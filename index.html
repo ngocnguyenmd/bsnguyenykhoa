@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Shell Center</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Layout chính */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f2f2f2; /* Màu nền dịu nhẹ */
+            color: #333; /* Màu chữ dễ đọc */
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Header nhỏ gọn */
+        header {
+            background: #343a40; /* Màu tối nhẹ */
+            color: white;
+            padding: 4px 5px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Menu */
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 0 10px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Menu Mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #343a40;
+                text-align: center;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                z-index: 10;
+            }
+
+            .menu li {
+                margin: 5px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 15px;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+        }
+
+        /* News Section */
+        .news-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .news-item {
+            width: 250px;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-item img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .news-item h2 {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .news-item a {
+            text-decoration: none;
+            color: orange;
+            font-weight: bold;
+        }
+
+        .news-item a:hover {
+            color: black;
+        }
+
+        /* Footer luôn dưới cùng */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 2px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Cuộc Sống [ Âm - Dương ]</div>
+        <div class="menu-toggle">☰</div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">l-OCenter</a></li>
+                <li><a href="77.html">Cần gấp</a></li>
+                <li><a href="https://nguyenydakhoa.netlify.app">Giải trí</a></li>
+                <li><a href="11.html">Thắp Nhang</a></li>
+                <li><a href="707.html">Nội Bộ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="news-container">
+            <article class="news-item">
+                <img src="https://images.pexels.com/photos/1216351/pexels-photo-1216351.jpeg" alt="Bài viết 1">
+                <h2><a href="505.html">&#9882; Giới thiệu chung &#9882;</a></h2>
+                <p>Trang này nhằm mục đích cho những người điếc,các bệnh lý,tật...</p>
+            </article>
+
+            <article class="news-item">
+                <img src="https://images.pexels.com/photos/237655/pexels-photo-237655.jpeg" alt="Bài viết 2">
+                <h2><a href="506.html">&#9878; Tin Thông Thường &#9878;</a></h2>
+                <p>Tin thông thường cho các vị...</p>
+            </article>
+
+            <article class="news-item">
+                <img src="https://images.pexels.com/photos/15225418/pexels-photo-15225418.jpeg" alt="Bài viết 3">
+                <h2><a href="07.html">&diams; Tin Hành Chính &diams;</a></h2>
+                <p>Tin cho các vị Thần,...Nội bộ</p>
+            </article>
+            
+            <article class="news-item">
+                <img src="https://images.pexels.com/photos/1083612/pexels-photo-1083612.jpeg" alt="Bài viết 4">
+                <h2><a href="Vip.html">&#10084 Quý Tộc &#10084</a></h2>
+                <p>Cho các vị [Quý Tộc},Quyền Quý...</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&#10084; 2025 Life shell center | Thuộc bản quyền của [LION][Ngọc Nguyên]</p>
+    </footer>
+
+    <script>
+        // Mở / đóng menu trên mobile
+        document.querySelector(".menu-toggle").addEventListener("click", function () {
+            document.querySelector(".menu").classList.toggle("active");
+        });
+    </script>
+
+</body>
+</html>

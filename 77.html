@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảo Mật | bậc 6 tiên phẩm</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Layout chung */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header cố định trên cùng */
+        header {
+            background: #343a40;
+            color: yellow;
+            padding: 5px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Để không bị che bởi header cố định */
+        .header-space {
+            height: 60px;
+        }
+
+        /* Cảnh báo */
+        .warning-container {
+            background: #ffc107;
+            color: #333;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 8px;
+            width: 80%;
+            margin: 20px auto;
+            font-weight: bold;
+        }
+
+        /* Form nhập mật khẩu */
+        .password-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        .password-container h2 {
+            margin-bottom: 15px;
+        }
+
+        .password-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .password-container button, 
+        .back-home {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .password-container button:hover, 
+        .back-home:hover {
+            background: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Nội dung bài viết */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .article-content {
+            text-align: left;
+            width: 100%;
+        }
+
+        .article-content img {
+            width: 100%;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .article-content h1 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .article-content p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Footer luôn ở dưới cùng */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* Điều khiển nhạc */
+        .music-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 18px;
+        }
+
+        .music-container:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">+ Giải quyết dành cho bậc 6 tiên phẩm [Up]+</div>
+    </header>
+
+    <div class="header-space"></div>
+
+    <!-- Cảnh báo -->
+    <div class="warning-container">
+        ⚠ Đây là bài viết **chỉ dành cho người có mật khẩu**! <br>
+        Nội dung này chứa thông tin quan trọng và không thể truy cập nếu không có quyền. <br>
+        Hãy đảm bảo bạn đã có mật khẩu đúng trước khi tiếp tục.
+    </div>
+
+    <!-- Form nhập mật khẩu -->
+    <div class="password-container" id="password-container">
+        <h2>Nhập mật khẩu để xem nội dung</h2>
+        <input type="password" id="password" placeholder="Nhập mật khẩu...">
+        <div class="button-container">
+            <button onclick="checkPassword()">Xác nhận</button>
+            <a href="index.html" class="back-home">⬅ Trang Chủ</a>
+        </div>
+        <p id="error-message" class="error-message">Mật khẩu sai! Thử lại.</p>
+    </div>
+
+    <!-- Nội dung bài viết (ẩn ban đầu) -->
+    <main id="content" class="hidden">
+        <section class="article-content">
+            <img src="https://images.pexels.com/photos/326168/pexels-photo-326168.jpeg" alt="Bài viết">
+            <h1>Bài viết đặc biệt</h1>
+            <p>Đây là bài viết </p>
+            <p>Hãy đảm bảo bạn đã có mật khẩu đúng trước khi tiếp tục.</p>
+            <a href="index.html" class="back-home">⬅Quay lại Trang Chủ</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&#10084; 2025 Life shell center | Thuộc bản quyền của [LION][Ngọc Nguyên]</p>
+    </footer>
+
+    <!-- Điều khiển nhạc -->
+    <div class="music-container" onclick="toggleMusic()">🎵</div>
+    <audio id="background-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2025/02/05/audio_98908add7a.mp3?filename=corporate-motivation-music-297445.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        function checkPassword() {
+            const passwordInput = document.getElementById("password").value;
+            const correctPassword = "cuclac0701&"; // Đổi mật khẩu tại đây
+            const errorMessage = document.getElementById("error-message");
+            
+            if (passwordInput === correctPassword) {
+                document.getElementById("password-container").style.display = "none";
+                document.getElementById("content").style.display = "flex";
+            } else {
+                errorMessage.style.display = "block";
+            }
+        }
+
+        // Phát nhạc khi người dùng nhấp vào trang
+        document.addEventListener("click", function() {
+            document.getElementById("background-music").play();
+        }, { once: true });
+
+        // Điều khiển nhạc
+        function toggleMusic() {
+            const music = document.getElementById("background-music");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+
+</body>
+</html>
