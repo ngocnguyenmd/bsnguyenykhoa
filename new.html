@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Tin Tức</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url('https://img5.thuthuatphanmem.vn/uploads/2021/11/08/anh-nen-ca-chep-hoa-rong-dep-nhat_095151352.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+        .news-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .news-item {
+            background-color: rgba(53, 52, 49, 0.9);
+            border: 2px solid #ff8c00;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .news-item:hover {
+            background-color: rgba(69, 69, 66, 0.9);
+        }
+        .news-item h2 {
+            margin: 0;
+            color: #ff8c00;
+            font-size: 18px;
+        }
+        .news-item .read-btn {
+            padding: 8px 15px;
+            background-color: #ff8c00;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .news-item .read-btn:hover {
+            background-color: #e07b00;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff8c00;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-btn:hover {
+            background-color: #e07b00;
+        }
+        .password-prompt {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #353431;
+            padding: 20px;
+            border: 2px solid #ff8c00;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+        }
+        .password-prompt input {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        .password-prompt button {
+            padding: 8px 15px;
+            background-color: #ff8c00;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .password-prompt button:hover {
+            background-color: #e07b00;
+        }
+        @media (max-width: 720px) {
+            .news-item h2 {
+                font-size: 16px;
+            }
+            .news-item .read-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="news-list" id="news-list">
+        <!-- Tin tức sẽ được thêm bằng JavaScript -->
+    </div>
+    <a href="index.html" class="back-btn">Quay lại</a>
+
+    <div class="password-prompt" id="passwordPrompt">
+        <h3>Nhập mật khẩu</h3>
+        <input type="password" id="passwordInput" placeholder="Mật khẩu">
+        <button onclick="checkPassword()">Xác nhận</button>
+    </div>
+
+    <script>
+        let currentId = null;
+        let correctPassword = null;
+
+        function createNewsItem(id, subtitle, password, articleNumber) {
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-item';
+
+            if (password) {
+                newsItem.innerHTML = `
+                    <h2>Bài ${articleNumber}: ${subtitle || 'Không có tiêu đề phụ'} (Có mật khẩu)</h2>
+                    <a href="#" class="read-btn" onclick="showPasswordPrompt(${id}, '${password}'); return false;">Đọc bài</a>
+                `;
+            } else {
+                newsItem.innerHTML = `
+                    <h2>Bài ${articleNumber}: ${subtitle || 'Không có tiêu đề phụ'}</h2>
+                    <a href="read.html?id=${id}" class="read-btn">Đọc bài</a>
+                `;
+            }
+
+            return newsItem;
+        }
+
+        function showPasswordPrompt(id, password) {
+            currentId = id;
+            correctPassword = password;
+            document.getElementById('passwordPrompt').style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === correctPassword) {
+                window.location.href = `read.html?id=${currentId}`;
+            } else {
+                alert('Mật khẩu sai!');
+            }
+        }
+
+        // Hàm chuẩn hóa chuỗi: loại bỏ khoảng trắng thừa và trước dấu +
+        function normalizeTitle(title) {
+            return title.replace(/\s+/g, ' ').replace(/\s+\+/g, '+').trim();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedMainTitle = decodeURIComponent(urlParams.get('title') || '');
+
+        fetch('news.txt')
+            .then(response => {
+                if (!response.ok) throw new Error('Không tìm thấy file');
+                return response.text();
+            })
+            .then(data => {
+                const newsList = document.getElementById('news-list');
+                const newsArray = data.trim().split('\n');
+
+                console.log('Dữ liệu news.txt:', newsArray);
+                console.log('Tiêu đề được chọn:', selectedMainTitle);
+
+                if (!selectedMainTitle) {
+                    newsList.innerHTML = '<p>Không có tiêu đề được chọn.</p>';
+                    return;
+                }
+
+                const normalizedSelectedTitle = normalizeTitle(selectedMainTitle);
+                console.log('Tiêu đề chuẩn hóa:', normalizedSelectedTitle);
+
+                let articleCounter = 1;
+                newsArray.forEach((news, index) => {
+                    const [mainTitle, , subtitle, , , , password] = news.split('|');
+                    const normalizedMainTitle = normalizeTitle(mainTitle);
+                    console.log(`Dòng ${index + 1}: mainTitle="${normalizedMainTitle}", subtitle="${subtitle}"`);
+                    console.log(`So sánh: "${normalizedMainTitle}" === "${normalizedSelectedTitle}" -> ${normalizedMainTitle === normalizedSelectedTitle}`);
+                    if (normalizedMainTitle === normalizedSelectedTitle) {
+                        console.log(`Khớp: Bài ${articleCounter} - ${subtitle}`);
+                        const newsItem = createNewsItem(index + 1, subtitle, password, articleCounter);
+                        newsList.appendChild(newsItem);
+                        articleCounter++;
+                    }
+                });
+
+                if (articleCounter === 1) {
+                    newsList.innerHTML = '<p>Không tìm thấy bài viết nào cho tiêu đề này.</p>';
+                    console.log('Không có bài nào khớp với tiêu đề.');
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                document.getElementById('news-list').innerHTML = '<p>Không thể tải tin tức.</p>';
+            });
+    </script>
+</body>
+</html>
