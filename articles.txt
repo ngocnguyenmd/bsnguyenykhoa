@@ -1,0 +1,34 @@
+posterIndex: Giới Thiệu 
+posterImage: poster 1.jpg
+---
+title: Về Website
+summary: Nhằm nắm thông tin và nhiệm vụ...
+image: images/poster 1.jpg
+displayAtPoster: poster 1.jpg
+---
+Đôi điều về tôi...
+Life shell center là bệnh viện lớn nhất tại Tam Giới có lẽ vậy như người ta thường nói, nhưng...à ừ vậy đấy !!!
+Sự phát triển nhanh chóng, nó ra đời cũng khá lâu do tôi điều hành khoảng 13 năm...Tôi cũng không nhớ rõ.
+Tôi người ta thường gọi là Lion Verterious (Thân thương là On hoặc thầy) Tôi chịu trách nhiệm toàn bộ các vụ liên quan về life shell và cả cuộc sống Tam Giới.
+Công việc hiện tại của tôi (Không xác định...) thuộc dòng tộc LIO-OS đại loại xử lý cho mọi người các vấn đề nhưng tôi không can thiệp về (dương thế) tôi khá bận nên đừng gọi tôi nếu không gấp cảm ơn quý vị
+Về Website
+Tôi lập ra để mọi người có thể xem thông tin - Các tin tức mới [Cho những người mới tới]
+Để mọi người có thể nắm tình hình nhiệm vụ của mình và xử lý kiện cho các vị (chỉ nhận đơn từ thuật cấp 7...)
+Các bài có mật khẩu chỉ dùng cho cấp cao - không được dùng cho người cấp thấp thông cảm ạ
+Không có mục đích nhắm tới ai - không kinh doanh - Không vu lợi - làm ơn đọc trước khi vào các bài khác ! Trân trọng.
+Đây là bài viết của : Lion Verterious.
+===
+title: Trung tâm hành chính [nội bộ]
+summary: Chưa có tin tức
+image: images/poster 3.jpg
+displayAtPoster: poster 1.jpg
+---
+Tác giả : Châu [nội bộ] 
+===
+title: Các cuộc họp và thảo luận
+summary: NOT
+image: images/poster 4.jpg
+displayAtPoster: poster 1.jpg
+---
+Tác giả : Tổng nội bộ lifeshell và của chung
+

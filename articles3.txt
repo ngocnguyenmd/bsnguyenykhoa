@@ -1,0 +1,9 @@
+posterIndex: VIP-Gia tộc-Quyền lực
+posterImage: poster 3.jpg
+---
+title: Học viện hoàng gia
+summary: chưa có thông tin 
+image: images/poster 4.jpg
+displayAtPoster: poster 3.jpg
+---
+Tác giả : Thảo [PhD][Học viện 01]
