@@ -118,6 +118,13 @@
             color: #FFFFFF;
         }
 
+        .error-message {
+            color: #FF5555;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             header nav ul {
@@ -186,6 +193,7 @@
         </nav>
     </header>
     <div class="main-content">
+        <div id="error-message" class="error-message"></div>
         <h1 id="article-title"></h1>
         <img id="article-image" src="" alt="Hình ảnh bài viết">
         <div id="article-content"></div>
@@ -201,20 +209,30 @@
             const file = urlParams.get('file');
             const articleIndex = parseInt(urlParams.get('articleIndex'));
             const poster = urlParams.get('poster');
+            const errorMessage = document.getElementById('error-message');
 
-            if (!file || isNaN(articleIndex)) return;
+            if (!file || isNaN(articleIndex)) {
+                errorMessage.textContent = 'Không tìm thấy bài viết hoặc thông tin không hợp lệ.';
+                return;
+            }
 
             // Cập nhật liên kết "Quay lại danh sách"
             if (poster) {
                 document.getElementById('back-to-list').href = `list.html?poster=${encodeURIComponent(poster)}`;
             }
 
-            fetch(`articles/${file}`)
-                .then(response => response.text())
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) throw new Error('File không tồn tại hoặc không thể truy cập.');
+                    return response.text();
+                })
                 .then(data => {
                     const parts = data.split('---');
                     const articles = parts.slice(1).join('---').split('===').map(article => article.trim()).filter(article => article);
-                    if (!articles[articleIndex]) return;
+                    if (!articles[articleIndex]) {
+                        errorMessage.textContent = 'Không tìm thấy bài viết được yêu cầu.';
+                        return;
+                    }
 
                     const [meta, content] = articles[articleIndex].split('---');
                     const metaLines = meta.trim().split('\n');
@@ -225,7 +243,10 @@
                     document.getElementById('article-image').src = image;
                     document.getElementById('article-content').innerHTML = content.trim().replace(/\n/g, '<br>');
                 })
-                .catch(error => console.error(`Lỗi khi tải file ${file}:`, error));
+                .catch(error => {
+                    console.error(`Lỗi khi tải file ${file}:`, error);
+                    errorMessage.textContent = 'Lỗi khi tải bài viết. Vui lòng thử lại sau.';
+                });
         }
 
         // Hamburger menu toggle
