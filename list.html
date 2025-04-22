@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách tin tức</title>
+    <title>Danh sách</title>
     <style>
         * {
             margin: 0;
@@ -13,14 +13,14 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #2D2D2D;
-            color: #D3D3D3;
+            background-color: #0a0624;
+            color: #d3d3d3;
             line-height: 1.6;
         }
 
         /* Header */
         header {
-            background-color: #1F1F1F;
+            background-color: #070418;
             padding: 15px 20px;
             position: fixed;
             top: 0;
@@ -35,7 +35,7 @@
         header .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #FFFFFF;
+            color: #ccce46;
         }
 
         header nav {
@@ -50,7 +50,7 @@
         }
 
         header nav ul li a {
-            color: #D3D3D3;
+            color: #e2d55f;
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s ease;
@@ -80,7 +80,7 @@
         }
 
         h1 {
-            color: #FFFFFF;
+            color: #bb9e1e;
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
@@ -93,7 +93,7 @@
         }
 
         .list-item {
-            background-color: #3A3A3A;
+            background-color: #161515;
             border-radius: 8px;
             padding: 15px;
             cursor: pointer;
@@ -124,7 +124,7 @@
         }
 
         .nav-link {
-            color: #4A90E2;
+            color: #e2cb4a;
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s ease;
@@ -199,12 +199,12 @@
 </head>
 <body>
     <header>
-        <div class="logo">Tin Tức</div>
+        <div class="logo">Tin Tức Chung</div>
         <nav>
             <input type="checkbox" id="menu-toggle">
             <label for="menu-toggle" class="hamburger">☰</label>
             <ul>
-                <li><a href="index.html">Giải trí</a></li>
+                <li><a href="index.html">Trang chủ</a></li>
                 <li><a href="#">Bảo mật</a></li>
                 <li><a href="#">Nội bộ</a></li>
                 <li><a href="#">Thắp nhang</a></li>
@@ -212,7 +212,7 @@
         </nav>
     </header>
     <div class="main-content">
-        <h1>Danh sách tin tức</h1>
+        <h1>Thông tin</h1>
         <div id="list-container" class="list-container"></div>
         <div id="error-message" class="error-message"></div>
         <div class="navigation-links">
@@ -221,42 +221,32 @@
         </div>
     </div>
     <script>
-        // Danh sách file .txt và ảnh từ URL
+        // Danh sách file .txt tương ứng với poster
         const posterFiles = [
             { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 1.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles.txt' 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles.txt' 
             },
             { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 2.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles2.txt' 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles2.txt' 
             },
             { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 3.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles3.txt' 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles3.txt' 
             },
             { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 4.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles4.txt' 
-            },
-            { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 5.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles5.txt' 
-            },
-            { 
-                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 6.jpg', 
-                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles6.txt' 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles4.txt' 
             }
         ];
 
-        // Danh sách file bài viết (dùng cho tham chiếu, không lặp)
+        // Danh sách file bài viết
         const articleFiles = [
-            'https://raw.githubusercontent.com/username/news-posters/main/articles.txt',
-            'https://raw.githubusercontent.com/username/news-posters/main/articles2.txt',
-            'https://raw.githubusercontent.com/username/news-posters/main/articles3.txt',
-            'https://raw.githubusercontent.com/username/news-posters/main/articles4.txt',
-            'https://raw.githubusercontent.com/username/news-posters/main/articles5.txt',
-            'https://raw.githubusercontent.com/username/news-posters/main/articles6.txt'
+            'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles.txt',
+            'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles2.txt',
+            'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles3.txt',
+            'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles4.txt'
         ];
 
         // Hàm tải danh sách bài viết
