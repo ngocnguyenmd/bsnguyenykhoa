@@ -3,144 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Tin Tức</title>
+    <title>Trang Thông tin</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #141205;
+            box-sizing: border-box;
         }
-        .header {
-            background-color: #353431;
-            padding: 15px 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            width: 100%;
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0a0714;
+            color: #D3D3D3;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #0a0624;
+            padding: 15px 20px;
             position: fixed;
             top: 0;
-            left: 0;
+            width: 100%;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
-        .header a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
+
+        header .logo {
+            font-size: 24px;
             font-weight: bold;
+            color: #d6e049;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        header nav ul li a {
+            color: #d6e049;
+            text-decoration: none;
             font-size: 16px;
-            padding: 8px 12px;
-            transition: color 0.3s;
-            display: inline-block;
+            transition: color 0.3s ease;
         }
-        .header a:hover {
-            color: #ff8c00;
+
+        header nav ul li a:hover {
+            color: #4A90E2;
         }
-        .poster {
-            width: 180px;
-            height: 254px;
-            margin: 10px;
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: #FFFFFF;
             cursor: pointer;
-            background-color: #353431;
-            border: 2px solid #ff8c00;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.2s;
         }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        /* Main content */
+        .main-content {
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .poster-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 cột trên PC */
+            gap: 20px;
+            max-width: 100%;
+        }
+
+        .poster {
+            background-color: #020003;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.753);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            height: 400px; /* Chiều cao trên PC */
+            width: 300px; /* Chiều rộng trên PC */
+        }
+
         .poster:hover {
             transform: scale(1.05);
         }
+
         .poster img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: 200px; /* Chiều cao hình ảnh trên PC */
+            object-fit: cover; /* Giữ tỷ lệ dọc */
+            object-position: center;
         }
-        .poster-container {
-            display: inline-block;
+
+        .poster-content {
+            padding: 10px;
             text-align: center;
-            margin: 10px;
-        }
-        .poster-container h3 {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            color: #ffffff;
-        }
-        .container {
+            flex-grow: 1;
             display: flex;
-            justify-content: center;
-            flex-wrap: nowrap;
-            max-width: 800px;
-            margin: 70px auto 20px auto;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
         }
-        @media (max-width: 720px) {
-            .poster {
-                width: 160px;
-                height: 226px;
+
+        .poster-content h3 {
+            color: #caa24a;
+            margin-bottom: 8px;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .poster-content p {
+            color: #e9b464;
+            font-size: 13px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Giới hạn 3 dòng */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .view-list {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #e2cb4a;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .view-list:hover {
+            color: #FFFFFF;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .poster-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
             }
-            .poster-container h3 {
+        }
+
+        @media (max-width: 768px) {
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #060505;
+                padding: 20px;
+            }
+
+            header nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .main-content {
+                margin-top: 60px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .poster-container {
+                display: grid;
+                grid-template-columns: repeat(3, 170px); /* 3 cột, mỗi cột 170px */
+                grid-auto-rows: 220px; /* Chiều cao hàng */
+                gap: 10px;
+                justify-content: center; /* Căn giữa */
+                max-width: 100%;
+            }
+
+            .poster {
+                width: 170px; /* Rộng 170px trên điện thoại */
+                height: 220px; /* Cao 220px trên điện thoại */
+            }
+
+            .poster img {
+                height: 120px; /* Hình ảnh nhỏ hơn */
+            }
+
+            .poster-content h3 {
                 font-size: 12px;
             }
-            .container {
-                flex-wrap: wrap;
+
+            .poster-content p {
+                font-size: 10px;
+                -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
             }
-            .header a {
-                margin: 0 10px;
-                font-size: 14px;
-                padding: 6px 8px;
+        }
+
+        @media (max-width: 520px) {
+            .poster-container {
+                transform: scale(0.9); /* Thu nhỏ nhẹ nếu màn hình quá nhỏ */
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .poster-container {
+                gap: 8px;
+            }
+
+            .poster {
+                width: 160px; /* Giảm nhẹ cho màn hình rất nhỏ */
+                height: 210px;
+            }
+
+            .poster img {
+                height: 110px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="https://nguyenydakhoa.netlify.app/index.html">Giải trí</a>
-        <a href="#bao-mat">Bảo mật</a>
-        <a href="#quan-trong">Quan trọng</a>
-        <a href="#tin-tuc">Tin tức</a>
+    <header>
+        <div class="logo">Life--Center</div>
+        <nav>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="hamburger">☰</label>
+            <ul>
+                <li><a href="https://nguyenydakhoa.netlify.app/">Giải trí</a></li>
+                <li><a href="#">Bảo mật</a></li>
+                <li><a href="#">Nội bộ</a></li>
+                <li><a href="#">Góp ý</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        <h1>- Thông tin =O= Âm Dương - 
+        <br>+ Bảng thông tin và Nhiệm vụ +
+        </h1>
+        <div id="poster-container" class="poster-container"></div>
+        <a href="index.html" class="view-list">Home</a>
     </div>
-    <div class="container" id="container">
-        <!-- Poster sẽ được thêm bằng JavaScript -->
-    </div>
-
     <script>
-        fetch('news.txt')
-            .then(response => {
-                if (!response.ok) throw new Error('Không tìm thấy file');
-                return response.text();
-            })
-            .then(data => {
-                const container = document.getElementById('container');
-                const newsArray = data.trim().split('\n');
+        // Danh sách file .txt tương ứng với poster
+        const posterFiles = [
+            { poster: 'poster 1.jpg', file: 'articles.txt' },
+            { poster: 'poster 2.jpg', file: 'articles2.txt' },
+            { poster: 'poster 3.jpg', file: 'articles3.txt' },
+            { poster: 'poster 4.jpg', file: 'articles4.txt' },
+        ];
 
-                const uniqueTitles = [];
-                const titleMap = new Map();
-                newsArray.forEach((news, index) => {
-                    const [mainTitle, posterUrl] = news.split('|');
-                    if (!titleMap.has(mainTitle) && posterUrl && posterUrl.startsWith('http')) {
-                        titleMap.set(mainTitle, posterUrl);
-                        uniqueTitles.push(mainTitle);
-                    }
-                });
+        // Hàm tải danh sách poster
+        function loadPosters() {
+            const container = document.getElementById('poster-container');
+            posterFiles.forEach(({ poster, file }, index) => {
+                fetch(`articles/${file}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        const [meta] = data.split('---');
+                        const metaLines = meta.trim().split('\n');
+                        const posterIndex = metaLines[0].replace('posterIndex: ', '') || `Poster ${index + 1}`;
+                        const posterImage = metaLines[1].replace('posterImage: ', '');
 
-                const defaultImage = 'https://via.placeholder.com/180x254.png?text=No+Image';
-
-                uniqueTitles.forEach((mainTitle) => {
-                    const posterUrl = titleMap.get(mainTitle);
-                    const encodedTitle = encodeURIComponent(mainTitle);
-                    const posterContainer = document.createElement('div');
-                    posterContainer.className = 'poster-container';
-                    posterContainer.innerHTML = `
-                        <div class="poster" onclick="window.location.href='new.html?title=${encodedTitle}'">
-                            <img src="${posterUrl || defaultImage}" alt="Poster for ${mainTitle}">
-                        </div>
-                        <h3>${mainTitle || 'Không có tiêu đề'}</h3>
-                    `;
-                    container.appendChild(posterContainer);
-                });
-            })
-            .catch(error => {
-                console.error('Lỗi:', error);
-                document.getElementById('container').innerHTML = '<p>Không thể tải tin tức.</p>';
+                        const posterDiv = document.createElement('div');
+                        posterDiv.className = 'poster';
+                        posterDiv.innerHTML = `
+                            <img src="images/${posterImage}" alt="${posterIndex}">
+                            <div class="poster-content">
+                                <h3>${posterIndex}</h3>
+                                <p>Xem các bài viết !!</p>
+                            </div>
+                        `;
+                        posterDiv.onclick = () => {
+                            window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
+                        };
+                        container.appendChild(posterDiv);
+                    })
+                    .catch(error => {
+                        console.error(`Lỗi khi tải file ${file}:`, error);
+                        const posterDiv = document.createElement('div');
+                        posterDiv.className = 'poster';
+                        posterDiv.innerHTML = `
+                            <img src="images/${poster}" alt="Poster ${index + 1}">
+                            <div class="poster-content">
+                                <h3>Poster ${index + 1}</h3>
+                                <p>Xem các bài viết liên quan.</p>
+                            </div>
+                        `;
+                        posterDiv.onclick = () => {
+                            window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
+                        };
+                        container.appendChild(posterDiv);
+                    });
             });
+        }
+
+        // Hamburger menu toggle
+        document.getElementById('menu-toggle').addEventListener('change', function() {
+            const menu = document.querySelector('header nav ul');
+            menu.classList.toggle('active', this.checked);
+        });
+
+        // Gọi hàm tải poster
+        loadPosters();
     </script>
 </body>
 </html>
