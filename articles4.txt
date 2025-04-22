@@ -1,9 +1,9 @@
 posterIndex: Các vị thần linh...
-posterImage: poster 4.jpg
+posterImage: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
 ---
 title: Nhiệm vụ 
 summary: chưa có thông tin 
-image: images/poster 4.jpg
-displayAtPoster: poster 4.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
 ---
 Tác giả : Hội đồng giải quyết [Nội bộ]
