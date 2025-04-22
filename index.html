@@ -284,8 +284,11 @@
         function loadPosters() {
             const container = document.getElementById('poster-container');
             posterFiles.forEach(({ poster, file }, index) => {
-                fetch(`articles/${file}`)
-                    .then(response => response.text())
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) throw new Error('File không tồn tại hoặc không thể truy cập.');
+                        return response.text();
+                    })
                     .then(data => {
                         const [meta] = data.split('---');
                         const metaLines = meta.trim().split('\n');
@@ -295,7 +298,7 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="images/${posterImage}" alt="${posterIndex}">
+                            <img src="${posterImage}" alt="${posterIndex}">
                             <div class="poster-content">
                                 <h3>${posterIndex}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -311,10 +314,10 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="images/${poster}" alt="Poster ${index + 1}">
+                            <img src="${poster}" alt="Poster ${index + 1}">
                             <div class="poster-content">
                                 <h3>Poster ${index + 1}</h3>
-                                <p>Xem các bài viết liên quan.</p>
+                                <p>Xem các bài viết !!</p>
                             </div>
                         `;
                         posterDiv.onclick = () => {
