@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách</title>
+    <title>Danh sách tin tức</title>
     <style>
         * {
             margin: 0;
@@ -13,14 +13,14 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #0a0624;
-            color: #d3d3d3;
+            background-color: #2D2D2D;
+            color: #D3D3D3;
             line-height: 1.6;
         }
 
         /* Header */
         header {
-            background-color:#070418;
+            background-color: #1F1F1F;
             padding: 15px 20px;
             position: fixed;
             top: 0;
@@ -35,7 +35,7 @@
         header .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ccce46;
+            color: #FFFFFF;
         }
 
         header nav {
@@ -50,7 +50,7 @@
         }
 
         header nav ul li a {
-            color: #e2d55f;
+            color: #D3D3D3;
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s ease;
@@ -80,7 +80,7 @@
         }
 
         h1 {
-            color: #bb9e1e;
+            color: #FFFFFF;
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
@@ -93,7 +93,7 @@
         }
 
         .list-item {
-            background-color: #161515;
+            background-color: #3A3A3A;
             border-radius: 8px;
             padding: 15px;
             cursor: pointer;
@@ -124,7 +124,7 @@
         }
 
         .nav-link {
-            color: #e2cb4a;
+            color: #4A90E2;
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s ease;
@@ -132,6 +132,13 @@
 
         .nav-link:hover {
             color: #FFFFFF;
+        }
+
+        .error-message {
+            color: #FF5555;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
         }
 
         /* Responsive */
@@ -192,12 +199,12 @@
 </head>
 <body>
     <header>
-        <div class="logo">Tin Tức Chung</div>
+        <div class="logo">Tin Tức</div>
         <nav>
             <input type="checkbox" id="menu-toggle">
             <label for="menu-toggle" class="hamburger">☰</label>
             <ul>
-                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="index.html">Giải trí</a></li>
                 <li><a href="#">Bảo mật</a></li>
                 <li><a href="#">Nội bộ</a></li>
                 <li><a href="#">Thắp nhang</a></li>
@@ -205,42 +212,82 @@
         </nav>
     </header>
     <div class="main-content">
-        <h1>Thông tin</h1>
+        <h1>Danh sách tin tức</h1>
         <div id="list-container" class="list-container"></div>
+        <div id="error-message" class="error-message"></div>
         <div class="navigation-links">
             <a href="index.html" class="nav-link">Trang chính</a>
             <a href="index.html" class="nav-link">Về trang chủ</a>
         </div>
     </div>
     <script>
-        // Danh sách file .txt tương ứng với poster
+        // Danh sách file .txt và ảnh từ URL
         const posterFiles = [
-            { poster: 'poster 1.jpg', file: 'articles.txt' },
-            { poster: 'poster 2.jpg', file: 'articles2.txt' },
-            { poster: 'poster 3.jpg', file: 'articles3.txt' },
-            { poster: 'poster 4.jpg', file: 'articles4.txt' }
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 1.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 2.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles2.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 3.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles3.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 4.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles4.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 5.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles5.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/username/news-posters/main/poster 6.jpg', 
+                file: 'https://raw.githubusercontent.com/username/news-posters/main/articles6.txt' 
+            }
         ];
 
-        // Danh sách file bài viết
-        const articleFiles = ['articles.txt', 'articles2.txt','articles3.txt','articles4.txt'];
+        // Danh sách file bài viết (dùng cho tham chiếu, không lặp)
+        const articleFiles = [
+            'https://raw.githubusercontent.com/username/news-posters/main/articles.txt',
+            'https://raw.githubusercontent.com/username/news-posters/main/articles2.txt',
+            'https://raw.githubusercontent.com/username/news-posters/main/articles3.txt',
+            'https://raw.githubusercontent.com/username/news-posters/main/articles4.txt',
+            'https://raw.githubusercontent.com/username/news-posters/main/articles5.txt',
+            'https://raw.githubusercontent.com/username/news-posters/main/articles6.txt'
+        ];
 
         // Hàm tải danh sách bài viết
         function loadList() {
             const container = document.getElementById('list-container');
+            const errorMessage = document.getElementById('error-message');
             const urlParams = new URLSearchParams(window.location.search);
             const poster = urlParams.get('poster');
 
-            if (!poster) return;
+            if (!poster) {
+                errorMessage.textContent = 'Không tìm thấy poster được chọn.';
+                return;
+            }
 
             // Tìm file .txt tương ứng với poster
             const posterFile = posterFiles.find(p => p.poster === poster)?.file;
-            if (!posterFile) return;
+            if (!posterFile) {
+                errorMessage.textContent = 'Không tìm thấy file dữ liệu cho poster này.';
+                return;
+            }
 
-            fetch(`articles/${posterFile}`)
-                .then(response => response.text())
+            fetch(posterFile)
+                .then(response => {
+                    if (!response.ok) throw new Error('File không tồn tại hoặc không thể truy cập.');
+                    return response.text();
+                })
                 .then(data => {
                     const parts = data.split('---');
                     const articles = parts.slice(1).join('---').split('===').map(article => article.trim()).filter(article => article);
+                    let hasArticles = false;
+
                     articles.forEach((article, index) => {
                         const [meta, content] = article.split('---');
                         const metaLines = meta.trim().split('\n');
@@ -250,6 +297,7 @@
                         const displayAtPoster = metaLines[3].replace('displayAtPoster: ', '');
 
                         if (displayAtPoster === poster) {
+                            hasArticles = true;
                             const item = document.createElement('div');
                             item.className = 'list-item';
                             item.innerHTML = `
@@ -262,8 +310,15 @@
                             container.appendChild(item);
                         }
                     });
+
+                    if (!hasArticles) {
+                        errorMessage.textContent = 'Không có bài viết nào cho poster này.';
+                    }
                 })
-                .catch(error => console.error(`Lỗi khi tải file ${posterFile}:`, error));
+                .catch(error => {
+                    console.error(`Lỗi khi tải file ${posterFile}:`, error);
+                    errorMessage.textContent = 'Lỗi khi tải danh sách bài viết. Vui lòng thử lại sau.';
+                });
         }
 
         // Hamburger menu toggle
