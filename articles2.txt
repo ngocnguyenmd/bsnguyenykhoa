@@ -1,10 +1,10 @@
 posterIndex: Thông tin chung [Free]
-posterImage: poster 2.jpg
+posterImage: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg
 ---
 title: Tin tức mới
 summary: Phù hợp cho mọi người và có ID chính...
-image: images/poster 3.jpg
-displayAtPoster: poster 2.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg
 ---
 -[Đã ký] Lấy bài [Muôn Kiếp Chờ Nhau] 
 -(làm nhạc cho người việt) (Thông qua luật duyên định số 6211)
@@ -18,8 +18,8 @@ displayAtPoster: poster 2.jpg
 ===
 title: 30/04 lễ
 summary: [Vietnam]
-image: images/poster 3.jpg
-displayAtPoster: poster 2.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg
 ---
 Mừng ngày Giải phóng miền Nam, Thống nhất đất nước (30/4/1975 – 30/4/2025) Ngày 30/4 – dấu son chói lọi trong lịch sử dân tộc, là biểu tượng của ý chí kiên cường, lòng yêu nước bất diệt và khát vọng hòa bình, thống nhất non sông.Chúng ta tri ân sâu sắc công lao của các thế hệ cha anh đã hy sinh xương máu vì độc lập – tự do của Tổ quốc. Chính nhờ những mất mát và cống hiến ấy mà thế hệ hôm nay được sống trong hòa bình, được xây dựng một tương lai tốt đẹp hơn.Nhân ngày lễ trọng đại của dân tộc, Tôi xin gửi lời chúc sức khỏe, bình an và hạnh phúc đến Quý khách hàng, Quý đối tác cùng toàn thể đồng bào Việt Nam cũng như lifeshell center.Hướng về lịch sử để trân trọng hiện tại – Gìn giữ hòa bình để phát triển tương lai.
 Tác giả : Hội nhân viên lifeshell vietnam, quỳnh
@@ -27,8 +27,8 @@ Tác giả : Hội nhân viên lifeshell vietnam, quỳnh
 ===
 title: Danh sách giải quyết cho vong mới (vietnam)
 summary: [Chung]
-image: images/poster 4.jpg
-displayAtPoster: poster 2.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg
 ---
 *Hà thị vũ 1981
 *Nguyễn thị hiếu 1990
