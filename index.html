@@ -18,7 +18,6 @@
             line-height: 1.6;
         }
 
-        /* Header */
         header {
             background-color: #0a0624;
             padding: 15px 20px;
@@ -60,7 +59,6 @@
             color: #4A90E2;
         }
 
-        /* Hamburger menu */
         .hamburger {
             display: none;
             font-size: 24px;
@@ -72,7 +70,6 @@
             display: none;
         }
 
-        /* Main content */
         .main-content {
             max-width: 1200px;
             margin: 80px auto 20px;
@@ -88,7 +85,7 @@
 
         .poster-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 cột trên PC */
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             max-width: 100%;
         }
@@ -103,18 +100,18 @@
             touch-action: manipulation;
             display: flex;
             flex-direction: column;
-            height: 400px; /* Chiều cao trên PC */
-            width: 300px; /* Chiều rộng trên PC */
+            height: 400px;
+            width: 300px;
         }
 
         .poster:hover {
             transform: scale(1.05);
         }
 
-        .poster img {
+        .poster picture img {
             width: 100%;
-            height: 200px; /* Chiều cao hình ảnh trên PC */
-            object-fit: cover; /* Giữ tỷ lệ dọc */
+            height: 200px;
+            object-fit: cover;
             object-position: center;
         }
 
@@ -141,7 +138,7 @@
             color: #e9b464;
             font-size: 13px;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Giới hạn 3 dòng */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -160,10 +157,9 @@
             color: #FFFFFF;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
             .poster-container {
-                grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -198,20 +194,20 @@
 
             .poster-container {
                 display: grid;
-                grid-template-columns: repeat(3, 170px); /* 3 cột, mỗi cột 170px */
-                grid-auto-rows: 220px; /* Chiều cao hàng */
+                grid-template-columns: repeat(3, 170px);
+                grid-auto-rows: 220px;
                 gap: 10px;
-                justify-content: center; /* Căn giữa */
+                justify-content: center;
                 max-width: 100%;
             }
 
             .poster {
-                width: 170px; /* Rộng 170px trên điện thoại */
-                height: 220px; /* Cao 220px trên điện thoại */
+                width: 170px;
+                height: 220px;
             }
 
-            .poster img {
-                height: 120px; /* Hình ảnh nhỏ hơn */
+            .poster picture img {
+                height: 120px;
             }
 
             .poster-content h3 {
@@ -220,13 +216,13 @@
 
             .poster-content p {
                 font-size: 10px;
-                -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+                -webkit-line-clamp: 2;
             }
         }
 
         @media (max-width: 520px) {
             .poster-container {
-                transform: scale(0.9); /* Thu nhỏ nhẹ nếu màn hình quá nhỏ */
+                transform: scale(0.9);
             }
 
             .main-content {
@@ -240,11 +236,11 @@
             }
 
             .poster {
-                width: 160px; /* Giảm nhẹ cho màn hình rất nhỏ */
+                width: 160px;
                 height: 210px;
             }
 
-            .poster img {
+            .poster picture img {
                 height: 110px;
             }
         }
@@ -272,24 +268,25 @@
         <a href="index.html" class="view-list">Home</a>
     </div>
     <script>
-        // Danh sách file .txt tương ứng với poster
         const posterFiles = [
-            { poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg', file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles.txt' },
-            { poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg', file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles2.txt' },
-            { poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg', file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles3.txt' },
-            { poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg', file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles4.txt' }
+            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%201.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles.txt' },
+            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%202.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles2.txt' },
+            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%203.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles3.txt' },
+            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%204.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles4.txt' }
         ];
 
-        // Hàm tải danh sách poster
-        function loadPosters() {
+        async function loadPosters() {
             const container = document.getElementById('poster-container');
-            posterFiles.forEach(({ poster, file }, index) => {
-                fetch(file)
-                    .then(response => {
-                        if (!response.ok) throw new Error('File không tồn tại hoặc không thể truy cập.');
-                        return response.text();
-                    })
-                    .then(data => {
+            const limit = 2;
+            const queue = posterFiles.slice();
+
+            while (queue.length) {
+                const batch = queue.splice(0, limit);
+                await Promise.all(batch.map(async ({ poster, file }, index) => {
+                    try {
+                        const response = await fetch(file);
+                        if (!response.ok) throw new Error('File không tồn tại.');
+                        const data = await response.text();
                         const [meta] = data.split('---');
                         const metaLines = meta.trim().split('\n');
                         const posterIndex = metaLines[0].replace('posterIndex: ', '') || `Poster ${index + 1}`;
@@ -298,7 +295,15 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="${posterImage}" alt="${posterIndex}">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="${posterImage.replace('.webp', '_mobile.webp')}" type="image/webp">
+                                <source srcset="${posterImage.replace('.webp', '_small.webp')}" type="image/webp">
+                                <img src="https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp" 
+                                     data-src="${posterImage}" 
+                                     alt="${posterIndex}" 
+                                     loading="lazy" 
+                                     onerror="this.src='https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp'">
+                            </picture>
                             <div class="poster-content">
                                 <h3>${posterIndex}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -308,13 +313,20 @@
                             window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
                         };
                         container.appendChild(posterDiv);
-                    })
-                    .catch(error => {
+                    } catch (error) {
                         console.error(`Lỗi khi tải file ${file}:`, error);
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="${poster}" alt="Poster ${index + 1}">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="${poster.replace('.webp', '_mobile.webp')}" type="image/webp">
+                                <source srcset="${poster.replace('.webp', '_small.webp')}" type="image/webp">
+                                <img src="https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp" 
+                                     data-src="${poster}" 
+                                     alt="Poster ${index + 1}" 
+                                     loading="lazy" 
+                                     onerror="this.src='https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp'">
+                            </picture>
                             <div class="poster-content">
                                 <h3>Poster ${index + 1}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -324,17 +336,32 @@
                             window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
                         };
                         container.appendChild(posterDiv);
-                    });
-            });
+                    }
+                }));
+            }
         }
 
-        // Hamburger menu toggle
+        // Lazy loading fallback cho trình duyệt cũ
+        document.querySelectorAll('img').forEach(img => {
+            if ('loading' in HTMLImageElement.prototype) return;
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        img.src = img.dataset.src;
+                        obs.unobserve(img);
+                    }
+                });
+            });
+            img.dataset.src = img.src;
+            img.src = '';
+            observer.observe(img);
+        });
+
         document.getElementById('menu-toggle').addEventListener('change', function() {
             const menu = document.querySelector('header nav ul');
             menu.classList.toggle('active', this.checked);
         });
 
-        // Gọi hàm tải poster
         loadPosters();
     </script>
 </body>
