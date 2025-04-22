@@ -108,7 +108,7 @@
             transform: scale(1.05);
         }
 
-        .poster picture img {
+        .poster img {
             width: 100%;
             height: 200px;
             object-fit: cover;
@@ -206,7 +206,7 @@
                 height: 220px;
             }
 
-            .poster picture img {
+            .poster img {
                 height: 120px;
             }
 
@@ -240,7 +240,7 @@
                 height: 210px;
             }
 
-            .poster picture img {
+            .poster img {
                 height: 110px;
             }
         }
@@ -268,17 +268,32 @@
         <a href="index.html" class="view-list">Home</a>
     </div>
     <script>
+        // Danh sách file .txt và ảnh poster (chỉ dùng raw GitHub)
         const posterFiles = [
-            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%201.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles.txt' },
-            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%202.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles2.txt' },
-            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%203.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles3.txt' },
-            { poster: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/Poster%204.webp', file: 'https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/articles4.txt' }
+            { 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles2.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles3.txt' 
+            },
+            { 
+                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg', 
+                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles4.txt' 
+            }
         ];
 
+        // Hàm tải danh sách poster với giới hạn request
         async function loadPosters() {
             const container = document.getElementById('poster-container');
-            const limit = 2;
+            const limit = 2; // Giới hạn 2 request cùng lúc
             const queue = posterFiles.slice();
+            const fallbackImage = 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg'; // Fallback là Poster 1.jpg
 
             while (queue.length) {
                 const batch = queue.splice(0, limit);
@@ -295,15 +310,10 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <picture>
-                                <source media="(max-width: 768px)" srcset="${posterImage.replace('.webp', '_mobile.webp')}" type="image/webp">
-                                <source srcset="${posterImage.replace('.webp', '_small.webp')}" type="image/webp">
-                                <img src="https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp" 
-                                     data-src="${posterImage}" 
-                                     alt="${posterIndex}" 
-                                     loading="lazy" 
-                                     onerror="this.src='https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp'">
-                            </picture>
+                            <img src="${posterImage}" 
+                                 alt="${posterIndex}" 
+                                 loading="lazy" 
+                                 onerror="this.src='${fallbackImage}'">
                             <div class="poster-content">
                                 <h3>${posterIndex}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -318,15 +328,10 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <picture>
-                                <source media="(max-width: 768px)" srcset="${poster.replace('.webp', '_mobile.webp')}" type="image/webp">
-                                <source srcset="${poster.replace('.webp', '_small.webp')}" type="image/webp">
-                                <img src="https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp" 
-                                     data-src="${poster}" 
-                                     alt="Poster ${index + 1}" 
-                                     loading="lazy" 
-                                     onerror="this.src='https://cdn.jsdelivr.net/gh/ngocnguyenmd/bsnguyenykhoa@main/placeholder.webp'">
-                            </picture>
+                            <img src="${poster}" 
+                                 alt="Poster ${index + 1}" 
+                                 loading="lazy" 
+                                 onerror="this.src='${fallbackImage}'">
                             <div class="poster-content">
                                 <h3>Poster ${index + 1}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -357,11 +362,13 @@
             observer.observe(img);
         });
 
+        // Hamburger menu toggle
         document.getElementById('menu-toggle').addEventListener('change', function() {
             const menu = document.querySelector('header nav ul');
             menu.classList.toggle('active', this.checked);
         });
 
+        // Gọi hàm tải poster
         loadPosters();
     </script>
 </body>
