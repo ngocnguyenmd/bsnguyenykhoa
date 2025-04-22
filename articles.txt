@@ -1,10 +1,10 @@
 posterIndex: Giới Thiệu 
-posterImage: poster 1.jpg
+posterImage: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg
 ---
 title: Về Website
 summary: Nhằm nắm thông tin và nhiệm vụ...
-image: images/poster 1.jpg
-displayAtPoster: poster 1.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg
 ---
 Đôi điều về tôi...
 Life shell center là bệnh viện lớn nhất tại Tam Giới có lẽ vậy như người ta thường nói, nhưng...à ừ vậy đấy !!!
