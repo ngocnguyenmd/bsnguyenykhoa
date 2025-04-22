@@ -20,15 +20,15 @@ Không có mục đích nhắm tới ai - không kinh doanh - Không vu lợi - 
 ===
 title: Trung tâm hành chính [nội bộ]
 summary: Chưa có tin tức
-image: images/poster 3.jpg
-displayAtPoster: poster 1.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg
 ---
 Tác giả : Châu [nội bộ] 
 ===
 title: Các cuộc họp và thảo luận
 summary: NOT
-image: images/poster 4.jpg
-displayAtPoster: poster 1.jpg
+image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg
 ---
 Tác giả : Tổng nội bộ lifeshell và của chung
 
