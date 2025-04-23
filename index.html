@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Thông tin</title>
     <style>
+        :root {
+            --primary-color: #41372e; /* Vàng nhạt, tươi sáng */
+            --text-color: #3a3939; /* Đen nhẹ, dễ đọc */
+            --background-light: #707a88; /* Xám trắng nhạt */
+            --card-background: #d3cbcb; /* Trắng cho poster */
+            --accent-color: #263a4e; /* Xanh dương nhạt */
+            --shadow-color: rgba(70, 68, 68, 0.1); /* Bóng mờ nhẹ */
+            --header-background: #48617e; /* Xám nhạt cho header */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,14 +23,15 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #0a0714;
-            color: #D3D3D3;
-            line-height: 1.6;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
         }
 
         header {
-            background-color: #0a0624;
-            padding: 15px 20px;
+            background-color: var(--header-background);
+            padding: 1rem 1.5rem;
             position: fixed;
             top: 0;
             width: 100%;
@@ -28,41 +39,38 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 8px var(--shadow-color);
         }
 
         header .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #d6e049;
-        }
-
-        header nav {
-            display: flex;
-            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
         }
 
         header nav ul {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 1.5rem;
         }
 
         header nav ul li a {
-            color: #d6e049;
+            color: var(--primary-color);
             text-decoration: none;
-            font-size: 16px;
+            font-size: 1rem;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
 
         header nav ul li a:hover {
-            color: #4A90E2;
+            color: var(--accent-color);
         }
 
         .hamburger {
             display: none;
-            font-size: 24px;
-            color: #FFFFFF;
+            font-size: 1.8rem;
+            color: var(--text-color);
             cursor: pointer;
         }
 
@@ -72,51 +80,61 @@
 
         .main-content {
             max-width: 1200px;
-            margin: 80px auto 20px;
-            padding: 20px;
+            margin: 5rem auto 2rem;
+            padding: 1.5rem;
         }
 
         h1 {
-            color: #FFFFFF;
+            color: var(--text-color);
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 28px;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-content p {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            opacity: 0.85;
         }
 
         .poster-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             max-width: 100%;
         }
 
         .poster {
-            background-color: #020003;
-            border-radius: 10px;
+            background-color: var(--card-background);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.753);
-            transition: transform 0.3s ease;
+            box-shadow: 0 6px 12px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            touch-action: manipulation;
             display: flex;
             flex-direction: column;
-            height: 400px;
-            width: 300px;
+            height: 360px;
         }
 
         .poster:hover {
-            transform: scale(1.05);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px var(--shadow-color);
         }
 
         .poster img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             object-position: center;
         }
 
         .poster-content {
-            padding: 10px;
+            padding: 1rem;
             text-align: center;
             flex-grow: 1;
             display: flex;
@@ -126,40 +144,43 @@
         }
 
         .poster-content h3 {
-            color: #caa24a;
-            margin-bottom: 8px;
-            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .poster-content p {
-            color: #e9b464;
-            font-size: 13px;
+            color: var(--text-color);
+            font-size: 0.9rem;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            opacity: 0.85;
         }
 
         .view-list {
             display: block;
             text-align: center;
-            margin-top: 30px;
-            color: #e2cb4a;
+            margin-top: 2rem;
+            color: var(--primary-color);
             text-decoration: none;
-            font-size: 16px;
+            font-size: 1rem;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .view-list:hover {
-            color: #FFFFFF;
+            color: var(--accent-color);
         }
 
         @media (max-width: 1024px) {
             .poster-container {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             }
         }
 
@@ -171,8 +192,9 @@
                 top: 60px;
                 left: 0;
                 width: 100%;
-                background-color: #060505;
-                padding: 20px;
+                background-color: var(--header-background);
+                padding: 1.5rem;
+                box-shadow: 0 4px 8px var(--shadow-color);
             }
 
             header nav ul.active {
@@ -184,26 +206,21 @@
             }
 
             .main-content {
-                margin-top: 60px;
-                padding: 15px;
+                margin-top: 4rem;
+                padding: 1rem;
             }
 
             h1 {
-                font-size: 24px;
+                font-size: 1.6rem;
             }
 
             .poster-container {
-                display: grid;
-                grid-template-columns: repeat(3, 170px);
-                grid-auto-rows: 220px;
-                gap: 10px;
-                justify-content: center;
-                max-width: 100%;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 1rem;
             }
 
             .poster {
-                width: 170px;
-                height: 220px;
+                height: 240px;
             }
 
             .poster img {
@@ -211,37 +228,31 @@
             }
 
             .poster-content h3 {
-                font-size: 12px;
+                font-size: 1rem;
             }
 
             .poster-content p {
-                font-size: 10px;
+                font-size: 0.8rem;
                 -webkit-line-clamp: 2;
-            }
-        }
-
-        @media (max-width: 520px) {
-            .poster-container {
-                transform: scale(0.9);
-            }
-
-            .main-content {
-                padding: 10px;
             }
         }
 
         @media (max-width: 480px) {
             .poster-container {
-                gap: 8px;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 0.8rem;
             }
 
             .poster {
-                width: 160px;
-                height: 210px;
+                height: 220px;
             }
 
             .poster img {
-                height: 110px;
+                height: 100px;
+            }
+
+            .main-content {
+                padding: 0.8rem;
             }
         }
     </style>
@@ -251,7 +262,7 @@
         <div class="logo">Life--Center</div>
         <nav>
             <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="hamburger">☰</label>
+            <label for="menu-toggle" class="hamburger" aria-label="Toggle navigation menu">☰</label>
             <ul>
                 <li><a href="https://nguyenydakhoa.netlify.app/">Giải trí</a></li>
                 <li><a href="#">Bảo mật</a></li>
@@ -261,14 +272,13 @@
         </nav>
     </header>
     <div class="main-content">
-        <h1>- Thông tin =O= Âm Dương - 
-        <br>+ Bảng thông tin và Nhiệm vụ +
-        </h1>
+        <h1>Thông tin Âm Dương</h1>
+        <p>Bảng thông tin và nhiệm vụ</p>
         <div id="poster-container" class="poster-container"></div>
-        <a href="index.html" class="view-list">Home</a>
+        <a href="/" class="view-list">Home</a>
     </div>
     <script>
-        // Danh sách file .txt và ảnh poster (chỉ dùng raw GitHub)
+        // Danh sách file .txt và ảnh poster
         const posterFiles = [
             { 
                 poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg', 
@@ -288,32 +298,29 @@
             }
         ];
 
-        // Hàm tải danh sách poster với giới hạn request
+        // Hàm tải danh sách poster
         async function loadPosters() {
             const container = document.getElementById('poster-container');
             const limit = 2; // Giới hạn 2 request cùng lúc
             const queue = posterFiles.slice();
-            const fallbackImage = 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg'; // Fallback là Poster 1.jpg
+            const fallbackImage = 'https://via.placeholder.com/300x200?text=Poster+Error';
 
             while (queue.length) {
                 const batch = queue.splice(0, limit);
                 await Promise.all(batch.map(async ({ poster, file }, index) => {
                     try {
                         const response = await fetch(file);
-                        if (!response.ok) throw new Error('File không tồn tại.');
+                        if (!response.ok) throw new Error(`File không tồn tại: ${response.status}`);
                         const data = await response.text();
                         const [meta] = data.split('---');
                         const metaLines = meta.trim().split('\n');
-                        const posterIndex = metaLines[0].replace('posterIndex: ', '') || `Poster ${index + 1}`;
-                        const posterImage = metaLines[1].replace('posterImage: ', '');
+                        const posterIndex = metaLines[0]?.replace('posterIndex: ', '') || `Poster ${index + 1}`;
+                        const posterImage = metaLines[1]?.replace('posterImage: ', '') || poster;
 
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="${posterImage}" 
-                                 alt="${posterIndex}" 
-                                 loading="lazy" 
-                                 onerror="this.src='${fallbackImage}'">
+                            <img src="${posterImage}" alt="${posterIndex}" loading="lazy" onerror="this.src='${fallbackImage}'">
                             <div class="poster-content">
                                 <h3>${posterIndex}</h3>
                                 <p>Xem các bài viết !!</p>
@@ -328,13 +335,10 @@
                         const posterDiv = document.createElement('div');
                         posterDiv.className = 'poster';
                         posterDiv.innerHTML = `
-                            <img src="${poster}" 
-                                 alt="Poster ${index + 1}" 
-                                 loading="lazy" 
-                                 onerror="this.src='${fallbackImage}'">
+                            <img src="${poster}" alt="Poster ${index + 1}" loading="lazy" onerror="this.src='${fallbackImage}'">
                             <div class="poster-content">
                                 <h3>Poster ${index + 1}</h3>
-                                <p>Xem các bài viết !!</p>
+                                <p>Lỗi tải nội dung.</p>
                             </div>
                         `;
                         posterDiv.onclick = () => {
@@ -346,24 +350,8 @@
             }
         }
 
-        // Lazy loading fallback cho trình duyệt cũ
-        document.querySelectorAll('img').forEach(img => {
-            if ('loading' in HTMLImageElement.prototype) return;
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        img.src = img.dataset.src;
-                        obs.unobserve(img);
-                    }
-                });
-            });
-            img.dataset.src = img.src;
-            img.src = '';
-            observer.observe(img);
-        });
-
         // Hamburger menu toggle
-        document.getElementById('menu-toggle').addEventListener('change', function() {
+        document.getElementById('menu-toggle').addEventListener('change', function () {
             const menu = document.querySelector('header nav ul');
             menu.classList.toggle('active', this.checked);
         });
