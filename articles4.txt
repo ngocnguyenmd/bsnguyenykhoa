@@ -4,6 +4,6 @@ posterImage: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/h
 title: Nhiệm vụ 
 summary: chưa có thông tin 
 image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
-displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
+displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
 ---
 Tác giả : Hội đồng giải quyết [Nội bộ]
