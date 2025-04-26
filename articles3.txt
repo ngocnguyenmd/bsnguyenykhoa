@@ -1,9 +1,0 @@
-posterIndex: VIP-Gia tộc-Quyền lực
-posterImage: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
----
-title: Học viện hoàng gia
-summary: chưa có thông tin 
-image: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg
-displayAtPoster: https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg
----
-Tác giả : Thảo [PhD][Học viện 01]
