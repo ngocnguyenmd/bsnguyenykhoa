@@ -3,361 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Thông tin</title>
+    <title>Lifeshell-center</title>
     <style>
-        :root {
-            --primary-color: #41372e; /* Vàng nhạt, tươi sáng */
-            --text-color: #3a3939; /* Đen nhẹ, dễ đọc */
-            --background-light: #707a88; /* Xám trắng nhạt */
-            --card-background: #d3cbcb; /* Trắng cho poster */
-            --accent-color: #263a4e; /* Xanh dương nhạt */
-            --shadow-color: rgba(70, 68, 68, 0.1); /* Bóng mờ nhẹ */
-            --header-background: #48617e; /* Xám nhạt cho header */
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-color);
-            line-height: 1.7;
-            font-size: 16px;
+            background: #d1cbcb;
+            color: #333;
         }
-
         header {
-            background-color: var(--header-background);
-            padding: 1rem 1.5rem;
-            position: fixed;
+            background: linear-gradient(135deg, #596785, #2f4666);
+            color: #e0cf35;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            width: 100%;
-            z-index: 1000;
+            z-index: 100;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px var(--shadow-color);
         }
-
-        header .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: 1px;
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
         }
-
-        header nav ul {
+        nav ul {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
-
-        header nav ul li a {
-            color: var(--primary-color);
+        nav a {
+            color: #98ccdb;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s;
         }
-
-        header nav ul li a:hover {
-            color: var(--accent-color);
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
-
-        .hamburger {
-            display: none;
-            font-size: 1.8rem;
-            color: var(--text-color);
-            cursor: pointer;
-        }
-
-        #menu-toggle {
-            display: none;
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 5rem auto 2rem;
-            padding: 1.5rem;
-        }
-
-        h1 {
-            color: var(--text-color);
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .main-content p {
-            text-align: center;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            opacity: 0.85;
-        }
-
         .poster-container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            padding: 0 0.5rem;
         }
-
         .poster {
-            background-color: var(--card-background);
-            border-radius: 12px;
+            background: #d4cdcd;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 6px 12px var(--shadow-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            height: 360px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .poster:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px var(--shadow-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
         }
-
         .poster img {
             width: 100%;
-            height: 180px;
+            height: 120px;
             object-fit: cover;
-            object-position: center;
         }
-
-        .poster-content {
-            padding: 1rem;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-        }
-
-        .poster-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .poster-content p {
-            color: var(--text-color);
-            font-size: 0.9rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            opacity: 0.85;
-        }
-
-        .view-list {
-            display: block;
-            text-align: center;
-            margin-top: 2rem;
-            color: var(--primary-color);
-            text-decoration: none;
+        .poster h3 {
+            padding: 0.8rem;
             font-size: 1rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            color: #2d3748;
+            text-align: center;
+            line-height: 1.2;
         }
-
-        .view-list:hover {
-            color: var(--accent-color);
-        }
-
-        @media (max-width: 1024px) {
-            .poster-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            header nav ul {
-                display: none;
+        @media (max-width: 600px) {
+            .header-container {
                 flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background-color: var(--header-background);
-                padding: 1.5rem;
-                box-shadow: 0 4px 8px var(--shadow-color);
+                gap: 0.5rem;
             }
-
-            header nav ul.active {
-                display: flex;
+            header h1 {
+                font-size: 1.2rem;
             }
-
-            .hamburger {
-                display: block;
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
             }
-
-            .main-content {
-                margin-top: 4rem;
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            .poster-container {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-                gap: 1rem;
-            }
-
-            .poster {
-                height: 240px;
-            }
-
-            .poster img {
-                height: 120px;
-            }
-
-            .poster-content h3 {
-                font-size: 1rem;
-            }
-
-            .poster-content p {
+            nav a {
                 font-size: 0.8rem;
-                -webkit-line-clamp: 2;
+                padding: 0.4rem 0.8rem;
             }
-        }
-
-        @media (max-width: 480px) {
             .poster-container {
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
                 gap: 0.8rem;
+                margin: 1rem auto;
             }
-
-            .poster {
-                height: 220px;
-            }
-
             .poster img {
                 height: 100px;
             }
-
-            .main-content {
-                padding: 0.8rem;
+            .poster h3 {
+                font-size: 0.9rem;
+                padding: 0.6rem;
+            }
+        }
+        @media (max-width: 400px) {
+            .poster-container {
+                grid-template-columns: 1fr;
+            }
+            .poster img {
+                height: 150px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">Life--Center</div>
-        <nav>
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="hamburger" aria-label="Toggle navigation menu">☰</label>
-            <ul>
-                <li><a href="https://nguyenydakhoa.netlify.app/">Giải trí</a></li>
-                <li><a href="#">Bảo mật</a></li>
-                <li><a href="#">Nội bộ</a></li>
-                <li><a href="#">Góp ý</a></li>
-            </ul>
-        </nav>
+        <div class="header-container">
+            <h1>*Lifeshell*</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="https://nguyenydakhoa.netlify.app">Giải Trí</a></li>
+                    <li><a href="noibo.html">Nội Bộ</a></li>
+                    <li><a href="baomat.html">Bảo Mật</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <div class="main-content">
-        <h1>Thông tin Âm Dương</h1>
-        <p>Bảng thông tin và nhiệm vụ</p>
-        <div id="poster-container" class="poster-container"></div>
-        <a href="/" class="view-list">Home</a>
+    <div class="poster-container">
+        <div class="poster" onclick="goToList(1)">
+            <img src="poster1.jpg" alt="Poster 1">
+            <h3>Giới thiệu</h3>
+        </div>
+        <div class="poster" onclick="goToList(2)">
+            <img src="poster2.jpg" alt="Poster 2">
+            <h3>Cho mọi người [Free]</h3>
+        </div>
+        <div class="poster" onclick="goToList(3)">
+            <img src="poster3.jpg" alt="Poster 3">
+            <h3>VIP +</h3>
+        </div>
+        <div class="poster" onclick="goToList(4)">
+            <img src="poster4.jpg" alt="Poster 4">
+            <h3>Các bậc +</h3>
+        </div>
+        <div class="poster" onclick="goToList(5)">
+            <img src="poster5.jpg" alt="Poster 5">
+            <h3>[Nội bộ]</h3>
+        </div>
+        <div class="poster" onclick="goToList(6)">
+            <img src="poster6.jpg" alt="Poster 6">
+            <h3>Quyền lực+</h3>
+        </div>
     </div>
     <script>
-        // Danh sách file .txt và ảnh poster
-        const posterFiles = [
-            { 
-                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%201.jpg', 
-                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles.txt' 
-            },
-            { 
-                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%202.jpg', 
-                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles2.txt' 
-            },
-            { 
-                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%203.jpg', 
-                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles3.txt' 
-            },
-            { 
-                poster: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/Poster%204.jpg', 
-                file: 'https://raw.githubusercontent.com/ngocnguyenmd/bsnguyenykhoa/refs/heads/main/articles4.txt' 
-            }
-        ];
-
-        // Hàm tải danh sách poster
-        async function loadPosters() {
-            const container = document.getElementById('poster-container');
-            const limit = 2; // Giới hạn 2 request cùng lúc
-            const queue = posterFiles.slice();
-            const fallbackImage = 'https://via.placeholder.com/300x200?text=Poster+Error';
-
-            while (queue.length) {
-                const batch = queue.splice(0, limit);
-                await Promise.all(batch.map(async ({ poster, file }, index) => {
-                    try {
-                        const response = await fetch(file);
-                        if (!response.ok) throw new Error(`File không tồn tại: ${response.status}`);
-                        const data = await response.text();
-                        const [meta] = data.split('---');
-                        const metaLines = meta.trim().split('\n');
-                        const posterIndex = metaLines[0]?.replace('posterIndex: ', '') || `Poster ${index + 1}`;
-                        const posterImage = metaLines[1]?.replace('posterImage: ', '') || poster;
-
-                        const posterDiv = document.createElement('div');
-                        posterDiv.className = 'poster';
-                        posterDiv.innerHTML = `
-                            <img src="${posterImage}" alt="${posterIndex}" loading="lazy" onerror="this.src='${fallbackImage}'">
-                            <div class="poster-content">
-                                <h3>${posterIndex}</h3>
-                                <p>Xem các bài viết !!</p>
-                            </div>
-                        `;
-                        posterDiv.onclick = () => {
-                            window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
-                        };
-                        container.appendChild(posterDiv);
-                    } catch (error) {
-                        console.error(`Lỗi khi tải file ${file}:`, error);
-                        const posterDiv = document.createElement('div');
-                        posterDiv.className = 'poster';
-                        posterDiv.innerHTML = `
-                            <img src="${poster}" alt="Poster ${index + 1}" loading="lazy" onerror="this.src='${fallbackImage}'">
-                            <div class="poster-content">
-                                <h3>Poster ${index + 1}</h3>
-                                <p>Lỗi tải nội dung.</p>
-                            </div>
-                        `;
-                        posterDiv.onclick = () => {
-                            window.location.href = `list.html?poster=${encodeURIComponent(poster)}`;
-                        };
-                        container.appendChild(posterDiv);
-                    }
-                }));
-            }
+        function goToList(posterId) {
+            window.location.href = `list.html?poster=${posterId}`;
         }
-
-        // Hamburger menu toggle
-        document.getElementById('menu-toggle').addEventListener('change', function () {
-            const menu = document.querySelector('header nav ul');
-            menu.classList.toggle('active', this.checked);
-        });
-
-        // Gọi hàm tải poster
-        loadPosters();
     </script>
 </body>
 </html>

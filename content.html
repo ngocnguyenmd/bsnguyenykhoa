@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nội Dung Bài Viết</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .content-container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 0.5rem;
+        }
+        .content {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #2d3748;
+        }
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .content p {
+            margin-bottom: 1rem;
+            white-space: pre-wrap;
+        }
+        .back-button {
+            display: block;
+            margin: 2rem auto;
+            padding: 0.8rem 1.5rem;
+            background: #6b7280;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            text-align: center;
+            width: fit-content;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .back-button:hover {
+            background: #4b5563;
+            transform: scale(1.05);
+        }
+        @media (max-width: 600px) {
+            .header-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            header h1 {
+                font-size: 1.2rem;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+            .content-container {
+                margin: 1rem auto;
+            }
+            .content {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+            .content img {
+                margin-bottom: 0.8rem;
+            }
+            .back-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Nội Dung Bài Viết</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="giaitri.html">Giải Trí</a></li>
+                    <li><a href="noibo.html">Nội Bộ</a></li>
+                    <li><a href="baomat.html">Bảo Mật</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="content-container">
+        <div class="content" id="articleContent"></div>
+    </div>
+    <a href="index.html" class="back-button">Quay lại Trang Chủ</a>
+    <script>
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const title = decodeURIComponent(urlParams.get('title') || '');
+
+            console.log('Title:', title); // Debug
+
+            if (!title) {
+                document.getElementById('articleContent').textContent = 'Không tìm thấy tiêu đề bài viết.';
+                return;
+            }
+
+            fetch('articles.txt')
+                .then(response => {
+                    if (!response.ok) throw new Error('Không tìm thấy articles.txt');
+                    return response.text();
+                })
+                .then(data => {
+                    const articles = data.trim().split('\n').filter(line => line.trim() !== '');
+                    console.log('articles.txt data:', articles); // Debug
+                    const articleExists = articles.some(article => article.split('|')[1] === title);
+                    if (!articleExists) {
+                        document.getElementById('articleContent').textContent = 'Không tìm thấy bài viết trong articles.txt.';
+                        return;
+                    }
+                    loadContent();
+                })
+                .catch(error => {
+                    console.error('Lỗi tải articles.txt:', error);
+                    document.getElementById('articleContent').innerHTML = '<p>Lỗi khi tải bài viết.</p>';
+                });
+
+            function loadContent() {
+                fetch('45.txt')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Không tìm thấy 45.txt');
+                        return response.text();
+                    })
+                    .then(data => {
+                        const articles = data.trim().split('==').filter(line => line.trim() !== '');
+                        console.log('45.txt data:', articles); // Debug
+                        const contentDiv = document.getElementById('articleContent');
+
+                        const matchingArticle = articles.find(article => {
+                            const parts = article.split('|');
+                            return parts[1] === title;
+                        });
+
+                        if (matchingArticle) {
+                            const parts = matchingArticle.split('|');
+                            console.log('Matching article parts:', parts); // Debug
+                            const posterId = parts[0] || '';
+                            const articleTitle = parts[1] || '';
+                            const image = parts[2] || '';
+                            const content = parts[3] || '';
+                            let html = '';
+                            if (image) {
+                                html += `<img src="${image}" alt="${articleTitle}">`;
+                            }
+                            html += `<p>${content.trim()}</p>`;
+                            contentDiv.innerHTML = html;
+                        } else {
+                            contentDiv.textContent = 'Không tìm thấy nội dung bài viết trong 45.txt.';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi tải 45.txt:', error);
+                        document.getElementById('articleContent').innerHTML = '<p>Lỗi khi tải nội dung bài viết. Kiểm tra file 45.txt.</p>';
+                    });
+            }
+        })();
+    </script>
+</body>
+</html>
