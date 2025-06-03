@@ -15,6 +15,9 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 ==
 2|Tin tức mới||[Tất cả đã ký thông qua]
+- xử lí lượng mưa nhiễu loạn thành 0,3f' 
+- Đã ký bỏ khu 01 làm khu nhà ở tạm cho người vô gia cư 
+- Đã điều chỉnh nhiệt cho miền bắc và (Iceland)
 - Tặng lượng f' cho châu á và giải quyết AOL cho 3 tháng tới 
 - [Đã ký Robot Davinci xi] Áp dụng và thông qua !?
 - Thông qua phát quà dịp lễ và tưởng niệm người có công và hiến tạng tại bảo tàng LIO
