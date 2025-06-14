@@ -27,10 +27,11 @@ Tuyển dụng nhân sự
 - Bệnh viện vẫn hoạt động bình thường từ 10/6/2025 
 - xử lí lượng mưa nhiễu loạn thành 0,3f' 
 - Đã ký bỏ khu 01 làm khu nhà ở tạm cho người vô gia cư 
-- Đã điều chỉnh nhiệt cho miền bắc và (Iceland)
+- Đã điều chỉnh nhiệt cho miền bắc và (Iceland)
 - Tăng lượng mưa 0,8(!) sữa đổi 0,7mhf' 
 - Biến cố tăng 10% bù trừ 27% 
-- Các loại /Rủi ro / may mắn : loại bỏ với -10 ! 
+- Các loại /Rủi ro / may mắn : loại bỏ với -10 !
+
 * Tác giả : Quản lý khu A [Lion đã tổng duyệt và thông qua] 6h55' 9/6/2025
 ==
 2|Danh sách giải quyết cho vong mới (vietnam)||
@@ -41,12 +42,12 @@ Tuyển dụng nhân sự
 - Nguyễn hà phương trâm 2000 (chưa duyệt)
 * Tác giả : Tổng quản ngục - Phòng giam 01[quản lý hyun]
 ==
-2|Lễ vu lan||01
-- Chuẩn bị thư mời ! 
+2|Lễ Vu Lan||
+- Chuẩn bị thư mời ! Coming soon
 * Tác giả : quỳnh
 ==
 3|Học viện hoàng gia||
-- Giải quyết mất tích bất thường khu cấm [Đã an toàn]
+- Tiếp nhận 300.000 học viên trong tháng này 
 - Đã ký đuổi học viên Trương mã tường [7]
 * Tác giả : Thảo [PhD][Học viện 01][Khu nội trú]
 ==
