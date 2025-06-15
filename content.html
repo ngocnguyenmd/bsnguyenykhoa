@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nội Dung Bài Viết</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,15 +12,15 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #d1cbcb;
-            color: #333;
+            font-family: 'Playfair Display', serif;
+            background: #e6d5b8;
+            color: #2d1b08;
         }
         header {
-            background: linear-gradient(135deg, #596785, #2f4666);
-            color: #e0cf35;
+            background: linear-gradient(135deg, #4a3728, #2b1e12);
+            color: #d4a017;
             padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -32,8 +33,10 @@
             align-items: center;
         }
         header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         nav ul {
             list-style: none;
@@ -41,16 +44,18 @@
             gap: 1rem;
         }
         nav a {
-            color: #98ccdb;
+            color: #e6c992;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
             font-weight: 500;
             padding: 0.5rem;
             border-radius: 4px;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
         }
         nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(212, 160, 23, 0.2);
+            color: #fff;
         }
         .content-container {
             max-width: 1200px;
@@ -58,13 +63,14 @@
             padding: 0 0.5rem;
         }
         .content {
-            background: #fcf1b6;
+            background: #f5e9c7;
             border-radius: 8px;
             padding: 1.5rem;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-            line-height: 1.6;
-            font-size: 1rem;
-            color: #2d3748;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #2d1b08;
+            border: 1px solid #d4a017;
         }
         .content img {
             max-width: 100%;
@@ -72,27 +78,32 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             display: block;
+            border: 2px solid #4a3728;
         }
         .content p {
             margin-bottom: 1rem;
             white-space: pre-wrap;
+            font-family: 'Playfair Display', serif;
         }
         .back-button {
             display: block;
             margin: 2rem auto;
             padding: 0.8rem 1.5rem;
-            background: #2f4666;
-            color: #fff;
+            background: #4a3728;
+            color: #e6c992;
             text-decoration: none;
+            font-family: 'Cinzel', serif;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 700;
             border-radius: 6px;
             text-align: center;
             width: fit-content;
             transition: background 0.3s, transform 0.3s;
+            border: 1px solid #d4a017;
         }
         .back-button:hover {
-            background: #2f4666;
+            background: #2b1e12;
+            color: #fff;
             transform: scale(1.05);
         }
         @media (max-width: 600px) {
@@ -101,7 +112,7 @@
                 gap: 0.5rem;
             }
             header h1 {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             nav ul {
                 flex-wrap: wrap;
@@ -109,7 +120,7 @@
                 gap: 0.5rem;
             }
             nav a {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 padding: 0.4rem 0.8rem;
             }
             .content-container {
@@ -117,7 +128,7 @@
             }
             .content {
                 padding: 1rem;
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
             .content img {
                 margin-bottom: 0.8rem;
@@ -152,8 +163,6 @@
             const urlParams = new URLSearchParams(window.location.search);
             const title = decodeURIComponent(urlParams.get('title') || '');
 
-            console.log('Title:', title); // Debug
-
             if (!title) {
                 document.getElementById('articleContent').textContent = 'Không tìm thấy tiêu đề bài viết.';
                 return;
@@ -166,7 +175,6 @@
                 })
                 .then(data => {
                     const articles = data.trim().split('\n').filter(line => line.trim() !== '');
-                    console.log('articles.txt data:', articles); // Debug
                     const articleExists = articles.some(article => article.split('|')[1] === title);
                     if (!articleExists) {
                         document.getElementById('articleContent').textContent = 'Không tìm thấy bài viết trong articles.txt.';
@@ -174,8 +182,7 @@
                     }
                     loadContent();
                 })
-                .catch(error => {
-                    console.error('Lỗi tải articles.txt:', error);
+                .catch(() => {
                     document.getElementById('articleContent').innerHTML = '<p>Lỗi khi tải bài viết.</p>';
                 });
 
@@ -187,7 +194,6 @@
                     })
                     .then(data => {
                         const articles = data.trim().split('==').filter(line => line.trim() !== '');
-                        console.log('45.txt data:', articles); // Debug
                         const contentDiv = document.getElementById('articleContent');
 
                         const matchingArticle = articles.find(article => {
@@ -197,7 +203,6 @@
 
                         if (matchingArticle) {
                             const parts = matchingArticle.split('|');
-                            console.log('Matching article parts:', parts); // Debug
                             const posterId = parts[0] || '';
                             const articleTitle = parts[1] || '';
                             const image = parts[2] || '';
@@ -212,8 +217,7 @@
                             contentDiv.textContent = 'Không tìm thấy nội dung bài viết trong 45.txt.';
                         }
                     })
-                    .catch(error => {
-                        console.error('Lỗi tải 45.txt:', error);
+                    .catch(() => {
                         document.getElementById('articleContent').innerHTML = '<p>Lỗi khi tải nội dung bài viết. Kiểm tra file 45.txt.</p>';
                     });
             }

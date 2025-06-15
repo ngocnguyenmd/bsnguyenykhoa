@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,15 +12,15 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #d1cbcb;
-            color: #333;
+            font-family: 'Playfair Display', serif;
+            background: #e6d5b8;
+            color: #2d1b08;
         }
         header {
-            background: linear-gradient(135deg, #596785, #2f4666);
-            color: #e0cf35;
+            background: linear-gradient(135deg, #4a3728, #2b1e12);
+            color: #d4a017;
             padding: 1rem;
-            box-shadow: 0 2px 4px rgba(124, 97, 97, 0.4);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -32,8 +33,10 @@
             align-items: center;
         }
         header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         nav ul {
             list-style: none;
@@ -41,16 +44,18 @@
             gap: 1rem;
         }
         nav a {
-            color: #98ccdb;
+            color: #e6c992;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
             font-weight: 500;
             padding: 0.5rem;
             border-radius: 4px;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
         }
         nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(212, 160, 23, 0.2);
+            color: #fff;
         }
         .list-container {
             max-width: 1200px;
@@ -58,39 +63,44 @@
             padding: 0 0.5rem;
         }
         .article {
-            background: #fcf7da;
+            background: #f5e9c7;
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #d4a017;
         }
         .article:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
         }
         .article h3 {
+            font-family: 'Cinzel', serif;
             font-size: 1.1rem;
-            color: #2d3748;
+            color: #2d1b08;
             margin-bottom: 0.5rem;
         }
         .back-button {
             display: block;
             margin: 2rem auto;
             padding: 0.8rem 1.5rem;
-            background: #2f4666;
-            color: #fff;
+            background: #4a3728;
+            color: #e6c992;
             text-decoration: none;
+            font-family: 'Cinzel', serif;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 700;
             border-radius: 6px;
             text-align: center;
             width: fit-content;
             transition: background 0.3s, transform 0.3s;
+            border: 1px solid #d4a017;
         }
         .back-button:hover {
-            background: #2f4666;
+            background: #2b1e12;
+            color: #fff;
             transform: scale(1.05);
         }
         .password-prompt {
@@ -99,35 +109,45 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #fff;
+            background: #f5e9c7;
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             z-index: 200;
             text-align: center;
+            border: 1px solid #d4a017;
+        }
+        .password-prompt h3 {
+            font-family: 'Cinzel', serif;
+            color: #2d1b08;
+            margin-bottom: 1rem;
         }
         .password-prompt input {
             padding: 0.5rem;
             margin: 0.5rem 0;
             width: 100%;
-            border: 1px solid #ccc;
+            border: 1px solid #4a3728;
             border-radius: 4px;
+            font-family: 'Playfair Display', serif;
         }
         .password-prompt button {
             padding: 0.5rem 1rem;
-            background: #6b7280;
-            color: #fff;
+            background: #4a3728;
+            color: #e6c992;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             transition: background 0.3s;
+            font-family: 'Cinzel', serif;
         }
         .password-prompt button:hover {
-            background: #4b5563;
+            background: #2b1e12;
+            color: #fff;
         }
         .password-prompt p {
             color: #dc2626;
             margin-top: 0.5rem;
+            font-family: 'Playfair Display', serif;
         }
         @media (max-width: 600px) {
             .header-container {
@@ -135,7 +155,7 @@
                 gap: 0.5rem;
             }
             header h1 {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             nav ul {
                 flex-wrap: wrap;
@@ -143,7 +163,7 @@
                 gap: 0.5rem;
             }
             nav a {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 padding: 0.4rem 0.8rem;
             }
             .list-container {
@@ -223,8 +243,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const posterId = urlParams.get('poster');
 
-        console.log('Poster ID:', posterId); // Debug
-
         fetch('articles.txt')
             .then(response => {
                 if (!response.ok) throw new Error('Không tìm thấy articles.txt');
@@ -232,11 +250,9 @@
             })
             .then(data => {
                 articlesData = data.trim().split('\n').filter(line => line.trim() !== '');
-                console.log('Articles data:', articlesData); // Debug
                 displayArticles();
             })
             .catch(error => {
-                console.error('Lỗi:', error);
                 document.getElementById('articleList').innerHTML = '<p>Lỗi khi tải danh sách bài viết.</p>';
             });
 
@@ -248,14 +264,14 @@
                 const id = parts[0];
                 const title = parts[1] || '';
                 const password = parts.length > 2 ? parts[2].trim() : '';
-                console.log(`Article: id=${id}, title=${title}, password=${password ? '***' : 'none'}`); // Debug
                 if (id === posterId) {
                     const div = document.createElement('div');
                     div.className = 'article';
                     div.innerHTML = `<h3>${title}</h3>`;
+                    div.dataset.password = password; // Lưu mật khẩu trong data attribute
                     div.onclick = () => {
-                        if (password.trim() !== '') {
-                            showPasswordPrompt(password, () => {
+                        if (div.dataset.password) {
+                            showPasswordPrompt(div.dataset.password, () => {
                                 window.location.href = `content.html?title=${encodeURIComponent(title)}`;
                             });
                         } else {
