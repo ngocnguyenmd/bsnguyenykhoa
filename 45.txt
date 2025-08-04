@@ -15,19 +15,7 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
-- thông qua đặc biệt ngẫu nhiên 31/7 67 58 29 83...
-- thông qua đặc biệt ngẫu nhiên 30/7 718 72 98 48 78...
-- khóa khu sinh học bảo trì !
-- điều chỉnh giảm tỉ lệ đậu thai khó giảm 25% - 78% ! 
-- thông qua đặc biệt ngẫu nhiên 29/7 04 09 29 34 35 39 32 834 149
-- thông qua đặc biệt ngẫu nhiên 28/7 25 68 95 97 32 72 94 459 259 579 958 658
-- thông qua đặc biệt ngẫu nhiên 25/7 98 365 640 06 70 79 946 48 20 36 
-- thông qua đặc biệt ngẫu nhiên 24/7 69 98 60 59 24 26 86 84
-- thông qua đặc biệt ngẫu nhiên 23/7 81 16 56 93 36 83 85 49 96 46 84
-- thông qua đặc biệt ngẫu nhiên 22/7 940 39 419 41 49 01 45 47 31 79 19 34 92 24
-- thông qua đặc biệt ngẫu nhiên 21/7 31 91 391 312 79 02 57 15 67 83 42 99
-- thông qua đặc biệt ngẫu nhiên 20/7 64 964 064 45 65 29 42 85 94 62 86 89
-- thông qua đặc biệt ngẫu nhiên 19/7 367 66 645 47 65 62 86 687 32 38 93 641 64 746 287
+- 
 - 1h chiều họp ký kết bệnh viện mới !
 - Tạm nhận đơn Hoàng bảo Ngọc (lion chưa ký)
 - đã giải quyết mất tích tàu KADOT 01 trạm 01 bảng vàng 1597 (chờ ký) 
@@ -40,13 +28,6 @@ Tuyển dụng nhân sự
 - đã ký giao diện mới hệ thống thủy lực máy nén khí !
 - khuyến khích dùng thủy lực bảo vệ tài nguyên! hạn chế vùng đỏ và cam !
 - biến đổi mạnh thị trường nhắm tới nông nghiệp! 
-- thông qua đặc biệt ngẫu nhiên 18/7 056 659 55 50 66 61 60 10 28 96 68 win
-- thông qua đặc biệt ngẫu nhiên 17/7 13 32 39 63 30 69 344 430 win 
-- thông qua đặc biệt ngẫu nhiên 16/7 647 644 749 04 94 79 43 32 37 87 84 67 64
-- thông qua đặc biệt ngẫu nhiên 15/7 65 75 15 51 96 57 11 81 lose part
-- thông qua đặc biệt ngẫu nhiên 14/7 17 71 27 49 42 97 407 62 56 win part 
-- thông qua đặc biệt ngẫu nhiên 13/3 97 57 59 78 98 70 17 65 36 68 10 3 : 979 579 23 48 win part 
-- thông qua đặc biệt ngẫu nhiên 12/7 15 51 55 95 52 79 27 45 515: 99 92 6 win 
 - bãi bỏ nhang thắp 3 thắp 2 điều chỉnh theo luật hương
 - dự kiến quản lý sân bay mới theo chỉ định lion (luật 27)
 - khu A tạm thời thu phí thông hành đối với xe bảng vàng đỏ (10k!)
@@ -59,10 +40,6 @@ Tuyển dụng nhân sự
 - đã fix nội trú lifeshell  !
 - thông qua đặc biệt 10/8 086 86 27 71 76 91 96...
 - dạ chúc bà và ông may mắn nghen : nguyệt, hân, tám, duy,... chỉ áp dụng 1 lần thôi cho những người giúp người nhà mình ! 
-- thông qua đặc biệt ngẫu nhiên 8/8 316 646 025 257 930 634 316: 95 536: 431
-- thông qua đặc biệt ngẫu nhiên 7/7 349 42 834/43 658 347 842 942 64 84 54 35 win part 
-- thông qua đặc biệt ngẫu nhiên 6/7 07 97 20 49 96 78 207 490: win
-- thông qua đặc biệt ngẫu nhiên 5/7 85 81 68 19 95 75 575 181 lose
 - điều chỉnh khu mới AOTS làm phòng lab đạt chuẩn giá dự kiến 27 tỷ 234
 - sữa đổi luật mới OA75 (chủ yếu thay đổi nhẹ về khía cạnh nhìn nhận tâm linh học thần học và chủ nghĩa duy vật duy tâm)
 - Các khu D giá đất dự kiến 350 071 cảm ơn !
@@ -72,28 +49,13 @@ Tuyển dụng nhân sự
 - những bạn vừa chuyển tới học viện (lấy sữa và vật phẩm) chỉ lấy 1 lần ! 
 - đã giữ quang mạnh (chờ ký) 
 - đã fix khu nội ô center khởi lập dự án tàu điện và cổng thời gian dịch qua khu A và B và sân bay mới !!
-- đã fix giá xă chạm đáy điều chỉnh tập đoàn gas !
-- thông qua đặc biệt ngẫu nhiên 4/7 99 04 23 35 75 47 41 72 74 58 874 514 458 win pạrt
-- thông qua đặc biệt ngẫu nhiên 3/7 74 76 96 86 89 52 25 65 92 952 182153 159885 759894... win
-- thông qua đặc biệt ngấu nhiên 2/7 45 05 95 25 50 59 512 612 935 945694... lose
-- thông qua đặc biệt ngấu nhiên 1/7 919783 819782 82 83 23 32 85 237 231 tỉ lệ tăng 30 nhỉn 10 rồi ạ ! chúc may mắn win !
-- thông qua đặc biệt ngẫu nhiên 30/6 051132 051134 963523 334 84 463523 532 235 92 24 94 28 18 78 :32:34:82: win
-- thông qua đặc biệt ngẫu nhiên 29/6 18 80 61 89 72 46 82 48 79 24 10 ngẫu nhiên mọi tỉ lệ đều 20% ! :09:16 win
-- thông qua đặc biệt 28/6 ngẫu nhiên 156421 :392851: 954227 176 166 521 21 57 21 50 52 :21:51:lose
+- đã fix giá xă chạm đáy điều chỉnh tập đoàn gas 
 - hoa hồng trắng đã xóa lấy cảm hứng mới từ việc dùng dâu tây để buff thể hồn cầu thuật
 - dự kiến 30 ngày chạy lại ổn định trung tâm mới lấy tên Sim to real và KONLS 
 - xóa bỏ thuật về tiền bạc !
 - đã ký kết bảo vệ thân chủ 0701 thêm 2 năm [đã được ký]
 - thông qua ký kết chạy lại dự án sim to real :30:
-- trở lại thảm họa mặc định và vấn đề các cây cầu và ngập nước 
-- thông qua đặc biệt 27/6 ngẫu nhiên 11 71 72 27 :400:win
-- thông qua đặc biệt 26/6 ngẫu nhiên 90 35 309 19 win 
-- thông qua đặc biệt 25/6 ngẫu nhiên 79 57 59 53 !win 
-- chúc mừng khởi chạy lại sàn giao dịch chứng khoán! 
-- thông qua đặc biệt 24/6 ngẫu nhiên 28 30 31 29 55 58 ! win
-- thông qua đặc biệt 23/6 ngẫu nhiên 91 96 lây đầu 359 596.. ký 20% thôi ạ ! win
-- thông qua đặc biệt 22/6 28 84 48 86 lấy đầu 831 939...đính kèm trên thông báo điện tử !lose
-- thông qua đặc biệt 21/6 23 22 21 12 lấy đầu 912 901 áp dụng ảnh hưởng 20% cho địa cầu chạy ngẫu nhiên các số đã ký win
+- trở lại thảm họa mặc định và vấn đề các cây cầu và ngập nước 
 - chưa thể thông qua các lối đi tự do !
 - báo điện tử tại trạm bến tàu A8 đã fix 
 - nội vụ : hành quyết phe đối lập 18/6 
