@@ -15,6 +15,7 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
+- Đã thông qua áo mới du hoan đà dùng cho qua cổng 1 khu tiếp nhận người mới 0023287
 - đã ký lấy 35.5 khoảng 1 bảo tàng đặt đá mới làm bảng thiên mệnh cấp tộc LS
 - thông qua danh sách xác nhận tiếp tục học tại học viện 
 - đã xử lý đơn nghĩ phép cho ông phước 2 ngày ! 
@@ -66,11 +67,16 @@ Tuyển dụng nhân sự
 - xóa bỏ thuật về tiền bạc !
 - đã ký kết bảo vệ thân chủ 0701 thêm 2 năm [đã được ký]
 - thông qua ký kết chạy lại dự án sim to real :30:
-- trở lại thảm họa mặc định và vấn đề các cây cầu và ngập nước 
+- trở lại thảm họa mặc định và vấn đề các cây cầu và ngập nước 
+
+
+
 - chưa thể thông qua các lối đi tự do !
-- báo điện tử tại trạm bến tàu A8 đã fix 
+- báo điện tử tại trạm bến tàu A8 đã fix 
+
 - nội vụ : hành quyết phe đối lập 18/6 
-- giải quyết nhà kho A là điểm trọng yếu trong chiến dịch Lab-eon 
+- giải quyết nhà kho A là điểm trọng yếu trong chiến dịch Lab-eon 
+
 * Tác giả : Quản lý hyun và phó chủ nhiệm khoa sản [Lion đã tổng duyệt và thông qua] 12h18' 11/7/2025
 ==
 2|Danh sách giải quyết cho vong mới (vietnam)||
@@ -101,3 +107,4 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
