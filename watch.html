@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xem Anime</title>
+  <style>
+/* ==============================
+   BODY & GLOBAL
+   ============================== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0a0a0a;
+  color: #eee;
+}
+
+/* ==============================
+   1. Player area
+   ============================== */
+#player-area {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  height: 60vh;
+  background: #000;
+  border: 2px solid #ff0000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(255,0,0,0.5);
+}
+
+/* ==============================
+   2. Tiêu đề phim
+   ============================== */
+.title-bar {
+  max-width: 900px;
+  margin: 10px auto 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ff0000;
+  padding: 12px 10px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  border: 1px solid #ff0000;
+  box-shadow: 0 2px 8px rgba(255,0,0,0.4);
+}
+
+/* ==============================
+   3. Grid tập phim
+   ============================== */
+.ep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 8px;
+  padding: 12px;
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.ep-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  border: 1px solid #ff0000;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(255,0,0,0.3);
+}
+
+.ep-btn:hover,
+.ep-btn.active {
+  background: #ff0000;
+  border-color: #ff5555;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,0,0,0.6);
+}
+
+/* ==============================
+   4. Thanh điều khiển
+   ============================== */
+.ctl-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px;
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.ctl-btn {
+  padding: 10px 18px;
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(255,0,0,0.5);
+}
+
+.ctl-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,0,0,0.7);
+}
+
+/* ==============================
+   5. Chọn server & mode
+   ============================== */
+.server-select, .mode-switch {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 10px auto;
+}
+
+.server-btn, .mode-btn {
+  padding: 8px 18px;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #ff0000;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.server-btn.active, .mode-btn.active,
+.server-btn:hover, .mode-btn:hover {
+  background: #ff0000;
+  border-color: #ff5555;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,0,0,0.5);
+}
+
+/* ==============================
+   6. Nút quay lại bên dưới
+   ============================== */
+.back-btn {
+  display: block;
+  max-width: 900px;
+  margin: 20px auto 40px;
+  padding: 12px 0;
+  background: #ff0000;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255,0,0,0.5);
+}
+
+.back-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,0,0,0.7);
+}
+
+/* ==============================
+   7. Toast
+   ============================== */
+#toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+  z-index: 9999;
+}
+
+/* ==============================
+   8. Responsive
+   ============================== */
+@media (max-width: 768px) {
+  .ep-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); }
+  .ep-btn { width: 40px; height: 40px; font-size: 13px; }
+  .ctl-btn, .server-btn, .mode-btn { padding: 8px 14px; font-size: 13px; }
+  .title-bar { font-size: 18px; padding: 10px; }
+  .back-btn { font-size: 15px; padding: 10px 0; }
+}
+
+@media (max-width: 480px) {
+  .ep-grid { grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 4px; }
+  .ep-btn { width: 35px; height: 35px; font-size: 12px; }
+  .ctl-btn, .server-btn, .mode-btn { padding: 6px 12px; font-size: 12px; }
+  .title-bar { font-size: 16px; }
+  .back-btn { font-size: 14px; padding: 8px 0; }
+}
+  </style>
+  </style>
+</head>
+<body>
+    <!-- 2. Tiêu đề phim và tập hiện tại -->
+  <div class="title-bar" id="title-bar">Tên Phim: Đang Tải... | Tập: 1</div>
+  <!-- 1. Khu vực phát video -->
+  <div id="player-area" style="width:100%;max-width:900px;margin:auto;height:60vh;background:#000"></div>
+
+  <!-- 3. Chọn server -->
+  <div class="server-select" id="server-select"></div>
+
+  <!-- 4. Chuyển mode (embed/m3u8) -->
+  <div class="mode-switch" id="mode-switch"></div>
+   <div class="ctl-bar">
+    <button class="ctl-btn" onclick="rew(-30)">⏪ 30s</button>
+    <button class="ctl-btn" onclick="prevEp()">Tập trước</button>
+    <button class="ctl-btn" onclick="nextEp()">Tập sau</button>
+    <button class="ctl-btn" onclick="rew(30)">30s ⏩</button>
+  </div>
+
+  <!-- 6. Grid tập phim -->
+  <div class="ep-grid" id="ep-grid"></div>
+
+  <!-- 7. Nút quay lại bên dưới grid -->
+  <a href="index.html" class="back-btn">Quay lại Trang Chủ</a>
+
+  <!-- 8. Toast thông báo -->
+  <div id="toast" style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 15px;border-radius:6px;font-size:14px;display:none;z-index:9999;">Toast</div>
+  <script>
+    // 15. Đọc slug & source từ query parameters
+    const p = new URLSearchParams(location.search);
+    const slug = p.get('slug');
+    const source = p.get('source');
+    const player = document.getElementById('player-area');
+    const grid = document.getElementById('ep-grid');
+    const serverSelect = document.getElementById('server-select');
+    const modeSwitch = document.getElementById('mode-switch');
+    const titleBar = document.getElementById('title-bar');
+    let servers = []; // Mảng lưu các server (cho Phimapi có nhiều server_name)
+    let currentServer = 0; // Chỉ số server hiện tại
+    let episodes = []; // Mảng lưu danh sách tập của server hiện tại
+    let current = -1; // Chỉ số tập hiện tại
+    let movieName = ''; // Tên phim từ API
+    let currentMode = 'm3u8'; // Mode mặc định: 'm3u8' hoặc 'embed'
+
+    // 16. Hàm chính để khởi tạo
+    async function main() {
+      if (!slug || !source) {
+        player.innerHTML = 'Thiếu slug/source';
+        showToast('Thiếu thông tin slug hoặc source!');
+        return;
+      }
+
+      // 17. Xây dựng URL API dựa trên source
+      let api = '';
+      if (source === 'Nguonc') api = `https://phim.nguonc.com/api/film/${slug}`;
+      if (source === 'Phimapi') api = `https://phimapi.com/phim/${slug}`;
+      if (source === 'Ophim') api = `https://ophim1.com/v1/api/phim/${slug}`;
+      try {
+        const response = await fetch(api);
+        if (!response.ok) throw new Error(`Lỗi từ ${source}: ${response.status}`);
+        const data = await response.json();
+
+        // 18. Lấy tên phim từ API
+        movieName = source === 'Nguonc' ? data.movie.name :
+                    source === 'Phimapi' ? data.movie.name :
+                    data.data.item.name || 'Không rõ tên phim';
+
+        // 19. Lấy danh sách tập phim từ API, tách theo server nếu có
+        if (source === 'Nguonc') {
+          // Nguonc: Chỉ một server, sử dụng episodes[0].items, chỉ embed
+          servers = [{ server_name: 'Vietsub #1', server_data: data.movie.episodes?.[0]?.items || [] }];
+        } else if (source === 'Phimapi') {
+          // Phimapi: Tách theo server_name, mỗi server có server_data riêng (không gộp)
+          servers = data.episodes || []; // Mỗi phần tử là một server với server_name và server_data
+        } else if (source === 'Ophim') {
+          // Ophim: Chỉ một server, sử dụng data.item.episodes[0].server_data
+          servers = [{ server_name: 'Vietsub #1', server_data: data.data.item.episodes?.[0]?.server_data || [] }];
+        }
+
+        if (servers.length === 0 || servers.every(s => s.server_data.length === 0)) {
+          player.innerHTML = 'Không có tập phim nào từ API';
+          showToast('Không tìm thấy danh sách tập phim từ API!');
+          return;
+        }
+
+        // 20. Hiển thị chọn server nếu có nhiều (hiển thị server_name)
+        renderServerSelect();
+        // Chọn server đầu tiên
+        switchServer(0);
+      } catch (error) {
+        console.error('Error:', error);
+        player.innerHTML = 'Lỗi tải dữ liệu từ API';
+        showToast('Lỗi tải danh sách tập phim từ API!');
+      }
+    }
+
+    // 21. Hàm hiển thị chọn server (sử dụng server_name từ API)
+    function renderServerSelect() {
+      serverSelect.innerHTML = '';
+      if (servers.length > 1) {
+        servers.forEach((s, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'server-btn';
+          btn.textContent = s.server_name || `Server ${i + 1}`; // Hiển thị tên từ API
+          btn.onclick = () => switchServer(i);
+          serverSelect.appendChild(btn);
+        });
+      }
+    }
+
+    // 22. Chuyển đổi server
+    function switchServer(i) {
+      currentServer = i;
+      episodes = servers[i].server_data || [];
+      [...serverSelect.children].forEach((btn, k) => btn.classList.toggle('active', k === i));
+      renderGrid();
+      renderModeSwitch(); // Hiển thị nút chuyển mode cho server mới
+      playEp(0); // Phát tập đầu tiên của server mới
+    }
+
+    // 23. Hàm hiển thị nút chuyển mode (embed/m3u8, nếu tập có cả hai)
+    function renderModeSwitch() {
+      modeSwitch.innerHTML = '';
+      // Kiểm tra nếu tập đầu tiên của server có cả embed và m3u8 (đại diện cho server)
+      const firstEp = episodes[0] || {};
+      const hasEmbed = firstEp.embed || firstEp.link_embed;
+      const hasM3u8 = firstEp.m3u8 || firstEp.link_m3u8;
+      if (hasEmbed && hasM3u8) {
+        const m3u8Btn = document.createElement('button');
+        m3u8Btn.className = 'mode-btn';
+        m3u8Btn.textContent = 'M3U8';
+        m3u8Btn.onclick = () => switchMode('m3u8');
+        modeSwitch.appendChild(m3u8Btn);
+
+        const embedBtn = document.createElement('button');
+        embedBtn.className = 'mode-btn';
+        embedBtn.textContent = 'Embed';
+        embedBtn.onclick = () => switchMode('embed');
+        modeSwitch.appendChild(embedBtn);
+
+        // Đánh dấu mode hiện tại
+        switchMode(currentMode, false); // Không phát lại video
+      }
+    }
+
+    // 24. Chuyển đổi mode (embed/m3u8)
+    function switchMode(mode, replay = true) {
+      currentMode = mode;
+      [...modeSwitch.children].forEach((btn, k) => {
+        btn.classList.toggle('active', (k === 0 && mode === 'm3u8') || (k === 1 && mode === 'embed'));
+      });
+      if (replay) playEp(current); // Phát lại tập hiện tại với mode mới (mượt mà)
+    }
+
+    // 25. Hàm hiển thị grid các tập phim
+    function renderGrid() {
+      grid.innerHTML = '';
+      episodes.forEach((ep, i) => {
+        const btn = document.createElement('div');
+        btn.className = 'ep-btn';
+        btn.textContent = i + 1;
+        btn.onclick = () => playEp(i);
+        grid.appendChild(btn);
+      });
+    }
+
+    // 26. Đánh dấu tập phim hiện tại
+    function mark(i) {
+      [...grid.children].forEach((btn, k) => btn.classList.toggle('active', k === i));
+    }
+
+    // 27. Hàm phát tập phim (chuyển đổi theo mode)
+    function playEp(i) {
+      current = i;
+      mark(i);
+      const ep = episodes[i] || {};
+      const embed = ep.embed || ep.link_embed || ''; // Tận dụng từ API
+      const m3u8 = ep.m3u8 || ep.link_m3u8 || ''; // Tận dụng từ API
+      if (source === 'Nguonc') {
+        // Nguonc: Chỉ dùng embed
+        if (embed) renderEmbed(embed);
+        else showToast('Không có embed cho tập này!');
+      } else {
+        // Các source khác: Theo mode người dùng chọn
+        if (currentMode === 'm3u8' && m3u8) renderHLS(m3u8);
+        else if (currentMode === 'embed' && embed) renderEmbed(embed);
+        else if (m3u8) renderHLS(m3u8); // Fallback nếu mode không khớp
+        else if (embed) renderEmbed(embed); // Fallback
+        else showToast('Không có m3u8 hoặc embed cho tập này!');
+      }
+      // Cập nhật tiêu đề
+      titleBar.textContent = `Tên Phim: ${movieName} | Tập: ${i + 1}`;
+    }
+
+    // 28. Hàm nhúng iframe embed
+    function renderEmbed(url) {
+      if (!url) return;
+      player.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen style="width:100%;height:100%"></iframe>`;
+    }
+
+    // 29. Hàm phát HLS
+    function renderHLS(url) {
+      if (!url) return;
+      player.innerHTML = `<video id="v" controls autoplay style="width:100%;height:100%;background:#000"></video>`;
+      const video = document.getElementById('v');
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
+        script.onload = () => {
+          const hls = new Hls();
+          hls.loadSource(url);
+          hls.attachMedia(video);
+        };
+        document.head.appendChild(script);
+      }
+    }
+
+    // 30. Hàm tua video
+    function rew(seconds) {
+      const video = document.getElementById('v');
+      if (video && !isNaN(video.currentTime)) {
+        video.currentTime += seconds;
+        showToast(`Tua ${seconds > 0 ? '+' : ''}${seconds}s`);
+      } else {
+        showToast('Không thể tua (có thể đang dùng embed bên thứ ba)');
+      }
+    }
+
+    // 31. Hàm chuyển tập trước
+    function prevEp() {
+      if (current > 0) playEp(current - 1);
+      else showToast('Đã ở tập đầu tiên!');
+    }
+
+    // 32. Hàm chuyển tập sau
+    function nextEp() {
+      if (current < episodes.length - 1) playEp(current + 1);
+      else showToast('Đã ở tập cuối cùng!');
+    }
+
+    // 33. Hàm hiển thị toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+
+    // 34. Khởi chạy hàm main
+    main();
+  </script>
+</body>
+</html>

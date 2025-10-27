@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Phim Của Tôi</title>
+    <style>
+/* ==============================
+   1. RESET & GLOBAL STYLES
+   ============================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 100%;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==============================
+   2. CONTAINER & UTILITIES
+   ============================== */
+.container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+    padding: 0 1rem;
+}
+
+.text-center { text-align: center; }
+.mt-1 { margin-top: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.d-flex { display: flex; }
+.gap-1 { gap: 1rem; }
+.gap-2 { gap: 2rem; }
+
+/* ==============================
+   3. HEADER & NAVIGATION
+   ============================== */
+header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    color: #fff;
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #333;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff0000, #ff4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 4px rgba(255, 0, 0, 0.3);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0.4rem 0;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #ff0000;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover {
+    color: #ff0000;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* ==============================
+   4. HERO SECTION
+   ============================== */
+.hero {
+    background: 
+        linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
+        url('https://nativespeaker.vn/uploaded/page_1601_1712215670_1713753865.jpg') center/cover no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, #000 70%);
+    z-index: 1;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #ff0000, #ff4d4d, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 15px rgba(255, 0, 0, 0.6);
+    letter-spacing: -1px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    color: #cccccc;
+    font-weight: 400;
+}
+
+/* ==============================
+   5. BUTTONS & FORMS
+   ============================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #cc0000, #b30000);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+}
+
+/* Search Form */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    flex-wrap: wrap;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid #333;
+    border-radius: 50px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.search-form input:focus {
+    border-color: #ff0000;
+    background-color: #222;
+    box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.2);
+}
+
+.search-form input::placeholder {
+    color: #777;
+}
+
+.search-form button {
+    padding: 0.9rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+/* ==============================
+   6. MOVIES SECTION
+   ============================== */
+.movies {
+    padding: 5rem 0;
+    background: #0f0f0f;
+}
+
+.movies h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #ff0000;
+    position: relative;
+    font-weight: 800;
+}
+
+.movies h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ff0000, transparent);
+    border-radius: 2px;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.8rem;
+    padding: 0 1rem;
+}
+
+/* ==============================
+   MOVIE CARD
+   ============================== */
+.movie-card {
+    background: #1a1a1a;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    border: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-bottom: 3px solid #ff0000;
+    transition: transform 0.4s ease;
+}
+
+.movie-card:hover img {
+    transform: scale(1.05);
+}
+
+.movie-card h3 {
+    font-size: 0.95rem;
+    margin: 0.8rem 0.6rem 0.4rem;
+    color: #fff;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-card p {
+    color: #aaa;
+    margin: 0 0.6rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+.movie-card .source {
+    font-style: italic;
+    color: #666;
+    font-size: 0.75rem;
+    margin: 0 0.6rem 0.8rem;
+}
+
+.episodes-label {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.35rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ==============================
+   MOVIE CARD BUTTONS
+   ============================== */
+.movie-buttons {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    margin: 0.6rem 0 1rem;
+    flex-wrap: wrap;
+}
+
+.movie-buttons .btn {
+    flex: 1 1 45%;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    text-align: center;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(255,0,0,0.3);
+}
+
+.movie-buttons .btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.movie-buttons .btn:hover::before {
+    left: 100%;
+}
+
+.movie-buttons .btn:hover {
+    background: linear-gradient(135deg, #cc0000, #b30000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
+/* ==============================
+   7. MODAL
+   ============================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    padding: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: #1a1a1a;
+    margin: 4% auto;
+    padding: 2rem;
+    border: 1px solid #333;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content img {
+    max-width: 220px;
+    height: auto;
+    border-radius: 12px;
+    float: left;
+    margin-right: 1.5rem;
+    border: 3px solid #ff0000;
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    color: #aaa;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background: rgba(0,0,0,0.5);
+}
+
+.close:hover {
+    color: #ff0000;
+    background: rgba(255, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+/* ==============================
+   8. RESPONSIVE DESIGN
+   ============================== */
+@media (max-width: 992px) {
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem 0;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .search-form input {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1.2rem;
+    }
+
+    .modal-content img {
+        float: none;
+        display: block;
+        margin: 0 auto 1rem;
+        max-width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+    }
+
+    .movie-card h3 {
+        font-size: 0.85rem;
+    }
+
+    .movie-buttons .btn {
+        flex: 1 1 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1 class="logo">CINEMAX</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Anime</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="movies.html">Library</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Khám Phá Thế Giới Phim</h2>
+            <p>Nhập tên phim để tìm kiếm nhanh từ nhiều nguồn!</p>
+            <div class="search-form">
+                <input type="text" id="search-input" placeholder="Nhập tên Phim ví dụ:...">
+                <button type="button" id="search-btn" class="btn">Tìm Kiếm</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movies Section -->
+    <section id="movies" class="movies">
+        <div class="container">
+            <h2>Tìm Kiếm Phim</h2>
+            <div class="movie-grid" id="movie-grid">
+                <!-- Kết quả phim sẽ được thêm động bằng JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Section -->
+    <section id="library" class="movies">
+        <div class="container">
+            <h2>Thư Viện Phim</h2>
+            <div class="movie-grid" id="library-grid">
+                <!-- Phim từ thư viện sẽ được thêm động bằng JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Movie Detail -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="detail-poster" src="" alt="Poster" style="display: none;">
+            <h2 id="detail-title"></h2>
+            <p id="detail-description"></p>
+            <p id="detail-info"></p>
+            <div id="watch-buttons"></div>
+        </div>
+    </div>
+
+    <script>
+       // 1. Xử lý cuộn trang mượt mà khi nhấp vào liên kết điều hướng
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// 2. Khai báo các biến toàn cục để thao tác với DOM
+const searchBtn = document.getElementById('search-btn');
+const searchInput = document.getElementById('search-input');
+const movieGrid = document.getElementById('movie-grid');
+const libraryGrid = document.getElementById('library-grid');
+const moviesSection = document.getElementById('movies');
+
+// Ẩn container tìm kiếm lúc đầu
+moviesSection.style.display = 'none';
+
+// 3. Bắt phím Enter để tìm kiếm
+searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        searchBtn.click();
+    }
+});
+
+// 4. Xóa grid khi input rỗng
+searchInput.addEventListener('input', function() {
+    if (!this.value.trim()) {
+        movieGrid.innerHTML = '';
+        moviesSection.style.display = 'none';
+    }
+});
+
+// 5. Xử lý khi nhấn nút tìm kiếm
+searchBtn.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const slug = searchInput.value.trim().toLowerCase().replace(/\s+/g, '-');
+
+    movieGrid.innerHTML = '';
+    if (!slug) return;
+
+    // Hiển thị container tìm kiếm khi có input
+    moviesSection.style.display = 'block';
+
+    // --- API list ---
+    const apis = [
+        { 
+            name: 'Nguonc', 
+            url: `https://phim.nguonc.com/api/film/${slug}`, 
+            dataPath: ['movie'],
+            titleKey: 'name',
+            descKey: 'description',
+            posterKey: 'thumb_url',
+            thumbKey: 'poster_url',
+            qualityKey: 'quality',
+            langKey: 'language'
+        },
+        { 
+            name: 'Phimapi', 
+            url: `https://phimapi.com/phim/${slug}`, 
+            dataPath: ['movie'],
+            titleKey: 'name',
+            descKey: 'content',
+            posterKey: 'poster_url',
+            thumbKey: 'thumb_url',
+            yearKey: 'year',
+            qualityKey: 'quality',
+            langKey: 'lang'
+        },
+        { 
+            name: 'Ophim', 
+            url: `https://ophim1.com/v1/api/phim/${slug}`, 
+            dataPath: ['data', 'item'],
+            titleKey: 'name',
+            descKey: 'content',
+            posterKey: 'thumb_url',
+            thumbKey: 'poster_url',
+            yearKey: 'year',
+            qualityKey: 'quality',
+            langKey: 'lang',
+            cdnImage: (data) => data.APP_DOMAIN_CDN_IMAGE || 'https://img.ophim.live/uploads/movies/'
+        }
+    ];
+
+    // Gửi yêu cầu đến tất cả API
+    const promises = apis.map(async (api) => {
+        try {
+            const response = await fetch(api.url);
+            if (!response.ok) throw new Error(`Lỗi từ ${api.name}: ${response.status}`);
+            const data = await response.json();
+
+            let movie = data;
+            for (const path of api.dataPath) {
+                if (movie && movie[path]) {
+                    movie = movie[path];
+                } else {
+                    movie = null;
+                    break;
+                }
+            }
+            if (!movie) return null;
+
+            const cdnImage = api.cdnImage ? api.cdnImage(data) : '';
+            const poster = movie[api.posterKey] ? 
+                (api.name === 'Ophim' && cdnImage ? `${cdnImage}/${movie[api.posterKey]}` : movie[api.posterKey]) : 
+                (movie[api.thumbKey] ? (api.name === 'Ophim' && cdnImage ? `${cdnImage}/${movie[api.thumbKey]}` : movie[api.thumbKey]) : '');
+
+            let episodesCount = 'N/A';
+            if (api.name === 'Nguonc') {
+                episodesCount = movie.total_episodes || (movie.episodes && movie.episodes.length > 0 && movie.episodes[0].items ? movie.episodes[0].items.length : 'N/A');
+            } else if (api.name === 'Phimapi') {
+                episodesCount = movie.episode_total || (movie.episodes && movie.episodes.length > 0 && movie.episodes[0].server_data ? movie.episodes[0].server_data.length : 'N/A');
+            } else if (api.name === 'Ophim') {
+                episodesCount = movie.episode_total || (movie.episodes ? movie.episodes.reduce((max, s) => Math.max(max, (s.server_data || []).length), 0) : 'N/A');
+            }
+
+            return {
+                title: movie[api.titleKey] || 'Không rõ tiêu đề',
+                description: movie[api.descKey] || 'Không có mô tả',
+                poster: poster,
+                year: typeof api.yearKey === 'function' ? api.yearKey(data) : (movie[api.yearKey] || 'N/A'),
+                quality: movie[api.qualityKey] || 'N/A',
+                language: movie[api.langKey] || 'N/A',
+                source: api.name,
+                detailUrl: api.url,
+                slug: slug,
+                episodesCount: episodesCount
+            };
+        } catch (error) {
+            console.error(`Error from ${api.name}:`, error);
+            return null;
+        }
+    });
+
+    const movies = (await Promise.all(promises)).filter(movie => movie !== null);
+    if (movies.length === 0) {
+        movieGrid.innerHTML = '<p>Không tìm thấy Phim với từ này.</p>';
+        return;
+    }
+    displayMovies(movies, movieGrid);
+});
+
+// 6. Hàm hiển thị danh sách phim
+function displayMovies(movies, grid) {
+    grid.innerHTML = '';
+    movies.forEach(movie => {
+        const movieCard = document.createElement('div');
+        movieCard.classList.add('movie-card');
+        let html = '';
+        if (grid.id === 'library-grid') {
+            html = `
+                ${movie.poster ? `<img src="${movie.poster}" alt="${movie.title}" loading="lazy">` : ''}
+                <span class="episodes-label">${movie.episodesCount} tập</span>
+                <h3>${movie.title}</h3>
+                <a href="#" class="btn view-detail" data-detail-url="${movie.detailUrl}" data-slug="${movie.slug}" data-source="${movie.source}">Chi Tiết</a>
+                <a href="watch.html?slug=${encodeURIComponent(movie.slug)}&source=${movie.source}" class="btn watch-movie">Xem Phim</a>
+            `;
+        } else {
+            html = `
+                ${movie.poster ? `<img src="${movie.poster}" alt="${movie.title}" loading="lazy">` : ''}
+                <span class="episodes-label">${movie.episodesCount} tập</span>
+                <h3>${movie.title}</h3>
+                <p>${movie.description.slice(0, 100)}${movie.description.length > 100 ? '...' : ''}</p>
+                <p class="source">Nguồn: ${movie.source}</p>
+                <a href="#" class="btn view-detail" data-detail-url="${movie.detailUrl}" data-slug="${movie.slug}" data-source="${movie.source}">Chi Tiết</a>
+                <a href="watch.html?slug=${encodeURIComponent(movie.slug)}&source=${movie.source}" class="btn watch-movie">Xem Phim </a>
+            `;
+        }
+        movieCard.innerHTML = html;
+        grid.appendChild(movieCard);
+    });
+
+    document.querySelectorAll('.view-detail').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const detailUrl = this.dataset.detailUrl;
+            const slug = this.dataset.slug;
+            const source = this.dataset.source;
+            await fetchMovieDetail(detailUrl, slug, source);
+        });
+    });
+}
+
+// 7. Modal chi tiết phim
+const modal = document.getElementById('movie-modal');
+const closeBtn = document.querySelector('.close');
+const detailTitle = document.getElementById('detail-title');
+const detailDescription = document.getElementById('detail-description');
+const detailInfo = document.getElementById('detail-info');
+const detailPoster = document.getElementById('detail-poster');
+const watchButtons = document.getElementById('watch-buttons');
+
+closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+// 8. Lấy chi tiết phim
+async function fetchMovieDetail(url, slug, source) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Lỗi lấy chi tiết phim');
+        const data = await response.json();
+
+        let movie, titleKey, descKey, posterKey, thumbKey, yearKey, qualityKey, langKey, cdnImage;
+        if (url.includes('nguonc')) {
+            movie = data.movie;
+            titleKey = 'name';
+            descKey = 'description';
+            posterKey = 'poster_url';
+            thumbKey = 'thumb_url';
+            qualityKey = 'quality';
+            langKey = 'language';
+        } else if (url.includes('phimapi')) {
+            movie = data.movie;
+            titleKey = 'name';
+            descKey = 'content';
+            posterKey = 'thumb_url';
+            thumbKey = 'poster_url';
+            yearKey = 'year';
+            qualityKey = 'quality';
+            langKey = 'lang';
+        } else if (url.includes('ophim1')) {
+            movie = data.data.item;
+            titleKey = 'name';
+            descKey = 'content';
+            posterKey = 'poster_url';
+            thumbKey = 'thumb_url';
+            yearKey = 'year';
+            qualityKey = 'quality';
+            langKey = 'lang';
+            cdnImage = data.APP_DOMAIN_CDN_IMAGE || 'https://img.ophim.live/uploads/movies/';
+        }
+
+        detailTitle.textContent = movie[titleKey] || 'Không rõ';
+        detailDescription.textContent = movie[descKey] || 'Không có mô tả';
+        const poster = movie[posterKey] ? (url.includes('ophim1') && cdnImage ? `${cdnImage}/${movie[posterKey]}` : movie[posterKey]) : (movie[thumbKey] ? (url.includes('ophim1') && cdnImage ? `${cdnImage}/${movie[thumbKey]}` : movie[thumbKey]) : '');
+        detailInfo.textContent = `Năm: ${typeof yearKey === 'function' ? yearKey(data) : (movie[yearKey] || 'N/A')} | Chất lượng: ${movie[qualityKey] || 'N/A'} | Ngôn ngữ: ${movie[langKey] || 'N/A'}`;
+        if (poster) { detailPoster.src = poster; detailPoster.style.display = 'block'; } 
+        else { detailPoster.style.display = 'none'; }
+
+        watchButtons.innerHTML = `
+            <a href="watch.html?slug=${encodeURIComponent(slug)}&source=Nguonc" class="btn watch-movie">Xem Anime (Nguonc)</a>
+            <a href="watch.html?slug=${encodeURIComponent(slug)}&source=Phimapi" class="btn watch-movie">Xem Anime (Phimapi)</a>
+            <a href="watch.html?slug=${encodeURIComponent(slug)}&source=Ophim" class="btn watch-movie">Xem Anime (Ophim)</a>
+        `;
+        modal.style.display = 'block';
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Không thể lấy chi tiết phim.');
+    }
+}
+
+// 9. Tải thư viện
+async function loadLibrary() {
+    try {
+        const response = await fetch('hoa.txt');
+        if (!response.ok) throw new Error('Lỗi tải hoa.txt');
+        const text = await response.text();
+        const lines = text.trim().split('\n');
+        const libraryMovies = [];
+
+        const apis = [
+            { name: 'Nguonc', urlTemplate: `https://phim.nguonc.com/api/film/`, dataPath: ['movie'], titleKey: 'name', descKey: 'description', posterKey: 'poster_url', thumbKey: 'thumb_url', qualityKey: 'quality', langKey: 'language' },
+            { name: 'Phimapi', urlTemplate: `https://phimapi.com/phim/`, dataPath: ['movie'], titleKey: 'name', descKey: 'content', posterKey: 'poster_url', thumbKey: 'thumb_url', yearKey: 'year', qualityKey: 'quality', langKey: 'lang' },
+            { name: 'Ophim', urlTemplate: `https://ophim1.com/v1/api/phim/`, dataPath: ['data', 'item'], titleKey: 'name', descKey: 'content', posterKey: 'thumb_url', thumbKey: 'poster_url', yearKey: 'year', qualityKey: 'quality', langKey: 'lang', cdnImage: (data) => data.APP_DOMAIN_CDN_IMAGE || 'https://img.ophim.live/uploads/movies/' }
+        ];
+
+        for (const line of lines) {
+            if (!line.trim()) continue;
+            const parts = line.split(' nguồn: ');
+            const slug = parts[0].trim();
+            const sourcesStr = parts[1] ? parts[1].trim() : 'nguonc,phimapi,ophim';
+            const sources = sourcesStr.split(',').map(s => s.trim().toLowerCase());
+            const selectedApis = apis.filter(api => sources.includes(api.name.toLowerCase()));
+
+            const promises = selectedApis.map(async (api) => {
+                try {
+                    const url = `${api.urlTemplate}${slug}`;
+                    const response = await fetch(url);
+                    if (!response.ok) return null;
+                    const data = await response.json();
+
+                    let movie = data;
+                    for (const path of api.dataPath) { if (movie && movie[path] !== undefined) movie = movie[path]; else { movie = null; break; } }
+                    if (!movie) return null;
+                    if (Array.isArray(movie)) movie = movie[0];
+
+                    const cdnImage = api.cdnImage ? api.cdnImage(data) : '';
+                    const poster = movie[api.posterKey] ? (api.name === 'Ophim' && cdnImage ? `${cdnImage}/${movie[api.posterKey]}` : movie[api.posterKey]) : (movie[api.thumbKey] ? (api.name === 'Ophim' && cdnImage ? `${cdnImage}/${movie[api.thumbKey]}` : movie[api.thumbKey]) : '');
+
+                    let episodesCount = 'N/A';
+                    if (api.name === 'Nguonc') episodesCount = movie.total_episodes || (movie.episodes && movie.episodes.length > 0 && movie.episodes[0].items ? movie.episodes[0].items.length : 'N/A');
+                    else if (api.name === 'Phimapi') episodesCount = movie.episode_total || (movie.episodes && movie.episodes.length > 0 && movie.episodes[0].server_data ? movie.episodes[0].server_data.length : 'N/A');
+                    else if (api.name === 'Ophim') episodesCount = movie.episode_total || (movie.episodes ? movie.episodes.reduce((max, s) => Math.max(max, (s.server_data || []).length), 0) : 'N/A');
+
+                    return {
+                        title: movie[api.titleKey] || 'Không rõ tiêu đề',
+                        description: movie[api.descKey] || 'Không có mô tả',
+                        poster: poster,
+                        year: typeof api.yearKey === 'function' ? api.yearKey(data) : (movie[api.yearKey] || 'N/A'),
+                        quality: movie[api.qualityKey] || 'N/A',
+                        language: movie[api.langKey] || 'N/A',
+                        source: api.name,
+                        detailUrl: url,
+                        slug: slug,
+                        episodesCount: episodesCount
+                    };
+                } catch (err) { console.error(`API ${api.name} lỗi với slug ${slug}:`, err); return null; }
+            });
+
+            const movies = (await Promise.all(promises)).filter(m => m !== null);
+            libraryMovies.push(...movies);
+        }
+
+        if (libraryMovies.length === 0) libraryGrid.innerHTML = '<p>Không có phim trong thư viện.</p>';
+        else displayMovies(libraryMovies, libraryGrid);
+
+    } catch (error) {
+        console.error('Lỗi tải thư viện:', error);
+        libraryGrid.innerHTML = '<p>Lỗi tải thư viện phim.</p>';
+    }
+}
+
+// 10. Load thư viện khi mở trang
+window.addEventListener('load', loadLibrary);
+    </script>
+</body>
+</html>
