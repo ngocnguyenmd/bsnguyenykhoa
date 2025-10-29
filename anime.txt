@@ -1,7 +1,6 @@
 dao-hai-tac nguồn: phimapi
 tham-tu-lung-danh-conan nguồn: phimapi
-co-hau-may-marie nguồn: phimapi
-tien-si-da-phan-1 nguồn: nguonc
+tien-si-da-phan-1 nguồn: nguonc 
 tien-si-da-phan-2 nguồn: nguonc
 tien-si-da-phan-3 nguồn: nguonc
 tien-si-da-phan-4 nguồn: nguonc

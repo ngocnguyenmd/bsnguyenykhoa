@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Anime - CINEMAX</title>
+    <style>
+        body { background:#0a0a0a; color:#e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; margin:0; padding:0; }
+        .container { width: min(100% - 2rem, 1000px); margin: 2rem auto; padding: 0 1rem; }
+        .detail-container { background: #1a1a1a; border-radius: 16px; padding: 1.5rem; border: 1px solid #222; }
+        .detail-poster { width: 100%; max-width: 300px; border-radius: 12px; border: 2px solid #0A1A2A; float: left; margin-right: 1.5rem; margin-bottom: 1rem; }
+        .detail-info { margin-top: 1rem; color: #aaa; font-size: 0.95rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; background: linear-gradient(135deg, #0A1A2A, #0F2A3F); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; transition: 0.2s; }
+        .btn:hover { background: linear-gradient(135deg, #0F2A3F, #142F47); transform: translateY(-1px); }
+        .back-btn { background: #333; color: #ccc; }
+        .watch-now-big { font-size:1.2rem; padding:1rem 2.5rem; margin-top:1.5rem; }
+        @media (max-width: 768px) { .detail-poster { float: none; display: block; margin: 0 auto 1rem; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- NÚT QUAY LẠI & TRANG CHỦ -->
+        <div style="text-align:center; margin:2rem 0;">
+            <a href="index1.html" class="btn back-btn">Quay Lại</a>
+            <a href="movies.html" class="btn" style="margin-left:0.5rem;">Trang Chủ</a>
+        </div>
+
+        <!-- NỘI DUNG CHI TIẾT -->
+        <div class="detail-container" id="detail-content">
+            <p style="text-align:center; color:#999;">Đang tải chi tiết phim...</p>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+        const source = urlParams.get('source') || 'Phimapi';
+
+        const apis = {
+            Nguonc: `https://phim.nguonc.com/api/film/${slug}`,
+            Phimapi: `https://phimapi.com/phim/${slug}`,
+            Ophim: `https://ophim1.com/v1/api/phim/${slug}`
+        };
+
+        async function loadDetail() {
+            const container = document.getElementById('detail-content');
+            try {
+                const res = await fetch(apis[source]);
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+
+                let movie, cdn = '';
+                if (source === 'Nguonc') movie = data.movie;
+                else if (source === 'Phimapi') movie = data.movie;
+                else if (source === 'Ophim') { movie = data.data.item; cdn = data.APP_DOMAIN_CDN_IMAGE || 'https://img.ophim.live/uploads/movies/'; }
+
+                const poster = movie.poster_url 
+                    ? (cdn ? `${cdn}/${movie.poster_url}` : movie.poster_url)
+                    : (movie.thumb_url ? (cdn ? `${cdn}/${movie.thumb_url}` : movie.thumb_url) : '');
+
+                // TÍNH TỔNG SỐ TẬP (chỉ hiển thị số, không liệt kê)
+                let totalEpisodes = 'N/A';
+                if (source === 'Nguonc') totalEpisodes = movie.total_episodes || (movie.episodes?.[0]?.items?.length) || 'N/A';
+                else if (source === 'Phimapi') totalEpisodes = movie.episode_total || (movie.episodes?.[0]?.server_data?.length) || 'N/A';
+                else if (source === 'Ophim') totalEpisodes = movie.episode_total || (movie.episodes?.reduce((a,s) => Math.max(a, s.server_data?.length || 0), 0)) || 'N/A';
+
+                container.innerHTML = `
+                    ${poster ? `<img src="${poster}" alt="${movie.name}" class="detail-poster">` : ''}
+                    <h1 style="color:#0F2A3F; margin:0.5rem 0;">${movie.name || 'Không rõ'}</h1>
+                    <p style="font-size:1.1rem; line-height:1.7; color:#ddd;">${movie.content || movie.description || 'Không có mô tả'}</p>
+                    <div class="detail-info">
+                        <p>
+                            <strong>Năm:</strong> ${movie.year || 'N/A'} | 
+                            <strong>Chất lượng:</strong> ${movie.quality || 'N/A'} | 
+                            <strong>Ngôn ngữ:</strong> ${movie.lang || movie.language || 'N/A'} | 
+                            <strong>Tổng tập:</strong> ${totalEpisodes}
+                        </p>
+                    </div>
+                    <!-- NÚT XEM NGAY -->
+                    <div style="text-align:center; margin-top:2rem;">
+                        <a href="watch.html?slug=${slug}&source=${source}&e=1" class="btn watch-now-big">
+                            Xem Ngay 
+                        </a>
+                    </div>
+                `;
+            } catch {
+                container.innerHTML = `<p style="color:#f66; text-align:center;">Không tải được chi tiết. <a href="index.html" style="color:#0A1A2A;">Quay lại</a></p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDetail);
+    </script>
+</body>
+</html>

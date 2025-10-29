@@ -5,224 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xem Anime</title>
   <style>
-/* ==============================
-   BODY & GLOBAL
-   ============================== */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0a0a0a;
-  color: #eee;
-}
+    /* ---------- GLOBAL ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Segoe UI',sans-serif;background:#0a0a0a;color:#eee}
+    a{text-decoration:none}
 
-/* ==============================
-   1. Player area
-   ============================== */
-#player-area {
-  width: 100%;
-  max-width: 900px;
-  margin: 20px auto;
-  height: 70vh;
-  background: #000;
-  border: 2px solid #ff0000;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(255,0,0,0.5);
-}
+    /* ---------- PLAYER ---------- */
+    #player-area{
+      width:845px;max-width:900px;margin:20px auto;
+      height:70vh;background:#000;
+      position:relative;overflow:hidden;
+    }
+    #player-area iframe,#player-area video{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    }
 
-/* ==============================
-   2. Tiêu đề phim
-   ============================== */
-.title-bar {
-  max-width: 900px;
-  margin: 10px auto 20px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: #ff0000;
-  padding: 12px 10px;
-  background: #1a1a1a;
-  border-radius: 10px;
-  border: 1px solid #ff0000;
-  box-shadow: 0 2px 8px rgba(255,0,0,0.4);
-}
+    /* Loading overlay */
+    #player-area::after{
+      content:"Đang tải...";position:absolute;inset:0;
+      background:rgba(0,0,0,.9);color:#ff0000;font:18px/1.5 sans-serif;
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;transition:opacity .2s;
+    }
+    #player-area.loading::after{opacity:1}
 
-/* ==============================
-   3. Grid tập phim
-   ============================== */
-.ep-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  gap: 8px;
-  padding: 12px;
-  max-width: 900px;
-  margin: 0 auto 20px;
-}
+    /* ---------- TITLE ---------- */
+    .title-bar{
+      max-width:900px;margin:10px auto 20px;padding:12px;
+      text-align:center;font-weight:700;color:#ff0000;
+      background:#1a1a1a;border:1px solid #ff0000;
+      border-radius:8px;
+    }
 
-.ep-btn {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #1a1a1a;
-  border: 1px solid #ff0000;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 2px 5px rgba(255,0,0,0.3);
-}
+    /* ---------- GRID EP ---------- */
+    .ep-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));
+      gap:8px;padding:12px;max-width:900px;margin:auto;
+    }
+    .ep-btn{
+      width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+      background:#1a1a1a;color:#fff;font:600 14px/1 sans-serif;
+      border:1px solid #ff0000;border-radius:6px;cursor:pointer;
+      transition:background .15s,opacity .15s;
+    }
+    .ep-btn:hover,.ep-btn.active{
+      background:#ff0000;opacity:.9;
+    }
+    .ep-btn.active{font-weight:700;transform:scale(1.05);will-change:transform}
 
-.ep-btn:hover,
-.ep-btn.active {
-  background: #ff0000;
-  border-color: #ff5555;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255,0,0,0.6);
-}
+    /* ---------- CONTROLS ---------- */
+    .ctl-bar,.server-select,.mode-switch{
+      display:flex;gap:10px;justify-content:center;
+      max-width:900px;margin:10px auto;padding:0 12px;
+    }
+    .ctl-btn,.server-btn,.mode-btn{
+      padding:8px 16px;background:#ff0000;color:#fff;
+      border:none;border-radius:6px;font:600 14px/1 sans-serif;
+      cursor:pointer;transition:opacity .15s;
+    }
+    .ctl-btn:hover,.server-btn:hover,.mode-btn:hover{opacity:.85}
+    .server-btn,.mode-btn{background:#1a1a1a;border:1px solid #ff0000}
+    .server-btn.active,.mode-btn.active{background:#ff0000}
 
-/* ==============================
-   4. Thanh điều khiển
-   ============================== */
-.ctl-bar {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  padding: 12px;
-  max-width: 900px;
-  margin: 0 auto 20px;
-}
+    /* ---------- BACK BTN ---------- */
+    .back-btn{
+      display:block;max-width:900px;margin:20px auto 40px;padding:12px;
+      background:#ff0000;color:#fff;text-align:center;border-radius:8px;
+      font:600 16px/1 sans-serif;transition:opacity .15s;
+    }
+    .back-btn:hover{opacity:.85}
 
-.ctl-btn {
-  padding: 10px 18px;
-  background: #ff0000;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(255,0,0,0.5);
-}
+    /* ---------- TOAST ---------- */
+    #toast{
+      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,.9);color:#fff;padding:12px 20px;
+      border-radius:6px;font:500 15px/1 sans-serif;
+      visibility:hidden;opacity:0;transition:opacity .2s;
+      z-index:9999;min-width:200px;text-align:center;
+    }
+    #toast.show{visibility:visible;opacity:1}
 
-.ctl-btn:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255,0,0,0.7);
-}
+    /* ---------- NETWORK SPEED ---------- */
+    #network-speed {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font: bold 13px/1 'Segoe UI', sans-serif;
+      z-index: 10;
+      pointer-events: none;
+      transition: background 0.3s;
+      backdrop-filter: blur(4px);
+      display: none; /* Ẩn mặc định, JS sẽ bật khi cần */
+    }
+    #network-speed.good { background: rgba(0,150,0,0.8); }
+    #network-speed.warn { background: rgba(200,150,0,0.8); }
+    #network-speed.bad { background: rgba(200,0,0,0.8); }
 
-/* ==============================
-   5. Chọn server & mode
-   ============================== */
-.server-select, .mode-switch {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  max-width: 900px;
-  margin: 10px auto;
-}
-
-.server-btn, .mode-btn {
-  padding: 8px 18px;
-  background: #1a1a1a;
-  color: #fff;
-  border: 1px solid #ff0000;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.server-btn.active, .mode-btn.active,
-.server-btn:hover, .mode-btn:hover {
-  background: #ff0000;
-  border-color: #ff5555;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255,0,0,0.5);
-}
-
-/* ==============================
-   6. Nút quay lại bên dưới
-   ============================== */
-.back-btn {
-  display: block;
-  max-width: 900px;
-  margin: 20px auto 40px;
-  padding: 12px 0;
-  background: #ff0000;
-  color: #fff;
-  text-align: center;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(255,0,0,0.5);
-}
-
-.back-btn:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255,0,0,0.7);
-}
-
-/* ==============================
-   7. Toast
-   ============================== */
-#toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 6px;
-  font-size: 14px;
-  display: none;
-  z-index: 9999;
-}
-
-/* ==============================
-   8. Responsive
-   ============================== */
-@media (max-width: 768px) {
-  .ep-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); }
-  .ep-btn { width: 40px; height: 40px; font-size: 13px; }
-  .ctl-btn, .server-btn, .mode-btn { padding: 8px 14px; font-size: 13px; }
-  .title-bar { font-size: 18px; padding: 10px; }
-  .back-btn { font-size: 15px; padding: 10px 0; }
-}
-
-@media (max-width: 480px) {
-  .ep-grid { grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 4px; }
-  .ep-btn { width: 35px; height: 35px; font-size: 12px; }
-  .ctl-btn, .server-btn, .mode-btn { padding: 6px 12px; font-size: 12px; }
-  .title-bar { font-size: 16px; }
-  .back-btn { font-size: 14px; padding: 8px 0; }
-}
-  </style>
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:768px){
+      .ep-grid{grid-template-columns:repeat(auto-fill,minmax(40px,1fr))}
+      .ep-btn{font-size:13px}
+    }
+    @media(max-width:480px){
+      #player-area{height:56vh}
+      .ep-grid{gap:6px;grid-template-columns:repeat(auto-fill,minmax(38px,1fr))}
+      .ep-btn{font-size:13px}
+      #toast{bottom:70px;width:90%}
+    }
+    @media(min-width:1024px){
+      #player-area{max-width:1200px;height:75vh}
+      .title-bar,.ep-grid,.ctl-bar,.server-select,.mode-switch,.back-btn{max-width:1200px}
+      .ep-grid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:10px}
+      .ep-btn{font-size:16px}
+    }
   </style>
 </head>
 <body>
-    <!-- 2. Tiêu đề phim và tập hiện tại -->
+  <!-- 2. Tiêu đề phim và tập hiện tại -->
   <div class="title-bar" id="title-bar">Tên Phim: Đang Tải... | Tập: 1</div>
+
   <!-- 1. Khu vực phát video -->
-  <div id="player-area" style="width:100%;max-width:900px;margin:auto;height:70vh;background:#000"></div>
+  <div id="player-area">
+    <div id="network-speed">Tốc độ: --</div>
+  </div>
 
   <!-- 3. Chọn server -->
   <div class="server-select" id="server-select"></div>
 
   <!-- 4. Chuyển mode (embed/m3u8) -->
   <div class="mode-switch" id="mode-switch"></div>
-   <div class="ctl-bar">
+
+  <!-- 5. Nút điều khiển -->
+  <div class="ctl-bar">
     <button class="ctl-btn" onclick="rew(-30)">⏪ 30s</button>
     <button class="ctl-btn" onclick="prevEp()">Tập trước</button>
     <button class="ctl-btn" onclick="nextEp()">Tập sau</button>
@@ -232,236 +150,407 @@ body {
   <!-- 6. Grid tập phim -->
   <div class="ep-grid" id="ep-grid"></div>
 
-  <!-- 7. Nút quay lại bên dưới grid -->
+  <!-- 7. Nút quay lại -->
   <a href="index.html" class="back-btn">Quay lại Trang Chủ</a>
 
   <!-- 8. Toast thông báo -->
-  <div id="toast" style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 15px;border-radius:6px;font-size:14px;display:none;z-index:9999;">Toast</div>
-  <script>
-    // 15. Đọc slug & source từ query parameters
-    const p = new URLSearchParams(location.search);
-    const slug = p.get('slug');
-    const source = p.get('source');
-    const player = document.getElementById('player-area');
-    const grid = document.getElementById('ep-grid');
-    const serverSelect = document.getElementById('server-select');
-    const modeSwitch = document.getElementById('mode-switch');
-    const titleBar = document.getElementById('title-bar');
-    let servers = []; // Mảng lưu các server (cho Phimapi có nhiều server_name)
-    let currentServer = 0; // Chỉ số server hiện tại
-    let episodes = []; // Mảng lưu danh sách tập của server hiện tại
-    let current = -1; // Chỉ số tập hiện tại
-    let movieName = ''; // Tên phim từ API
-    let currentMode = 'm3u8'; // Mode mặc định: 'm3u8' hoặc 'embed'
+  <div id="toast">Thông báo</div>
 
-    // 16. Hàm chính để khởi tạo
-    async function main() {
-      if (!slug || !source) {
-        player.innerHTML = 'Thiếu slug/source';
-        showToast('Thiếu thông tin slug hoặc source!');
+<script>
+  // === PRELOAD HLS.JS (TĂNG TỐC KHỞI ĐỘNG) ===
+  const hlsScript = document.createElement('script');
+  hlsScript.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.15';
+  hlsScript.onload = () => console.log('HLS.js đã sẵn sàng');
+  document.head.appendChild(hlsScript);
+
+  // === BIẾN TOÀN CỤC ===
+  const p = new URLSearchParams(location.search);
+  const slug = p.get('slug');
+  const source = p.get('source');
+  const player = document.getElementById('player-area');
+  const grid = document.getElementById('ep-grid');
+  const serverSelect = document.getElementById('server-select');
+  const modeSwitch = document.getElementById('mode-switch');
+  const titleBar = document.getElementById('title-bar');
+  const speedEl = document.getElementById('network-speed');
+  let servers = [], currentServer = 0, episodes = [], current = -1, movieName = '', currentMode = 'm3u8';
+  let currentSpeedInterval = null;
+  let hlsInstance = null;
+  let speedHistory = [];
+  const MAX_HISTORY = 5;
+  let m3u8ErrorCount = 0;
+  let retryCount = 0;
+  const MAX_RETRY = 3;
+  let isSeeking = false;
+  let loadTimeout = null;
+
+  // === CẬP NHẬT URL ===
+  function updateURL(epIndex) {
+    if (epIndex < 0 || !episodes[epIndex]) return;
+    const epParam = `e${epIndex + 1}`;
+    const newUrl = `${location.pathname}?slug=${slug}&source=${source}&${epParam}`;
+    history.pushState({ ep: epIndex }, '', newUrl);
+  }
+
+  function getEpFromURL() {
+    for (let i = 1; i <= 500; i++) if (p.has(`e${i}`)) return i - 1;
+    return 0;
+  }
+
+  // === PLAY EP ===
+  function playEp(i) {
+    if (i < 0 || i >= episodes.length) return;
+    if (currentSpeedInterval) { clearInterval(currentSpeedInterval); currentSpeedInterval = null; }
+    if (hlsInstance) { hlsInstance.destroy(); hlsInstance = null; }
+    if (loadTimeout) { clearTimeout(loadTimeout); loadTimeout = null; }
+    speedHistory = []; m3u8ErrorCount = 0; isSeeking = false;
+
+    current = i; mark(i); updateURL(i);
+    const ep = episodes[i] || {};
+    const embed = ep.embed || ep.link_embed || '';
+    const m3u8 = ep.m3u8 || ep.link_m3u8 || '';
+
+    player.innerHTML = '<div style="width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;color:#ff0000;font-size:18px;">Đang tải...</div>';
+
+    setTimeout(() => {
+      if (source === 'Nguonc') {
+        embed ? renderEmbed(embed) : showToast('Không có embed!');
+      } else {
+        if (currentMode === 'm3u8' && m3u8) renderHLS(m3u8);
+        else if (currentMode === 'embed' && embed) renderEmbed(embed);
+        else if (m3u8) renderHLS(m3u8);
+        else if (embed) renderEmbed(embed);
+        else showToast('Không có link phát!');
+      }
+      titleBar.textContent = `Tên Phim: ${movieName} | Tập: ${i + 1}`;
+    }, 100);
+  }
+
+  // === SWITCH SERVER ===
+  function switchServer(i) {
+    currentServer = i; episodes = servers[i].server_data || [];
+    [...serverSelect.children].forEach((btn, k) => btn.classList.toggle('active', k === i));
+    renderGrid(); renderModeSwitch();
+    const urlEp = getEpFromURL();
+    playEp(urlEp < episodes.length ? urlEp : 0);
+  }
+
+  // === MAIN ===
+  async function main() {
+    if (!slug || !source) { player.innerHTML = 'Thiếu slug/source'; showToast('Thiếu thông tin!'); return; }
+    let api = '';
+    if (source === 'Nguonc') api = `https://phim.nguonc.com/api/film/${slug}`;
+    if (source === 'Phimapi') api = `https://phimapi.com/phim/${slug}`;
+    if (source === 'Ophim') api = `https://ophim1.com/v1/api/phim/${slug}`;
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch(api, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (!res.ok) throw new Error(`Lỗi: ${res.status}`);
+      const data = await res.json();
+
+      movieName = source === 'Nguonc' ? data.movie.name :
+                  source === 'Phimapi' ? data.movie.name :
+                  data.data?.item?.name || 'Không rõ';
+
+      if (source === 'Nguonc') servers = [{ server_name: 'Vietsub #1', server_data: data.movie.episodes?.[0]?.items || [] }];
+      else if (source === 'Phimapi') servers = data.episodes || [];
+      else if (source === 'Ophim') servers = [{ server_name: 'Vietsub #1', server_data: data.data.item.episodes?.[0]?.server_data || [] }];
+
+      if (servers.length === 0 || servers.every(s => s.server_data.length === 0)) {
+        player.innerHTML = 'Không có tập phim'; showToast('Không có tập nào!'); return;
+      }
+
+      renderServerSelect(); switchServer(0);
+      window.addEventListener('popstate', e => { if (e.state?.ep !== undefined) playEp(e.state.ep); });
+      retryCount = 0;
+    } catch (error) {
+      console.error('Lỗi API:', error);
+      if (retryCount < MAX_RETRY) {
+        retryCount++;
+        showToast(`Lỗi kết nối, thử lại lần ${retryCount}...`);
+        setTimeout(main, 3000 * retryCount);
+      } else {
+        player.innerHTML = 'Lỗi tải dữ liệu'; showToast('Không thể kết nối API!');
+      }
+    }
+  }
+
+  // === TOAST ===
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toast.timeout);
+    toast.timeout = setTimeout(() => { toast.classList.remove('show'); }, 2500);
+  }
+
+  // === RENDER SERVER & MODE ===
+  function renderServerSelect() {
+    serverSelect.innerHTML = '';
+    if (servers.length > 1) {
+      servers.forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'server-btn'; btn.textContent = s.server_name || `Server ${i + 1}`;
+        btn.onclick = () => switchServer(i); serverSelect.appendChild(btn);
+      });
+    }
+  }
+
+  function renderModeSwitch() {
+    modeSwitch.innerHTML = '';
+    const firstEp = episodes[0] || {};
+    const hasEmbed = firstEp.embed || firstEp.link_embed;
+    const hasM3u8 = firstEp.m3u8 || firstEp.link_m3u8;
+    if (hasEmbed && hasM3u8) {
+      const m3u8Btn = document.createElement('button'); m3u8Btn.className = 'mode-btn'; m3u8Btn.textContent = 'M3U8'; m3u8Btn.onclick = () => switchMode('m3u8'); modeSwitch.appendChild(m3u8Btn);
+      const embedBtn = document.createElement('button'); embedBtn.className = 'mode-btn'; embedBtn.textContent = 'Embed'; embedBtn.onclick = () => switchMode('embed'); modeSwitch.appendChild(embedBtn);
+      switchMode(currentMode, false);
+    }
+  }
+
+  function switchMode(mode, replay = true) {
+    currentMode = mode;
+    [...modeSwitch.children].forEach((btn, k) => btn.classList.toggle('active', (k === 0 && mode === 'm3u8') || (k === 1 && mode === 'embed')));
+    if (replay && current >= 0) playEp(current);
+  }
+
+  // === GRID ===
+  function renderGrid() {
+    grid.innerHTML = '';
+    episodes.forEach((ep, i) => {
+      const btn = document.createElement('div');
+      btn.className = 'ep-btn'; btn.textContent = i + 1; btn.onclick = () => playEp(i);
+      grid.appendChild(btn);
+    });
+  }
+
+  function mark(i) { [...grid.children].forEach((btn, k) => btn.classList.toggle('active', k === i)); }
+
+  // === RENDER EMBED ===
+  function renderEmbed(url) {
+    if (!url) return;
+    player.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%"></iframe>`;
+    speedEl.style.display = 'none';
+  }
+
+  // === RENDER HLS + TỐI ƯU MẠNG CHẬM & BUFFER THÔNG MINH ===
+  function renderHLS(url) {
+    if (!url) return;
+    player.innerHTML = `<video id="v" controls autoplay playsinline style="width:100%;height:100%;background:#000"></video>`;
+    const video = document.getElementById('v');
+    speedEl.textContent = 'Tốc độ: --';
+    speedEl.style.display = 'block';
+    speedEl.className = 'network-speed';
+
+    const hlsConfig = {
+      enableWorker: true,
+      lowLatencyMode: true,
+      backBufferLength: 15,
+      maxBufferLength: 10,        // Chỉ buffer 10s phía trước
+      maxMaxBufferLength: 20,     // Tối đa 20s
+      maxBufferSize: 20 * 1000 * 1000,
+      startLevel: -1,
+      capLevelToPlayerSize: true,
+      abrEwmaFastLive: 1.5,
+      abrEwmaSlowLive: 4.0,
+      abrBandWidthFactor: 0.8,
+      abrBandWidthUpFactor: 0.6,
+      liveSyncDurationCount: 2,
+      liveMaxLatencyDurationCount: 6,
+      fragLoadingMaxRetry: 8,
+      manifestLoadingMaxRetry: 5,
+      levelLoadingMaxRetry: 6,
+      xhrSetup: (xhr) => {
+        xhr.setRequestHeader('Referer', location.href);
+        xhr.setRequestHeader('Origin', location.origin);
+      },
+      fetchSetup: (context, initParams) => {
+        return new Request(context.url, {
+          ...initParams,
+          credentials: 'omit',
+          headers: { ...initParams.headers, 'Referer': location.href, 'Origin': location.origin }
+        });
+      }
+    };
+
+    // === BURST MODE KHI TUA ===
+    function enableBurstMode() {
+      if (hlsInstance && !isSeeking) {
+        isSeeking = true;
+        hlsInstance.maxBufferLength = 30;
+        hlsInstance.maxMaxBufferLength = 60;
+        showToast('Tua nhanh...');
+      }
+    }
+    function disableBurstMode() {
+      if (hlsInstance && isSeeking) {
+        setTimeout(() => {
+          hlsInstance.maxBufferLength = 10;
+          hlsInstance.maxMaxBufferLength = 20;
+          isSeeking = false;
+        }, 2000);
+      }
+    }
+    video.addEventListener('seeking', enableBurstMode);
+    video.addEventListener('seeked', disableBurstMode);
+    video.addEventListener('pause', disableBurstMode);
+
+    // === ĐO TỐC ĐỘ ===
+    function updateSpeed(avg) {
+      speedEl.textContent = `Tốc độ: ${avg} kb/s`;
+      speedEl.className = avg >= 3000 ? 'network-speed good' : 
+                         avg >= 800 ? 'network-speed warn' : 
+                         'network-speed bad';
+
+      // Tự động giảm chất lượng nếu mạng quá chậm
+      if (avg < 800 && hlsInstance && hlsInstance.currentLevel > 0) {
+        hlsInstance.currentLevel = 0;
+        showToast('Mạng yếu → giảm chất lượng');
+      }
+    }
+
+    // === TỰ ĐỘNG CHUYỂN EMBED NẾU M3U8 CHẬM >15s ===
+    hlsInstance?.off?.(Hls.Events.MANIFEST_LOADING);
+    hlsInstance?.off?.(Hls.Events.MANIFEST_PARSED);
+
+    // === KHỞI TẠO HLS ===
+    function initHls() {
+      if (!Hls.isSupported()) {
+        video.src = url;
+        video.play().catch(() => {});
+        startNativeSpeedCheck();
         return;
       }
 
-      // 17. Xây dựng URL API dựa trên source
-      let api = '';
-      if (source === 'Nguonc') api = `https://phim.nguonc.com/api/film/${slug}`;
-      if (source === 'Phimapi') api = `https://phimapi.com/phim/${slug}`;
-      if (source === 'Ophim') api = `https://ophim1.com/v1/api/phim/${slug}`;
-      try {
-        const response = await fetch(api);
-        if (!response.ok) throw new Error(`Lỗi từ ${source}: ${response.status}`);
-        const data = await response.json();
+      if (hlsInstance) hlsInstance.destroy();
+      hlsInstance = new Hls(hlsConfig);
+      hlsInstance.loadSource(url);
+      hlsInstance.attachMedia(video);
 
-        // 18. Lấy tên phim từ API
-        movieName = source === 'Nguonc' ? data.movie.name :
-                    source === 'Phimapi' ? data.movie.name :
-                    data.data.item.name || 'Không rõ tên phim';
-
-        // 19. Lấy danh sách tập phim từ API, tách theo server nếu có
-        if (source === 'Nguonc') {
-          // Nguonc: Chỉ một server, sử dụng episodes[0].items, chỉ embed
-          servers = [{ server_name: 'Vietsub #1', server_data: data.movie.episodes?.[0]?.items || [] }];
-        } else if (source === 'Phimapi') {
-          // Phimapi: Tách theo server_name, mỗi server có server_data riêng (không gộp)
-          servers = data.episodes || []; // Mỗi phần tử là một server với server_name và server_data
-        } else if (source === 'Ophim') {
-          // Ophim: Chỉ một server, sử dụng data.item.episodes[0].server_data
-          servers = [{ server_name: 'Vietsub #1', server_data: data.data.item.episodes?.[0]?.server_data || [] }];
-        }
-
-        if (servers.length === 0 || servers.every(s => s.server_data.length === 0)) {
-          player.innerHTML = 'Không có tập phim nào từ API';
-          showToast('Không tìm thấy danh sách tập phim từ API!');
-          return;
-        }
-
-        // 20. Hiển thị chọn server nếu có nhiều (hiển thị server_name)
-        renderServerSelect();
-        // Chọn server đầu tiên
-        switchServer(0);
-      } catch (error) {
-        console.error('Error:', error);
-        player.innerHTML = 'Lỗi tải dữ liệu từ API';
-        showToast('Lỗi tải danh sách tập phim từ API!');
-      }
-    }
-
-    // 21. Hàm hiển thị chọn server (sử dụng server_name từ API)
-    function renderServerSelect() {
-      serverSelect.innerHTML = '';
-      if (servers.length > 1) {
-        servers.forEach((s, i) => {
-          const btn = document.createElement('button');
-          btn.className = 'server-btn';
-          btn.textContent = s.server_name || `Server ${i + 1}`; // Hiển thị tên từ API
-          btn.onclick = () => switchServer(i);
-          serverSelect.appendChild(btn);
-        });
-      }
-    }
-
-    // 22. Chuyển đổi server
-    function switchServer(i) {
-      currentServer = i;
-      episodes = servers[i].server_data || [];
-      [...serverSelect.children].forEach((btn, k) => btn.classList.toggle('active', k === i));
-      renderGrid();
-      renderModeSwitch(); // Hiển thị nút chuyển mode cho server mới
-      playEp(0); // Phát tập đầu tiên của server mới
-    }
-
-    // 23. Hàm hiển thị nút chuyển mode (embed/m3u8, nếu tập có cả hai)
-    function renderModeSwitch() {
-      modeSwitch.innerHTML = '';
-      // Kiểm tra nếu tập đầu tiên của server có cả embed và m3u8 (đại diện cho server)
-      const firstEp = episodes[0] || {};
-      const hasEmbed = firstEp.embed || firstEp.link_embed;
-      const hasM3u8 = firstEp.m3u8 || firstEp.link_m3u8;
-      if (hasEmbed && hasM3u8) {
-        const m3u8Btn = document.createElement('button');
-        m3u8Btn.className = 'mode-btn';
-        m3u8Btn.textContent = 'M3U8';
-        m3u8Btn.onclick = () => switchMode('m3u8');
-        modeSwitch.appendChild(m3u8Btn);
-
-        const embedBtn = document.createElement('button');
-        embedBtn.className = 'mode-btn';
-        embedBtn.textContent = 'Embed';
-        embedBtn.onclick = () => switchMode('embed');
-        modeSwitch.appendChild(embedBtn);
-
-        // Đánh dấu mode hiện tại
-        switchMode(currentMode, false); // Không phát lại video
-      }
-    }
-
-    // 24. Chuyển đổi mode (embed/m3u8)
-    function switchMode(mode, replay = true) {
-      currentMode = mode;
-      [...modeSwitch.children].forEach((btn, k) => {
-        btn.classList.toggle('active', (k === 0 && mode === 'm3u8') || (k === 1 && mode === 'embed'));
+      // Timeout: nếu >15s không load → chuyển embed
+      hlsInstance.on(Hls.Events.MANIFEST_LOADING, () => {
+        loadTimeout = setTimeout(() => {
+          if (episodes[current]?.embed) {
+            showToast('m3u8 chậm → chuyển Embed');
+            switchMode('embed');
+          }
+        }, 15000);
       });
-      if (replay) playEp(current); // Phát lại tập hiện tại với mode mới (mượt mà)
-    }
+      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+        clearTimeout(loadTimeout);
+        video.play().catch(() => {});
+        startSpeedCheck();
+      });
 
-    // 25. Hàm hiển thị grid các tập phim
-    function renderGrid() {
-      grid.innerHTML = '';
-      episodes.forEach((ep, i) => {
-        const btn = document.createElement('div');
-        btn.className = 'ep-btn';
-        btn.textContent = i + 1;
-        btn.onclick = () => playEp(i);
-        grid.appendChild(btn);
+      hlsInstance.on(Hls.Events.FRAG_LOADED, (event, data) => {
+        const stats = data.stats;
+        const bytes = stats.loaded;
+        const time = (stats.tload - stats.trequest) / 1000;
+        if (time > 0 && bytes > 0) {
+          const kbps = Math.round((bytes * 8) / time / 1024);
+          speedHistory.push(kbps);
+          if (speedHistory.length > MAX_HISTORY) speedHistory.shift();
+          if (speedHistory.length >= 3) {
+            const avg = Math.round(speedHistory.reduce((a,b)=>a+b,0)/speedHistory.length);
+            updateSpeed(avg);
+          }
+        }
+      });
+
+      hlsInstance.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+        const level = hlsInstance.levels[data.level];
+        if (level) {
+          const quality = level.height ? `${level.height}p` : `${Math.round(level.bitrate/1000)}kbps`;
+          console.log(`Chất lượng: ${quality}`);
+        }
+      });
+
+      hlsInstance.on(Hls.Events.ERROR, (event, data) => {
+        if (data.fatal) {
+          m3u8ErrorCount++;
+          if (m3u8ErrorCount >= 3 && episodes[current]?.embed) {
+            showToast('Lỗi m3u8 → chuyển Embed');
+            switchMode('embed');
+            m3u8ErrorCount = 0;
+          } else {
+            showToast('Lỗi mạng, thử lại...');
+            setTimeout(() => hlsInstance && hlsInstance.startLoad(), 1500);
+          }
+        }
       });
     }
 
-    // 26. Đánh dấu tập phim hiện tại
-    function mark(i) {
-      [...grid.children].forEach((btn, k) => btn.classList.toggle('active', k === i));
+    // === ĐO TỐC ĐỘ NATIVE (iOS) ===
+    function startNativeSpeedCheck() {
+      let lastTime = 0, lastLoaded = 0;
+      currentSpeedInterval = setInterval(() => {
+        if (video.buffered.length > 0) {
+          const now = performance.now() / 1000;
+          const loaded = video.buffered.end(0);
+          const timeDiff = now - (lastTime || now);
+          const dataDiff = (loaded - (lastLoaded || 0)) * 8e6;
+          if (timeDiff > 0.5 && dataDiff > 0) {
+            const kbps = Math.round(dataDiff / timeDiff / 1024);
+            if (kbps > 0 && kbps < 20000) {
+              speedHistory.push(kbps);
+              if (speedHistory.length > MAX_HISTORY) speedHistory.shift();
+              if (speedHistory.length >= 3) {
+                const avg = Math.round(speedHistory.reduce((a,b)=>a+b,0)/speedHistory.length);
+                updateSpeed(avg);
+              }
+            }
+          }
+          lastTime = now; lastLoaded = loaded;
+        }
+      }, 1000);
     }
 
-    // 27. Hàm phát tập phim (chuyển đổi theo mode)
-    function playEp(i) {
-      current = i;
-      mark(i);
-      const ep = episodes[i] || {};
-      const embed = ep.embed || ep.link_embed || ''; // Tận dụng từ API
-      const m3u8 = ep.m3u8 || ep.link_m3u8 || ''; // Tận dụng từ API
-      if (source === 'Nguonc') {
-        // Nguonc: Chỉ dùng embed
-        if (embed) renderEmbed(embed);
-        else showToast('Không có embed cho tập này!');
-      } else {
-        // Các source khác: Theo mode người dùng chọn
-        if (currentMode === 'm3u8' && m3u8) renderHLS(m3u8);
-        else if (currentMode === 'embed' && embed) renderEmbed(embed);
-        else if (m3u8) renderHLS(m3u8); // Fallback nếu mode không khớp
-        else if (embed) renderEmbed(embed); // Fallback
-        else showToast('Không có m3u8 hoặc embed cho tập này!');
+    function startSpeedCheck() {
+      if (currentSpeedInterval) clearInterval(currentSpeedInterval);
+      if (!Hls.isSupported()) startNativeSpeedCheck();
+    }
+
+    // === TẠM DỪNG TẢI KHI RỜI TAB ===
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && hlsInstance) {
+        hlsInstance.stopLoad();
+      } else if (!document.hidden && hlsInstance) {
+        hlsInstance.startLoad();
       }
-      // Cập nhật tiêu đề
-      titleBar.textContent = `Tên Phim: ${movieName} | Tập: ${i + 1}`;
-    }
+    });
 
-    // 28. Hàm nhúng iframe embed
-    function renderEmbed(url) {
-      if (!url) return;
-      player.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen style="width:100%;height:100%"></iframe>`;
+    // === KHỞI CHẠY ===
+    if (window.Hls) {
+      initHls();
+    } else {
+      hlsScript.onload = initHls;
     }
+  }
 
-    // 29. Hàm phát HLS
-    function renderHLS(url) {
-      if (!url) return;
-      player.innerHTML = `<video id="v" controls autoplay style="width:100%;height:100%;background:#000"></video>`;
-      const video = document.getElementById('v');
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-      } else {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
-        script.onload = () => {
-          const hls = new Hls();
-          hls.loadSource(url);
-          hls.attachMedia(video);
-        };
-        document.head.appendChild(script);
-      }
+  // === CONTROL ===
+  function rew(seconds) {
+    const video = document.getElementById('v');
+    if (video && !isNaN(video.currentTime)) {
+      video.currentTime += seconds;
+      showToast(`${seconds > 0 ? '+' : ''}${seconds}s`);
+    } else showToast('Không tua được');
+  }
+
+  function prevEp() { if (current > 0) playEp(current - 1); else showToast('Tập đầu!'); }
+  function nextEp() { if (current < episodes.length - 1) playEp(current + 1); else showToast('Tập cuối!'); }
+
+  // === TỰ ĐỘNG THỬ LẠI KHI MẤT MẠNG ===
+  setInterval(() => {
+    if (episodes.length === 0 && slug && source && retryCount < MAX_RETRY) {
+      main();
     }
+  }, 15000);
 
-    // 30. Hàm tua video
-    function rew(seconds) {
-      const video = document.getElementById('v');
-      if (video && !isNaN(video.currentTime)) {
-        video.currentTime += seconds;
-        showToast(`Tua ${seconds > 0 ? '+' : ''}${seconds}s`);
-      } else {
-        showToast('Không thể tua (có thể đang dùng embed bên thứ ba)');
-      }
-    }
-
-    // 31. Hàm chuyển tập trước
-    function prevEp() {
-      if (current > 0) playEp(current - 1);
-      else showToast('Đã ở tập đầu tiên!');
-    }
-
-    // 32. Hàm chuyển tập sau
-    function nextEp() {
-      if (current < episodes.length - 1) playEp(current + 1);
-      else showToast('Đã ở tập cuối cùng!');
-    }
-
-    // 33. Hàm hiển thị toast
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2000);
-    }
-
-    // 34. Khởi chạy hàm main
-    main();
-  </script>
+  // === KHỞI CHẠY ===
+  main();
+</script>
 </body>
 </html>
