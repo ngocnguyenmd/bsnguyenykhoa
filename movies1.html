@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AINEMAX - Anime Siêu Nhẹ</title>
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { background:#0a0a0a; color:#e0e0e0; font-family:Arial, sans-serif; line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
+        .container { width:min(100% - 2rem, 1200px); margin:auto; padding:0 1rem; }
+
+        header { background:#111; padding:1rem 0; position:fixed; top:0; left:0; width:100%; z-index:1000; border-bottom:1px solid #222; }
+        header .container { display:flex; justify-content:space-between; align-items:center; }
+        .logo { font-size:2rem; font-weight:800; background:linear-gradient(90deg,#0A1A2A,#0F2A3F); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        nav a { color:#aaa; text-decoration:none; margin:0 1rem; font-weight:500; }
+
+        .hero { background:linear-gradient(rgba(0,0,0,0.92),rgba(0,0,0,0.98)), url('hoathinh.jpg') center/cover no-repeat fixed; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding-top:80px; }
+        .hero h2 { font-size:clamp(2.5rem,5vw,4rem); font-weight:900; margin-bottom:1rem; background:linear-gradient(90deg,#0A1A2A,#0F2A3F,#0A1A2A); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .hero p { font-size:1.2rem; max-width:600px; color:#ccc; }
+
+        .movies { padding:5rem 0; background:#0f0f0f; }
+        .movies h2 { text-align:center; margin-bottom:2.5rem; font-size:2.3rem; color:#0A1A2A; position:relative; }
+        .movies h2::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:70px; height:3px; background:#0A1A2A; border-radius:2px; }
+
+        .movie-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:1.6rem; padding:0 1rem; }
+        .movie-card { background:#1a1a1a; border-radius:12px; overflow:hidden; border:1px solid #222; transition:transform .25s, border-color .25s; position:relative; }
+        .movie-card:hover { transform:translateY(-6px); border-color:#0A1A2A; }
+        .movie-card img { width:100%; height:250px; object-fit:cover; border-bottom:2px solid #0A1A2A; }
+        .movie-card h3 { font-size:0.9rem; margin:0.7rem 0.6rem 0.3rem; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .quality, .ep-count { position:absolute; top:10px; padding:0.25rem 0.6rem; border-radius:12px; font-size:0.7rem; font-weight:600; background:rgba(10,26,42,0.95); color:#fff; border:1px solid rgba(255,255,255,0.15); }
+        .quality { right:10px; }
+        .ep-count { left:10px; }
+        .movie-buttons { display:flex; gap:0.4rem; margin:0.5rem 0.6rem 0.7rem; }
+        .btn { flex:1; padding:0.4rem; font-size:0.72rem; background:linear-gradient(135deg,#0A1A2A,#0F2A3F); color:#fff; text-decoration:none; border-radius:6px; text-align:center; font-weight:600; }
+        .btn:hover { background:linear-gradient(135deg,#0F2A3F,#142F47); }
+
+        /* Popup */
+        .popup { position:fixed; inset:0; background:rgba(0,0,0,0.92); display:flex; align-items:center; justify-content:center; z-index:1001; display:none; padding:1rem; }
+        .popup-content { background:#1a1a1a; padding:2rem; border-radius:16px; max-width:500px; width:100%; text-align:center; border:1px solid #0A1A2A; }
+        .popup h3 { color:#0F2A3F; margin-bottom:1rem; }
+        .ep-list { display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; margin:1rem 0; max-height:300px; overflow-y:auto; }
+        .ep-btn { background:#222; color:#fff; border:none; padding:0.5rem 1rem; border-radius:8px; cursor:pointer; font-size:0.85rem; min-width:60px; }
+        .ep-btn:hover, .ep-btn.active { background:#0A1A2A; }
+
+        @media (max-width:768px) { .movie-grid { grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">AINEMAX</h1>
+            <nav>
+                <a href="#home">Trang Chủ</a>
+                <a href="#library">Thư Viện</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Anime - Hoạt Hình</h2>
+            <p>Chỉ cần <code>Tên</code> – thêm phim dễ như chơi!</p>
+        </div>
+    </section>
+
+    <section id="library" class="movies">
+        <div class="container">
+            <h2>Thư Viện Anime</h2>
+            <div class="movie-grid" id="grid"></div>
+        </div>
+    </section>
+
+    <!-- Popup chọn tập -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h3 id="popup-title">Chọn tập</h3>
+            <div class="ep-list" id="ep-list"></div>
+            <button id="close-popup" class="btn" style="background:#333; margin-top:1rem;">Đóng</button>
+        </div>
+    </div>
+
+    <script>
+        const grid = document.getElementById('grid');
+        const popup = document.getElementById('popup');
+        const epList = document.getElementById('ep-list');
+        const popupTitle = document.getElementById('popup-title');
+        let currentLinks = [];
+
+        // Đóng popup
+        document.getElementById('close-popup').onclick = () => popup.style.display = 'none';
+        popup.onclick = e => { if (e.target === popup) popup.style.display = 'none'; };
+
+        async function loadAnime() {
+            grid.innerHTML = '<p style="text-align:center; color:#aaa; grid-column:1/-1;">Đang tải...</p>';
+            try {
+                const res = await fetch('anime1.txt');
+                if (!res.ok) throw 'Không tìm thấy anime.txt';
+                const text = await res.text();
+                const blocks = text.trim().split(/\n\s*\n/).filter(b => b.trim());
+
+                const fragment = document.createDocumentFragment();
+
+                blocks.forEach(block => {
+                    const lines = block.trim().split('\n').map(l => l.trim()).filter(l => l);
+                    if (lines.length < 2) return;
+
+                    const [titleLine, ...videoLines] = lines;
+                    const [title, poster, quality = 'HD'] = titleLine.split('|').map(s => s.trim());
+
+                    if (!title || !poster) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.innerHTML = `
+                        <img src="${poster}" alt="${title}" loading="lazy" onerror="this.src='https://via.placeholder.com/170x250/333/fff?text=No+Image'">
+                        <div class="ep-count">${videoLines.length} tập</div>
+                        <div class="quality">${quality}</div>
+                        <h3 title="${title}">${title}</h3>
+                        <div class="movie-buttons">
+                            <a href="javascript:void(0)" class="btn watch-btn">Xem Phim</a>
+                        </div>
+                    `;
+
+                    // Gắn sự kiện mở popup
+                    card.querySelector('.watch-btn').onclick = () => {
+                        currentLinks = videoLines;
+                        popupTitle.textContent = title;
+                        epList.innerHTML = '';
+                        videoLines.forEach((link, i) => {
+                            const btn = document.createElement('button');
+                            btn.className = 'ep-btn';
+                            btn.textContent = `Tập ${i + 1}`;
+                            btn.onclick = () => {
+                                window.open(link, '_blank');
+                                popup.style.display = 'none';
+                            };
+                            epList.appendChild(btn);
+                        });
+                        popup.style.display = 'flex';
+                    };
+
+                    fragment.appendChild(card);
+                });
+
+                grid.innerHTML = '';
+                grid.appendChild(fragment);
+                if (!blocks.length) grid.innerHTML = '<p style="text-align:center; color:#aaa; grid-column:1/-1;">Chưa có phim nào.</p>';
+
+            } catch (err) {
+                grid.innerHTML = `<p style="text-align:center; color:#f66; grid-column:1/-1;">Lỗi: ${err}</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadAnime);
+    </script>
+</body>
+</html>
