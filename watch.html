@@ -18,7 +18,7 @@
     .ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:8px;padding:12px;max-width:900px;margin:auto;}
     .ep-btn{width:40px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;font:500 14px/1 sans-serif;border:1px solid #161515;border-radius:6px;cursor:pointer;transition:background .15s,opacity .15s,transform .15s;}
     .ep-btn:hover,.ep-btn.active{background:#ff0000;opacity:.9;transform:scale(1.05)}
-    .ctl-bar,.server-select,.mode-switch{display:flex;gap:10px;justify-content:center;max-width:900px;margin:10px auto;padding:0 12px;}
+    .ctl-bar,.server-select,.mode-switch{display:flex;gap:10px;justify-content:center;max-width:900px;margin:10px auto;padding:0 12px;flex-wrap:wrap;}
     .ctl-btn,.server-btn,.mode-btn{padding:8px 16px;background:#ff0000;color:#fff;border:none;border-radius:6px;font:600 14px/1 sans-serif;cursor:pointer;transition:opacity .15s;}
     .ctl-btn:hover,.server-btn:hover,.mode-btn:hover{opacity:.85}
     .server-btn,.mode-btn{background:#1a1a1a;border:1px solid #ff0000}
@@ -46,6 +46,8 @@
       #player-area{height:56vh}
       .ep-grid{gap:6px}
       #toast{bottom:70px;width:90%}
+      .ctl-bar,.server-select,.mode-switch{gap:8px;}
+      .ctl-btn,.server-btn,.mode-btn{padding:8px 12px;font-size:13px;}
     }
   </style>
 </head>
@@ -79,10 +81,10 @@
   </div>
 </div>
 
+
 <script>
-const p = new URLSearchParams(location.search);
-const slug = p.get('slug');
-const source = p.get('source');
+let slug = new URLSearchParams(location.search).get('slug');
+let source = new URLSearchParams(location.search).get('source');
 
 const playerArea = document.getElementById('player-area');
 const grid = document.getElementById('ep-grid');
@@ -96,66 +98,191 @@ const toastEl = document.getElementById('toast');
 
 let servers = [], episodes = [], currentServer = 0, current = 0;
 let movieName = '', hls = null;
-let currentMode = 'm3u8'; // 'm3u8' hoặc 'embed'
+let currentMode = 'm3u8';
 let warned = false;
 
-// ---------------- Toast ----------------
-function showToast(msg){
-  toastEl.textContent = msg;
-  toastEl.classList.add('show');
-  clearTimeout(toastEl.timeout);
-  toastEl.timeout = setTimeout(() => toastEl.classList.remove('show'), 3000);
-}
-
-// ---------------- URL Handling ----------------
-function updateURL(epIndex){
-  const epParam = `e${epIndex+1}`;
-  const newUrl = `${location.pathname}?slug=${slug}&source=${source}&${epParam}`;
-  history.pushState({ep: epIndex}, '', newUrl);
-}
-function getEpFromURL(){
-  for(let i=1; i<=500; i++) if(p.has(`e${i}`)) return i-1;
+// ---------------- Đọc tập từ URL ----------------
+function getEpisodeFromURL() {
+  const params = new URLSearchParams(location.search);
+  for (let i = 1; i <= 500; i++) {
+    if (params.has(`e${i}`)) return i - 1;
+  }
   return 0;
 }
 
+// ---------------- Cập nhật URL (không reload) ----------------
+function updateURL(epIndex, newSource = source) {
+  current = epIndex;
+  const epParam = `e${epIndex + 1}`;
+  const newUrl = `${location.pathname}?slug=${slug}&source=${newSource}&${epParam}`;
+  history.replaceState({ ep: epIndex, source: newSource }, '', newUrl);
+}
+
+// ---------------- Đổi nguồn (KHÔNG RELOAD) ----------------
+async function changeSource(newSource) {
+  if (newSource === source) return;
+  if (!slug) return showToast('Thiếu slug!');
+
+  // Cập nhật URL ngay (không reload)
+  updateURL(current, newSource);
+
+  // Cập nhật biến toàn cục
+  source = newSource;
+
+  // Tải lại dữ liệu phim
+  await loadMovieData();
+
+  // Phát lại tập hiện tại
+  if (episodes.length > current) {
+    playEp(current);
+  } else if (episodes.length > 0) {
+    playEp(0);
+  }
+}
+
+// ---------------- Tải dữ liệu phim ----------------
+async function loadMovieData() {
+  let api = '';
+  if (source === 'Nguonc') api = `https://phim.nguonc.com/api/film/${slug}`;
+  else if (source === 'Phimapi') api = `https://phimapi.com/phim/${slug}`;
+  else if (source === 'Ophim') api = `https://ophim1.com/v1/api/phim/${slug}`;
+  else return showToast('Nguồn không hỗ trợ!');
+
+  try {
+    const res = await fetch(api);
+    if (!res.ok) throw new Error('API lỗi');
+    const data = await res.json();
+
+    movieName = source === 'Nguonc' ? data.movie?.name :
+                source === 'Phimapi' ? data.movie?.name :
+                data.data?.item?.name || 'Không rõ';
+
+    servers = [];
+
+    if (source === 'Nguonc' && Array.isArray(data.movie?.episodes)) {
+      data.movie.episodes.forEach((g, i) => {
+        const items = Array.isArray(g.items) ? g.items : [];
+        if (items.length) servers.push({ server_name: g.server_name || `Server ${i + 1}`, server_data: items });
+      });
+    } else if (source === 'Phimapi' && Array.isArray(data.episodes)) {
+      data.episodes.forEach((s, i) => {
+        const d = Array.isArray(s.server_data) ? s.server_data : [];
+        if (d.length) servers.push({ server_name: s.server_name || `Server ${i + 1}`, server_data: d });
+      });
+    } else if (source === 'Ophim' && Array.isArray(data.data?.item?.episodes)) {
+      data.data.item.episodes.forEach((g, i) => {
+        const d = Array.isArray(g.server_data) ? g.server_data : [];
+        if (d.length) servers.push({ server_name: g.server_name || `Server ${i + 1}`, server_data: d });
+      });
+    }
+
+    if (!servers.length) {
+      playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Không có tập phim nào</p>';
+      showToast('Không tìm thấy tập phim!');
+      return false;
+    }
+
+    renderServerSelect();
+    switchServer(0);
+    renderModeSwitch();
+    return true;
+  } catch (e) {
+    console.error(e);
+    playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Lỗi tải dữ liệu</p>';
+    showToast('Không thể kết nối API!');
+    return false;
+  }
+}
+
+// ---------------- Thêm nút chọn nguồn ----------------
+function addSourceSwitcher() {
+  const ctlBar = document.querySelector('.ctl-bar');
+  if (!ctlBar.querySelector('.source-switcher')) {
+    const btn = document.createElement('button');
+    btn.className = 'ctl-btn source-switcher';
+    btn.textContent = 'Nguồn';
+    btn.style.background = '#ff6600';
+    btn.onclick = showSourcePopup;
+    const nextBtn = ctlBar.querySelector('button[onclick="nextEp()"]');
+    ctlBar.insertBefore(btn, nextBtn);
+  }
+}
+
+// ---------------- Popup chọn nguồn ----------------
+function showSourcePopup() {
+  const existing = document.getElementById('source-popup');
+  if (existing) existing.remove();
+
+  const sources = ['Ophim', 'Phimapi', 'Nguonc'].map(v => ({ name: v, value: v }));
+
+  const popup = document.createElement('div');
+  popup.id = 'source-popup';
+  popup.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:10001;';
+
+  const box = document.createElement('div');
+  box.style.cssText = 'background:#1a1a1a;padding:24px;border-radius:12px;max-width:320px;width:90%;text-align:center;color:#fff;border:2px solid #ff6600;';
+
+  const title = document.createElement('p');
+  title.textContent = 'Chọn nguồn phát';
+  title.style.cssText = 'margin-bottom:16px;font-weight:700;font-size:18px;';
+  box.appendChild(title);
+
+  sources.forEach(src => {
+    const btn = document.createElement('button');
+    btn.textContent = src.name;
+    btn.style.cssText = `
+      display:block;width:100%;margin:8px 0;padding:12px;
+      background:${source === src.value ? '#ff6600' : '#333'};
+      color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;
+    `;
+    btn.onmouseover = () => btn.style.opacity = '0.9';
+    btn.onmouseout = () => btn.style.opacity = '1';
+    btn.onclick = () => changeSource(src.value).then(() => popup.remove());
+    box.appendChild(btn);
+  });
+
+  const close = document.createElement('button');
+  close.textContent = 'Đóng';
+  close.style.cssText = 'margin-top:16px;padding:10px 20px;background:#555;color:#fff;border:none;border-radius:6px;cursor:pointer;';
+  close.onclick = () => popup.remove();
+  box.appendChild(close);
+
+  popup.appendChild(box);
+  document.body.appendChild(popup);
+  popup.onclick = e => e.target === popup && popup.remove();
+}
+
 // ---------------- Play Episode ----------------
-function playEp(i){
-  if(i < 0 || i >= episodes.length) return;
+function playEp(i) {
+  if (i < 0 || i >= episodes.length) return;
   current = i;
   mark(i);
-  updateURL(i);
+  updateURL(i); // Cập nhật URL
 
   const ep = episodes[i] || {};
   const embed = ep.embed || ep.link_embed || '';
   const m3u8 = ep.m3u8 || ep.link_m3u8 || '';
 
-  titleBar.textContent = `Tên Phim: ${movieName} | Tập: ${i+1}`;
+  titleBar.textContent = `Tên Phim: ${movieName} | Tập: ${i + 1}`;
   warned = false;
 
-  // Ưu tiên mode người dùng chọn
-  if (currentMode === 'embed' && embed) {
-    renderEmbed(embed);
-  } else if (currentMode === 'm3u8' && m3u8) {
-    renderHLS(m3u8, embed); // embed là fallback
-  } else if (m3u8) {
-    renderHLS(m3u8, embed);
-  } else if (embed) {
-    renderEmbed(embed);
-  } else {
+  if (currentMode === 'embed' && embed) renderEmbed(embed);
+  else if (currentMode === 'm3u8' && m3u8) renderHLS(m3u8, embed);
+  else if (m3u8) renderHLS(m3u8, embed);
+  else if (embed) renderEmbed(embed);
+  else {
     playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Không có link phát!</p>';
     showToast('Không có nguồn!');
   }
 }
 
 // ---------------- Render Embed ----------------
-function renderEmbed(url){
-  playerArea.innerHTML = `
-    <iframe src="${url}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%"></iframe>
-  `;
+function renderEmbed(url) {
+  playerArea.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%"></iframe>`;
 }
 
-// ---------------- Render HLS + Fallback ----------------
-function renderHLS(m3u8Url, fallbackEmbed){
+// ---------------- Render HLS ----------------
+function renderHLS(m3u8Url, fallbackEmbed) {
   playerArea.innerHTML = `
     <video id="hls-video" controls playsinline style="width:100%;height:100%;background:#000;"></video>
     <div class="loading-overlay"><div class="spinner"></div></div>
@@ -164,42 +291,33 @@ function renderHLS(m3u8Url, fallbackEmbed){
   const video = document.getElementById('hls-video');
   const loading = playerArea.querySelector('.loading-overlay');
   video.muted = true;
-
   let hasPlayed = false;
 
   const startPlay = () => {
     if (hasPlayed) return;
-    video.play().catch(() => {
-      showToast('Nhấn Play để xem');
-    });
+    video.play().catch(() => showToast('Nhấn Play để xem'));
     hasPlayed = true;
   };
 
-  if(Hls.isSupported()){
-    if(hls) hls.destroy();
+  if (Hls.isSupported()) {
+    if (hls) hls.destroy();
     hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-
     hls.loadSource(m3u8Url);
     hls.attachMedia(video);
-
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
       loading.style.display = 'none';
       startPlay();
     });
-
-    hls.on(Hls.Events.ERROR, (event, data) => {
-      if(data.fatal){
-        console.warn('HLS lỗi, chuyển sang embed');
+    hls.on(Hls.Events.ERROR, (e, d) => {
+      if (d.fatal) {
         loading.style.display = 'none';
-        if(fallbackEmbed && currentMode !== 'embed'){
+        if (fallbackEmbed && currentMode !== 'embed') {
           showToast('M3U8 lỗi → chuyển Embed');
           setTimeout(() => renderEmbed(fallbackEmbed), 500);
-        } else {
-          showToast('Lỗi phát video!');
-        }
+        } else showToast('Lỗi phát video!');
       }
     });
-  } else if(video.canPlayType('application/vnd.apple.mpegurl')){
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = m3u8Url;
     video.addEventListener('loadedmetadata', () => {
       loading.style.display = 'none';
@@ -207,20 +325,15 @@ function renderHLS(m3u8Url, fallbackEmbed){
     });
   } else {
     loading.style.display = 'none';
-    if(fallbackEmbed){
+    if (fallbackEmbed) {
       showToast('Không hỗ trợ HLS → dùng Embed');
       renderEmbed(fallbackEmbed);
-    } else {
-      showToast('Trình duyệt không hỗ trợ!');
-    }
+    } else showToast('Trình duyệt không hỗ trợ!');
   }
 
-  // Kết thúc → next
   video.addEventListener('ended', nextEp);
-
-  // Cảnh báo 2 phút trước
   video.addEventListener('timeupdate', () => {
-    if(!warned && video.duration && video.currentTime >= video.duration - 120){
+    if (!warned && video.duration && video.currentTime >= video.duration - 120) {
       warned = true;
       popup.style.visibility = 'visible';
       popup.style.opacity = '1';
@@ -229,135 +342,134 @@ function renderHLS(m3u8Url, fallbackEmbed){
 }
 
 // ---------------- Mode Switch ----------------
-function switchMode(mode){
+function switchMode(mode) {
   currentMode = mode;
-  [...modeSwitch.children].forEach((btn, i) => {
-    btn.classList.toggle('active', (i===0 && mode==='m3u8') || (i===1 && mode==='embed'));
-  });
-  if(current >= 0) playEp(current);
+  [...modeSwitch.children].forEach((b, i) => b.classList.toggle('active', (i === 0 && mode === 'm3u8') || (i === 1 && mode === 'embed')));
+  if (current >= 0) playEp(current);
 }
 
-function renderModeSwitch(){
+function renderModeSwitch() {
   modeSwitch.innerHTML = '';
   const hasEmbed = episodes.some(ep => ep.embed || ep.link_embed);
   const hasM3u8 = episodes.some(ep => ep.m3u8 || ep.link_m3u8);
-  if(hasEmbed && hasM3u8){
-    const m3u8Btn = Object.assign(document.createElement('button'), {
-      className: 'mode-btn', textContent: 'M3U8', onclick: () => switchMode('m3u8')
-    });
-    const embedBtn = Object.assign(document.createElement('button'), {
-      className: 'mode-btn', textContent: 'Embed', onclick: () => switchMode('embed')
-    });
-    modeSwitch.append(m3u8Btn, embedBtn);
+  if (hasEmbed && hasM3u8) {
+    modeSwitch.append(
+      Object.assign(document.createElement('button'), { className: 'mode-btn', textContent: 'M3U8', onclick: () => switchMode('m3u8') }),
+      Object.assign(document.createElement('button'), { className: 'mode-btn', textContent: 'Embed', onclick: () => switchMode('embed') })
+    );
     switchMode(currentMode);
   }
 }
 
 // ---------------- Server Switch ----------------
-function switchServer(i){
+function switchServer(i) {
+  if (i < 0 || i >= servers.length) return;
   currentServer = i;
   episodes = servers[i].server_data || [];
-  [...serverSelect.children].forEach((b,k) => b.classList.toggle('active', k===i));
+  [...serverSelect.children].forEach((b, k) => b.classList.toggle('active', k === i));
   renderGrid();
   renderModeSwitch();
-  const urlEp = getEpFromURL();
-  playEp(urlEp < episodes.length ? urlEp : 0);
+  playEp(Math.min(current, episodes.length - 1));
 }
 
-function renderServerSelect(){
+// ---------------- Render Server Select ----------------
+function renderServerSelect() {
   serverSelect.innerHTML = '';
-  if(servers.length > 1){
-    servers.forEach((s,i) => {
-      const b = Object.assign(document.createElement('button'), {
-        className: 'server-btn',
-        textContent: s.server_name || `Server ${i+1}`,
-        onclick: () => switchServer(i)
-      });
-      if(i===currentServer) b.classList.add('active');
-      serverSelect.appendChild(b);
+  if (!servers.length) return;
+
+  servers.forEach((s, i) => {
+    const count = Array.isArray(s.server_data) ? s.server_data.length : 0;
+    if (count === 0) return;
+    const name = s.server_name || `Server ${i + 1}`;
+    const btn = Object.assign(document.createElement('button'), {
+      className: 'server-btn',
+      textContent: `${name} (${count})`,
+      onclick: () => switchServer(i)
     });
-  }
+    if (i === currentServer) btn.classList.add('active');
+    serverSelect.appendChild(btn);
+  });
 }
 
 // ---------------- Grid ----------------
-function renderGrid(){
+function renderGrid() {
   grid.innerHTML = '';
-  episodes.forEach((ep,i) => {
+  episodes.forEach((_, i) => {
     const b = Object.assign(document.createElement('div'), {
       className: 'ep-btn',
-      textContent: i+1,
+      textContent: i + 1,
       onclick: () => playEp(i)
     });
-    if(i===current) b.classList.add('active');
+    if (i === current) b.classList.add('active');
     grid.appendChild(b);
   });
 }
 
-function mark(i){
-  [...grid.children].forEach((b,k) => b.classList.toggle('active', k===i));
+function mark(i) {
+  [...grid.children].forEach((b, k) => b.classList.toggle('active', k === i));
 }
 
 // ---------------- Navigation ----------------
-function prevEp(){ if(current>0) playEp(current-1); else showToast('Đang ở tập đầu!'); }
-function nextEp(){ if(current<episodes.length-1) playEp(current+1); else showToast('Hết tập!'); }
+function prevEp() { if (current > 0) playEp(current - 1); else showToast('Đang ở tập đầu!'); }
+function nextEp() { if (current < episodes.length - 1) playEp(current + 1); else showToast('Hết tập!'); }
 
-function seekForward(){
-  const video = document.getElementById('hls-video');
-  if(video) video.currentTime = Math.min(video.currentTime+30, video.duration||Infinity);
+function seekForward() {
+  const v = document.getElementById('hls-video');
+  if (v) v.currentTime = Math.min(v.currentTime + 30, v.duration || Infinity);
 }
-function seekBackward(){
-  const video = document.getElementById('hls-video');
-  if(video) video.currentTime = Math.max(video.currentTime-30,0);
+function seekBackward() {
+  const v = document.getElementById('hls-video');
+  if (v) v.currentTime = Math.max(v.currentTime - 30, 0);
 }
 
 // ---------------- Popup ----------------
 popupYes.onclick = () => { popup.style.opacity = '0'; setTimeout(() => popup.style.visibility = 'hidden', 200); nextEp(); };
 popupNo.onclick = () => { popup.style.opacity = '0'; setTimeout(() => popup.style.visibility = 'hidden', 200); };
 
+// ---------------- Toast ----------------
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastEl.timeout);
+  toastEl.timeout = setTimeout(() => toastEl.classList.remove('show'), 3000);
+}
+
 // ---------------- Main ----------------
-async function main(){
-  if(!slug || !source){
+async function main() {
+  const params = new URLSearchParams(location.search);
+  slug = params.get('slug');
+  source = params.get('source');
+
+  if (!slug || !source) {
     playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Thiếu slug/source</p>';
     showToast('Thiếu thông tin!');
     return;
   }
 
-  let api = '';
-  if(source==='Nguonc') api = `https://phim.nguonc.com/api/film/${slug}`;
-  if(source==='Phimapi') api = `https://phimapi.com/phim/${slug}`;
-  if(source==='Ophim') api = `https://ophim1.com/v1/api/phim/${slug}`;
+  addSourceSwitcher();
 
-  try {
-    const res = await fetch(api);
-    const data = await res.json();
+  // Lấy tập từ URL
+  current = getEpisodeFromURL();
 
-    movieName = source==='Nguonc'? data.movie.name :
-                source==='Phimapi'? data.movie.name :
-                data.data?.item?.name || 'Không rõ';
+  // Tải dữ liệu
+  const success = await loadMovieData();
+  if (!success) return;
 
-    if(source==='Nguonc') servers = [{server_name:'Vietsub #1', server_data: data.movie.episodes?.[0]?.items || []}];
-    else if(source==='Phimapi') servers = data.episodes || [];
-    else if(source==='Ophim') servers = [{server_name:'Vietsub #1', server_data: data.data.item.episodes?.[0]?.server_data || []}];
-
-    if(!servers.length || !servers[0].server_data.length){
-      playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Không có tập phim</p>';
-      showToast('Không có tập nào!');
-      return;
-    }
-
-    renderServerSelect();
-    switchServer(0);
-    renderModeSwitch();
-
-    window.addEventListener('popstate', e => {
-      if(e.state?.ep !== undefined) playEp(e.state.ep);
-    });
-
-  } catch(e){
-    console.error(e);
-    playerArea.innerHTML = '<p style="color:#f66;text-align:center;">Lỗi tải dữ liệu</p>';
-    showToast('Không thể kết nối API!');
+  // Phát tập hiện tại
+  if (current < episodes.length) {
+    playEp(current);
+  } else if (episodes.length > 0) {
+    current = 0;
+    playEp(0);
   }
+
+  window.addEventListener('popstate', e => {
+    if (e.state?.ep !== undefined) {
+      current = e.state.ep;
+      source = e.state.source || source;
+      loadMovieData().then(() => playEp(current));
+    }
+  });
 }
 
 // ---------------- Run ----------------
