@@ -1,94 +1,288 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Anime - CINEMAX</title>
-    <style>
-        body { background:#0a0a0a; color:#e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; margin:0; padding:0; }
-        .container { width: min(100% - 2rem, 1000px); margin: 2rem auto; padding: 0 1rem; }
-        .detail-container { background: #1a1a1a; border-radius: 16px; padding: 1.5rem; border: 1px solid #222; }
-        .detail-poster { width: 100%; max-width: 300px; border-radius: 12px; border: 2px solid #0A1A2A; float: left; margin-right: 1.5rem; margin-bottom: 1rem; }
-        .detail-info { margin-top: 1rem; color: #aaa; font-size: 0.95rem; }
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; background: linear-gradient(135deg, #0A1A2A, #0F2A3F); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; transition: 0.2s; }
-        .btn:hover { background: linear-gradient(135deg, #0F2A3F, #142F47); transform: translateY(-1px); }
-        .back-btn { background: #333; color: #ccc; }
-        .watch-now-big { font-size:1.2rem; padding:1rem 2.5rem; margin-top:1.5rem; }
-        @media (max-width: 768px) { .detail-poster { float: none; display: block; margin: 0 auto 1rem; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết Anime - CINEMAX</title>
+  <style>
+    :root {
+      --primary: #e50914;
+      --bg-dark: #0f0f0f;
+      --card-bg: #1a1a1a;
+      --text: #fff;
+      --text-muted: #aaa;
+      --border: #333;
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* CONTAINER */
+    .container {
+      width: min(100% - 2rem, 1100px);
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    /* KHUNG CHI TIẾT */
+    .detail-container {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from {
+        box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
+      }
+      to {
+        box-shadow: 0 0 40px rgba(229, 9, 20, 0.9);
+      }
+    }
+
+    /* VIỀN NEON */
+    .detail-container::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background: linear-gradient(45deg, var(--primary), #ff4d4d, #ff6b6b, var(--primary));
+      opacity: 0;
+      filter: blur(2px);
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+    .detail-container:hover::before {
+      opacity: 0.8;
+    }
+
+    /* POSTER */
+    .detail-poster {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      float: left;
+      margin-right: 1.8rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      transition: var(--transition);
+      background: #111;
+    }
+
+    .detail-poster:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 25px rgba(229, 9, 20, 0.6);
+    }
+
+    /* THÔNG TIN PHIM */
+    .detail-title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-meta {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .detail-info {
+      color: var(--text);
+      font-size: 1rem;
+      margin-top: 1.2rem;
+      line-height: 1.7;
+    }
+
+    /* NÚT CHUNG */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.6rem;
+      background: linear-gradient(135deg, var(--primary), #b00610);
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: var(--transition);
+      box-shadow: 0 6px 18px rgba(229, 9, 20, 0.4);
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 25px rgba(229, 9, 20, 0.7);
+      background: linear-gradient(135deg, #ff1a1a, var(--primary));
+    }
+
+    /* NÚT QUAY LẠI */
+    .back-btn {
+      background: #333;
+      color: var(--text-muted);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
+    }
+
+    /* NÚT XEM NGAY TO */
+    .watch-now-big {
+      font-size: 1.2rem;
+      padding: 1rem 2.8rem;
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), #b00610);
+      box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+    }
+
+    /* CLEAR FLOAT */
+    .detail-container::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .detail-poster {
+        float: none;
+        display: block;
+        margin: 0 auto 1.2rem;
+      }
+
+      .detail-container {
+        padding: 1.4rem;
+      }
+
+      .detail-title {
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- NÚT QUAY LẠI & TRANG CHỦ -->
-        <div style="text-align:center; margin:2rem 0;">
-            <a href="index1.html" class="btn back-btn">Quay Lại</a>
-            <a href="movies.html" class="btn" style="margin-left:0.5rem;">Trang Chủ</a>
-        </div>
-
-        <!-- NỘI DUNG CHI TIẾT -->
-        <div class="detail-container" id="detail-content">
-            <p style="text-align:center; color:#999;">Đang tải chi tiết phim...</p>
-        </div>
+  <div class="container">
+    <!-- NÚT QUAY LẠI & TRANG CHỦ -->
+    <div style="text-align: center; margin: 2rem 0;">
+      <a href="index1.html" class="btn back-btn">← Quay Lại</a>
+      <a href="movies.html" class="btn" style="margin-left: 0.5rem;">🏠 Trang Chủ</a>
     </div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const slug = urlParams.get('slug');
-        const source = urlParams.get('source') || 'Phimapi';
+    <!-- KHUNG CHI TIẾT -->
+    <div class="detail-container" id="detail-content">
+      <p style="text-align:center; color:#999;">Đang tải chi tiết phim...</p>
+    </div>
+  </div>
 
-        const apis = {
-            Nguonc: `https://phim.nguonc.com/api/film/${slug}`,
-            Phimapi: `https://phimapi.com/phim/${slug}`,
-            Ophim: `https://ophim1.com/v1/api/phim/${slug}`
-        };
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get("slug");
+    const source = urlParams.get("source") || "Phimapi";
 
-        async function loadDetail() {
-            const container = document.getElementById('detail-content');
-            try {
-                const res = await fetch(apis[source]);
-                if (!res.ok) throw new Error();
-                const data = await res.json();
+    const apis = {
+      Nguonc: `https://phim.nguonc.com/api/film/${slug}`,
+      Phimapi: `https://phimapi.com/phim/${slug}`,
+      Ophim: `https://ophim1.com/v1/api/phim/${slug}`,
+    };
 
-                let movie, cdn = '';
-                if (source === 'Nguonc') movie = data.movie;
-                else if (source === 'Phimapi') movie = data.movie;
-                else if (source === 'Ophim') { movie = data.data.item; cdn = data.APP_DOMAIN_CDN_IMAGE || 'https://img.ophim.live/uploads/movies/'; }
+    // Lấy URL poster tùy source
+    function getPosterUrl(movie, cdn = "") {
+      let url = "";
+      if (source === "Phimapi") {
+        url = movie.thumb_url || movie.poster_url || "";
+      } else if (source === "Ophim") {
+        url = movie.poster_url || movie.thumb_url || "";
+        if (url && cdn) url = cdn + "/" + url.replace(/^\/+/, "");
+      } else {
+        url = movie.poster_url || movie.thumb_url || "";
+        if (url && cdn) url = cdn + "/" + url.replace(/^\/+/, "");
+      }
+      return url ? url.trim() : "";
+    }
 
-                const poster = movie.poster_url 
-                    ? (cdn ? `${cdn}/${movie.poster_url}` : movie.poster_url)
-                    : (movie.thumb_url ? (cdn ? `${cdn}/${movie.thumb_url}` : movie.thumb_url) : '');
+    async function loadDetail() {
+      const container = document.getElementById("detail-content");
+      try {
+        const res = await fetch(apis[source]);
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
 
-                // TÍNH TỔNG SỐ TẬP (chỉ hiển thị số, không liệt kê)
-                let totalEpisodes = 'N/A';
-                if (source === 'Nguonc') totalEpisodes = movie.total_episodes || (movie.episodes?.[0]?.items?.length) || 'N/A';
-                else if (source === 'Phimapi') totalEpisodes = movie.episode_total || (movie.episodes?.[0]?.server_data?.length) || 'N/A';
-                else if (source === 'Ophim') totalEpisodes = movie.episode_total || (movie.episodes?.reduce((a,s) => Math.max(a, s.server_data?.length || 0), 0)) || 'N/A';
-
-                container.innerHTML = `
-                    ${poster ? `<img src="${poster}" alt="${movie.name}" class="detail-poster">` : ''}
-                    <h1 style="color:#0F2A3F; margin:0.5rem 0;">${movie.name || 'Không rõ'}</h1>
-                    <p style="font-size:1.1rem; line-height:1.7; color:#ddd;">${movie.content || movie.description || 'Không có mô tả'}</p>
-                    <div class="detail-info">
-                        <p>
-                            <strong>Năm:</strong> ${movie.year || 'N/A'} | 
-                            <strong>Chất lượng:</strong> ${movie.quality || 'N/A'} | 
-                            <strong>Ngôn ngữ:</strong> ${movie.lang || movie.language || 'N/A'} | 
-                            <strong>Tổng tập:</strong> ${totalEpisodes}
-                        </p>
-                    </div>
-                    <!-- NÚT XEM NGAY -->
-                    <div style="text-align:center; margin-top:2rem;">
-                        <a href="watch.html?slug=${slug}&source=${source}&e=1" class="btn watch-now-big">
-                            Xem Ngay 
-                        </a>
-                    </div>
-                `;
-            } catch {
-                container.innerHTML = `<p style="color:#f66; text-align:center;">Không tải được chi tiết. <a href="index.html" style="color:#0A1A2A;">Quay lại</a></p>`;
-            }
+        let movie, cdn = "";
+        if (source === "Nguonc") movie = data.movie;
+        else if (source === "Phimapi") movie = data.movie;
+        else if (source === "Ophim") {
+          movie = data.data.item;
+          cdn = data.APP_DOMAIN_CDN_IMAGE || "https://img.ophim.live/uploads/movies";
         }
 
-        document.addEventListener('DOMContentLoaded', loadDetail);
-    </script>
+        const poster = getPosterUrl(movie, cdn);
+
+        // Tổng số tập
+        let totalEpisodes = "N/A";
+        if (source === "Nguonc") {
+          totalEpisodes = movie.total_episodes || movie.episodes?.[0]?.items?.length || "N/A";
+        } else if (source === "Phimapi") {
+          const eps = movie.episode_total || movie.episodes?.[0]?.server_data?.length || 0;
+          totalEpisodes = eps > 0 ? eps : "N/A";
+        } else if (source === "Ophim") {
+          const max = movie.episodes?.reduce((a, s) => Math.max(a, s.server_data?.length || 0), 0) || 0;
+          totalEpisodes = max > 0 ? max : "N/A";
+        }
+
+        container.innerHTML = `
+          ${poster ? `<img src="${poster}" alt="${movie.name || "Anime"}" class="detail-poster" loading="lazy">` : ""}
+          <h1 class="detail-title">${movie.name || "Không rõ"}</h1>
+          <p class="detail-info">${movie.content || movie.description || "Không có mô tả"}</p>
+
+          <div class="detail-info" style="margin-top:1rem;">
+            <p><strong>Năm:</strong> ${movie.year || "N/A"} |
+            <strong>Chất lượng:</strong> ${movie.quality || "N/A"} |
+            <strong>Ngôn ngữ:</strong> ${movie.lang || movie.language || "N/A"} |
+            <strong>Tổng tập:</strong> ${totalEpisodes}</p>
+          </div>
+
+          <div style="text-align:center; margin-top:2rem;">
+            <a href="watch.html?slug=${slug}&source=${source}&e=1" class="btn watch-now-big">▶ Xem Ngay</a>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p style="color:#f66; text-align:center;">
+          Không tải được chi tiết. <a href="index1.html" style="color:var(--primary)">Quay lại</a>
+        </p>`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
 </body>
 </html>
