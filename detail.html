@@ -5,189 +5,270 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chi Tiết Anime - CINEMAX</title>
   <style>
-    :root {
-      --primary: #e50914;
-      --bg-dark: #0f0f0f;
-      --card-bg: #1a1a1a;
-      --text: #fff;
-      --text-muted: #aaa;
-      --border: #333;
-      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-      --transition: all 0.3s ease;
-    }
+  :root {
+    --primary: #e50914;
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text: #fff;
+    --text-muted: #aaa;
+    --border: #333;
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+    --transition: all 0.3s ease;
+  }
 
-    body {
-      background: var(--bg-dark);
-      color: var(--text);
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
+  body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
 
-    /* CONTAINER */
+  /* CONTAINER */
+  .container {
+    width: min(100% - 2rem, 1100px);
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+  }
+
+  /* KHUNG CHI TIẾT - DÙNG FLEXBOX */
+  .detail-container {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 1.8rem;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    animation: glowPulse 3s ease-in-out infinite alternate;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  @keyframes glowPulse {
+  
+  }
+
+  /* VIỀN NEON */
+  .detail-container::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, var(--primary), #ff4d4d, #ff6b6b, var(--primary));
+    opacity: 0;
+    filter: blur(2px);
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+  .detail-container:hover::before {
+    opacity: 0.8;
+  }
+
+  /* POSTER */
+  .detail-poster {
+    flex: 0 0 280px;
+    max-width: 100%;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    
+    transition: var(--transition);
+    background: #111;
+    object-fit: cover;
+    loading: lazy;
+  }
+  .detail-poster:hover {
+    transform: scale(1.04);
+   
+  }
+
+  /* THÔNG TIN PHIM */
+  .detail-info-wrapper {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .detail-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-meta {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .detail-info {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-top: 0.8rem;
+    flex-grow: 1;
+  }
+
+  /* NÚT CHUNG */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.6rem;
+    min-height: 48px;
+    background: linear-gradient(135deg, var(--primary), #b00610);
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    transition: var(--transition);
+   
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .btn:hover {
+    transform: translateY(-4px) scale(1.03);
+   
+    background: linear-gradient(135deg, #ff1a1a, var(--primary));
+  }
+
+  .btn:active {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  /* NÚT QUAY LẠI */
+  .back-btn {
+    background: #333;
+    color: var(--text-muted);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1rem;
+  }
+  .back-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    
+  }
+
+  /* NÚT XEM NGAY TO */
+  .watch-now-big {
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+    margin-top: 1.2rem;
+    background: linear-gradient(135deg, var(--primary), #b00610);
+   
+    width: 20%;
+    max-width: 180px;
+  }
+
+  /* === TỐI ƯU CHO SAMSUNG A04 (mobile nhỏ < 480px) === */
+  @media (max-width: 480px) {
     .container {
-      width: min(100% - 2rem, 1100px);
-      margin: 2.5rem auto;
-      padding: 0 1rem;
+      margin: 1.5rem auto;
+      padding: 0 0.8rem;
     }
 
-    /* KHUNG CHI TIẾT */
     .detail-container {
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      border-radius: 18px;
-      padding: 2rem;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-      position: relative;
-      overflow: hidden;
-      transition: var(--transition);
-      animation: glowPulse 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes glowPulse {
-      from {
-        box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
-      }
-      to {
-        box-shadow: 0 0 40px rgba(229, 9, 20, 0.9);
-      }
-    }
-
-    /* VIỀN NEON */
-    .detail-container::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: 20px;
-      background: linear-gradient(45deg, var(--primary), #ff4d4d, #ff6b6b, var(--primary));
-      opacity: 0;
-      filter: blur(2px);
-      transition: opacity 0.4s ease;
-      z-index: -1;
-    }
-    .detail-container:hover::before {
-      opacity: 0.8;
-    }
-
-    /* POSTER */
-    .detail-poster {
-      width: 100%;
-      max-width: 300px;
+      padding: 1.2rem;
+      gap: 1rem;
       border-radius: 14px;
-      border: 2px solid var(--border);
-      float: left;
-      margin-right: 1.8rem;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      transition: var(--transition);
-      background: #111;
     }
 
-    .detail-poster:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 25px rgba(229, 9, 20, 0.6);
+    .detail-poster {
+      flex: 0 0 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
     }
 
-    /* THÔNG TIN PHIM */
     .detail-title {
-      font-size: 1.9rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
-      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+      text-align: center;
     }
 
     .detail-meta {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      text-align: center;
     }
 
     .detail-info {
-      color: var(--text);
-      font-size: 1rem;
-      margin-top: 1.2rem;
-      line-height: 1.7;
+      font-size: 0.95rem;
     }
 
-    /* NÚT CHUNG */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.6rem;
-      background: linear-gradient(135deg, var(--primary), #b00610);
-      color: #fff;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
+      width: 100%;
       font-size: 1rem;
-      letter-spacing: 0.3px;
-      transition: var(--transition);
-      box-shadow: 0 6px 18px rgba(229, 9, 20, 0.4);
-      border: none;
+      padding: 0.9rem 1.2rem;
+      min-height: 50px;
     }
 
-    .btn:hover {
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 0 25px rgba(229, 9, 20, 0.7);
-      background: linear-gradient(135deg, #ff1a1a, var(--primary));
-    }
-
-    /* NÚT QUAY LẠI */
-    .back-btn {
-      background: #333;
-      color: var(--text-muted);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .back-btn:hover {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
-    }
-
-    /* NÚT XEM NGAY TO */
     .watch-now-big {
-      font-size: 1.2rem;
-      padding: 1rem 2.8rem;
-      margin-top: 1.5rem;
-      background: linear-gradient(135deg, var(--primary), #b00610);
-      box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+      font-size: 1.1rem;
+      padding: 1rem;
+      margin-top: 1rem;
     }
 
-    /* CLEAR FLOAT */
-    .detail-container::after {
-      content: "";
-      display: block;
-      clear: both;
+    /* Hiệu ứng tap */
+    .detail-poster:active,
+    .btn:active {
+      transform: scale(0.98);
+      transition: 0.15s;
+    }
+  }
+
+  /* === TỐI ƯU CHO LAPTOP (màn hình rộng ≥ 1024px) === */
+  @media (min-width: 1024px) {
+    .detail-container {
+      padding: 2.2rem;
+      gap: 2rem;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .detail-poster {
-        float: none;
-        display: block;
-        margin: 0 auto 1.2rem;
-      }
-
-      .detail-container {
-        padding: 1.4rem;
-      }
-
-      .detail-title {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
+    .detail-poster {
+      flex: 0 0 320px;
     }
-  </style>
+
+    .detail-title {
+      font-size: 2.1rem;
+    }
+
+    .detail-info {
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      padding: 0.9rem 2rem;
+      font-size: 1.05rem;
+    }
+
+    .watch-now-big {
+      font-size: 1.25rem;
+      padding: 1.1rem 3rem;
+      max-width: 420px;
+    }
+  }
+
+  /* === TRUNG GIAN (tablet) === */
+  @media (max-width: 768px) and (min-width: 481px) {
+    .detail-poster {
+      flex: 0 0 260px;
+    }
+    .detail-title {
+      font-size: 1.6rem;
+    }
+  }
+</style>
 </head>
 <body>
   <div class="container">

@@ -8,48 +8,362 @@
   <!-- Preload HLS.js -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.13"></script>
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:'Segoe UI',sans-serif;background:#0a0a0a;color:#eee}
-    a{text-decoration:none}
-    #player-area{width:1100px;max-width:1500px;margin:20px auto;height:60vh;position:relative;overflow:hidden;background:#000;border-radius:12px;box-shadow:0 0 30px rgba(229,9,20,0.4);}
-    #player-area video,#player-area iframe{width:100%;height:100%;border:none;background:#000;}
-    .title-bar{max-width:800px;margin:10px auto 20px;padding:12px;text-align:center;font-weight:700;color:#ff0000;background:#1a1a1a;border:1px solid #ff0000;border-radius:8px;}
-    .ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:8px;padding:12px;max-width:900px;margin:auto;}
-    .ep-btn{width:40px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;font:500 14px/1 sans-serif;border:1px solid #161515;border-radius:6px;cursor:pointer;transition:background .15s,opacity .15s,transform .15s;}
-    .ep-btn:hover,.ep-btn.active{background:#ff0000;opacity:.9;transform:scale(1.05)}
-    .ctl-bar,.server-select,.mode-switch{display:flex;gap:10px;justify-content:center;max-width:900px;margin:10px auto;padding:0 12px;flex-wrap:wrap;}
-    .ctl-btn,.server-btn,.mode-btn{padding:8px 16px;background:#ff0000;color:#fff;border:none;border-radius:6px;font:600 14px/1 sans-serif;cursor:pointer;transition:opacity .15s;}
-    .ctl-btn:hover,.server-btn:hover,.mode-btn:hover{opacity:.85}
-    .server-btn,.mode-btn{background:#1a1a1a;border:1px solid #ff0000}
-    .server-btn.active,.mode-btn.active{background:#ff0000}
-    .back-btn{display:block;max-width:900px;margin:20px auto 40px;padding:12px;background:#ff0000;color:#fff;text-align:center;border-radius:8px;font:600 16px/1 sans-serif;transition:opacity .15s;}
-    .back-btn:hover{opacity:.85}
-    #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:#fff;padding:12px 20px;border-radius:6px;font:500 15px/1 sans-serif;visibility:hidden;opacity:0;transition:opacity .2s;z-index:9999;min-width:200px;text-align:center;}
-    #toast.show{visibility:visible;opacity:1}
+ <style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:'Segoe UI',sans-serif;background:#0a0a0a;color:#eee}
+  a{text-decoration:none}
 
-    /* Popup */
-    #popup-confirm{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10000;visibility:hidden;opacity:0;transition:opacity .2s;}
-    #popup-box{background:#1a1a1a;padding:24px;border-radius:12px;max-width:400px;text-align:center;color:#fff;border:2px solid #ff0000;}
-    #popup-box p{margin-bottom:20px;font-size:16px;}
-    .popup-btn{padding:8px 20px;margin:0 10px;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:opacity .15s;}
-    .popup-btn:hover{opacity:.85;}
-    .popup-yes{background:#ff0000;color:#fff;}
-    .popup-no{background:#555;color:#fff;}
+  /* === PLAYER AREA - RESPONSIVE === */
+  #player-area{
+    width: 100%;
+    max-width: 1400px;
+    margin: 16px auto;
+    height: 60vh;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border-radius: 14px;
+    aspect-ratio: 16 / 9;
+  }
+  #player-area video,
+  #player-area iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+    object-fit: contain;
+  }
 
-    /* Loading */
-    .loading-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:10;}
-    .spinner{width:50px;height:50px;border:5px solid #333;border-top:5px solid #ff0000;border-radius:50%;animation:spin 1s linear infinite;}
-    @keyframes spin{to{transform:rotate(360deg)}}
+  /* === TITLE BAR === */
+  .title-bar{
+    max-width: 900px;
+    margin: 12px auto 18px;
+    padding: 14px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #ff0000;
+    background: #1a1a1a;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    
+  }
 
-    @media(max-width:480px){
-      #player-area{height:56vh}
-      .ep-grid{gap:6px}
-      #toast{bottom:70px;width:90%}
-      .ctl-bar,.server-select,.mode-switch{gap:8px;}
-      .ctl-btn,.server-btn,.mode-btn{padding:8px 12px;font-size:13px;}
+  /* === EPISODE GRID === */
+  .ep-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    padding: 14px;
+    max-width: 1000px;
+    margin: 0 auto 20px;
+    touch-action: pan-y;
+  }
+  .ep-btn{
+    min-width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+    font: 600 14px/1 sans-serif;
+    border: 1.5px solid #161515;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s ease;
+    user-select: none;
+  }
+  .ep-btn:hover,
+  .ep-btn.active{
+    background: #ff0000;
+    color: #fff;
+    transform: scale(1.08);
+    
+  }
+  .ep-btn:active{
+    transform: scale(0.98);
+  }
+
+  /* === CONTROL BAR, SERVER, MODE === */
+  .ctl-bar, .server-select, .mode-switch{
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 12px auto;
+    padding: 0 12px;
+    flex-wrap: wrap;
+  }
+  .ctl-btn, .server-btn, .mode-btn{
+    padding: 10px 18px;
+    min-height: 48px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font: 600 14px/1 sans-serif;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .ctl-btn:hover,
+  .server-btn:hover,
+  .mode-btn:hover{
+    opacity: .9;
+    transform: translateY(-2px);
+  }
+  .server-btn, .mode-btn{
+    background: #1a1a1a;
+    border: 1.5px solid #ff0000;
+  }
+  .server-btn.active, .mode-btn.active{
+    background: #ff0000;
+    
+  }
+
+  /* === BACK BUTTON === */
+  .back-btn{
+    display: block;
+    max-width: 900px;
+    margin: 24px auto 40px;
+    padding: 14px;
+    min-height: 52px;
+    background: #ff0000;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    font: 600 16px/1 sans-serif;
+    transition: all .2s;
+  }
+  .back-btn:hover{
+    opacity: .9;
+    transform: translateY(-3px);
+  }
+
+  /* === TOAST === */
+  #toast{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,.95);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font: 500 15px/1 sans-serif;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease;
+    z-index: 9999;
+    min-width: 220px;
+    text-align: center;
+    border: 1px solid #ff0000;
+  }
+  #toast.show{
+    visibility: visible;
+    opacity: 1;
+    bottom: 30px;
+  }
+
+  /* === POPUP CONFIRM === */
+  #popup-confirm{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease;
+    backdrop-filter: blur(8px);
+  }
+  #popup-confirm.show{
+    visibility: visible;
+    opacity: 1;
+  }
+  #popup-box{
+    background: #1a1a1a;
+    padding: 28px;
+    border-radius: 16px;
+    max-width: 90%;
+    width: 380px;
+    text-align: center;
+    color: #fff;
+    border: 2px solid #ff0000;
+    animation: popIn .3s ease;
+  }
+  @keyframes popIn{
+    from{transform:scale(0.8);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+  #popup-box p{
+    margin-bottom: 22px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .popup-btn{
+    padding: 10px 24px;
+    margin: 0 8px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    min-width: 80px;
+  }
+  .popup-btn:hover{
+    opacity: .9;
+    transform: translateY(-2px);
+  }
+  .popup-yes{
+    background: #ff0000;
+    color: #fff;
+  }
+  .popup-no{
+    background: #555;
+    color: #fff;
+  }
+
+  /* === LOADING === */
+  .loading-overlay{
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 14px;
+  }
+  .spinner{
+    width: 60px;
+    height: 60px;
+    border: 6px solid #333;
+    border-top: 6px solid #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ================================================================== */
+  /* === TỐI ƯU CHO SAMSUNG GALAXY A04 (mobile nhỏ < 480px) === */
+  @media (max-width: 480px) {
+    #player-area{
+      height: 56vh;
+      margin: 12px 8px;
+      border-radius: 12px;
     }
-  </style>
+    .title-bar{
+      margin: 10px 8px 16px;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+    .ep-grid{
+      gap: 8px;
+      padding: 12px 8px;
+      grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+    }
+    .ep-btn{
+      min-width: 48px;
+      height: 48px;
+      font-size: 13px;
+    }
+    .ctl-bar, .server-select, .mode-switch{
+      gap: 8px;
+      padding: 0 8px;
+      margin: 10px 8px;
+    }
+    .ctl-btn, .server-btn, .mode-btn{
+      padding: 10px 14px;
+      font-size: 13px;
+      min-height: 46px;
+    }
+    .back-btn{
+      margin: 20px 8px 40px;
+      padding: 14px;
+      font-size: 15px;
+    }
+    #toast{
+      bottom: 80px;
+      left: 5%;
+      right: 5%;
+      width: auto;
+      transform: none;
+      font-size: 14px;
+    }
+    #popup-box{
+      padding: 20px;
+      max-width: 92%;
+    }
+    #popup-box p{
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .popup-btn{
+      padding: 10px 18px;
+      margin: 0 6px;
+      font-size: 14px;
+    }
+    .spinner{
+      width: 50px;
+      height: 50px;
+      border-width: 5px;
+    }
+  }
+
+  /* === TỐI ƯU CHO LAPTOP (≥ 1024px) === */
+  @media (min-width: 1024px) {
+    #player-area{
+      height: 65vh;
+      max-width: 1000px;
+      border-radius: 16px;
+      
+    }
+    .title-bar{
+      max-width: 1000px;
+      font-size: 1.3rem;
+      padding: 16px;
+    }
+    .ep-grid{
+      max-width: 1000px;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    .ep-btn{
+      min-width: 60px;
+      height: 56px;
+      font-size: 15px;
+    }
+    .ctl-bar, .server-select, .mode-switch{
+      max-width: 1000px;
+      gap: 14px;
+    }
+    .ctl-btn, .server-btn, .mode-btn{
+      padding: 12px 24px;
+      font-size: 15px;
+      min-height: 52px;
+    }
+    .back-btn{
+      max-width: 1000px;
+      padding: 16px;
+      font-size: 17px;
+    }
+  }
+
+  /* === TRUNG GIAN (tablet) === */
+  @media (max-width: 768px) and (min-width: 481px) {
+    #player-area{ height: 58vh; }
+    .ep-grid{ grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); }
+  }
+</style>
 </head>
 <body>
 
@@ -201,7 +515,7 @@ function addSourceSwitcher() {
     const btn = document.createElement('button');
     btn.className = 'ctl-btn source-switcher';
     btn.textContent = 'Nguồn';
-    btn.style.background = '#ff6600';
+    btn.style.background = 'brown';
     btn.onclick = showSourcePopup;
     const nextBtn = ctlBar.querySelector('button[onclick="nextEp()"]');
     ctlBar.insertBefore(btn, nextBtn);
@@ -290,7 +604,7 @@ function renderHLS(m3u8Url, fallbackEmbed) {
 
   const video = document.getElementById('hls-video');
   const loading = playerArea.querySelector('.loading-overlay');
-  video.muted = true;
+  video.muted = false;
   let hasPlayed = false;
 
   const startPlay = () => {
