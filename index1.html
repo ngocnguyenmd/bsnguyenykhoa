@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Phim Hay - Xem Phim Online</title>
 <style>
+  /* === PHONG CÁCH CƠ BẢN (giữ nguyên từ code gốc) === */
 :root {
   --primary: #e50914;
   --bg-dark: #0f0f0f;
@@ -347,41 +348,43 @@ nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-b
     </div>
   </div>
 <script>
-  //SLUG MAP
-  const GENRE_SLUG_MAP = {
-    'Hành Động': 'hanh-dong', 'Phiêu Lưu': 'phieu-luu', 'Hoạt Hình': 'hoat-hinh', 'Hài': 'phim-hai',
-    'Hài Hước': 'hai-huoc', 'Hình Sự': 'hinh-su', 'Tài Liệu': 'tai-lieu', 'Chính Kịch': 'chinh-kich',
-    'Gia Đình': 'gia-dinh', 'Giả Tưởng': 'gia-tuong', 'Lịch Sử': 'lich-su', 'Kinh Dị': 'kinh-di',
-    'Nhạc': 'am-nhac', 'Âm Nhạc': 'am-nhac', 'Bí Ẩn': 'bi-an', 'Lãng Mạn': 'lang-man',
-    'Tình Cảm': 'tinh-cam', 'Khoa Học Viễn Tưởng': 'khoa-hoc-vien-tuong', 'Gây Cấn': 'gay-can',
-    'Chiến Tranh': 'chien-tranh', 'Tâm Lý': 'tam-ly', 'Cổ Trang': 'co-trang', 'Miền Tây': 'mien-tay',
-    'Phim 18+': 'phim-18', 'Thể Thao': 'the-thao', 'Võ Thuật': 'vo-thuat', 'Viễn Tưởng': 'vien-tuong',
-    'Khoa Học': 'khoa-hoc', 'Thần Thoại': 'than-thoai', 'Học Đường': 'hoc-duong', 'Kinh Điển': 'kinh-dien'
-  };
+//SLUG MAP
+const GENRE_SLUG_MAP = {
+  'Hành Động': 'hanh-dong', 'Phiêu Lưu': 'phieu-luu', 'Hoạt Hình': 'hoat-hinh', 'Hài': 'phim-hai',
+  'Hài Hước': 'hai-huoc', 'Hình Sự': 'hinh-su', 'Tài Liệu': 'tai-lieu', 'Chính Kịch': 'chinh-kich',
+  'Gia Đình': 'gia-dinh', 'Giả Tưởng': 'gia-tuong', 'Lịch Sử': 'lich-su', 'Kinh Dị': 'kinh-di',
+  'Nhạc': 'am-nhac', 'Âm Nhạc': 'am-nhac', 'Bí Ẩn': 'bi-an', 'Lãng Mạn': 'lang-man',
+  'Tình Cảm': 'tinh-cam', 'Khoa Học Viễn Tưởng': 'khoa-hoc-vien-tuong', 'Gây Cấn': 'gay-can',
+  'Chiến Tranh': 'chien-tranh', 'Tâm Lý': 'tam-ly', 'Cổ Trang': 'co-trang', 'Miền Tây': 'mien-tay',
+  'Phim 18+': 'phim-18', 'Thể Thao': 'the-thao', 'Võ Thuật': 'vo-thuat', 'Viễn Tưởng': 'vien-tuong',
+  'Khoa Học': 'khoa-hoc', 'Thần Thoại': 'than-thoai', 'Học Đường': 'hoc-duong', 'Kinh Điển': 'kinh-dien'
+};
 
-  const COUNTRY_SLUG_MAP = {
-    'Âu Mỹ': 'au-my', 'Hàn Quốc': 'han-quoc', 'Trung Quốc': 'trung-quoc', 'Nhật Bản': 'nhat-ban',
-    'Thái Lan': 'thai-lan', 'Hồng Kông': 'hong-kong', 'Ấn Độ': 'an-do', 'Anh': 'anh',
-    'Pháp': 'phap', 'Canada': 'canada', 'Đức': 'duc', 'Tây Ban Nha': 'tay-ban-nha', 'Úc': 'uc',
-    'Ý': 'y', 'Hà Lan': 'ha-lan', 'Indonesia': 'indonesia', 'Nga': 'nga', 'Mexico': 'mexico',
-    'Ba Lan': 'ba-lan', 'Malaysia': 'malaysia', 'Bồ Đào Nha': 'bo-dao-nha', 'Thụy Điển': 'thuy-dien',
-    'Philippines': 'philippines', 'Đan Mạch': 'dan-mach', 'Thụy Sĩ': 'thuy-si', 'Ukraina': 'ukraina',
-    'UAE': 'uae', 'Ả Rập Xê Út': 'a-rap-xe-ut', 'Thổ Nhĩ Kỳ': 'tho-nhi-ky', 'Brazil': 'brazil',
-    'Na Uy': 'na-uy', 'Nam Phi': 'nam-phi', 'Việt Nam': 'viet-nam', 'Đài Loan': 'dai-loan',
-    'Châu Phi': 'chau-phi', 'Bỉ': 'bi', 'Ireland': 'ireland', 'Colombia': 'colombia',
-    'Phần Lan': 'phan-lan', 'Chile': 'chile', 'Hy Lạp': 'hy-lap', 'Nigeria': 'nigeria',
-    'Argentina': 'argentina', 'Singapore': 'singapore', 'Quốc Gia Khác': 'quoc-gia-khac'
-  };
-  const TYPE_MAP = {
-    'phim-bo': 'phim-bo', 'phim-le': 'phim-le',
-    'thuyet-minh': 'phim-thuyet-minh', 'chieu-rap': 'phim-chieu-rap'
-  };
- const CUTEE_MENU = {
+const COUNTRY_SLUG_MAP = {
+  'Âu Mỹ': 'au-my', 'Hàn Quốc': 'han-quoc', 'Trung Quốc': 'trung-quoc', 'Nhật Bản': 'nhat-ban',
+  'Thái Lan': 'thai-lan', 'Hồng Kông': 'hong-kong', 'Ấn Độ': 'an-do', 'Anh': 'anh',
+  'Pháp': 'phap', 'Canada': 'canada', 'Đức': 'duc', 'Tây Ban Nha': 'tay-ban-nha', 'Úc': 'uc',
+  'Ý': 'y', 'Hà Lan': 'ha-lan', 'Indonesia': 'indonesia', 'Nga': 'nga', 'Mexico': 'mexico',
+  'Ba Lan': 'ba-lan', 'Malaysia': 'malaysia', 'Bồ Đào Nha': 'bo-dao-nha', 'Thụy Điển': 'thuy-dien',
+  'Philippines': 'philippines', 'Đan Mạch': 'dan-mach', 'Thụy Sĩ': 'thuy-si', 'Ukraina': 'ukraina',
+  'UAE': 'uae', 'Ả Rập Xê Út': 'a-rap-xe-ut', 'Thổ Nhĩ Kỳ': 'tho-nhi-ky', 'Brazil': 'brazil',
+  'Na Uy': 'na-uy', 'Nam Phi': 'nam-phi', 'Việt Nam': 'viet-nam', 'Đài Loan': 'dai-loan',
+  'Châu Phi': 'chau-phi', 'Bỉ': 'bi', 'Ireland': 'ireland', 'Colombia': 'colombia',
+  'Phần Lan': 'phan-lan', 'Chile': 'chile', 'Hy Lạp': 'hy-lap', 'Nigeria': 'nigeria',
+  'Argentina': 'argentina', 'Singapore': 'singapore', 'Quốc Gia Khác': 'quoc-gia-khac'
+};
+
+const TYPE_MAP = {
+  'phim-bo': 'phim-bo', 'phim-le': 'phim-le',
+  'thuyet-minh': 'phim-thuyet-minh', 'chieu-rap': 'phim-chieu-rap'
+};
+
+const CUTEE_MENU = {
   'Phim mới':               { mode: 'default' },
   'Phim bộ':                { mode: 'type',   filter: 'phim-bo' },
   'Phim lẻ':                { mode: 'type',   filter: 'phim-le' },
   'Shows':                  { mode: 'cutee',  slug: 'tv-shows' },
-  'Hoạt hình':              { mode: 'cutee',  slug: 'hoat-hinh' },  // ĐÃ SỬA: cutee, không phải genre
+  'Hoạt hình':              { mode: 'cutee',  slug: 'hoat-hinh' },
   'Phim vietsub':           { mode: 'cutee',  slug: 'vietsub' },
   'Phim thuyết minh':       { mode: 'cutee',  slug: 'thuyet-minh' },
   'Phim lồng tiếng':        { mode: 'cutee',  slug: 'long-tieng' },
@@ -391,82 +394,76 @@ nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-b
   'Subteam':                { mode: 'cutee',  slug: 'subteam' },
   'Phim chiếu rạp':         { mode: 'cutee',  slug: 'phim-chieu-rap' }
 };
-  // CẤU HÌNH NGUỒN
-  const API_SOURCES = {
-    Ophim: {
-      name: 'Ophim',
-      defaultUrl: p => `https://ophim1.com/v1/api/home?page=${p}`,
-      genreUrl: (slug, p) => `https://ophim1.com/v1/api/danh-sach/${slug}?page=${p}`,
-     genreUrlTheLoai: (slug, p) => `https://ophim1.com/v1/api/the-loai/${slug}?page=${p}`,
-      countryUrl: (slug, p) => `https://ophim1.com/v1/api/quoc-gia/${slug}?page=${p}`,
-      yearUrl: (year, p) => `https://ophim1.com/v1/api/nam-phat-hanh/${year}?page=${p}`,
-      typeUrl: (type, p) => `https://ophim1.com/v1/api/danh-sach/${type}?page=${p}`,
-      cuteeUrl: (slug, p) => `https://ophim1.com/v1/api/danh-sach/${slug}?page=${p}`,
-      searchUrl: slug => `https://ophim1.com/v1/api/phim/${slug}`,
-      parser: d => d?.data?.items || [],
-      searchParser: d => d?.data?.item ? [d.data.item] : [],
-      getCdn: () => 'https://img.ophim.live/uploads/movies/'
-    },
-    Phimapi: {
-      name: 'Phimapi',
-      defaultUrl: p => `https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3?page=${p}`,
-      genreUrl: (slug, p) => `https://phimapi.com/v1/api/danh-sach/${slug}?page=${p}`,
-      genreUrlTheLoai: (slug, p) => `https://phimapi.com/v1/api/the-loai/${slug}?page=${p}`,
-      countryUrl: (slug, p) => `https://phimapi.com/v1/api/quoc-gia/${slug}?page=${p}`,
-      yearUrl: (year, p) => `https://phimapi.com/v1/api/nam/${year}?page=${p}`,
-      typeUrl: (type, p) => `https://phimapi.com/v1/api/danh-sach/${type}?page=${p}`,
-      cuteeUrl: (slug, p) => `https://phimapi.com/v1/api/danh-sach/${slug}?page=${p}`,
-      searchUrl: slug => `https://phimapi.com/phim/${slug}`,
-      parser: d => d?.data?.items || d?.items || [],
-      searchParser: d => d?.movie ? [d.movie] : [],
-      getCdn: d => (d?.data?.APP_DOMAIN_CDN_IMAGE || 'https://phimimg.com/').replace(/\/+$/, '') + '/'
-    },
-    Nguonc: {
-      name: 'Nguonc',
-      defaultUrl: p => `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${p}`,
-      genreUrl: (slug, p) => `https://phim.nguonc.com/api/films/danh-sach/${slug}?page=${p}`,
-      countryUrl: (slug, p) => `https://phim.nguonc.com/api/films/quoc-gia/${slug}?page=${p}`,
-      yearUrl: (year, p) => `https://phim.nguonc.com/api/films/nam-phat-hanh/${year}?page=${p}`,
-      typeUrl: (type, p) => `https://phim.nguonc.com/api/films/danh-sach/${type}?page=${p}`,
-      cuteeUrl: (slug, p) => {
-        const map = { 'tv-shows': 'tv-shows', 'dang-chieu': 'phim-dang-chieu', 'hoat-hinh': 'hoat-hinh' };
-        return `https://phim.nguonc.com/api/films/danh-sach/${map[slug] || slug}?page=${p}`;
-      },
-      searchUrl: slug => `https://phim.nguonc.com/api/film/${slug}`,
-      parser: d => d?.items || [],
-      searchParser: d => d?.movie ? [d.movie] : [],
-      getCdn: () => 'https://phim.nguonc.com/public/images/Post/'
-    }
-  };
 
-  const ITEMS_PER_PAGE = 10;
-  let currentMode = 'default', currentFilter = null, currentPage = 1;
-  let currentSearchQuery = '';
-  const imageCache = new Map();
+// CẤU HÌNH NGUỒN
+const API_SOURCES = {
+  Ophim: {
+    name: 'Ophim',
+    defaultUrl: p => `?page=${p}`,
+    genreUrl: (slug, p) => `https://ophim1.com/v1/api/danh-sach/${slug}?page=${p}`,
+    genreUrlTheLoai: (slug, p) => `https://ophim1.com/v1/api/the-loai/${slug}?page=${p}`,
+    countryUrl: (slug, p) => `https://ophim1.com/v1/api/quoc-gia/${slug}?page=${p}`,
+    yearUrl: (year, p) => `https://ophim1.com/v1/api/nam-phat-hanh/${year}?page=${p}`,
+    typeUrl: (type, p) => `https://ophim1.com/v1/api/danh-sach/${type}?page=${p}`,
+    cuteeUrl: (slug, p) => `https://ophim1.com/v1/api/danh-sach/${slug}?page=${p}`,
+    searchUrl: slug => `https://ophim1.com/v1/api/phim/${slug}`,
+    parser: d => d?.data?.items || [],
+    searchParser: d => d?.data?.item ? [d.data.item] : [],
+    getCdn: () => 'https://img.ophim.live/uploads/movies/'
+  },
+  Phimapi: {
+    name: 'Phimapi',
+    defaultUrl: p => `https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3?page=${p}`,
+    genreUrl: (slug, p) => `https://phimapi.com/v1/api/danh-sach/${slug}?page=${p}`,
+    genreUrlTheLoai: (slug, p) => `https://phimapi.com/v1/api/the-loai/${slug}?page=${p}`,
+    countryUrl: (slug, p) => `https://phimapi.com/v1/api/quoc-gia/${slug}?page=${p}`,
+    yearUrl: (year, p) => `https://phimapi.com/v1/api/nam/${year}?page=${p}`,
+    typeUrl: (type, p) => `https://phimapi.com/v1/api/danh-sach/${type}?page=${p}`,
+    cuteeUrl: (slug, p) => `https://phimapi.com/v1/api/danh-sach/${slug}?page=${p}`,
+    searchUrl: slug => `https://phimapi.com/phim/${slug}`,
+    parser: d => d?.data?.items || d?.items || [],
+    searchParser: d => d?.movie ? [d.movie] : [],
+    getCdn: d => (d?.data?.APP_DOMAIN_CDN_IMAGE || 'https://phimimg.com/').replace(/\/+$/, '') + '/'
+  },
+  Nguonc: {
+    name: 'Nguonc',
+    defaultUrl: p => `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${p}`,
+    genreUrl: (slug, p) => `https://phim.nguonc.com/api/films/danh-sach/${slug}?page=${p}`,
+    countryUrl: (slug, p) => `https://phim.nguonc.com/api/films/quoc-gia/${slug}?page=${p}`,
+    yearUrl: (year, p) => `https://phim.nguonc.com/api/films/nam-phat-hanh/${year}?page=${p}`,
+    typeUrl: (type, p) => `https://phim.nguonc.com/api/films/danh-sach/${type}?page=${p}`,
+    cuteeUrl: (slug, p) => {
+      const map = { 'tv-shows': 'tv-shows', 'dang-chieu': 'phim-dang-chieu', 'hoat-hinh': 'hoat-hinh' };
+      return `https://phim.nguonc.com/api/films/danh-sach/${map[slug] || slug}?page=${p}`;
+    },
+    searchUrl: slug => `https://phim.nguonc.com/api/film/${slug}`,
+    parser: d => d?.items || [],
+    searchParser: d => d?.movie ? [d.movie] : [],
+    getCdn: () => 'https://phim.nguonc.com/public/images/Post/'
+  }
+};
 
-  // === HÀM ĐẾM SỐ TẬP + LINK CHUNG CHO 3 NGUỒN ===
+const ITEMS_PER_PAGE = 10;
+let currentMode = 'default', currentFilter = null, currentPage = 1;
+let currentSearchQuery = '';
+const imageCache = new Map();
+
+// === HÀM ĐẾM SỐ TẬP ===
 function getEpisodeDisplay(item) {
   if (!item) return '';
-
   const movie = item.movie || item;
   const episodes = item.episodes || movie.episodes;
 
-  // Nếu không có dữ liệu tập phim => bỏ qua
   if (
     (!movie.episode_current && !movie.current_episode) &&
     (!movie.episode_total && !movie.total_episodes) &&
     !Array.isArray(episodes)
   ) {
-    // Dữ liệu danh sách phim: chỉ hiển thị loại phim
     const type = movie.type || movie.tmdb?.type;
     return type === 'tv' ? 'Phim bộ' : 'Phim lẻ';
   }
 
-  // === Nếu là chi tiết phim có dữ liệu tập ===
-  let current = '';
-  let total = '';
-  let links = 0;
-
+  let current = '', total = '', links = 0;
   const currStr = movie.episode_current || movie.current_episode || '';
   const totalStr = movie.episode_total || movie.total_episodes || '';
 
@@ -491,431 +488,563 @@ function getEpisodeDisplay(item) {
   return display;
 }
 
+// DOM READY
+document.addEventListener('DOMContentLoaded', () => {
+  renderDropdowns();
+  initYearDropdown();
+  attachNavEvents();
+  loadContent('default');     // 1. Hiện phim mới
+  loadCustomMenu();           // 2. TỰ ĐỘNG HIỆN section từ txt
+});
 
-  // DOM READY
-  document.addEventListener('DOMContentLoaded', () => {
-    renderDropdowns();
-    initYearDropdown();
-    attachNavEvents();
-    loadContent('default');
-  });
-
-  // RENDER DROPDOWNS
-  function renderDropdowns() {
-    renderGenreDropdown();
-    renderCountryDropdown();
-    renderCuteeDropdown();
-  }
-
-  function renderGenreDropdown() {
-    const list = document.getElementById('genre-list');
-    list.innerHTML = '<div class="dropdown-grid"></div>';
-    const grid = list.querySelector('.dropdown-grid');
-    const half = Math.ceil(Object.keys(GENRE_SLUG_MAP).length / 2);
-    const keys = Object.keys(GENRE_SLUG_MAP);
-    for (let i = 0; i < keys.length; i += half) {
-      const col = document.createElement('div');
-      for (let j = i; j < Math.min(i + half, keys.length); j++) {
-        const item = document.createElement('div');
-        item.className = 'dropdown-item';
-        item.textContent = keys[j];
-        item.dataset.slug = GENRE_SLUG_MAP[keys[j]];
-        item.dataset.mode = 'genre';
-        col.appendChild(item);
-      }
-      grid.appendChild(col);
-    }
-  }
-
-  function renderCountryDropdown() {
-    const list = document.getElementById('country-list');
-    list.innerHTML = '<div class="dropdown-grid"></div>';
-    const grid = list.querySelector('.dropdown-grid');
-    const half = Math.ceil(Object.keys(COUNTRY_SLUG_MAP).length / 2);
-    const keys = Object.keys(COUNTRY_SLUG_MAP);
-    for (let i = 0; i < keys.length; i += half) {
-      const col = document.createElement('div');
-      for (let j = i; j < Math.min(i + half, keys.length); j++) {
-        const item = document.createElement('div');
-        item.className = 'dropdown-item';
-        item.textContent = keys[j];
-        item.dataset.slug = COUNTRY_SLUG_MAP[keys[j]];
-        item.dataset.mode = 'country';
-        col.appendChild(item);
-      }
-      grid.appendChild(col);
-    }
-  }
-
-  function renderCuteeDropdown() {
-    const list = document.getElementById('cutee-list');
-    list.innerHTML = '<div class="dropdown-grid"></div>';
-    const grid = list.querySelector('.dropdown-grid');
-    const items = Object.keys(CUTEE_MENU);
-    const half = Math.ceil(items.length / 2);
-    for (let i = 0; i < items.length; i += half) {
-      const col = document.createElement('div');
-      for (let j = i; j < Math.min(i + half, items.length); j++) {
-        const label = items[j];
-        const cfg = CUTEE_MENU[label];
-        const item = document.createElement('div');
-        item.className = 'dropdown-item';
-        item.textContent = label;
-        item.dataset.mode = cfg.mode;
-        if (cfg.slug) item.dataset.slug = cfg.slug;
-        if (cfg.filter) item.dataset.filter = cfg.filter;
-        col.appendChild(item);
-      }
-      grid.appendChild(col);
-    }
-  }
-
-  function initYearDropdown() {
-    const yearList = document.getElementById('year-list');
-    yearList.innerHTML = '';
-    for (let y = 2028; y >= 1969; y--) {
-      const item = document.createElement('div');
-      item.className = 'dropdown-item';
-      item.textContent = y;
-      item.dataset.year = y;
-      item.dataset.mode = 'year';
-      yearList.appendChild(item);
-    }
-  }
-
-  // EVENT LISTENERS
-  function attachNavEvents() {
-    document.getElementById('home-link').onclick = e => { e.preventDefault(); loadContent('default'); };
-    document.getElementById('phim-bo').onclick = e => { e.preventDefault(); loadContent('type', 'phim-bo', 1); };
-    document.getElementById('phim-le').onclick = e => { e.preventDefault(); loadContent('type', 'phim-le', 1); };
-    document.getElementById('phim-chieu-rap').onclick = e => { e.preventDefault(); loadContent('cutee', 'phim-chieu-rap', 1); };
-    const searchBtn = document.getElementById('search-btn');
-    const searchInput = document.getElementById('search-input');
-    searchBtn.onclick = search;
-    searchInput.addEventListener('keypress', ev => ev.key === 'Enter' && search());
-    searchInput.addEventListener('input', () => {
-      if (!searchInput.value.trim()) loadContent('default');
-    });
-  }
-
-  // SECTION MANAGEMENT
-  function createSection(id, title) {
-    const sec = document.createElement('div');
-    sec.id = id;
-    sec.innerHTML = `
-      <div class="section-title">${title}</div>
-      <div class="movie-grid" id="${id}-grid"></div>
-      <div class="pagination" id="${id}-pagination"></div>
-    `;
-    return sec;
-  }
-
-  function showSection(section) {
-    document.querySelectorAll('.container > div[id$="-section"]').forEach(s => s.style.display = 'none');
-    const container = document.querySelector('.container');
-    const existing = document.getElementById(section.id);
-    if (existing) {
-      existing.style.display = 'block';
-      container.insertBefore(existing, container.firstChild);
-    } else {
-      container.insertBefore(section, container.firstChild);
-      section.style.display = 'block';
-    }
-  }
-
-  // PRELOAD IMAGE
-  function preloadImage(src) {
-    if (imageCache.has(src)) return imageCache.get(src);
-    const img = new Image();
-    img.decoding = 'async';
-    img.src = src;
-    imageCache.set(src, img);
-    return img;
-  }
-
-  // FETCH CHUNG
-  async function fetchFromSource(source, page, mode, filter, isSearch = false) {
-    let urls = [];
-
-    if (isSearch) {
-      urls.push(source.searchUrl(filter));
-    // === SỬA ĐOẠN NÀY TRONG fetchFromSource ===
-} else if (mode === 'genre') {
-  // CHỈ DÙNG CHO NAV "Thể loại" → chính xác thể loại
-  if (source.genreUrlTheLoai) {
-    urls.push(source.genreUrlTheLoai(filter, page));
-  } else {
-    urls.push(source.genreUrl(filter, page)); // Nguonc fallback
-  }
-} else if (mode === 'cutee' || mode === 'type') {
-  // CHỈ DÙNG CHO MODAL "Danh Sách" → danh sách tổng hợp
-  const slug = filter || source.cuteeUrl?.slug;
-  urls.push(source.cuteeUrl?.(slug, page) || source.genreUrl(filter, page));
-} else if (mode === 'cutee' || mode === 'type') {
-  // Danh sách tổng hợp: dùng danh-sach
-  urls.push(source.cuteeUrl ? source.cuteeUrl(filter, page) : source.genreUrl(filter, page));
-} else if (mode === 'country') {
-  urls.push(source.countryUrl(filter, page));
-} else if (mode === 'year') {
-  urls.push(source.yearUrl(filter, page));
-} else {
-  urls.push(source.defaultUrl(page));
+// RENDER DROPDOWNS
+function renderDropdowns() {
+  renderGenreDropdown();
+  renderCountryDropdown();
+  renderCuteeDropdown();
 }
 
-    const fetchPromises = urls.map(async (url) => {
-      try {
-        const res = await fetch(url, { mode: 'cors' });
-        if (!res.ok) return null;
-        const data = await res.json();
-        const parser = isSearch ? (source.searchParser || source.parser) : source.parser;
-        const items = parser(data) || [];
-        if (items.length > 0) {
-          return { data, items, cdn: typeof source.getCdn === 'function' ? source.getCdn(data) : source.getCdn() };
-        }
-        return null;
-      } catch (e) {
-        console.warn(`[${source.name}] Lỗi URL: ${url}`, e.message);
-        return null;
+function renderGenreDropdown() {
+  const list = document.getElementById('genre-list');
+  list.innerHTML = '<div class="dropdown-grid"></div>';
+  const grid = list.querySelector('.dropdown-grid');
+  const half = Math.ceil(Object.keys(GENRE_SLUG_MAP).length / 2);
+  const keys = Object.keys(GENRE_SLUG_MAP);
+  for (let i = 0; i < keys.length; i += half) {
+    const col = document.createElement('div');
+    for (let j = i; j < Math.min(i + half, keys.length); j++) {
+      const item = document.createElement('div');
+      item.className = 'dropdown-item';
+      item.textContent = keys[j];
+      item.dataset.slug = GENRE_SLUG_MAP[keys[j]];
+      item.dataset.mode = 'genre';
+      col.appendChild(item);
+    }
+    grid.appendChild(col);
+  }
+}
+
+function renderCountryDropdown() {
+  const list = document.getElementById('country-list');
+  list.innerHTML = '<div class="dropdown-grid"></div>';
+  const grid = list.querySelector('.dropdown-grid');
+  const half = Math.ceil(Object.keys(COUNTRY_SLUG_MAP).length / 2);
+  const keys = Object.keys(COUNTRY_SLUG_MAP);
+  for (let i = 0; i < keys.length; i += half) {
+    const col = document.createElement('div');
+    for (let j = i; j < Math.min(i + half, keys.length); j++) {
+      const item = document.createElement('div');
+      item.className = 'dropdown-item';
+      item.textContent = keys[j];
+      item.dataset.slug = COUNTRY_SLUG_MAP[keys[j]];
+      item.dataset.mode = 'country';
+      col.appendChild(item);
+    }
+    grid.appendChild(col);
+  }
+}
+
+function renderCuteeDropdown() {
+  const list = document.getElementById('cutee-list');
+  let grid = list.querySelector('.dropdown-grid');
+  if (!grid) {
+    list.innerHTML = '<div class="dropdown-grid"></div>';
+    grid = list.querySelector('.dropdown-grid');
+  } else {
+    const items = grid.querySelectorAll('.dropdown-item');
+    items.forEach(item => {
+      if (!item.dataset.mode || item.dataset.mode !== 'custom-search') {
+        item.remove();
       }
     });
-
-    const results = await Promise.all(fetchPromises);
-    const valid = results.find(r => r !== null);
-    if (!valid) return [];
-
-    // === XỬ LÝ TỪNG ITEM ===
-    return valid.items.map(item => {
-      let thumb = '';
-      if (source.name === 'Phimapi') {
-        thumb = item.poster_url || item.poster || item.thumb_url || item.thumb || '';
-      } else {
-        thumb = item.thumb_url || item.thumb || item.poster_url || item.poster || '';
-      }
-
-      if (thumb && !thumb.startsWith('http') && !thumb.startsWith('//')) {
-        thumb = valid.cdn + thumb.replace(/^\/+/, '');
-      }
-
-      return {
-        name: item.name || item.origin_name || item.title || 'Không rõ',
-        thumb_url: thumb || 'https://via.placeholder.com/200x300/333/fff?text=No+Image',
-        episodeDisplay: getEpisodeDisplay(item),
-        slug: item.slug || '',
-        source: source.name
-      };
-    }).filter(m => m.slug);
   }
 
-  // XEN KẼ NGUỒN
-  function interleaveSourcesProperly(results, isSearch = false) {
-    if (isSearch) {
-      const final = [];
-      let idx = Array(results.length).fill(0);
-      while (final.length < ITEMS_PER_PAGE) {
-        let added = false;
-        for (let i = 0; i < results.length; i++) {
-          if (idx[i] < results[i].length) {
-            final.push(results[i][idx[i]]);
+  const items = Object.keys(CUTEE_MENU);
+  const half = Math.ceil(items.length / 2);
+  for (let i = 0; i < items.length; i += half) {
+    const col = document.createElement('div');
+    for (let j = i; j < Math.min(i + half, items.length); j++) {
+      const label = items[j];
+      const cfg = CUTEE_MENU[label];
+      const item = document.createElement('div');
+      item.className = 'dropdown-item';
+      item.textContent = label;
+      item.dataset.mode = cfg.mode;
+      if (cfg.slug) item.dataset.slug = cfg.slug;
+      if (cfg.filter) item.dataset.filter = cfg.filter;
+      col.appendChild(item);
+    }
+    grid.appendChild(col);
+  }
+}
+
+function initYearDropdown() {
+  const yearList = document.getElementById('year-list');
+  yearList.innerHTML = '';
+  for (let y = 2028; y >= 1969; y--) {
+    const item = document.createElement('div');
+    item.className = 'dropdown-item';
+    item.textContent = y;
+    item.dataset.year = y;
+    item.dataset.mode = 'year';
+    yearList.appendChild(item);
+  }
+}
+
+// EVENT LISTENERS
+function attachNavEvents() {
+  document.getElementById('home-link').onclick = e => { e.preventDefault(); loadContent('default'); };
+  document.getElementById('phim-bo').onclick = e => { e.preventDefault(); loadContent('type', 'phim-bo', 1); };
+  document.getElementById('phim-le').onclick = e => { e.preventDefault(); loadContent('type', 'phim-le', 1); };
+  document.getElementById('phim-chieu-rap').onclick = e => { e.preventDefault(); loadContent('cutee', 'phim-chieu-rap', 1); };
+  const searchBtn = document.getElementById('search-btn');
+  const searchInput = document.getElementById('search-input');
+  searchBtn.onclick = search;
+  searchInput.addEventListener('keypress', ev => ev.key === 'Enter' && search());
+  searchInput.addEventListener('input', () => {
+    if (!searchInput.value.trim()) loadContent('default');
+  });
+}
+
+// SECTION MANAGEMENT
+function createSection(id, title) {
+  const sec = document.createElement('div');
+  sec.id = id;
+  sec.innerHTML = `
+    <div class="section-title">${title}</div>
+    <div class="movie-grid" id="${id}-grid"></div>
+    <div class="pagination" id="${id}-pagination"></div>
+  `;
+  return sec;
+}
+
+function showSection(section) {
+  document.querySelectorAll('.container > div[id$="-section"]').forEach(s => {
+    s.style.display = 'none';
+  });
+
+  const container = document.querySelector('.container');
+  if (!container) return console.error('Không có .container!');
+
+  const existing = document.getElementById(section.id);
+  if (existing) {
+    existing.style.display = 'block';
+    container.insertBefore(existing, container.firstChild);
+  } else {
+    container.insertBefore(section, container.firstChild);
+    section.style.display = 'block';
+  }
+}
+
+// PRELOAD IMAGE
+function preloadImage(src) {
+  if (imageCache.has(src)) return imageCache.get(src);
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = src;
+  imageCache.set(src, img);
+  return img;
+}
+
+// FETCH CHUNG
+async function fetchFromSource(source, page, mode, filter, isSearch = false) {
+  let urls = [];
+
+  if (isSearch) {
+    urls.push(source.searchUrl(filter));
+  } else if (mode === 'genre') {
+    if (source.genreUrlTheLoai) {
+      urls.push(source.genreUrlTheLoai(filter, page));
+    } else {
+      urls.push(source.genreUrl(filter, page));
+    }
+  } else if (mode === 'cutee' || mode === 'type') {
+    const slug = filter || '';
+    urls.push(source.cuteeUrl?.(slug, page) || source.genreUrl(filter, page));
+  } else if (mode === 'country') {
+    urls.push(source.countryUrl(filter, page));
+  } else if (mode === 'year') {
+    urls.push(source.yearUrl(filter, page));
+  } else {
+    urls.push(source.defaultUrl(page));
+  }
+
+  const fetchPromises = urls.map(async (url) => {
+    try {
+      const res = await fetch(url, { mode: 'cors' });
+      if (!res.ok) return null;
+      const data = await res.json();
+      const parser = isSearch ? (source.searchParser || source.parser) : source.parser;
+      const items = parser(data) || [];
+      if (items.length > 0) {
+        return { data, items, cdn: typeof source.getCdn === 'function' ? source.getCdn(data) : source.getCdn() };
+      }
+      return null;
+    } catch (e) {
+      console.warn(`[${source.name}] Lỗi URL: ${url}`, e.message);
+      return null;
+    }
+  });
+
+  const results = await Promise.all(fetchPromises);
+  const valid = results.find(r => r !== null);
+  if (!valid) return [];
+
+  return valid.items.map(item => {
+    let thumb = '';
+    if (source.name === 'Phimapi') {
+      thumb = item.poster_url || item.poster || item.thumb_url || item.thumb || '';
+    } else {
+      thumb = item.thumb_url || item.thumb || item.poster_url || item.poster || '';
+    }
+
+    if (thumb && !thumb.startsWith('http') && !thumb.startsWith('//')) {
+      thumb = valid.cdn + thumb.replace(/^\/+/, '');
+    }
+
+    return {
+      name: item.name || item.origin_name || item.title || 'Không rõ',
+      thumb_url: thumb || 'https://via.placeholder.com/200x300/333/fff?text=No+Image',
+      episodeDisplay: getEpisodeDisplay(item),
+      slug: item.slug || '',
+      source: source.name
+    };
+  }).filter(m => m.slug);
+}
+
+// XEN KẼ NGUỒN
+function interleaveSourcesProperly(results, isSearch = false) {
+  if (isSearch) {
+    const final = [];
+    let idx = Array(results.length).fill(0);
+    while (final.length < ITEMS_PER_PAGE) {
+      let added = false;
+      for (let i = 0; i < results.length; i++) {
+        if (idx[i] < results[i].length) {
+          final.push(results[i][idx[i]]);
+          idx[i]++;
+          added = true;
+          if (final.length >= ITEMS_PER_PAGE) break;
+        }
+      }
+      if (!added) break;
+    }
+    return final;
+  } else {
+    const seen = new Set();
+    const final = [];
+    let idx = Array(results.length).fill(0);
+    while (final.length < ITEMS_PER_PAGE) {
+      let added = false;
+      for (let i = 0; i < results.length; i++) {
+        if (idx[i] < results[i].length) {
+          const m = results[i][idx[i]];
+          if (!seen.has(m.slug)) {
+            seen.add(m.slug);
+            final.push(m);
             idx[i]++;
             added = true;
             if (final.length >= ITEMS_PER_PAGE) break;
+          } else {
+            idx[i]++;
           }
         }
-        if (!added) break;
       }
-      return final;
-    } else {
-      const seen = new Set();
-      const final = [];
-      let idx = Array(results.length).fill(0);
-      while (final.length < ITEMS_PER_PAGE) {
-        let added = false;
-        for (let i = 0; i < results.length; i++) {
-          if (idx[i] < results[i].length) {
-            const m = results[i][idx[i]];
-            if (!seen.has(m.slug)) {
-              seen.add(m.slug);
-              final.push(m);
-              idx[i]++;
-              added = true;
-              if (final.length >= ITEMS_PER_PAGE) break;
-            } else {
-              idx[i]++;
-            }
-          }
-        }
-        if (!added) break;
-      }
-      return final;
+      if (!added) break;
     }
+    return final;
   }
+}
 
-  // LOAD CONTENT
-  async function loadContent(mode, filter = null, page = 1) {
-    currentMode = mode; currentFilter = filter; currentPage = page;
-    const title = getTitle(mode, filter);
-    const sectionId = `${mode}-${filter || ''}-section`.replace(/--/g, '-');
-    let section = document.getElementById(sectionId);
-    if (!section) section = createSection(sectionId, title);
-    else section.querySelector('.section-title').textContent = title;
-    showSection(section);
-    const grid = document.getElementById(`${sectionId}-grid`);
-    grid.innerHTML = '<div class="loading">Đang tải từ 3 nguồn...</div>';
-    const sources = Object.values(API_SOURCES);
-    const promises = sources.map(s => fetchFromSource(s, page, mode, filter, false));
-    const allResults = await Promise.all(promises);
-    const movies = interleaveSourcesProperly(allResults, false);
-    grid.innerHTML = '';
+// LOAD CONTENT
+async function loadContent(mode, filter = null, page = 1) {
+  currentMode = mode; currentFilter = filter; currentPage = page;
+  const title = getTitle(mode, filter);
+  const sectionId = `${mode}-${filter || ''}-section`.replace(/--/g, '-');
+  let section = document.getElementById(sectionId);
+  if (!section) section = createSection(sectionId, title);
+  else section.querySelector('.section-title').textContent = title;
+  showSection(section);
+  const grid = document.getElementById(`${sectionId}-grid`);
+  grid.innerHTML = '<div class="loading">Đang tải từ 3 nguồn...</div>';
+  const sources = Object.values(API_SOURCES);
+  const promises = sources.map(s => fetchFromSource(s, page, mode, filter, false));
+  const allResults = await Promise.all(promises);
+  const movies = interleaveSourcesProperly(allResults, false);
+  grid.innerHTML = '';
+  if (movies.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:40px;">Không có phim nào!</div>';
+  } else {
     renderMoviesFinal(movies, grid);
-    renderPagination(page, sectionId, movies.length >= ITEMS_PER_PAGE);
-    section.scrollIntoView({ behavior: 'smooth' });
   }
+  renderPagination(page, sectionId, movies.length >= ITEMS_PER_PAGE);
+  section.scrollIntoView({ behavior: 'smooth' });
+}
 
-  function getTitle(mode, filter) {
-    if (mode === 'default') return 'PHIM MỚI NHÀ BÁNH MÌ';
-    if (mode === 'genre') return `THỂ LOẠI: ${getDisplayName(filter, GENRE_SLUG_MAP).toUpperCase()}`;
-    if (mode === 'country') return `QUỐC GIA: ${getDisplayName(filter, COUNTRY_SLUG_MAP).toUpperCase()}`;
-    if (mode === 'year') return `NĂM: ${filter}`;
-    if (mode === 'type') return { 'phim-bo': 'PHIM BỘ', 'phim-le': 'PHIM LẺ' }[filter] || filter.toUpperCase();
-    if (mode === 'cutee') {
-      const label = Object.keys(CUTEE_MENU).find(k => CUTEE_MENU[k].slug === filter || CUTEE_MENU[k].filter === filter);
-      return label?.toUpperCase() || filter.toUpperCase().replace(/-/g, ' ');
+function getTitle(mode, filter) {
+  if (mode === 'default') return 'PHIM MỚI NHÀ BÁNH MÌ';
+  if (mode === 'genre') return `THỂ LOẠI: ${getDisplayName(filter, GENRE_SLUG_MAP).toUpperCase()}`;
+  if (mode === 'country') return `QUỐC GIA: ${getDisplayName(filter, COUNTRY_SLUG_MAP).toUpperCase()}`;
+  if (mode === 'year') return `NĂM: ${filter}`;
+  if (mode === 'type') return { 'phim-bo': 'PHIM BỘ', 'phim-le': 'PHIM LẺ' }[filter] || filter.toUpperCase();
+  if (mode === 'cutee') {
+    const label = Object.keys(CUTEE_MENU).find(k => CUTEE_MENU[k].slug === filter || CUTEE_MENU[k].filter === filter);
+    return label?.toUpperCase() || filter.toUpperCase().replace(/-/g, ' ');
+  }
+  return filter?.toUpperCase() || 'PHIM';
+}
+
+function getDisplayName(slug, map) {
+  return Object.keys(map).find(k => map[k] === slug) || slug;
+}
+
+// RENDER CARD
+function renderMoviesFinal(movies, container) {
+  container.innerHTML = '';
+  movies.forEach(m => container.appendChild(createMovieCard(m)));
+}
+
+function createMovieCard(m) {
+  const card = document.createElement('div');
+  card.className = 'movie-card';
+  card.dataset.slug = m.slug;
+  card.dataset.source = m.source;
+  card.onclick = () => location.href = `detail.html?slug=${m.slug}&source=${m.source}`;
+
+  const img = document.createElement('img');
+  img.alt = m.name;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.style.cssText = 'width:100%;height:280px;object-fit:cover;border-radius:10px 10px 0 0;display:block;background:#111;';
+  preloadImage(m.thumb_url);
+  img.src = m.thumb_url;
+  img.onerror = () => img.src = 'https://via.placeholder.com/200x300/333/fff?text=No+Image';
+
+  const sourceMap = { 'Ophim': 'ADS', 'Phimapi': 'AD', 'Nguonc': 'VIP' };
+  const displaySource = sourceMap[m.source] || m.source;
+
+  const info = document.createElement('div');
+  info.className = 'movie-info';
+  info.innerHTML = `
+    <div class="movie-title">${m.name}</div>
+    <div class="movie-episode" style="font-weight:600; color:#00ff88;">${m.episodeDisplay}</div>
+    <div class="movie-source">Nguồn: <strong>${displaySource}</strong></div>
+  `;
+  card.append(img, info);
+  return card;
+}
+
+function renderPagination(page, sectionId, hasMore) {
+  const el = document.getElementById(`${sectionId}-pagination`);
+  if (!el) return;
+  el.innerHTML = '';
+  const prev = document.createElement('button');
+  prev.className = 'page-btn'; prev.textContent = '<'; prev.disabled = page === 1;
+  prev.onclick = () => loadContent(currentMode, currentFilter, page - 1);
+  el.appendChild(prev);
+  for (let i = Math.max(1, page - 4); i <= page + 5; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'page-btn';
+    if (i === page) btn.classList.add('active');
+    btn.textContent = i;
+    btn.onclick = () => loadContent(currentMode, currentFilter, i);
+    el.appendChild(btn);
+  }
+  const next = document.createElement('button');
+  next.className = 'page-btn'; next.textContent = '>';
+  next.disabled = !hasMore;
+  next.onclick = () => loadContent(currentMode, currentFilter, page + 1);
+  el.appendChild(next);
+}
+
+// TÌM KIẾM
+async function search(query = null, page = 1) {
+  const raw = (query || document.getElementById('search-input').value).trim();
+  if (!raw) return loadContent('default');
+  const slug = raw.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  currentSearchQuery = raw; currentPage = page;
+  const sectionId = 'search-section';
+  let section = document.getElementById(sectionId);
+  if (!section) section = createSection(sectionId, `TÌM: "${raw}"`);
+  else section.querySelector('.section-title').textContent = `TÌM: "${raw}"`;
+  showSection(section);
+  const grid = document.getElementById(`${sectionId}-grid`);
+  grid.innerHTML = '<div class="loading">Đang tìm kiếm từ 3 nguồn...</div>';
+  const sources = Object.values(API_SOURCES);
+  const searchPromises = sources.map(s => fetchFromSource(s, null, null, slug, true));
+  const results = await Promise.all(searchPromises);
+  const movies = interleaveSourcesProperly(results, true);
+  grid.innerHTML = '';
+  renderMoviesFinal(movies, grid);
+  renderPagination(page, sectionId, movies.length >= ITEMS_PER_PAGE);
+  section.scrollIntoView({ behavior: 'smooth' });
+}
+
+// === [CUSTOM MENU - HIỆN NGAY TRÊN TRANG CHỦ] ===
+// === [CUSTOM MENU - HỖ TRỢ NHÓM] ===
+// === [CUSTOM MENU - HIỆN NHƯ PHIM MỚI] ===
+async function loadCustomMenu() {
+  console.log('Bắt đầu load custom-menu.txt...');
+  try {
+    const res = await fetch('custom-menu.txt?t=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    if (!text.trim()) throw new Error('File trống');
+    const groups = parseCustomMenuWithGroups(text);
+    console.log('NHÓM TẢI XONG:', Object.keys(groups));
+
+    // HIỆN TẤT CẢ NHÓM NHƯ SECTION BÌNH THƯỜNG
+    for (const [groupName, items] of Object.entries(groups)) {
+      if (items.length === 0) continue;
+      // Dùng mỗi item đầu tiên làm đại diện cho nhóm
+      const item = items[0];
+      await loadCustomGroup(groupName, items);
     }
-    return '';
+
+  } catch (e) {
+    console.error('LỖI LOAD custom-menu.txt:', e.message);
   }
+}
 
-  function getDisplayName(slug, map) {
-    return Object.keys(map).find(k => map[k] === slug) || slug;
-  }
+function parseCustomMenuWithGroups(text) {
+  const lines = text.split('\n');
+  const groups = {};
+  let currentGroup = null;
 
-  // RENDER CARD
-  function renderMoviesFinal(movies, container) {
-    container.innerHTML = '';
-    movies.forEach(m => container.appendChild(createMovieCard(m)));
-  }
+  lines.forEach(line => {
+    line = line.trim();
+    if (!line) return;
 
-  function createMovieCard(m) {
-    const card = document.createElement('div');
-    card.className = 'movie-card';
-    card.dataset.slug = m.slug;
-    card.dataset.source = m.source;
-    card.onclick = () => location.href = `detail.html?slug=${m.slug}&source=${m.source}`;
-
-    const img = document.createElement('img');
-    img.alt = m.name;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    img.style.cssText = 'width:100%;height:280px;object-fit:cover;border-radius:10px 10px 0 0;display:block;background:#111;';
-    preloadImage(m.thumb_url);
-    img.src = m.thumb_url;
-    img.onerror = () => img.src = 'https://via.placeholder.com/200x300/333/fff?text=No+Image';
-
-    const sourceMap = { 'Ophim': 'ADS', 'Phimapi': 'AD', 'Nguonc': 'VIP' };
-    const displaySource = sourceMap[m.source] || m.source;
-
-    const info = document.createElement('div');
-    info.className = 'movie-info';
-    info.innerHTML = `
-      <div class="movie-title">${m.name}</div>
-      <div class="movie-episode" style="font-weight:600; color:#00ff88;">${m.episodeDisplay}</div>
-      <div class="movie-source">Nguồn: <strong>${displaySource}</strong></div>
-    `;
-    card.append(img, info);
-    return card;
-  }
-
-  function renderPagination(page, sectionId, hasMore) {
-    const el = document.getElementById(`${sectionId}-pagination`);
-    if (!el) return;
-    el.innerHTML = '';
-    const prev = document.createElement('button');
-    prev.className = 'page-btn'; prev.textContent = '<'; prev.disabled = page === 1;
-    prev.onclick = () => loadContent(currentMode, currentFilter, page - 1);
-    el.appendChild(prev);
-    for (let i = Math.max(1, page - 4); i <= page + 5; i++) {
-      const btn = document.createElement('button');
-      btn.className = 'page-btn';
-      if (i === page) btn.classList.add('active');
-      btn.textContent = i;
-      btn.onclick = () => loadContent(currentMode, currentFilter, i);
-      el.appendChild(btn);
+    if (line.startsWith('#')) {
+      currentGroup = line.substring(1).trim().toUpperCase();
+      if (!groups[currentGroup]) groups[currentGroup] = [];
+      return;
     }
-    const next = document.createElement('button');
-    next.className = 'page-btn'; next.textContent = '>';
-    next.disabled = !hasMore;
-    next.onclick = () => loadContent(currentMode, currentFilter, page + 1);
-    el.appendChild(next);
-  }
 
-  // TÌM KIẾM
-  async function search(query = null, page = 1) {
-    const raw = (query || document.getElementById('search-input').value).trim();
-    if (!raw) return loadContent('default');
-    const slug = raw.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    currentSearchQuery = raw; currentPage = page;
-    const sectionId = 'search-section';
-    let section = document.getElementById(sectionId);
-    if (!section) section = createSection(sectionId, `TÌM: "${raw}"`);
-    else section.querySelector('.section-title').textContent = `TÌM: "${raw}"`;
-    showSection(section);
-    const grid = document.getElementById(`${sectionId}-grid`);
-    grid.innerHTML = '<div class="loading">Đang tìm kiếm từ 3 nguồn...</div>';
-    const sources = Object.values(API_SOURCES);
-    const searchPromises = sources.map(s => fetchFromSource(s, null, null, slug, true));
-    const results = await Promise.all(searchPromises);
-    const movies = interleaveSourcesProperly(results, true);
-    grid.innerHTML = '';
-    renderMoviesFinal(movies, grid);
-    renderPagination(page, sectionId, movies.length >= ITEMS_PER_PAGE);
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
+    if (!currentGroup) return; // Bỏ dòng không thuộc nhóm
 
-  // MODAL
-  const modal = document.getElementById('table-modal');
-  const modalGrid = document.getElementById('modal-grid');
-  const modalTitle = document.getElementById('modal-title');
-  const closeBtn = document.querySelector('.modal-close');
-  closeBtn.onclick = () => modal.style.display = 'none';
-  modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+    const parts = line.split('|');
+    if (parts.length < 2) return;
 
-  document.addEventListener('click', (e) => {
-    const toggle = e.target.closest('.dropdown-toggle');
-    if (!toggle) return;
-    const dropdown = toggle.closest('.dropdown');
-    if (!dropdown) return;
-    const listId = dropdown.querySelector('.dropdown-content')?.id;
-    if (!['genre-list', 'country-list', 'year-list', 'cutee-list'].includes(listId)) return;
-    e.preventDefault();
-    modalTitle.textContent = toggle.textContent.toUpperCase();
-    modalGrid.innerHTML = '';
-    const items = dropdown.querySelectorAll('.dropdown-item');
-    items.forEach(item => {
-      const clone = item.cloneNode(true);
-      clone.className = 'modal-item';
-      clone.onclick = (ev) => {
-        ev.stopPropagation();
-        modal.style.display = 'none';
-        item.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-      };
-      modalGrid.appendChild(clone);
+    const [searchText, sourceKey, displayTitle] = parts.map(p => p.trim());
+    const slug = searchText.toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+    groups[currentGroup].push({
+      slug: slug,
+      source: sourceKey.toLowerCase(),
+      display: displayTitle || searchText
     });
-    modal.style.display = 'flex';
   });
 
-  document.addEventListener('click', e => {
-    if (!e.target.classList.contains('dropdown-item')) return;
-    const mode = e.target.dataset.mode;
-    const slug = e.target.dataset.slug;
-    const filter = e.target.dataset.filter || slug;
-    const year = e.target.dataset.year;
-    currentSearchQuery = '';
-    if (mode === 'default') loadContent('default');
-    else if (mode === 'genre') loadContent('genre', filter, 1);
-    else if (mode === 'country') loadContent('country', filter, 1);
-    else if (mode === 'year') loadContent('year', year, 1);
-    else if (mode === 'type') loadContent('type', filter, 1);
-    else if (mode === 'cutee') loadContent('cutee', slug || filter, 1);
+  return groups;
+}
+
+// HIỆN NHÓM NHƯ SECTION BÌNH THƯỜNG
+async function loadCustomGroup(groupName, items) {
+  const sectionId = `custom-group-${groupName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+  let section = document.getElementById(sectionId);
+  if (!section) {
+    section = createSection(sectionId, groupName);
+  }
+
+  // HIỆN TRONG TRANG CHỦ
+  const container = document.querySelector('.container');
+  if (!document.getElementById(sectionId)) {
+    container.appendChild(section);
+  }
+  section.style.display = 'block';
+
+  const grid = document.getElementById(`${sectionId}-grid`);
+  if (grid.innerHTML && !grid.innerHTML.includes('loading')) return;
+
+  grid.innerHTML = '<div class="loading">Đang tải...</div>';
+
+  // GỘP TẤT CẢ KẾT QUẢ TỪ CÁC ITEM TRONG NHÓM
+  const allMovies = [];
+  for (const item of items) {
+    let sources = [];
+    const src = Object.values(API_SOURCES).find(s => s.name.toLowerCase() === item.source);
+    if (src) sources = [src];
+
+    if (sources.length === 0) continue;
+
+    const results = await Promise.all(sources.map(s => fetchFromSource(s, null, null, item.slug, true)));
+    const movies = interleaveSourcesProperly(results, true);
+    allMovies.push(...movies);
+  }
+
+  // LOẠI BỎ TRÙNG + GIỮ 10 PHIM ĐẦU
+  const seen = new Set();
+  const finalMovies = [];
+  for (const m of allMovies) {
+    if (!seen.has(m.slug) && finalMovies.length < 10000000) {
+      seen.add(m.slug);
+      finalMovies.push(m);
+    }
+  }
+
+  grid.innerHTML = '';
+  if (finalMovies.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:40px;">Không tìm thấy phim!</div>';
+  } else {
+    renderMoviesFinal(finalMovies, grid);
+  }
+
+  // Ẩn phân trang
+  const pagination = document.getElementById(`${sectionId}-pagination`);
+  if (pagination) pagination.style.display = 'none';
+}
+// XỬ LÝ CLICK MENU (giữ nguyên)
+document.addEventListener('click', e => {
+  if (!e.target.classList.contains('dropdown-item')) return;
+
+  const mode = e.target.dataset.mode;
+  const slug = e.target.dataset.slug;
+  const filter = e.target.dataset.filter || slug;
+  const year = e.target.dataset.year;
+  currentSearchQuery = '';
+  if (mode === 'default') loadContent('default');
+  else if (mode === 'genre') loadContent('genre', filter, 1);
+  else if (mode === 'country') loadContent('country', filter, 1);
+  else if (mode === 'year') loadContent('year', year, 1);
+  else if (mode === 'type') loadContent('type', filter, 1);
+  else if (mode === 'cutee') loadContent('cutee', slug || filter, 1);
+});
+
+// MODAL
+const modal = document.getElementById('table-modal');
+const modalGrid = document.getElementById('modal-grid');
+const modalTitle = document.getElementById('modal-title');
+const closeBtn = document.querySelector('.modal-close');
+closeBtn.onclick = () => modal.style.display = 'none';
+modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+
+document.addEventListener('click', (e) => {
+  const toggle = e.target.closest('.dropdown-toggle');
+  if (!toggle) return;
+  const dropdown = toggle.closest('.dropdown');
+  if (!dropdown) return;
+  const listId = dropdown.querySelector('.dropdown-content')?.id;
+  if (!['genre-list', 'country-list', 'year-list', 'cutee-list'].includes(listId)) return;
+  e.preventDefault();
+  modalTitle.textContent = toggle.textContent.toUpperCase();
+  modalGrid.innerHTML = '';
+  const items = dropdown.querySelectorAll('.dropdown-item');
+  items.forEach(item => {
+    const clone = item.cloneNode(true);
+    clone.className = 'modal-item';
+    clone.onclick = (ev) => {
+      ev.stopPropagation();
+      modal.style.display = 'none';
+      item.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    };
+    modalGrid.appendChild(clone);
   });
+  modal.style.display = 'flex';
+});
 </script>
 </body>
 </html>
