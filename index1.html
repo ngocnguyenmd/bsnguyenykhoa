@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Phim Hay - Xem Phim Online</title>
 <style>
-  /* === PHONG CÁCH CƠ BẢN (giữ nguyên từ code gốc) === */
 :root {
   --primary: #e50914;
   --bg-dark: #0f0f0f;
@@ -220,76 +219,33 @@ nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-b
 
 /* === TỐI ƯU CHO SAMSUNG GALAXY A04 (mobile nhỏ ~412px) === */
 @media (max-width: 480px) {
-  .logo { font-size: 22px; }
-  .nav-links { gap: 12px; font-size: 14px; }
-  .search-bar { display: none; }
-  .mobile-search { 
-    display: flex !important; 
-    background: var(--border); 
-    border-radius: 8px; 
-    padding: 8px 12px; 
-    cursor: pointer; 
-    color: var(--primary); 
-    font-size: 20px; 
-    align-items: center; 
-    justify-content: center;
+  .search-bar {
+    display: flex !important;           /* HIỆN LẠI */
+    flex: 1;
+    max-width: 200px;                   /* NHỎ GỌN */
+    margin-left: 8px;
   }
-  .mobile-search:hover { background: #444; }
-
-  .movie-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 10px 6px;
-  }
-  .movie-card { border-radius: 12px; }
-  .movie-card img { 
-    height: 220px; 
-    border-radius: 10px 10px 0 0; 
-  }
-  .movie-info { padding: 10px; }
-  .movie-title { font-size: 13.5px; }
-  .movie-episode { font-size: 12px; }
-  .movie-source { font-size: 10px; }
-
-  .page-btn {
-    min-width: 44px;
-    height: 44px;
-    font-size: 15px;
-  }
-
-  .modal-content { 
-    height: 92vh; 
-    max-height: none; 
-    border-radius: 14px; 
-  }
-  .modal-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 16px;
-  }
-  .modal-item {
-    padding: 14px 8px;
+  .search-bar input {
+    padding: 8px 32px 8px 10px;          /* NHỎ HƠN */
     font-size: 13px;
+    border-radius: 6px;
   }
-  .modal-header {
-    font-size: 18px;
-    padding: 14px 16px;
-  }
-  .modal-close {
-    width: 42px;
-    height: 42px;
-    font-size: 30px;
+  .search-bar button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
   }
 
-  /* Hiệu ứng tap thay hover */
-  .movie-card:active {
-    transform: translateY(-4px) scale(1.02);
-    transition: transform 0.15s ease;
+  /* ẨN mobile-search ICON vì đã có input */
+  .mobile-search {
+    display: none !important;
   }
-  .modal-item:active {
-    transform: translateY(-4px) scale(1.03);
-    background: var(--primary);
-    color: white;
+
+  /* Đẩy nav-links xuống dòng nếu chật */
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
   }
 }
 
@@ -337,7 +293,14 @@ nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-b
   font-size: 18px;
 }
 @media (max-width: 900px) {
-  .mobile-search { display: flex !important; }
+  .search-bar {
+    display: flex !important;           /* KHÔNG ẨN NỮA */
+    flex: 1;
+    max-width: 300px;
+  }
+  .mobile-search {
+    display: none !important;           /* KHÔNG DÙNG ICON */
+  }
 }
 </style>
 </head>
