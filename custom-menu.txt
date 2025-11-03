@@ -1,4 +1,4 @@
-# US/UK
+# Danh sách chung : US/UK
 vuong quyen david|ophim
 robin hood|phimapi
 tri tue tiem nang phan 2|phimapi
@@ -14,3 +14,17 @@ chuyen so phan 2|phimapi
 tho san quai vat phan 4|phimapi
 Duong Ve Coi Chet|phimapi
 Phu Thuy Thuong Tru Tai Xu Waverly phan 2|phimapi
+
+# Danh sách chung : Anime / Hoạt hình
+vo han gacha|phimapi
+gia dinh diep vien phan 3|phimapi
+tham tu lung danh conan|phimapi
+dao hai tac|phimapi
+doraemon 2005|nguonc
+
+
+# Danh sách chung : Tình cảm / Hàn / Trung
+thien dia kiem tam|phimapi
+
+# Danh sách chung : Rạp - NETFLIX - MOVIES
+ca map sieu bao chua|phimapi
