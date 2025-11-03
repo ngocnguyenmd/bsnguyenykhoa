@@ -448,6 +448,55 @@ let currentMode = 'default', currentFilter = null, currentPage = 1;
 let currentSearchQuery = '';
 const imageCache = new Map();
 
+// === HỆ THỐNG CACHE 12 TIẾNG ===
+const CACHE_TTL = 12 * 60 * 60 * 1000;
+
+function getCacheKey(sourceName, mode, filter, page, isSearch) {
+  if (isSearch) return `cache|search|${sourceName}|${filter}`;
+  return `cache|${sourceName}|${mode}|${filter || 'default'}|${page || 1}`;
+}
+
+function getCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const cached = JSON.parse(raw);
+    if (Date.now() - cached.timestamp > CACHE_TTL) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return cached.data;
+  } catch (e) {
+    console.warn('Lỗi đọc cache:', e);
+    return null;
+  }
+}
+
+function setCache(key, data) {
+  try {
+    const toStore = { data, timestamp: Date.now() };
+    localStorage.setItem(key, JSON.stringify(toStore));
+  } catch (e) {
+    console.warn('Lỗi lưu cache:', e);
+    clearOldCache();
+  }
+}
+
+function clearOldCache() {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key?.startsWith('cache|')) {
+      try {
+        const raw = localStorage.getItem(key);
+        const cached = JSON.parse(raw);
+        if (Date.now() - cached.timestamp > CACHE_TTL) {
+          localStorage.removeItem(key);
+        }
+      } catch {}
+    }
+  }
+}
+
 // === HÀM ĐẾM SỐ TẬP ===
 function getEpisodeDisplay(item) {
   if (!item) return '';
@@ -493,8 +542,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDropdowns();
   initYearDropdown();
   attachNavEvents();
-  loadContent('default');     // 1. Hiện phim mới
-  loadCustomMenu();           // 2. TỰ ĐỘNG HIỆN section từ txt
+  loadContent('default');
+  loadCustomMenu();
+  initAntiDevTools(); // Gọi sau khi DOM sẵn sàng
 });
 
 // RENDER DROPDOWNS
@@ -648,6 +698,14 @@ function preloadImage(src) {
 
 // FETCH CHUNG
 async function fetchFromSource(source, page, mode, filter, isSearch = false) {
+  const cacheKey = getCacheKey(source.name, mode, filter, page, isSearch);
+  const cached = getCache(cacheKey);
+
+  if (cached) {
+    console.log(`[CACHE HIT] ${cacheKey}`);
+    return cached;
+  }
+
   let urls = [];
 
   if (isSearch) {
@@ -690,7 +748,7 @@ async function fetchFromSource(source, page, mode, filter, isSearch = false) {
   const valid = results.find(r => r !== null);
   if (!valid) return [];
 
-  return valid.items.map(item => {
+  const processed = valid.items.map(item => {
     let thumb = '';
     if (source.name === 'Phimapi') {
       thumb = item.poster_url || item.poster || item.thumb_url || item.thumb || '';
@@ -710,6 +768,11 @@ async function fetchFromSource(source, page, mode, filter, isSearch = false) {
       source: source.name
     };
   }).filter(m => m.slug);
+
+  setCache(cacheKey, processed);
+  console.log(`[CACHE SET] ${cacheKey}`);
+
+  return processed;
 }
 
 // XEN KẼ NGUỒN
@@ -759,6 +822,24 @@ function interleaveSourcesProperly(results, isSearch = false) {
 // LOAD CONTENT
 async function loadContent(mode, filter = null, page = 1) {
   currentMode = mode; currentFilter = filter; currentPage = page;
+
+  if (mode === 'default') {
+    const sectionId = 'default-section';
+    let section = document.getElementById(sectionId);
+    if (!section) {
+      section = createSection(sectionId, 'PHIM MỚI NHÀ BÁNH MÌ');
+      const container = document.querySelector('.container');
+      container.insertBefore(section, container.firstChild);
+    }
+    showSection(section);
+    const grid = document.getElementById(`${sectionId}-grid`);
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:40px;">Trang chủ </div>';
+    const pagination = document.getElementById(`${sectionId}-pagination`);
+    if (pagination) pagination.style.display = 'none';
+    section.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
   const title = getTitle(mode, filter);
   const sectionId = `${mode}-${filter || ''}-section`.replace(/--/g, '-');
   let section = document.getElementById(sectionId);
@@ -766,7 +847,7 @@ async function loadContent(mode, filter = null, page = 1) {
   else section.querySelector('.section-title').textContent = title;
   showSection(section);
   const grid = document.getElementById(`${sectionId}-grid`);
-  grid.innerHTML = '<div class="loading">Đang tải từ 3 nguồn...</div>';
+  grid.innerHTML = '<div class="loading">Đang tải nguồn...</div>';
   const sources = Object.values(API_SOURCES);
   const promises = sources.map(s => fetchFromSource(s, page, mode, filter, false));
   const allResults = await Promise.all(promises);
@@ -880,9 +961,7 @@ async function search(query = null, page = 1) {
   section.scrollIntoView({ behavior: 'smooth' });
 }
 
-// === [CUSTOM MENU - HIỆN NGAY TRÊN TRANG CHỦ] ===
-// === [CUSTOM MENU - HỖ TRỢ NHÓM] ===
-// === [CUSTOM MENU - HIỆN NHƯ PHIM MỚI] ===
+// === [CUSTOM MENU] ===
 async function loadCustomMenu() {
   console.log('Bắt đầu load custom-menu.txt...');
   try {
@@ -893,11 +972,10 @@ async function loadCustomMenu() {
     const groups = parseCustomMenuWithGroups(text);
     console.log('NHÓM TẢI XONG:', Object.keys(groups));
 
-    // HIỆN TẤT CẢ NHÓM NHƯ SECTION BÌNH THƯỜNG
+    clearOldCache();
+
     for (const [groupName, items] of Object.entries(groups)) {
       if (items.length === 0) continue;
-      // Dùng mỗi item đầu tiên làm đại diện cho nhóm
-      const item = items[0];
       await loadCustomGroup(groupName, items);
     }
 
@@ -921,7 +999,7 @@ function parseCustomMenuWithGroups(text) {
       return;
     }
 
-    if (!currentGroup) return; // Bỏ dòng không thuộc nhóm
+    if (!currentGroup) return;
 
     const parts = line.split('|');
     if (parts.length < 2) return;
@@ -942,7 +1020,6 @@ function parseCustomMenuWithGroups(text) {
   return groups;
 }
 
-// HIỆN NHÓM NHƯ SECTION BÌNH THƯỜNG
 async function loadCustomGroup(groupName, items) {
   const sectionId = `custom-group-${groupName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
   let section = document.getElementById(sectionId);
@@ -950,7 +1027,6 @@ async function loadCustomGroup(groupName, items) {
     section = createSection(sectionId, groupName);
   }
 
-  // HIỆN TRONG TRANG CHỦ
   const container = document.querySelector('.container');
   if (!document.getElementById(sectionId)) {
     container.appendChild(section);
@@ -962,7 +1038,6 @@ async function loadCustomGroup(groupName, items) {
 
   grid.innerHTML = '<div class="loading">Đang tải...</div>';
 
-  // GỘP TẤT CẢ KẾT QUẢ TỪ CÁC ITEM TRONG NHÓM
   const allMovies = [];
   for (const item of items) {
     let sources = [];
@@ -976,7 +1051,6 @@ async function loadCustomGroup(groupName, items) {
     allMovies.push(...movies);
   }
 
-  // LOẠI BỎ TRÙNG + GIỮ 10 PHIM ĐẦU
   const seen = new Set();
   const finalMovies = [];
   for (const m of allMovies) {
@@ -993,11 +1067,11 @@ async function loadCustomGroup(groupName, items) {
     renderMoviesFinal(finalMovies, grid);
   }
 
-  // Ẩn phân trang
   const pagination = document.getElementById(`${sectionId}-pagination`);
   if (pagination) pagination.style.display = 'none';
 }
-// XỬ LÝ CLICK MENU (giữ nguyên)
+
+// XỬ LÝ CLICK MENU
 document.addEventListener('click', e => {
   if (!e.target.classList.contains('dropdown-item')) return;
 
@@ -1045,6 +1119,103 @@ document.addEventListener('click', (e) => {
   });
   modal.style.display = 'flex';
 });
+
+// === [BẢO VỆ F12 & DEVTOOLS - AN TOÀN] ===
+function initAntiDevTools() {
+  'use strict';
+
+  let devtoolsDetected = false;
+  let blockTriggered = false;
+  const threshold = 160;
+
+  const blockScreen = `
+    <div id="devblock" style="
+      position:fixed;top:0;left:0;width:100vw;height:100vh;
+      background:rgba(0,0,0,0.97);color:#e50914;z-index:999999;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      font-family:Arial,sans-serif;text-align:center;padding:20px;
+      backdrop-filter:blur(12px);pointer-events:none;user-select:none;
+    ">
+      <h1 style="font-size:2.8em;margin:0;">TRUY CẬP BỊ CHẶN</h1>
+      <p style="font-size:1.2em;margin:12px 0;color:#fff;">
+        Vui lòng không sử dụng công cụ phát triển (F12).<br>
+        Trang sẽ tải lại sau <span id="cd">3</span>s...
+      </p>
+    </div>`;
+
+  function triggerBlock() {
+    if (blockTriggered) return;
+    blockTriggered = true;
+    document.body.insertAdjacentHTML('afterbegin', blockScreen);
+    let count = 3;
+    const cd = document.getElementById('cd');
+    const iv = setInterval(() => {
+      count--;
+      if (cd) cd.textContent = count;
+      if (count <= 0) {
+        clearInterval(iv);
+        location.reload();
+      }
+    }, 1000);
+  }
+
+  // Phím tắt
+  const keys = {};
+  document.addEventListener('keydown', e => {
+    keys[e.key] = true;
+    if (
+      e.key === 'F12' ||
+      (keys.Control && keys.Shift && (e.key === 'I' || e.key === 'J')) ||
+      (keys.Control && e.key === 'U') ||
+      (keys.Control && e.key === 'S')
+    ) {
+      e.preventDefault();
+      triggerBlock();
+    }
+  });
+  document.addEventListener('keyup', e => { keys[e.key] = false; });
+
+  // Chuột phải (chỉ khi DevTools mở)
+  let rightClickCount = 0;
+  document.addEventListener('contextmenu', e => {
+    if (devtoolsDetected || rightClickCount > 2) {
+      e.preventDefault();
+      triggerBlock();
+    } else {
+      rightClickCount++;
+      setTimeout(() => rightClickCount = Math.max(0, rightClickCount - 1), 3000);
+    }
+  });
+
+  // Phát hiện DevTools (kích thước)
+  function checkDevTools() {
+    const widthDiff = window.outerWidth - window.innerWidth > threshold;
+    const heightDiff = window.outerHeight - window.innerHeight > threshold;
+    if (widthDiff || heightDiff) {
+      devtoolsDetected = true;
+      if (!blockTriggered) triggerBlock();
+    }
+    requestAnimationFrame(checkDevTools);
+  }
+  requestAnimationFrame(checkDevTools);
+
+  // Phát hiện debugger
+  setInterval(() => {
+    const before = Date.now();
+    debugger;
+    if (Date.now() - before > 100) {
+      triggerBlock();
+    }
+  }, 3000);
+
+  // Tắt log nếu không debug
+  if (!window.location.href.includes('debug=true')) {
+    console.log = () => {};
+    console.warn = () => {};
+    console.error = () => {};
+  }
+}
+
 </script>
 </body>
 </html>
