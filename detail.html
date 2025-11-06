@@ -3,363 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chi Tiết Anime - CINEMAX</title>
+  <title id="page-title">Movies</title>
+
+  <!-- SEO -->
+  <meta property="og:title" content="" id="og-title" />
+  <meta property="og:description" content="" id="og-desc" />
+  <meta property="og:image" content="" id="og-image" />
+  <meta property="og:url" content="" id="og-url" />
+  <meta property="og:type" content="video.movie" />
+
   <style>
-  :root {
-    --primary: #e50914;
-    --bg-dark: #0f0f0f;
-    --card-bg: #1a1a1a;
-    --text: #fff;
-    --text-muted: #aaa;
-    --border: #333;
-    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-    --transition: all 0.3s ease;
-  }
-
-  body {
-    background: var(--bg-dark);
-    color: var(--text);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  /* CONTAINER */
-  .container {
-    width: min(100% - 2rem, 1100px);
-    margin: 2.5rem auto;
-    padding: 0 1rem;
-  }
-
-  /* KHUNG CHI TIẾT - DÙNG FLEXBOX */
-  .detail-container {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-radius: 18px;
-    padding: 1.8rem;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-    position: relative;
-    overflow: hidden;
-    transition: var(--transition);
-    animation: glowPulse 3s ease-in-out infinite alternate;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
-  }
-
-  @keyframes glowPulse {
-  
-  }
-
-  /* VIỀN NEON */
-  .detail-container::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 20px;
-    background: linear-gradient(45deg, var(--primary), #ff4d4d, #ff6b6b, var(--primary));
-    opacity: 0;
-    filter: blur(2px);
-    transition: opacity 0.4s ease;
-    z-index: -1;
-  }
-  .detail-container:hover::before {
-    opacity: 0.8;
-  }
-
-  /* POSTER */
-  .detail-poster {
-    flex: 0 0 280px;
-    max-width: 100%;
-    border-radius: 14px;
-    border: 2px solid var(--border);
-    
-    transition: var(--transition);
-    background: #111;
-    object-fit: cover;
-    loading: lazy;
-  }
-  .detail-poster:hover {
-    transform: scale(1.04);
-   
-  }
-
-  /* THÔNG TIN PHIM */
-  .detail-info-wrapper {
-    flex: 1;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-
-  .detail-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-    
-    margin-bottom: 0.5rem;
-  }
-
-  .detail-meta {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .detail-info {
-    color: var(--text);
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-top: 0.8rem;
-    flex-grow: 1;
-  }
-
-  /* NÚT CHUNG */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.6rem;
-    min-height: 48px;
-    background: linear-gradient(135deg, var(--primary), #b00610);
-    color: #fff;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: 0.3px;
-    transition: var(--transition);
-   
-    border: none;
-    cursor: pointer;
-    width: fit-content;
-  }
-
-  .btn:hover {
-    transform: translateY(-4px) scale(1.03);
-   
-    background: linear-gradient(135deg, #ff1a1a, var(--primary));
-  }
-
-  .btn:active {
-    transform: translateY(-2px) scale(1.01);
-  }
-
-  /* NÚT QUAY LẠI */
-  .back-btn {
-    background: #333;
-    color: var(--text-muted);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    margin-bottom: 1rem;
-  }
-  .back-btn:hover {
-    background: var(--primary);
-    color: #fff;
-    
-  }
-
-  /* NÚT XEM NGAY TO */
-  .watch-now-big {
-    font-size: 1.1rem;
-    padding: 1rem 2.5rem;
-    margin-top: 1.2rem;
-    background: linear-gradient(135deg, var(--primary), #b00610);
-   
-    width: 20%;
-    max-width: 180px;
-  }
-
-  /* === TỐI ƯU CHO SAMSUNG A04 (mobile nhỏ < 480px) === */
-  @media (max-width: 480px) {
-    .container {
-      margin: 1.5rem auto;
-      padding: 0 0.8rem;
+    :root {
+      --primary: #f5c518;
+      --text-dark: #000;
+      --text-light: #fff;
+      --bg-dark: #000;
+      --card-light: rgba(255, 255, 255, 0.92);
+      --radius: 16px;
     }
 
-    .detail-container {
-      padding: 1.2rem;
-      gap: 1rem;
-      border-radius: 14px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: var(--text-dark); font-family: 'Segoe UI', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+    /* CẤM CHUỘT PHẢI + KHÔNG TẢI ẢNH */
+    img { user-select: none; -webkit-user-drag: none; pointer-events: none; }
+    .poster { -webkit-touch-callout: none; }
+
+    .bg-poster {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover; background-position: center;
+      filter: blur(12px) brightness(0.3); z-index: -2; display: none;
+    }
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: -1; display: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
+
+    header {
+      background: rgba(0,0,0,0.7); padding: 15px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
+    }
+    .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .logo { font-weight: bold; font-size: 24px; color: var(--primary); cursor: pointer; }
+    .back-home { background: var(--primary); color: #000; padding: 8px 16px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 14px; }
+
+    .info-card {
+      background: var(--card-light); color: var(--text-dark); padding: 30px; border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 30px; position: relative; z-index: 10;
     }
 
-    .detail-poster {
-      flex: 0 0 100%;
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-    }
+    .detail-wrapper { display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start; }
+    .poster-wrapper { flex: 0 0 260px; position: relative; }
+    .poster { width: 100%; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
 
-    .detail-title {
-      font-size: 1.4rem;
-      text-align: center;
-    }
+    .info-wrapper { flex: 1; min-width: 300px; }
+    .title { font-size: 28px; font-weight: bold; margin-bottom: 8px; }
+    .original-title { font-size: 16px; color: #555; margin-bottom: 15px; font-style: italic; }
 
-    .detail-meta {
-      font-size: 0.9rem;
-      text-align: center;
-    }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+    .tag { background: #eee; padding: 6px 12px; border-radius: 20px; font-size: 13px; color: #333; }
 
-    .detail-info {
-      font-size: 0.95rem;
-    }
+    .desc { margin: 20px 0; line-height: 1.8; max-height: 120px; overflow: hidden; transition: max-height 0.4s ease; }
+    .desc.expanded { max-height: 1000px; }
+    .toggle-desc { color: var(--primary); cursor: pointer; font-weight: bold; margin-top: 10px; display: inline-block; }
 
-    .btn {
-      width: 100%;
-      font-size: 1rem;
-      padding: 0.9rem 1.2rem;
-      min-height: 50px;
-    }
+    .actions { display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap; }
+    .btn { padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; }
+    .btn-primary { background: var(--primary); color: #000; }
+    .btn-secondary { background: #333; color: #fff; }
 
-    .watch-now-big {
-      font-size: 1.1rem;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
+    .episodes-section { margin: 30px 0; }
+    .section-title { font-size: 18px; margin-bottom: 15px; font-weight: bold; }
+    .server-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+    .server-tab { padding: 8px 16px; background: #ddd; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .server-tab.active { background: var(--primary); color: #000; }
 
-    /* Hiệu ứng tap */
-    .detail-poster:active,
-    .btn:active {
-      transform: scale(0.98);
-      transition: 0.15s;
-    }
-  }
+    .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+    .episode-btn { padding: 10px; text-align: center; background: #eee; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .episode-btn:hover, .episode-btn.active { background: var(--primary); color: #000; }
 
-  /* === TỐI ƯU CHO LAPTOP (màn hình rộng ≥ 1024px) === */
-  @media (min-width: 1024px) {
-    .detail-container {
-      padding: 2.2rem;
-      gap: 2rem;
-    }
+    .trailer-section { margin: 20px 0; display: none; }
+    .trailer-iframe { width: 100%; height: 400px; border-radius: 12px; }
 
-    .detail-poster {
-      flex: 0 0 320px;
-    }
+    .skeleton { background: #ddd; border-radius: 8px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-    .detail-title {
-      font-size: 2.1rem;
+    @media (max-width: 768px) {
+      .bg-poster, .overlay { display: none !important; }
+      .info-card { background: #1a1a1a; color: #fff; padding: 20px; }
+      .tag { background: #333; color: #aaa; }
+      .title { font-size: 22px; text-align: center; }
+      .actions { justify-content: center; }
+      .episode-grid { grid-template-columns: repeat(4, 1fr); }
+      .container { padding: 10px; }
+      .poster-wrapper { flex: 0 0 100%; }
     }
-
-    .detail-info {
-      font-size: 1.05rem;
-    }
-
-    .btn {
-      padding: 0.9rem 2rem;
-      font-size: 1.05rem;
-    }
-
-    .watch-now-big {
-      font-size: 1.25rem;
-      padding: 1.1rem 3rem;
-      max-width: 420px;
-    }
-  }
-
-  /* === TRUNG GIAN (tablet) === */
-  @media (max-width: 768px) and (min-width: 481px) {
-    .detail-poster {
-      flex: 0 0 260px;
-    }
-    .detail-title {
-      font-size: 1.6rem;
-    }
-  }
-</style>
+    @media (max-width: 480px) { .episode-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 769px) { .bg-poster, .overlay { display: block; } }
+  </style>
 </head>
-<body>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+
+  <div class="bg-poster" id="bg-poster"></div>
+  <div class="overlay"></div>
+
+  <header>
+    <div class="nav">
+      <div class="logo" onclick="location.href='index4.html'">Phim Nhà Bánh Mì</div>
+      <a href="index4.html" class="back-home">←</a>
+    </div>
+  </header>
+
   <div class="container">
-    <!-- NÚT QUAY LẠI & TRANG CHỦ -->
-    <div style="text-align: center; margin: 2rem 0;">
-      <a href="index1.html" class="btn back-btn">← Quay Lại</a>
-      <a href="index1.html" class="btn" style="margin-left: 0.5rem;">🏠 Trang Chủ</a>
+    <div id="skeleton" style="display:block;">
+      <div class="info-card">
+        <div class="detail-wrapper">
+          <div class="poster-wrapper"><div class="skeleton" style="width:260px;height:390px;"></div></div>
+          <div class="info-wrapper">
+            <div class="skeleton" style="height:32px;width:70%;margin:10px 0;"></div>
+            <div class="skeleton" style="height:20px;width:50%;"></div>
+            <div class="skeleton" style="height:100px;margin:20px 0;"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- KHUNG CHI TIẾT -->
-    <div class="detail-container" id="detail-content">
-      <p style="text-align:center; color:#999;">Đang tải chi tiết phim...</p>
+    <div id="detail-content" style="display:none;">
+      <div class="info-card">
+        <div class="detail-wrapper">
+          <div class="poster-wrapper">
+            <img id="poster" class="poster" src="" alt="" draggable="false">
+          </div>
+          <div class="info-wrapper">
+            <h1 id="title" class="title"></h1>
+            <p id="original-title" class="original-title"></p>
+
+            <div class="meta" id="meta-tags"></div>
+
+            <p id="desc" class="desc"></p>
+            <span id="toggle-desc" class="toggle-desc">Xem thêm</span>
+
+            <div class="actions">
+              <a id="watch-btn" class="btn btn-primary">Xem Ngay</a>
+              <a id="trailer-btn" class="btn btn-secondary">Xem Trailer</a>
+            </div>
+
+            <div class="trailer-section" id="trailer-section"></div>
+
+            <div class="episodes-section">
+              <div class="section-title">Chọn tập phim</div>
+              <div id="server-tabs" class="server-tabs"></div>
+              <div id="episode-grid" class="episode-grid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const slug = urlParams.get("slug");
-    const source = urlParams.get("source") || "Phimapi";
+    let source = urlParams.get("source") || "ax";
+
+    const sourceMap = { "ax": "Ophim", "bx": "Phimapi", "cx": "Nguonc" };
+    source = sourceMap[source] || "Ophim";
 
     const apis = {
-      Nguonc: `https://phim.nguonc.com/api/film/${slug}`,
-      Phimapi: `https://phimapi.com/phim/${slug}`,
       Ophim: `https://ophim1.com/v1/api/phim/${slug}`,
+      Phimapi: `https://phimapi.com/phim/${slug}`,
+      Nguonc: `https://phim.nguonc.com/api/film/${slug}`,
     };
 
-    // Lấy URL poster tùy source
-    function getPosterUrl(movie, cdn = "") {
+    // === SỬA POSTER OPHIM: thêm /uploads/movies/ + -thumb.jpg ===
+    function getPoster(movie, cdn = "") {
       let url = "";
-      if (source === "Phimapi") {
-        url = movie.thumb_url || movie.poster_url || "";
-      } else if (source === "Ophim") {
-        url = movie.poster_url || movie.thumb_url || "";
-        if (url && cdn) url = cdn + "/" + url.replace(/^\/+/, "");
-      } else {
-        url = movie.poster_url || movie.thumb_url || "";
-        if (url && cdn) url = cdn + "/" + url.replace(/^\/+/, "");
+      if (source === "Phimapi") url = movie.poster_url || movie.thumb_url;
+      else if (source === "Ophim") {
+        url = movie.poster_url || movie.thumb_url;
+        if (url && !url.includes('/uploads/movies/')) {
+          const name = url.split('/').pop().replace('-poster.jpg', '').replace('-thumb.jpg', '');
+          url = `${cdn || 'https://img.ophim.live'}/uploads/movies/${name}-thumb.jpg`;
+        }
       }
-      return url ? url.trim() : "";
+      else if (source === "Nguonc") url = movie.thumb_url || movie.thumb_url;
+
+      if (url && cdn && !url.startsWith('http')) url = cdn + '/' + url.replace(/^\/+/, '');
+      return url || 'https://via.placeholder.com/280x420/111/fff?text=No+Image';
+    }
+
+    function renderEpisodes(episodes) {
+      if (!episodes || episodes.length === 0) {
+        document.getElementById('episode-grid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;">Phim lẻ - Xem ngay</p>';
+        document.getElementById('watch-btn').href = `watch.html?slug=${slug}&source=${Object.keys(sourceMap).find(k => sourceMap[k] === source)}&e=1`;
+        return;
+      }
+
+      const tabs = document.getElementById('server-tabs');
+      const grid = document.getElementById('episode-grid');
+      tabs.innerHTML = ''; grid.innerHTML = '';
+
+      episodes.forEach((server, i) => {
+        const tab = document.createElement('div');
+        tab.className = 'server-tab';
+        if (i === 0) tab.classList.add('active');
+        tab.textContent = server.server_name || `Server ${i+1}`;
+        tab.onclick = () => {
+          document.querySelectorAll('.server-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          renderEpisodeList(server.server_data || server.items || []);
+        };
+        tabs.appendChild(tab);
+      });
+
+      renderEpisodeList(episodes[0].server_data || episodes[0].items || []);
+    }
+
+    function renderEpisodeList(items) {
+      const grid = document.getElementById('episode-grid');
+      grid.innerHTML = '';
+      if (!items || items.length === 0) { grid.innerHTML = '<p style="grid-column:1/-1;color:#aaa;">Không có tập</p>'; return; }
+
+      items.forEach((ep, i) => {
+        const btn = document.createElement('div');
+        btn.className = 'episode-btn';
+        btn.textContent = ep.name || `Tập ${i + 1}`;
+        const episodeNumber = (i + 1).toString();
+        btn.onclick = () => {
+          grid.querySelectorAll('.episode-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const encodedSource = Object.keys(sourceMap).find(k => sourceMap[k] === source);
+          document.getElementById('watch-btn').href = `watch.html?slug=${slug}&source=${encodedSource}&e=${episodeNumber}`;
+        };
+        grid.appendChild(btn);
+      });
+
+      if (grid.children[0]) grid.children[0].click();
     }
 
     async function loadDetail() {
-      const container = document.getElementById("detail-content");
+      const skeleton = document.getElementById("skeleton");
+      const content = document.getElementById("detail-content");
+      const bg = document.getElementById("bg-poster");
+
+      if (!slug) {
+        content.innerHTML = `<p style="color:#f66;text-align:center;">Không có phim!</p>`;
+        skeleton.style.display = 'none'; content.style.display = 'block';
+        return;
+      }
+
       try {
         const res = await fetch(apis[source]);
-        if (!res.ok) throw new Error("Network error");
+        if (!res.ok) throw new Error("Không tải được phim");
         const data = await res.json();
 
-        let movie, cdn = "";
-        if (source === "Nguonc") movie = data.movie;
-        else if (source === "Phimapi") movie = data.movie;
-        else if (source === "Ophim") {
-          movie = data.data.item;
-          cdn = data.APP_DOMAIN_CDN_IMAGE || "https://img.ophim.live/uploads/movies";
-        }
+        let movie = {}, episodes = [], cdn = "";
+        if (source === "Nguonc") { movie = data.movie; episodes = movie.episodes; }
+        else if (source === "Phimapi") { movie = data.movie; episodes = data.episodes; }
+        else if (source === "Ophim") { movie = data.data.item; episodes = movie.episodes; cdn = data.data.APP_DOMAIN_CDN_IMAGE || "https://img.ophim.live"; }
 
-        const poster = getPosterUrl(movie, cdn);
+        const poster = getPoster(movie, cdn);
+        document.getElementById('poster').src = poster;
+        bg.style.backgroundImage = `url(${poster})`;
 
-        // Tổng số tập
-        let totalEpisodes = "N/A";
-        if (source === "Nguonc") {
-          totalEpisodes = movie.total_episodes || movie.episodes?.[0]?.items?.length || "N/A";
+        document.getElementById('title').textContent = movie.name || "Không rõ";
+        document.getElementById('original-title').textContent = movie.origin_name || "";
+
+        const tags = [];
+        if (movie.year) tags.push(`<span class="tag">${movie.year}</span>`);
+        if (movie.quality) tags.push(`<span class="tag">${movie.quality}</span>`);
+        if (movie.lang || movie.language) tags.push(`<span class="tag">${movie.lang || movie.language}</span>`);
+        if (movie.episode_current) tags.push(`<span class="tag">Tập ${movie.episode_current}</span>`);
+        if (movie.tmdb?.vote_average) tags.push(`<span class="tag">⭐ ${movie.tmdb.vote_average.toFixed(1)}</span>`);
+
+        // === TẬN DỤNG CẤU TRÚC JSON TỪNG NGUỒN ===
+        if (source === "Ophim") {
+          (movie.category || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
+          (movie.country || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
         } else if (source === "Phimapi") {
-          const eps = movie.episode_total || movie.episodes?.[0]?.server_data?.length || 0;
-          totalEpisodes = eps > 0 ? eps : "N/A";
-        } else if (source === "Ophim") {
-          const max = movie.episodes?.reduce((a, s) => Math.max(a, s.server_data?.length || 0), 0) || 0;
-          totalEpisodes = max > 0 ? max : "N/A";
+          (movie.category || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
+          (movie.country || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
+        } else if (source === "Nguonc") {
+          (movie.category?.list || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
+          (movie.country?.list || []).forEach(c => tags.push(`<span class="tag">${c.name}</span>`));
         }
 
-        container.innerHTML = `
-          ${poster ? `<img src="${poster}" alt="${movie.name || "Anime"}" class="detail-poster" loading="lazy">` : ""}
-          <h1 class="detail-title">${movie.name || "Không rõ"}</h1>
-          <p class="detail-info">${movie.content || movie.description || "Không có mô tả"}</p>
+        if (movie.actor && Array.isArray(movie.actor)) {
+          const actors = movie.actor.slice(0, 3).join(', ');
+          tags.push(`<span class="tag">Diễn viên: ${actors}${movie.actor.length > 3 ? '...' : ''}</span>`);
+        }
 
-          <div class="detail-info" style="margin-top:1rem;">
-            <p><strong>Năm:</strong> ${movie.year || "N/A"} |
-            <strong>Chất lượng:</strong> ${movie.quality || "N/A"} |
-            <strong>Ngôn ngữ:</strong> ${movie.lang || movie.language || "N/A"} |
-            <strong>Tổng tập:</strong> ${totalEpisodes}</p>
-          </div>
+        document.getElementById('meta-tags').innerHTML = tags.join('');
 
-          <div style="text-align:center; margin-top:2rem;">
-            <a href="watch.html?slug=${slug}&source=${source}&e=1" class="btn watch-now-big">▶ Xem Ngay</a>
-          </div>
-        `;
+        const fullDesc = (movie.content || movie.description || "Không có mô tả").trim();
+        document.getElementById('desc').textContent = fullDesc;
+
+        const toggleBtn = document.getElementById('toggle-desc');
+        if (fullDesc.length > 200) {
+          toggleBtn.style.display = 'inline-block';
+          toggleBtn.onclick = () => {
+            const desc = document.getElementById('desc');
+            if (desc.classList.contains('expanded')) {
+              desc.classList.remove('expanded');
+              toggleBtn.textContent = 'Xem thêm';
+            } else {
+              desc.classList.add('expanded');
+              toggleBtn.textContent = 'Thu gọn';
+            }
+          };
+        } else {
+          toggleBtn.style.display = 'none';
+        }
+
+        const trailerBtn = document.getElementById('trailer-btn');
+        const trailerSection = document.getElementById('trailer-section');
+        if (movie.trailer_url) {
+          const trailerId = movie.trailer_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+          if (trailerId) {
+            trailerBtn.style.display = 'inline-flex';
+            trailerBtn.onclick = () => {
+              if (trailerSection.style.display === 'block') {
+                trailerSection.style.display = 'none';
+                trailerBtn.textContent = 'Xem Trailer';
+              } else {
+                trailerSection.innerHTML = `<iframe class="trailer-iframe" src="https://www.youtube.com/embed/${trailerId[1]}" frameborder="0" allowfullscreen></iframe>`;
+                trailerSection.style.display = 'block';
+                trailerBtn.textContent = 'Ẩn Trailer';
+              }
+            };
+          }
+        } else {
+          trailerBtn.style.display = 'none';
+        }
+
+        renderEpisodes(episodes);
+
+        document.getElementById('page-title').textContent = `${movie.name} - CINEMAX`;
+        document.getElementById('og-title').content = movie.name;
+        document.getElementById('og-desc').content = fullDesc.substring(0, 160) + '...';
+        document.getElementById('og-image').content = poster;
+        document.getElementById('og-url').content = location.href;
+
+        skeleton.style.display = 'none';
+        content.style.display = 'block';
+
       } catch (err) {
         console.error(err);
-        container.innerHTML = `<p style="color:#f66; text-align:center;">
-          Không tải được chi tiết. <a href="index1.html" style="color:var(--primary)">Quay lại</a>
-        </p>`;
+        content.innerHTML = `<p style="color:#f66;text-align:center;">Lỗi: ${err.message}</p>`;
+        skeleton.style.display = 'none';
+        content.style.display = 'block';
       }
     }
 
