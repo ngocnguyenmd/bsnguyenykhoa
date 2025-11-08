@@ -10,217 +10,361 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   <style>
-    :root {
-      --main-color: #e50914;
-      --body-bg: #0f0f0f;
-      --box-bg: #1a1a1a;
-      --text-color: #ffffff;
-      --nav-height: 70px;
-    }
+:root {
+  --main-color: #e50914;
+  --body-bg: #0f0f0f;
+  --box-bg: #1a1a1a;
+  --text-color: #ffffff;
+  --nav-height: 70px;
+}
 
-    * { padding: 0; margin: 0; box-sizing: border-box; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { 
-      font-family: "Cairo", sans-serif; 
-      background: var(--body-bg); 
-      color: var(--text-color); 
-      padding-top: var(--nav-height); 
-    }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-    button { cursor: pointer; border: none; background: none; font: inherit; }
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: "Cairo", sans-serif;
+  background: var(--body-bg);
+  color: var(--text-color);
+  padding-top: var(--nav-height);
+  line-height: 1.5;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; width: 100%; object-fit: cover; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
 
-    .container { max-width: 1400px; padding: 0 15px; margin: auto; }
+.container { max-width: 1400px; padding: 0 15px; margin: auto; }
 
-    /* NAV - TỐI ƯU CHO A04 */
-    .nav-wrapper { 
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
-      background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); 
-    }
-    .nav { 
-      display: flex; align-items: center; justify-content: space-between; 
-      height: var(--nav-height); padding: 0 10px; 
-    }
-    .logo { 
-      font-size: 1.4rem; font-weight: 900; color: var(--main-color); 
-    }
-    .nav-menu { 
-      display: flex; list-style: none; gap: 1.2rem; align-items: center; 
-    }
-    .nav-menu a { 
-      font-weight: 600; font-size: 0.85rem; transition: color 0.3s; 
-    }
-    .nav-menu a:hover { color: var(--main-color); }
+/* ======================= NAVIGATION ======================= */
+.nav-wrapper {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 20px;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
 
-    /* SEARCH BAR - FULL WIDTH TRÊN MOBILE */
-    .nav-search {
-      display: flex; align-items: center; gap: 0.4rem; margin-left: auto;
-      position: relative; z-index: 10; width: 100%; max-width: 300px;
-    }
-    .nav-search-input {
-      flex: 1; padding: 0.5rem 0.8rem; font-size: 0.9rem; border: 2px solid #444; 
-      border-radius: 20px; background: #222; color: white; outline: none; 
-      transition: all 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    .nav-search-input:focus { border-color: var(--main-color); box-shadow: 0 6px 12px rgba(229,9,20,0.3); }
-    .nav-search-btn {
-      background: var(--main-color); color: white; padding: 0.5rem 1rem; 
-      border-radius: 20px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    .nav-search-btn:hover { background: #f40612; transform: scale(1.05); }
+/* LOGO TRÁI */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--main-color);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 
-    /* DROPDOWN */
-    .dropdown { position: relative; }
-    .dropdown-menu { 
-      position: absolute; top: 100%; left: 0; background: var(--box-bg); 
-      min-width: 180px; border-radius: 8px; opacity: 0; visibility: hidden; 
-      transform: translateY(-10px); transition: all 0.3s; z-index: 999; 
-      max-height: 60vh; overflow-y: auto; 
-    }
-    .dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
-    .dropdown-item { 
-      padding: 0.6rem 0.9rem; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; 
-    }
-    .dropdown-item:hover { background: var(--main-color); }
+/* SEARCH GIỮA NHỎ GỌN */
+.nav-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  flex-shrink: 0;
+}
+.nav-search-input {
+  flex: 1;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+  border: 2px solid #333;
+  border-radius: 20px 0 0 20px;
+  background: #1c1c1c;
+  color: white;
+  transition: all 0.3s;
+}
+.nav-search-input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 8px rgba(229,9,20,0.6);
+}
+.nav-search-btn {
+  background: var(--main-color);
+  color: white;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0 20px 20px 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+.nav-search-btn:hover { background: #f40612; transform: scale(1.05); }
 
-    /* HAMBURGER */
-    .hamburger-menu { 
-      display: none; flex-direction: column; gap: 5px; cursor: pointer; 
-    }
-    .hamburger { 
-      width: 22px; height: 3px; background: white; border-radius: 3px; transition: 0.3s; 
-    }
-    .hamburger-menu.active .hamburger:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .hamburger-menu.active .hamburger:nth-child(2) { opacity: 0; }
-    .hamburger-menu.active .hamburger:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+/* MENU PHẢI - GIỮA ĐẸP TRÊN LAPTOP */
+.nav-menu-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+.nav-menu a {
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.nav-menu a:hover { color: var(--main-color); }
 
-    /* HERO SLIDER - TỐI ƯU CHO A04 */
-    .hero-slide { 
-      margin-top: 0; height: 45vh; overflow: hidden; position: relative; 
-    }
-    .hero-slide-item { 
-      position: relative; height: 100%; display: flex; align-items: center; cursor: pointer; 
-    }
-    .hero-slide-item img { 
-      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55); 
-    }
-    .overlay { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      background: linear-gradient(to right, rgba(0,0,0,0.9), transparent 70%); 
-    }
-    .hero-slide-item-content { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      display: flex; flex-direction: column; justify-content: center; padding-left: 1.5rem; 
-      z-index: 2; color: white; 
-    }
-    .item-content-title { 
-      font-size: 1.3rem; font-weight: 900; margin-bottom: 0.4rem; line-height: 1.2; 
-      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-    }
-    .movie-infos { 
-      display: flex; gap: 0.6rem; margin-bottom: 0.6rem; font-size: 0.75rem; font-weight: 600; 
-    }
-    .movie-info i { color: var(--main-color); margin-right: 0.2rem; }
-    .btn { 
-      background: var(--main-color); color: white; padding: 0.5rem 1.2rem; 
-      border-radius: 6px; font-weight: 700; display: inline-flex; align-items: center; 
-      gap: 0.4rem; transition: all 0.3s; width: fit-content; cursor: pointer;
-      font-size: 0.85rem; box-shadow: 0 4px 10px rgba(229,9,20,0.4);
-    }
-    .btn:hover { background: #f40612; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(229,9,20,0.5); }
+/* DROPDOWN */
+.dropdown { position: relative; }
+.dropdown-menu {
+  position: absolute;
+  top: 200%; left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  border: 1px solid #000000;
+  min-width: 190px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 999;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(5px);
+}
+.dropdown-item {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dropdown-item:hover { background: var(--main-color); }
 
-    /* MAIN CONTENT */
-    #main-content { padding: 1.5rem 0; }
-    .section { padding-top: 2rem; }
-    .section-header { 
-      font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; 
-      padding-left: 0.8rem; border-left: 3px solid var(--main-color); 
-    }
+/* HAMBURGER MENU */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.hamburger {
+  width: 22px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+.hamburger-menu.active .hamburger:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger-menu.active .hamburger:nth-child(2) { opacity: 0; }
+.hamburger-menu.active .hamburger:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
 
-    /* MOVIE GRID */
-    .movies-slide .movie-item { 
-      padding-top: 150%; position: relative; overflow: hidden; cursor: pointer; 
-    }
-    .movies-slide .movie-item img { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      object-fit: cover; transition: transform 0.4s; 
-    }
-    .movies-slide .movie-item:hover img { transform: scale(1.1); }
-    .movies-slide .movie-item-content { 
-      position: absolute; bottom: 0; left: 0; width: 100%; 
-      background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 0.8rem; 
-    }
-    .movies-slide .movie-item-title { 
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; 
-    }
-    .movies-slide .movie-infos { display: flex; gap: 0.4rem; font-size: 0.7rem; }
+/* ======================= MAIN CONTENT ======================= */
+#main-content { padding: 1.5rem 0; }
+.section { padding-top: 2rem; }
+.section-header {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--main-color);
+}
 
-    /* PAGINATION */
-    .pagination { 
-      display: flex; justify-content: center; gap: 0.4rem; margin: 1.5rem 0; 
-    }
-    .page-btn { 
-      background: #333; color: white; width: 36px; height: 36px; 
-      border-radius: 6px; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; 
-    }
-    .page-btn:hover:not(:disabled), .page-btn.active { background: var(--main-color); }
+/* ======================= MOVIE CARD ======================= */
+.movies-slide .movie-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid rgba(229,9,20,0.5); /* viền đỏ bo nhẹ */
+  aspect-ratio: 2 / 3;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    /* FOOTER */
-    footer { 
-      background: var(--box-bg); padding: 2rem 0; margin-top: 3rem; 
-    }
-    .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-heading { 
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--main-color); 
-    }
-    .social-list { display: flex; gap: 0.8rem; margin-top: 0.8rem; }
-    .social-item { 
-      width: 36px; height: 36px; background: #333; border-radius: 50%; 
-      display: flex; align-items: center; justify-content: center; transition: background 0.3s; 
-    }
-    .social-item:hover { background: var(--main-color); }
-    .copyright { 
-      text-align: center; padding-top: 1rem; border-top: 1px solid #333; 
-      color: #666; font-size: 0.8rem; 
-    }
+/* RANDOM EFFECT MỖI LẦN RELOAD */
+.movies-slide .movie-item:nth-child(3n) img { filter: brightness(0.55); }
+.movies-slide .movie-item:nth-child(3n+1) img { filter: brightness(0.6) contrast(1.05); }
+.movies-slide .movie-item:nth-child(3n+2) img { filter: brightness(0.65) grayscale(0.1); }
 
-    /* LOADING */
-    .loading { 
-      text-align: center; padding: 2rem; color: #888; font-size: 1rem; 
-    }
+.movies-slide .movie-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.5s ease, transform 0.5s ease;
+  filter: brightness(0.6); /* mờ sẵn */
+}
+.movies-slide .movie-item:hover img {
+  filter: brightness(1) saturate(1.1); /* sáng lên khi hover */
+  transform: scale(1.05);
+}
+.movies-slide .movie-item-content {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+  background: linear-gradient(transparent 60%, rgba(0,0,0,0.85));
+  transition: all 0.3s ease;
+}
+.movies-slide .movie-item:hover .movie-item-content {
+  background: linear-gradient(transparent 70%, rgba(0,0,0,0.9));
+}
+.movie-item-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 10px rgba(0,0,0,0.9);
+}
+.movies-slide .movie-infos {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+.movie-source-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--main-color);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  z-index: 5;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
 
-    /* RESPONSIVE - A04 & MOBILE */
-    @media (max-width: 992px) {
-      .nav-menu { 
-        display: none; position: absolute; top: 100%; left: 0; width: 100%; 
-        background: #000; flex-direction: column; padding: 1rem; gap: 1rem; 
-      }
-      .nav-menu.active { display: flex; }
-      .hamburger-menu { display: flex; }
-      .nav-search { max-width: none; width: auto; }
-    }
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .nav-search { flex-direction: row; width: 100%; margin-left: 0; }
-      .nav-search-input, .nav-search-btn { width: auto; }
-      .hero-slide { height: 45vh; }
-    }
-    @media (max-width: 480px) {
-      .nav { padding: 0 8px; }
-      .logo { font-size: 1.3rem; }
-      .nav-menu a { font-size: 0.8rem; }
-      .nav-search-input { padding: 0.45rem 0.7rem; font-size: 0.85rem; }
-      .nav-search-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; }
-      .hero-slide-item-content { padding-left: 1.2rem; }
-      .item-content-title { font-size: 1.2rem; }
-      .btn { padding: 0.45rem 1rem; font-size: 0.8rem; }
-      .section-header { font-size: 1.1rem; }
-      .movie-item-title { font-size: 0.95rem; }
-      .movies-slide .movie-infos { font-size: 0.65rem; }
-      .page-btn { width: 32px; height: 32px; font-size: 0.8rem; }
-    }
-  </style>
+/* ======================= PAGINATION ======================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1.5rem 0;
+}
+.page-btn {
+  background: #333;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.page-btn:hover:not(:disabled),
+.page-btn.active {
+  background: var(--main-color);
+  transform: scale(1.1);
+}
+
+/* ======================= FOOTER ======================= */
+footer {
+  background: var(--box-bg);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.footer-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: var(--main-color);
+}
+.social-list {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+.social-item {
+  width: 36px;
+  height: 36px;
+  background: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.social-item:hover { background: var(--main-color); }
+.copyright {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* ======================= RESPONSIVE ======================= */
+@media (max-width: 992px) {
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .logo {
+    flex: 1 1 100%;
+    text-align: left;
+  }
+  .nav-search {
+    order: 2;
+    flex: 1 1 100%;
+    margin-top: 0.5rem;
+  }
+  .nav-menu-wrapper {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: #000;
+    border-radius: 10px;
+    padding: 0.5rem 0;
+  }
+  .nav-menu.active { display: flex; }
+  .hamburger-menu { display: flex; order: 1; }
+  .dropdown-menu {
+    left: 0;
+    transform: none;
+    width: 100%;
+    background: #000;
+  }
+}
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+  .logo { font-size: 1.1rem; justify-content: center; }
+  .nav-search { max-width: 90%; }
+  .nav-search-input, .nav-search-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .section-header { font-size: 1rem; }
+  .movie-item-title { font-size: 0.9rem; }
+  .movies-slide .movie-infos { font-size: 0.65rem; }
+  .page-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+}
+</style>
+
 </head>
 <body>
 
@@ -229,30 +373,32 @@
     <div class="container">
       <div class="nav">
         <a href="#" class="logo">Phim Nhà Bánh Mì</a>
-        <ul class="nav-menu" id="nav-menu">
-          <li><a href="#" id="home-link">Trang chủ</a></li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle">Thể Loại</a><div class="dropdown-menu" id="genre-list"></div></li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle">Quốc Gia</a><div class="dropdown-menu" id="country-list"></div></li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle">Năm</a><div class="dropdown-menu" id="year-list"></div></li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle">Khác</a><div class="dropdown-menu" id="cutee-list"></div></li>
-          <li><a href="#" id="phim-bo">Phim Bộ</a></li>
-          <li><a href="#" id="phim-le">Phim Lẻ</a></li>
-          <li><a href="#" id="phim-chieu-rap">Cinemax</a></li>
-        </ul>
+
+        <!-- TÌM KIẾM BÊN TRÁI -->
         <div class="nav-search">
           <input type="text" class="nav-search-input" id="nav-search-input" placeholder="Tìm phim, diễn viên...">
           <button class="nav-search-btn" id="nav-search-btn">Tìm</button>
         </div>
+
+        <!-- MENU CĂN GIỮA -->
+        <div class="nav-menu-wrapper">
+          <ul class="nav-menu" id="nav-menu">
+            <li><a href="#" id="home-link">Trang chủ</a></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Thể Loại</a><div class="dropdown-menu" id="genre-list"></div></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Quốc Gia</a><div class="dropdown-menu" id="country-list"></div></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Năm</a><div class="dropdown-menu" id="year-list"></div></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Khác</a><div class="dropdown-menu" id="cutee-list"></div></li>
+            <li><a href="#" id="phim-bo">Phim Bộ</a></li>
+            <li><a href="#" id="phim-le">Phim Lẻ</a></li>
+            <li><a href="#" id="phim-chieu-rap">Cinemax</a></li>
+          </ul>
+        </div>
+
         <div class="hamburger-menu" id="hamburger-menu">
           <div class="hamburger"></div><div class="hamburger"></div><div class="hamburger"></div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- HERO SLIDER -->
-  <div class="hero-slide">
-    <div class="owl-carousel" id="hero-carousel"></div>
   </div>
 
   <!-- MAIN CONTENT -->
@@ -261,6 +407,16 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-heading">Phim Nhà Bánh Mì</h3>
+          <p>Xem phim online miễn phí cập nhật nhanh nhất.</p>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">© 2025 Phim Nhà Bánh Mì</div>
+    </div>
+  </footer>
 
   <!-- LIBS -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -360,7 +516,7 @@
       }
     };
 
-    let ITEMS_PER_PAGE = 8;
+    let ITEMS_PER_PAGE = 12;
     let currentMode = 'default', currentFilter = null, currentPage = 1;
     let currentSearchQuery = '';
     const imageCache = new Map();
@@ -426,15 +582,6 @@
       else display = 'Đang phát';
       if (links > 0) display += ` (${links} link)`;
       return display;
-    }
-
-    // === GET HERO IMAGE ===
-    function getHeroImage(item) {
-      const source = item.sourceName;
-      if (source === 'Ophim') return item.poster_url || item.thumb_url || '';
-      if (source === 'Phimapi') return item.thumb_url || item.thumb_url || '';
-      if (source === 'Nguonc') return item.poster_url || item.thumb_url || '';
-      return item.thumb_url || '';
     }
 
     // === FETCH TỪ NGUỒN ===
@@ -563,13 +710,17 @@
       }
     }
 
-    // === RENDER CARD ===
+    // === RENDER CARD - THÊM NGUỒN ax/bx/cx ===
     function createMovieCard(m) {
       const card = document.createElement('div');
       card.className = 'movie-item';
       card.dataset.slug = m.slug;
       card.dataset.source = m.sourceCode;
       card.onclick = () => location.href = `detail.html?slug=${m.slug}&source=${m.sourceCode}`;
+
+      const sourceTag = document.createElement('div');
+      sourceTag.className = 'movie-source-tag';
+      sourceTag.textContent = m.sourceCode;
 
       const img = document.createElement('img');
       img.alt = m.name;
@@ -588,7 +739,7 @@
           <div class="movie-info"><span>Bánh mì</span></div>
         </div>
       `;
-      card.append(img, content);
+      card.append(sourceTag, img, content);
       return card;
     }
 
@@ -605,8 +756,8 @@
         responsive: {
           0: { items: 2 },
           480: { items: 2 },
-          768: { items: 3 },
-          1024: { items: 4 }
+          768: { items: 4 },
+          1024: { items: 5 }
         }
       });
     }
@@ -654,107 +805,13 @@
       return filter?.toUpperCase() || 'PHIM';
     }
 
-    // === LOAD HERO SLIDER - HOÀN CHỈNH ===
-    async function loadHeroSlider() {
-      const carousel = document.getElementById('hero-carousel');
-      carousel.innerHTML = '<div class="loading">Đang tải phim nổi bật...</div>';
-
-      try {
-        const res = await fetch('custom-menu.txt?t=' + Date.now());
-        if (!res.ok) throw new Error();
-        const text = await res.text();
-        const groups = parseCustomMenuWithGroups(text);
-        const allItems = Object.values(groups).flat();
-
-        const sources = Object.values(API_SOURCES);
-        const results = await Promise.all(allItems.map(async item => {
-          const src = sources.find(s => s.name.toLowerCase() === item.source);
-          return src ? await fetchFromSource(src, null, null, item.slug, true, false) : [];
-        }));
-
-        let movies = interleaveSourcesProperly(results).slice(0, 5);
-        if (movies.length < 5) {
-          const fallback = await Promise.all(sources.map(s => fetchFromSource(s, 1, 'default')));
-          movies = interleaveSourcesProperly(fallback).slice(0, 5);
-        }
-
-        renderHeroSlides(movies);
-      } catch {
-        const sources = Object.values(API_SOURCES);
-        const results = await Promise.all(sources.map(s => fetchFromSource(s, 1, 'default')));
-        const movies = interleaveSourcesProperly(results).slice(0, 5);
-        renderHeroSlides(movies);
-      }
-    }
-
-    function renderHeroSlides(movies) {
-      const carousel = document.getElementById('hero-carousel');
-      carousel.innerHTML = '';
-
-      movies.forEach(m => {
-        const slide = document.createElement('div');
-        slide.className = 'hero-slide-item';
-        slide.dataset.slug = m.slug;
-        slide.dataset.source = m.sourceCode;
-
-        const heroImg = getHeroImage(m);
-        slide.innerHTML = `
-          <img src="${heroImg}" alt="${m.name}" loading="lazy">
-          <div class="overlay"></div>
-          <div class="hero-slide-item-content">
-            <div class="item-content-wraper">
-              <div class="item-content-title">${m.name}</div>
-              <div class="movie-infos">
-                <div class="movie-info"><i class="bx bxs-star"></i><span>*</span></div>
-                <div class="movie-info"><i class="bx bxs-time"></i><span>${m.episodeDisplay}</span></div>
-                <div class="movie-info"><span>HD</span></div>
-                <div class="movie-info"><span>Bánh mì</span></div>
-              </div>
-              <div class="item-content-description">Xem phim ngay để trải nghiệm!</div>
-              <div class="item-action">
-                <div class="btn" data-slug="${m.slug}" data-source="${m.sourceCode}">
-                  <i class="bx bxs-right-arrow"></i><span>Xem ngay</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-
-        slide.addEventListener('click', (e) => {
-          if (e.target.closest('.btn')) return;
-          window.location.href = `detail.html?slug=${m.slug}&source=${m.sourceCode}`;
-        });
-
-        carousel.appendChild(slide);
-      });
-
-      $('#hero-carousel').trigger('destroy.owl.carousel').owlCarousel({
-        items: 1,
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 6000,
-        autoplayHoverPause: true,
-        navText: ["<i class='bx bx-chevron-left'></i>", "<i class='bx bx-chevron-right'></i>"],
-        responsive: { 0: { items: 1 } }
-      });
-
-      document.querySelectorAll('.hero-slide-item .btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.location.href = `detail.html?slug=${btn.dataset.slug}&source=${btn.dataset.source}`;
-        });
-      });
-    }
-
     // === LOAD CONTENT ===
     async function loadContent(mode, filter = null, page = 1) {
       ITEMS_PER_PAGE = (mode === 'genre') ? 8 : 12;
       currentMode = mode; currentFilter = filter; currentPage = page;
       if (mode === 'default') {
         document.querySelectorAll('#main-content > .section').forEach(s => s.remove());
-        loadHeroSlider();
+        loadCustomMenu(); // Tải custom menu làm trang chủ
         return;
       }
 
@@ -817,7 +874,7 @@
       section.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // === CUSTOM MENU ===
+    // === CUSTOM MENU (làm trang chủ) ===
     async function loadCustomMenu() {
       try {
         const res = await fetch('custom-menu.txt?t=' + Date.now());
@@ -831,6 +888,8 @@
         }
       } catch (e) {
         console.error('Lỗi custom-menu.txt:', e);
+        // Fallback: load phim mới từ API
+        loadContentFromAPI('default');
       }
     }
 
@@ -887,6 +946,22 @@
       }
       const pagination = document.getElementById(`${sectionId}-pagination`);
       if (pagination) pagination.style.display = 'none';
+    }
+
+    // Fallback nếu custom-menu.txt lỗi
+    async function loadContentFromAPI(mode, filter = null, page = 1) {
+      const sectionId = 'fallback-section';
+      let section = document.getElementById(sectionId);
+      if (!section) section = createSection(sectionId, 'PHIM MỚI CẬP NHẬT');
+      showSection(section);
+      const grid = document.getElementById(`${sectionId}-grid`);
+      grid.innerHTML = '<div class="loading">Đang tải phim mới...</div>';
+      const sources = Object.values(API_SOURCES);
+      const promises = sources.map(s => fetchFromSource(s, page, mode, filter));
+      const allResults = await Promise.all(promises);
+      const movies = interleaveSourcesProperly(allResults);
+      renderMoviesFinal(movies, grid);
+      renderPagination(page, sectionId, movies.length >= ITEMS_PER_PAGE);
     }
 
     // === RENDER DROPDOWN ===
@@ -981,9 +1056,7 @@
       renderCuteeDropdown();
       initYearDropdown();
       attachNavEvents();
-      loadHeroSlider();
-      loadContent('default');
-      loadCustomMenu();
+      loadContent('default'); // Trang chủ = custom-menu.txt hoặc fallback
 
       document.addEventListener('click', e => {
         if (!e.target.classList.contains('dropdown-item')) return;

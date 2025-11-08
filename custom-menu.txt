@@ -6,7 +6,7 @@ nhat ky du hanh di gioi cua nha thu thap nguyen lieu|phimapi
 vo han gacha|phimapi
 tham tu lung danh conan|phimapi
 tien si da hoi sinh the gioi phan 3|phimapi
-dao hai tac|phimapi
+
 
 
 # Danh sách chung : ASIAN / Hàn / Trung

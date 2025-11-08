@@ -8,173 +8,242 @@
   <!-- Preload HLS.js -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.13"></script>
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:'Segoe UI',sans-serif;background:#0a0a0a;color:#eee;overflow-y:auto;overflow-x:hidden}
-    a{text-decoration:none}
+ <style>
+:root {
+  --main-color: #e50914;
+  --bg-dark: #0a0a0a;
+  --card-bg: #1a1a1a;
+  --text-color: #fff;
+  --radius: 12px;
+}
 
-    /* === BACKGROUND BLUR FULL SCREEN (NHƯ DETAIL.HTML) === */
-    .bg-blur{
-      position:fixed;top:0;left:0;width:100vw;height:100vh;
-      background-size:cover;background-position:center;background-repeat:no-repeat;
-      filter:blur(12px) brightness(.3);z-index:-2;display:none;
-    }
-    .overlay{
-      position:fixed;top:0;left:0;width:100vw;height:100vh;
-      background:rgba(0,0,0,.7);z-index:-1;display:none;
-    }
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;
+  font-family:"Cairo",sans-serif;
+  background:var(--bg-dark);
+  color:var(--text-color);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
 
-    /* === MAIN CONTAINER (NHƯ DETAIL) === */
-    .main-container{
-      position:relative;z-index:1;min-height:100vh;padding-bottom:60px;
-    }
+/* ==== HEADER ==== */
+header{
+  position:sticky;top:0;z-index:1000;
+  background:#000;
+  border-bottom:1px solid #222;
+}
+.nav{
+  max-width:1200px;margin:auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+}
+.logo{
+  font-weight:900;font-size:1.3rem;color:var(--main-color);
+}
 
-    /* === PLAYER AREA === */
-    #player-area{
-      width:100%;max-width:1400px;margin:16px auto;height:60vh;min-height:300px;position:relative;overflow:hidden;
-      background:#000;border-radius:14px;aspect-ratio:16/9;box-shadow:0 10px 30px #00000099;
-    }
-    #player-area video,#player-area iframe{width:100%;height:100%;border:none;background:#000;object-fit:contain}
+/* ==== PLAYER ==== */
+#player-area{
+  width:100%;
+  max-width:900px;
+  margin:16px auto;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:2px solid #111;
+  aspect-ratio:16/9;
+  position:relative;
+}
+#player-area video,#player-area iframe{
+  width:100%;height:100%;
+  border:none;object-fit:contain;
+  background:#000;
+}
 
-    /* === TITLE BAR === */
-    .title-bar{
-      max-width:900px;margin:12px auto 16px;padding:14px;text-align:center;font-weight:700;font-size:1.1rem;
-      color:#ff0000;background:#1a1a1a;border:2px solid #ff0000;border-radius:10px;
-    }
+/* ==== TITLE ==== */
+.title-bar{
+  max-width:900px;
+  margin:12px auto 18px;
+  padding:12px;
+  text-align:center;
+  font-weight:700;
+  font-size:1.1rem;
+  color:var(--main-color);
+  background:var(--card-bg);
+  border:1.5px solid var(--main-color);
+  border-radius:var(--radius);
+}
 
-    /* === BARS === */
-    .bar{display:flex;gap:12px;justify-content:center;max-width:1000px;margin:12px auto;padding:0 12px;flex-wrap:wrap}
-    .btn{
-      padding:10px 18px;min-height:48px;background:#ff0000;color:#fff;border:none;border-radius:8px;
-      font:600 14px/1 sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;
-    }
-    .btn:hover{opacity:.9;transform:translateY(-2px)}
-    .tab{background:#1a1a1a;border:1.5px solid #ff0000;color:#fff}
-    .tab.active{background:#ff0000}
-    .upload{background:#0066cc}
+/* ==== BUTTONS ==== */
+.bar{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  gap:10px;margin:14px auto;max-width:900px;padding:0 10px;
+}
+.btn{
+  padding:10px 18px;
+  border:none;border-radius:8px;
+  font-weight:600;cursor:pointer;
+  font-size:14px;
+}
+.btn-primary{background:var(--main-color);color:#fff;}
+.btn-primary:hover{opacity:0.9}
+.tab{
+  background:#1a1a1a;
+  border:1.5px solid var(--main-color);
+  color:#fff;
+}
+.tab.active{background:var(--main-color);}
 
-    /* === EP GRID === */
-    .ep-grid{
-      display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:10px;padding:14px;
-      max-width:1000px;margin:0 auto 20px;touch-action:pan-y;
-    }
-    .ep-btn{
-      min-width:48px;height:48px;display:flex;align-items:center;justify-content:center;
-      background:#000;color:#fff;font:600 14px/1 sans-serif;border:1.5px solid #161515;border-radius:8px;
-      cursor:pointer;transition:all .2s;user-select:none;
-    }
-    .ep-btn:hover,.ep-btn.active{background:#ff0000;color:#fff;transform:scale(1.08)}
-    .ep-btn:active{transform:scale(0.98)}
+/* ==== EPISODE GRID ==== */
+.ep-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(50px,1fr));
+  gap:10px;
+  padding:14px;
+  max-width:900px;
+  margin:0 auto 20px;
+}
+.ep-btn{
+  min-width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  background:#000;
+  color:#fff;
+  border:1.5px solid #222;
+  border-radius:8px;
+  font-weight:600;font-size:14px;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.ep-btn:hover{
+  background:var(--main-color);
+  color:#fff;
+}
+.ep-btn.active{
+  background:var(--main-color);
+  border-color:var(--main-color);
+}
 
-    /* === CỐT TRUYỆN === */
-    .plot-container {
-      max-width: 1000px;
-      margin: 0 auto 24px;
-      padding: 16px;
-      background: #1a1a1a;
-      border: 1.5px solid #ff0000;
-      border-radius: 12px;
-      color: #ddd;
-      line-height: 1.6;
-      font-size: 15px;
-      overflow-y:auto;max-height:200px;
-    }
-    .plot-container h3 {
-      color: #ff0000;
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-    }
+/* ==== CỐT TRUYỆN ==== */
+.plot-container{
+  max-width:900px;
+  margin:0 auto 24px;
+  padding:14px;
+  background:#1a1a1a;
+  border:1.5px solid var(--main-color);
+  border-radius:var(--radius);
+  color:#ddd;
+  line-height:1.6;
+  font-size:15px;
+  overflow-y:auto;
+  max-height:220px;
+}
+.plot-container h3{
+  color:var(--main-color);
+  margin-bottom:8px;
+  font-size:1.15rem;
+}
 
-    /* === BACK BUTTON === */
-    .back-btn{
-      display:block;max-width:900px;margin:24px auto 40px;padding:14px;min-height:52px;
-      background:#ff0000;color:#fff;text-align:center;border-radius:10px;font:600 16px/1 sans-serif;transition:all .2s;
-    }
-    .back-btn:hover{opacity:.9;transform:translateY(-3px)}
+/* ==== BACK BUTTON ==== */
+.back-btn{
+  display:block;
+  max-width:900px;
+  margin:24px auto 40px;
+  padding:14px;
+  background:var(--main-color);
+  color:#fff;
+  text-align:center;
+  border-radius:10px;
+  font-weight:600;
+  font-size:16px;
+}
 
-    /* === TOAST === */
-    #toast{
-      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.95);color:#fff;
-      padding:14px 24px;border-radius:8px;font:500 15px/1 sans-serif;visibility:hidden;opacity:0;transition:all .3s;
-      z-index:9999;min-width:220px;text-align:center;border:1px solid #ff0000;
-    }
-    #toast.show{visibility:visible;opacity:1;bottom:30px}
+/* ==== TOAST ==== */
+#toast{
+  position:fixed;
+  bottom:20px;left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  color:#fff;
+  padding:12px 22px;
+  border:1px solid var(--main-color);
+  border-radius:8px;
+  font-size:14px;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .2s;
+  z-index:9999;
+}
+#toast.show{visibility:visible;opacity:1}
 
-    /* === POPUP === */
-    #popup-confirm{
-      position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;
-      z-index:10000;visibility:hidden;opacity:0;transition:all .3s;backdrop-filter:blur(8px);
-    }
-    #popup-confirm.show{visibility:visible;opacity:1}
-    #popup-box{
-      background:#1a1a1a;padding:28px;border-radius:16px;max-width:90%;width:380px;text-align:center;
-      color:#fff;border:2px solid #ff0000;animation:popIn .3s ease;
-    }
-    @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-    #popup-box p{margin-bottom:22px;font-size:16px;line-height:1.5}
-    .popup-btn{
-      padding:10px 24px;margin:0 8px;border:none;border-radius:8px;font-weight:600;cursor:pointer;
-      transition:all .2s;min-width:80px;
-    }
-    .popup-btn:hover{opacity:.9;transform:translateY(-2px)}
-    .popup-yes{background:#ff0000;color:#fff}
-    .popup-no{background:#555;color:#fff}
+/* ==== POPUP ==== */
+#popup-confirm{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+  visibility:hidden;opacity:0;
+  transition:opacity .2s;
+}
+#popup-confirm.show{visibility:visible;opacity:1}
+#popup-box{
+  background:#1a1a1a;
+  padding:20px;
+  border:1.5px solid var(--main-color);
+  border-radius:10px;
+  color:#fff;
+  width:90%;max-width:360px;
+  text-align:center;
+}
+.popup-btn{
+  padding:10px 20px;
+  margin:0 6px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.popup-yes{background:var(--main-color);color:#fff}
+.popup-no{background:#555;color:#fff}
 
-    /* === LOADING === */
-    .loading-overlay{
-      position:absolute;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;
-      z-index:10;border-radius:14px;
-    }
-    .spinner{
-      width:60px;height:60px;border:6px solid #333;border-top:6px solid #ff0000;border-radius:50%;
-      animation:spin 1s linear infinite;
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
+/* ==== LOADING ==== */
+.loading-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--radius);
+}
+.spinner{
+  width:48px;height:48px;
+  border:5px solid #333;
+  border-top:5px solid var(--main-color);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    /* === SUBTITLES === */
-    .sub{
-      position:absolute;bottom:10px;left:10px;right:10px;font-size:16px;font-weight:600;
-      text-shadow:2px 2px 4px #000;pointer-events:none;z-index:5;line-height:1.4;text-align:center;
-    }
-    .vi{color:#fff}
-    .en{color:#f5c518;font-style:italic}
+/* ==== SUB ==== */
+.sub{
+  position:absolute;bottom:10px;left:10px;right:10px;
+  text-align:center;
+  font-size:15px;
+  color:#fff;
+  text-shadow:1px 1px 2px #000;
+  font-weight:600;
+}
 
-    .error-msg{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#f66;font-size:16px;
-      text-align:center;z-index:11;display:none;
-    }
+/* ==== RESPONSIVE ==== */
+@media(max-width:480px){
+  #player-area{margin:10px 6px}
+  .title-bar{margin:10px 6px;font-size:1rem}
+  .ep-grid{gap:8px;padding:10px 6px}
+  .ep-btn{height:44px;font-size:13px}
+  .btn{padding:9px 14px;font-size:13px}
+  .back-btn{margin:20px 6px 40px;font-size:15px}
+  .plot-container{padding:12px;font-size:14px}
+}
+</style>
 
-    /* === RESPONSIVE & FULL SCREEN FIX === */
-    @media(max-width:480px){
-      #player-area{height:56vh;margin:12px 8px;border-radius:12px}
-      .title-bar{margin:10px 8px 16px;padding:12px;font-size:1rem;border-radius:8px}
-      .ep-grid{gap:8px;padding:12px 8px;grid-template-columns:repeat(auto-fill,minmax(48px,1fr))}
-      .ep-btn{min-width:48px;height:48px;font-size:13px}
-      .bar{gap:8px;padding:0 8px;margin:10px 8px}
-      .btn{padding:10px 14px;font-size:13px;min-height:46px}
-      .back-btn{margin:20px 8px 40px;padding:14px;font-size:15px}
-      #toast{bottom:80px;left:5%;right:5%;width:auto;transform:none;font-size:14px}
-      #popup-box{padding:20px;max-width:92%}
-      #popup-box p{font-size:15px;margin-bottom:18px}
-      .popup-btn{padding:10px 18px;margin:0 6px;font-size:14px}
-      .spinner{width:50px;height:50px;border-width:5px}
-      .sub{font-size:14px;bottom:8px;left:8px;right:8px}
-      .plot-container{padding:14px;font-size:14px}
-    }
-    @media(min-width:1024px){
-      #player-area{height:65vh;max-width:1000px;border-radius:16px}
-      .bg-blur,.overlay{display:block}
-      .title-bar{max-width:1000px;font-size:1.3rem;padding:16px}
-      .ep-grid{max-width:1000px;gap:12px;grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
-      .ep-btn{min-width:60px;height:56px;font-size:15px}
-      .bar{max-width:1000px;gap:14px}
-      .btn{padding:12px 24px;font-size:15px;min-height:52px}
-      .back-btn{max-width:1000px;padding:16px;font-size:17px}
-    }
-    @media(min-width:1366px){
-      #player-area{max-width:1366px;height:70vh}
-    }
-  </style>
 </head>
 <body>
 
@@ -526,13 +595,49 @@
 
     timeUpdateHandler = () => {
       const t = videoEl.currentTime;
-      const d = videoEl.duration;
+     // ======= AUTO SKIP OPENING - CÓ GIỮ TRẠNG THÁI PHÁT =======
+const d = videoEl.duration;
+if (d && !videoEl.seeking) {
+  // Cờ tránh tua lặp
+  if (!videoEl._skipped30) videoEl._skipped30 = false;
+  if (!videoEl._skipped15) videoEl._skipped15 = false;
 
-      if (t >= 900 && t <= 960) {
-        videoEl.currentTime = t + 35;
-        showToast('Tự động tua(opening)');
-      }
+  const wasPlaying = !videoEl.paused;
 
+  // < 30 phút → tua ở 30s
+  if (d < 1800 && !videoEl._skipped30 && t >= 30 && t < 70) {
+    videoEl._skipped30 = true;
+    videoEl.currentTime = t + 40;
+    showToast('Tự động tua (ngắn <30p)');
+    if (wasPlaying) videoEl.play().catch(() => {});
+  }
+
+  // 30–45 phút → tua ở 15p
+  else if (d >= 1800 && d <= 2700 && !videoEl._skipped15 && t >= 900 && t < 940) {
+    videoEl._skipped15 = true;
+    videoEl.currentTime = t + 40;
+    showToast('Tự động tua (15p)');
+    if (wasPlaying) videoEl.play().catch(() => {});
+  }
+
+  // > 45 phút → tua 2 lần: 30s đầu & 15p
+  else if (d > 2700) {
+    if (!videoEl._skipped30 && t >= 30 && t < 70) {
+      videoEl._skipped30 = true;
+      videoEl.currentTime = t + 40;
+      showToast('Tự động tua (đầu phim)');
+      if (wasPlaying) videoEl.play().catch(() => {});
+    }
+    else if (!videoEl._skipped15 && t >= 900 && t < 940) {
+      videoEl._skipped15 = true;
+      videoEl.currentTime = t + 40;
+      showToast('Tự động tua (15p)');
+      if (wasPlaying) videoEl.play().catch(() => {});
+    }
+  }
+}
+
+     
       if (!warned && d && t >= d - 120) {
         showEndPopup();
       }
