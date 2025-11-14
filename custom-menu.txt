@@ -1,20 +1,44 @@
 # Danh sách chung : US/UK
+# (chưa có nội dung)
 
+# Danh sách chung : Anime / Hoạt hình / Tổng hợp
+nhat ky du hanh di gioi cua nha thu thap nguyen lieu|nguonc
+vo han gacha|nguonc
+tham tu lung danh conan|nguonc
 
-# Danh sách chung : Anime / Hoạt hình
-nhat ky du hanh di gioi cua nha thu thap nguyen lieu|phimapi
-vo han gacha|phimapi
-tham tu lung danh conan|phimapi
-tien si da hoi sinh the gioi phan 3|phimapi
-
-
+# Danh sách chung : Ăn Cơm - Doraemon Movies
+doraemon nobita va cuoc phieu luu vao the gioi trong tranh|nguonc
+doraemon nobita va ban giao huong dia cau|nguonc
+doraemon nobita va vung dat ly tuong tren bau troi|nguonc
+doraemon nobita va cuoc chien vu tru ti hon|nguonc
+doraemon nobita va nhung ban khung long moi|nguonc
+doraemon nobita va mat trang phieu luu ky|nguonc
+doraemon nobita va dao giau vang|nguonc
+doraemon nobita va chuyen tham hiem nam cuc kachi kochi|nguonc
+doraemon nobita va nuoc nhat thoi nguyen thuy|nguonc
+doraemon nobita va nhung hiep si khong gian|nguonc
+doraemon nobita tham hiem vung dat moi peko va 5 nha tham hiem|nguonc
+doraemon nobita va vien bao tang bao boi|nguonc
+doraemon Nobita va Hon Dao Dieu Ki Cuoc Phieu Luu Cua Loai Thu|nguonc
+doraemon nobita va binh doan nguoi sat|nguonc
+doraemon nobita va cuoc dai thuy chien o xu so nguoi ca|nguonc
+doraemon nobita va lich su khai pha vu tru|nguonc
+doraemon nobita va nguoi khong lo xanh|nguonc
+doraemon nobita va chuyen phieu luu vao xu quy|nguonc
+doraemon nobita o vuong quoc cho meo|nguonc
+doraemon nobita va nhung phap su gio bi an|nguonc
+doraemon nobita va vuong quoc robot|nguonc
+doraemon nobita va nhung dung si co canh|nguonc
+doraemon nobita va truyen thuyet vua Mat Troi|nguonc
+doraemon doi ban than 2|nguonc
 
 # Danh sách chung : ASIAN / Hàn / Trung
-yeu em|phimapi
-than den oi uoc di |phimapi
-hau due mat troi|phimapi
+yeu em|nguonc
+than den oi uoc di|nguonc
+hau due mat troi|nguonc
+di den noi co giao|phimapi
 
 
-# Danh sách chung : Rạp - NETFLIX 
-ca map sieu bao chua|phimapi
+# Danh sách chung : Rạp - NETFLIX
+ca map sieu bao chua|nguonc
 Titanic|nguonc
