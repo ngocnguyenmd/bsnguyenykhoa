@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Ngọc Nguyên - Phim Đa Nguồn</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #0d6efd; --neon: #00f7ff; --dark: #0f0f0f; --gray: #1f1f1f; --radius: 16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:#fff;font-family:'Segoe UI',sans-serif;overflow-x:hidden;}
+.container{max-width:1366px;margin:0 auto;padding:0 16px;}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;background:rgba(18,18,18,.92);backdrop-filter:blur(15px);z-index:1000;padding:14px 0;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.nav{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:26px;font-weight:800;color:var(--primary);}
+.nav-links{display:flex;gap:18px;align-items:center;}
+.nav-link{padding:8px 16px;border-radius:10px;color:#ccc;font-weight:600;transition:.3s;cursor:pointer;}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(13,110,253,.25);}
+.search-box{position:relative;width:260px;}
+.search-box input{width:100%;padding:12px 45px 12px 16px;border:none;border-radius:30px;background:var(--gray);color:#fff;font-size:15px;}
+.search-box i{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#aaa;}
+.search-results{position:absolute;top:48px;left:0;right:0;background:#161616;border-radius:12px;max-height:55vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.5);display:none;}
+.search-results.show{display:block;}
+.result-item{display:flex;gap:12px;padding:12px;border-bottom:1px solid #333;cursor:pointer;}
+.result-item:hover{background:#232323;}
+.result-poster img{width:60px;height:90px;border-radius:8px;object-fit:cover;}
+.result-info{flex:1;}
+.result-info h4{font-size:14px;margin-bottom:4px;}
+.result-info p{font-size:12px;color:#888;}
+.result-source{background:var(--primary);padding:2px 8px;border-radius:4px;font-size:11px;margin-top:4px;display:inline-block;}
+
+/* HERO */
+.hero-wrapper{margin-top:80px;position:relative;overflow:hidden;border-radius:var(--radius);box-shadow:0 20px 50px rgba(0,0,0,.7);max-width:1366px;margin-left:auto;margin-right:auto;height:70vh;min-height:500px;}
+.hero{width:100%;height:101%;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;padding:0 40px;opacity:0;transition:opacity 1s ease;}
+.hero.fade-in{opacity:1;}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(15,15,15,.95) 0%,rgba(15,15,15,.6) 50%,transparent 100%);z-index:1;}
+.hero-content{position:relative;z-index:3;max-width:650px;}
+.hero h1{font-size:3.8rem;line-height:1.1;font-weight:800;margin-bottom:16px;background:linear-gradient(90deg,#fff,var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{font-size:1.25rem;line-height:1.6;opacity:.95;margin-bottom:24px;}
+.source-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.7);padding:6px 12px;border-radius:20px;font-size:0.9rem;font-weight:600;margin-bottom:16px;margin-right:8px;}
+.source-badge.ax{background:rgba(255,87,51,.8);}
+.source-badge.bx{background:rgba(33,150,243,.8);}
+.source-badge.cx{background:rgba(76,175,80,.8);}
+.source-badge.tmdb{background:rgba(1,180,228,.8);}
+.btn{padding:14px 36px;border:none;border-radius:12px;background:var(--primary);color:white;font-weight:700;cursor:pointer;font-size:1.1rem;transition:.3s;box-shadow:0 0 20px rgba(13,110,253,.5);}
+.btn:hover{background:#0b5ed7;transform:translateY(-2px);box-shadow:0 0 30px rgba(13,110,253,.8);}
+
+/* SECTION */
+.section{padding:60px 0;display:none;}
+.section.active{display:block;}
+.section-title{font-size:1.8rem;margin-bottom:25px;padding-left:60px;position:relative;}
+.section-title::before{content:'';position:absolute;left:0;top:50%;width:40px;height:4px;background:var(--primary);border-radius:3px;box-shadow:0 0 10px var(--neon);}
+.movie-grid{display:grid;gap:18px;padding:0 20px;grid-template-columns:repeat(2,1fr);}
+@media(min-width:600px){.movie-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:900px){.movie-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:1200px){.movie-grid{grid-template-columns:repeat(5,1fr);}}
+.card{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;transition:all .4s ease;background:#111;border:1px solid rgba(0,247,255,.1);}
+.card:hover{transform:translateY(-8px);box-shadow:0 0 30px rgba(0,247,255,.3),0 0 60px rgba(13,110,253,.2);border-color:var(--neon);}
+.card img{width:100%;height:300px;object-fit:cover;transition:.5s;}
+.card:hover img{transform:scale(1.05);}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.98));z-index:2;}
+.card-title{font-size:1rem;font-weight:700;}
+.card-year{font-size:.82rem;opacity:.85;color:var(--neon);}
+.card-source{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.8);padding:4px 8px;border-radius:6px;font-size:.75rem;z-index:3;}
+.pagination{text-align:center;margin:30px 0;}
+.page-btn{padding:9px 15px;margin:0 4px;border-radius:8px;background:var(--gray);border:none;color:#fff;transition:.3s;cursor:pointer;}
+.page-btn:hover{background:var(--primary);box-shadow:0 0 15px rgba(13,110,253,.6);}
+.page-btn.active{background:var(--primary);box-shadow:0 0 20px rgba(0,247,255,.7);}
+.progress-container{position:relative;height:3px;background:rgba(255,255,255,.1);margin:10px 0;overflow:hidden;}
+.progress-bar{height:100%;background:var(--primary);width:0%;transition:width .3s;}
+
+@media(max-width:480px){
+  .logo{font-size:22px;}.nav-links{display:none;}.search-box{width:100%;}
+  .hero-wrapper{margin-top:70px;height:50vh;min-height:300px;border-radius:12px;}
+  .hero{padding:0 16px;}.hero h1{font-size:2.3rem;}.hero p{font-size:1rem;}.btn{padding:12px 28px;font-size:1rem;}
+  .card img{height:240px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">Ngọc Nguyên</div>
+    <div class="nav-links">
+      <div class="nav-link active" data-section="home">Trang chủ</div>
+      <div class="nav-link" data-section="movies">Phim lẻ</div>
+      <div class="nav-link" data-section="tv">Series</div>
+      <div class="nav-link" data-section="top">Top phim</div>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm phim..."/>
+      <i class="fa fa-search"></i>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+</header>
+
+<div class="hero-wrapper">
+  <section class="hero" id="heroSection">
+    <div class="container hero-content" id="heroContent">Đang tải...</div>
+  </section>
+</div>
+
+<section class="section active" id="homeSection">
+  <div class="container">
+    <h2 class="section-title">Phim đang hot (4 nguồn)</h2>
+    <div class="progress-container"><div class="progress-bar" id="trendingProgress"></div></div>
+    <div class="movie-grid" id="trendingMovies"></div>
+    <div class="pagination" id="trendingPag"></div>
+  </div>
+</section>
+
+<section class="section" id="moviesSection">
+  <div class="container">
+    <h2 class="section-title">Phim lẻ mới (4 nguồn)</h2>
+    <div class="progress-container"><div class="progress-bar" id="moviesProgress"></div></div>
+    <div class="movie-grid" id="moviesGrid"></div>
+    <div class="pagination" id="moviesPag"></div>
+  </div>
+</section>
+
+<section class="section" id="tvSection">
+  <div class="container">
+    <h2 class="section-title">Series nổi bật (4 nguồn)</h2>
+    <div class="progress-container"><div class="progress-bar" id="tvProgress"></div></div>
+    <div class="movie-grid" id="tvGrid"></div>
+    <div class="pagination" id="tvPag"></div>
+  </div>
+</section>
+
+<section class="section" id="topSection">
+  <div class="container">
+    <h2 class="section-title">Top phim (4 nguồn)</h2>
+    <div class="progress-container"><div class="progress-bar" id="topProgress"></div></div>
+    <div class="movie-grid" id="topGrid"></div>
+    <div class="pagination" id="topPag"></div>
+  </div>
+</section>
+
+<script>
+// CẤU HÌNH
+const TMDB_KEY = 'c1ba4826351c415243b3d8ea82a77cd7';
+const BASE_TMDB = 'https://api.themoviedb.org/3';
+const IMG_TMDB = 'https://image.tmdb.org/t/p/w500';
+const BACKDROP_TMDB = 'https://image.tmdb.org/t/p/original';
+
+const API_SOURCES = {
+  ax: {name:'Ophim',code:'ax',defaultUrl:p=>`https://ophim1.com/v1/api/danh-sach/phim-moi-cap-nhat?page=${p}`,searchUrl:s=>`https://ophim1.com/v1/api/phim/${s}`,keywordUrl:(k,p)=>`https://ophim1.com/v1/api/tim-kiem?keyword=${encodeURIComponent(k)}&page=${p}`,parser:d=>d?.data?.items||[],cdn:()=>"https://img.ophim.live/uploads/movies/"},
+  bx: {name:'Phimapi',code:'bx',defaultUrl:p=>`https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3?page=${p}`,searchUrl:s=>`https://phimapi.com/phim/${s}`,keywordUrl:(k,p)=>`https://phimapi.com/v1/api/tim-kiem?keyword=${encodeURIComponent(k)}&page=${p}`,parser:d=>d?.data?.items||d?.items||[],cdn:d=>(d?.data?.APP_DOMAIN_CDN_IMAGE||'https://phimimg.com/').replace(/\/+$/,'')+'/'},
+  cx: {name:'Nguonc',code:'cx',defaultUrl:p=>`https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${p}`,searchUrl:s=>`https://phim.nguonc.com/api/film/${s}`,keywordUrl:(k,p)=>`https://phim.nguonc.com/api/films/search?keyword=${encodeURIComponent(k)}&page=${p}`,parser:d=>d?.items||[],cdn:()=>"https://phim.nguonc.com/public/images/Poster/"}
+};
+
+let allMovies = [], currentHeroIndex = 0, heroInterval = null;
+const ITEMS_PER_PAGE = 20;
+
+// TMDB
+async function fetchTMDB(url){try{const r=await fetch(url);return r.ok?await r.json():{};}catch{return {};}}
+
+// CREATE CARD từ cả 4 nguồn
+function createUnifiedCard(item) {
+  const div = document.createElement('div');
+  div.className = 'card';
+  
+  // Xác định nguồn và link
+  if (item.source === 'tmdb') {
+    div.onclick = () => location.href = `detail.html?id=${item.id}&type=${item.type}`;
+  } else {
+    div.onclick = () => location.href = `detail.html?slug=${item.slug}&source=${item.source}`;
+  }
+  
+  div.innerHTML = `
+    <img src="${item.thumb_url}" loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='"/>
+    <div class="card-source ${item.source}">${item.source.toUpperCase()}</div>
+    <div class="card-info">
+      <div class="card-title">${item.name}</div>
+      <div class="card-year">${item.year}</div>
+    </div>
+  `;
+  return div;
+}
+
+// HERO từ cả 4 nguồn
+async function loadHeroMultiSource() {
+  const all = [];
+  
+  // Lấy từ TMDB
+  const tmdbData = await fetchTMDB(`${BASE_TMDB}/trending/movie/week?api_key=${TMDB_KEY}&language=vi-VN`);
+  const tmdbMovies = (tmdbData.results || []).filter(m => m.backdrop_path).slice(0, 5).map(m => ({
+    source: 'tmdb',
+    backdrop: BACKDROP_TMDB + m.backdrop_path,
+    name: m.title,
+    overview: m.overview,
+    rating: m.vote_average.toFixed(1),
+    id: m.id,
+    type: 'movie'
+  }));
+  all.push(...tmdbMovies);
+  
+  // Lấy từ 3 nguồn API
+  for (const src of Object.values(API_SOURCES)) {
+    const movies = await fetchSource(src, 1);
+    const heroMovies = movies.slice(0, 3).map(m => ({
+      source: src.code,
+      backdrop: m.thumb_url,
+      name: m.name,
+      overview: `Phim từ`,
+      slug: m.slug,
+      year: m.year
+    }));
+    all.push(...heroMovies);
+  }
+  
+  allMovies = all;
+  if (allMovies.length > 0) {
+    updateHero();
+    startHeroRotation();
+  }
+}
+
+function updateHero() {
+  const m = allMovies[currentHeroIndex];
+  const hero = document.getElementById('heroSection');
+  const content = document.getElementById('heroContent');
+  hero.style.backgroundImage = `url(${m.backdrop})`;
+  hero.classList.remove('fade-in');
+  
+  setTimeout(() => {
+    let badges = `<div class="source-badge ${m.source}">${m.source.toUpperCase()}</div>`;
+    if (m.rating) badges += `<div class="source-badge"><i class="fas fa-star"></i> ${m.rating}</div>`;
+    
+    let clickAction = '';
+    if (m.source === 'tmdb') {
+      clickAction = `onclick="location.href='detail.html?id=${m.id}&type=${m.type}'"`;
+    } else {
+      clickAction = `onclick="location.href='detail.html?slug=${m.slug}&source=${m.source}'"`;
+    }
+    
+    content.innerHTML = `
+      ${badges}
+      <h1>${m.name}</h1>
+      <p>${m.overview.slice(0, 180)}...</p>
+      <button class="btn" ${clickAction}>Xem ngay</button>
+    `;
+    hero.classList.add('fade-in');
+  }, 100);
+}
+
+function startHeroRotation() {
+  if (heroInterval) clearInterval(heroInterval);
+  heroInterval = setInterval(() => {
+    currentHeroIndex = (currentHeroIndex + 1) % allMovies.length;
+    updateHero();
+  }, 8000);
+}
+
+// FETCH từ API sources
+async function fetchSource(src, p = 1, mode = null, filter = null, isSearch = false, isKeyword = false) {
+  let url = '';
+  if (isKeyword) url = src.keywordUrl(filter, p);
+  else if (isSearch) url = src.searchUrl(filter);
+  else url = src.defaultUrl(p);
+  
+  try {
+    const r = await fetch(url, {mode: 'cors'});
+    if (!r.ok) return [];
+    const d = await r.json();
+    const items = src.parser(d);
+    const cdn = typeof src.cdn === 'function' ? src.cdn(d) : src.cdn();
+    
+    return items.map(it => {
+      let thumb = it.thumb_url || it.poster_url || it.poster || '';
+      if (thumb && !thumb.startsWith('http') && !thumb.startsWith('//')) thumb = cdn + thumb.replace(/^\/+/, '');
+      return {
+        name: it.name || it.title || 'N/A',
+        thumb_url: thumb || '',
+        slug: it.slug || '',
+        source: src.code,
+        year: (it.year || '').toString()
+      };
+    }).filter(x => x.slug && x.thumb_url);
+  } catch (e) {
+    console.error(src.code, e);
+    return [];
+  }
+}
+
+// INTERLEAVE cả 4 nguồn (ax, bx, cx, tmdb)
+async function interleaveFull(endpoint, type, page) {
+  const all = [];
+  
+  // Lấy từ TMDB
+  const tmdbData = await fetchTMDB(`${BASE_TMDB}${endpoint}?api_key=${TMDB_KEY}&language=vi-VN&page=${page}`);
+  const tmdbMovies = (tmdbData.results || []).map(item => ({
+    name: item.title || item.name,
+    thumb_url: IMG_TMDB + item.poster_path,
+    year: (item.release_date || item.first_air_date || '').slice(0, 4),
+    source: 'tmdb',
+    id: item.id,
+    type: type
+  }));
+  
+  // Lấy từ 3 API sources
+  const sources = Object.values(API_SOURCES);
+  const apiResults = await Promise.all(sources.map(s => fetchSource(s, page)));
+  
+  // Xen kẽ: tmdb, ax, bx, cx, tmdb, ax, bx, cx...
+  const maxLen = Math.max(tmdbMovies.length, ...apiResults.map(r => r.length));
+  const seen = new Set();
+  
+  for (let i = 0; i < maxLen; i++) {
+    // TMDB
+    if (i < tmdbMovies.length) {
+      const key = `tmdb-${tmdbMovies[i].id}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        all.push(tmdbMovies[i]);
+      }
+    }
+    
+    // ax, bx, cx
+    for (let j = 0; j < sources.length; j++) {
+      if (i < apiResults[j].length) {
+        const m = apiResults[j][i];
+        const key = `${m.source}-${m.slug}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          all.push(m);
+        }
+      }
+    }
+    
+    if (all.length >= ITEMS_PER_PAGE * 2) break;
+  }
+  
+  return all.slice(0, ITEMS_PER_PAGE);
+}
+
+// RENDER
+function renderCards(movies, container, progId) {
+  container.innerHTML = '';
+  const disp = movies.slice(0, ITEMS_PER_PAGE);
+  let loaded = 0, total = disp.length;
+  
+  const updateProg = () => {
+    loaded++;
+    document.getElementById(progId).style.width = (loaded / total * 100) + '%';
+    if (loaded === total) document.querySelector(`#${progId}`).parentElement.style.opacity = '0';
+  };
+  
+  disp.forEach(m => {
+    const card = createUnifiedCard(m);
+    container.appendChild(card);
+    const img = new Image();
+    img.onload = () => updateProg();
+    img.onerror = () => updateProg();
+    img.src = m.thumb_url;
+  });
+}
+
+async function loadSection(containerId, pagId, endpoint, type, page = 1) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;">Đang tải...</div>';
+  const prog = document.getElementById(pagId.replace('Pag', 'Progress'));
+  prog.style.width = '0%';
+  prog.parentElement.style.opacity = '1';
+  
+  const movies = await interleaveFull(endpoint, type, page);
+  renderCards(movies, container, pagId.replace('Pag', 'Progress'));
+  
+  const pag = document.getElementById(pagId);
+  pag.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'page-btn';
+    btn.textContent = i;
+    if (i === page) btn.classList.add('active');
+    btn.onclick = () => loadSection(containerId, pagId, endpoint, type, i);
+    pag.appendChild(btn);
+  }
+}
+
+// NAV & SEARCH
+document.querySelectorAll('.nav-link').forEach(l => l.onclick = () => {
+  showSection(l.dataset.section);
+});
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById(id + 'Section').classList.add('active');
+  document.querySelector(`[data-section="${id}"]`).classList.add('active');
+  
+  if (id === 'home') loadSection('trendingMovies', 'trendingPag', '/trending/movie/week', 'movie');
+  if (id === 'movies') loadSection('moviesGrid', 'moviesPag', '/movie/now_playing', 'movie');
+  if (id === 'tv') loadSection('tvGrid', 'tvPag', '/trending/tv/week', 'tv');
+  if (id === 'top') loadSection('topGrid', 'topPag', '/movie/top_rated', 'movie');
+}
+
+// TÌM KIẾM cả 4 nguồn
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+let timer;
+
+searchInput.oninput = () => {
+  clearTimeout(timer);
+  if (searchInput.value.trim().length < 2) {
+    searchResults.classList.remove('show');
+    return;
+  }
+  timer = setTimeout(() => doSearch(searchInput.value.trim()), 350);
+};
+
+async function doSearch(q) {
+  searchResults.innerHTML = '';
+  searchResults.classList.add('show');
+  
+  const all = [];
+  
+  // TMDB
+  const tmdb = await fetchTMDB(`${BASE_TMDB}/search/multi?api_key=${TMDB_KEY}&language=vi-VN&query=${encodeURIComponent(q)}`);
+  (tmdb.results || []).slice(0, 3).forEach(item => {
+    all.push({
+      name: item.title || item.name,
+      thumb_url: IMG_TMDB + item.poster_path,
+      year: (item.release_date || item.first_air_date || '').slice(0, 4),
+      source: 'tmdb',
+      id: item.id,
+      type: item.media_type || 'movie'
+    });
+  });
+  
+  // ax, bx, cx
+  const sources = Object.values(API_SOURCES);
+  const apiResults = await Promise.all(sources.map(s => fetchSource(s, 1, null, q, false, true)));
+  
+  apiResults.forEach((results, idx) => {
+    results.slice(0, 3).forEach(m => all.push(m));
+  });
+  
+  // Hiển thị kết quả
+  all.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'result-item';
+    
+    if (m.source === 'tmdb') {
+      div.onclick = () => location.href = `detail.html?id=${m.id}&type=${m.type}`;
+    } else {
+      div.onclick = () => location.href = `detail.html?slug=${m.slug}&source=${m.source}`;
+    }
+    
+    div.innerHTML = `
+      <div class="result-poster">
+        <img src="${m.thumb_url}" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='"/>
+      </div>
+      <div class="result-info">
+        <h4>${m.name}</h4>
+        <p>${m.year}</p>
+        <div class="result-source ${m.source}">${m.source.toUpperCase()}</div>
+      </div>
+    `;
+    searchResults.appendChild(div);
+  });
+}
+
+searchInput.addEventListener('blur', () => setTimeout(() => searchResults.classList.remove('show'), 200));
+
+// INIT
+window.onload = () => {
+  loadHeroMultiSource();
+  loadSection('trendingMovies', 'trendingPag', '/trending/movie/week', 'movie');
+};
+</script>
+</body>
+</html>
