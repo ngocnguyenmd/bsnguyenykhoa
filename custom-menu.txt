@@ -35,8 +35,8 @@ doraemon doi ban than 2|nguonc
 # Danh sách chung : ASIAN / Hàn / Trung
 yeu em|nguonc
 than den oi uoc di|nguonc
-hau due mat troi|nguonc
-di den noi co giao|phimapi
+hau due mat troi|ophim
+di den noi co gio|phimapi
 
 
 # Danh sách chung : Rạp - NETFLIX
