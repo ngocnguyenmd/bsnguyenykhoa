@@ -15,6 +15,14 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
+- đã fix rung mức 3 tại nhật và nơi cần chỉnh
+- đã fix hệ thống ký ước số 1 loạn số thứ tự
+- đã fix tăng nhẹ tỉ lệ D
+- đã ký bản fix hàng không tăng nhẹ 0.6L
+- điều luật mới đã ký 
+- giải quyết bể kính do đập phá
+- fix nhẹ lượng ra vào cổng A và C tại cầu HCF
+- coming soon giáng sinh rút thẻ bí ẩn giá trị cao
 - đã fix hệ thống điện và mạng đã bật lại 04/12/2025
 - đã ký thông quá giáng sinh và chủ đề năm nay tuyết rơi và đỏ !
 - đã ký những đơn khoa dược gửi qua
@@ -57,6 +65,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
