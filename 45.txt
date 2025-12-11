@@ -53,9 +53,11 @@ Tuyển dụng nhân sự
 * Tác giả : quỳnh - Bích Tuyền - Sơn - Ánh
 ==
 3|Học viện hoàng gia||
-- Dự kiến năm học mới 20/12/2025
-- Tiếp nhận 300.000 học viên trong tháng này 
-- Đã ký đuổi học viên Trương mã tường [7]
+- Năm học mới đang diễn ra 10/12/2025 
+- Mở lớp 10/1/2026 chuẩn bị cho lịch học 
+- Tiếp nhận 219.000 học viên trong tháng này 
+- Tất cả lên lớp tiếng anh cơ bản tiếng hàn cơ bản
+- Bắt buộc học toán nâng cao ở lớp 5^
 * Tác giả : Thảo [PhD][Học viện 01][Khu nội trú]
 ==
 4|Nhiệm vu +||Chưa có nhiệm vụ mới 
@@ -63,6 +65,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
