@@ -15,6 +15,8 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
+- đã đấu giá bức tranh 500 triệu thành công / từ thiện thêm 600 triệu cho các bạn nhỏ khó khăn khu A
+- đã fix báo đài bây giờ chỉ có tin thật / các loại giả đã xóa bỏ nếu phát hiện ! 
 - đã fix nước hoa loại có mùi nhạy cảm sức khỏe sẽ cấm vĩnh viển
 - đã fix mùi phòng giam 300/01 tăng đột biến cho tháng 12 đến ngày 4/1/2026
 - đã fix Hoa hồng trắng mức 1 phù thuật ưu tiên loại biến thuật ẩn
@@ -70,6 +72,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
