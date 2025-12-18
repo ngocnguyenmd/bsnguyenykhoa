@@ -15,25 +15,7 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
-- đã đấu giá bức tranh 500 triệu thành công / từ thiện thêm 600 triệu cho các bạn nhỏ khó khăn khu A
-- đã fix báo đài bây giờ chỉ có tin thật / các loại giả đã xóa bỏ nếu phát hiện ! 
-- đã fix nước hoa loại có mùi nhạy cảm sức khỏe sẽ cấm vĩnh viển
-- đã fix mùi phòng giam 300/01 tăng đột biến cho tháng 12 đến ngày 4/1/2026
-- đã fix Hoa hồng trắng mức 1 phù thuật ưu tiên loại biến thuật ẩn
-- đã fix hệ thống lab phát triển nước uống mới cải thiện đời sống
-- đã fix rung mức 3 tại nhật và nơi cần chỉnh
-- đã fix hệ thống ký ước số 1 loạn số thứ tự
-- đã fix tăng nhẹ tỉ lệ D
-- đã ký bản fix hàng không tăng nhẹ 0.6L
-- điều luật mới đã ký 
-- giải quyết bể kính do đập phá
-- fix nhẹ lượng ra vào cổng A và C tại cầu HCF
-- coming soon giáng sinh rút thẻ bí ẩn giá trị cao
-- đã fix hệ thống điện và mạng đã bật lại 04/12/2025
-- đã ký thông quá giáng sinh và chủ đề năm nay tuyết rơi và đỏ !
-- đã ký những đơn khoa dược gửi qua
-- đã ký giảm 20% theo lion tức trải nghiệm siêu thực 110k ! 
-- đã ký chính thức hoạt động siêu thực ký từ 03/12/2025
+- Thông qua lễ hội giáng sinh - Thắp nến - Khu B
 * Tác giả : Nội bộ
 ==
 2|Danh sách giải quyết cho vong mới (vietnam)||
@@ -72,6 +54,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
