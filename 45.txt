@@ -15,11 +15,12 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
+- Ok cu sơn nhen :)) nói chứ tui nhỏ tuổi hơn mai đem nộp id cho chị hân nghen !
 - Đã fix nghi thức sinh nhật nhằm đảm bảo sự công bằng - và sự ý nghĩa đặc biệt và ưu tiên cộng 1 điểm 
 - Đã tiếp nhận đơn của bà hmmm có gì đâu bà dù sao cũng từng là cô á vậy nghen nên đừng ngại con đang bận !
-- Đã fix hoa cầu nguyện - phù thuật - hưởng phù thuật giai đoạn 2 thay vì 3 giảm 1 bậc để cần bằng
+- Đã fix hoa cầu nguyện - phù thuật - hưởng phù thuật giai đoạn 2 thay vì 3 giảm 1 bậc 
 - Đã giao khu công viên 1 cho ông tô và tuyền deco ! [trang trí độ khó cao yêu cầu rời khỏi khu 1 hay khu C]
-* Tác giả : Nội bộ - Vy - trâm - tuấn - quỳnh 9h00p pm 3/1/2026 AR-d3m
+* Tác giả : Nội bộ - Vy - trâm - tuấn - quỳnh 7h10p pm 4/1/2026 AR-d3m
 ==
 2|Danh sách giải quyết cho vong mới (vietnam)||
 - giải quyết ID phụ gặp hyun tại AT08 12h40 16/12/2025
@@ -57,6 +58,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
