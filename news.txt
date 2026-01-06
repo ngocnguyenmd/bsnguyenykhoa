@@ -33,7 +33,7 @@ Quản lý - BS Đức
 -tiêu đề-
 Tin Miễn Phí
 -ảnh-
-poto2.jpg
+poto3.jpg
 -nội dung-
 * Sữa chữa không gian hẹp phòng 16!
 * Sữa chữa cổng A
@@ -44,7 +44,7 @@ Quản lý -
 -tiêu đề-
 Coming - Năm mới âm lịch
 -ảnh-
-poto2.jpg
+poto4.jpg
 -nội dung-
 
 -tác giả-
@@ -55,7 +55,7 @@ abc
 -tiêu đề-
 Giải quyết Vong mới 
 -ảnh-
-poto2.jpg
+poto5.jpg
 -nội dung-
 * Giải quyết : trần hoàng nhật minh đã xong 9h sáng mai ghé làm id nghen !
 -tác giả-
@@ -66,7 +66,7 @@ Quản lý -
 -tiêu đề-
 Hoàng Tộc/Quý Tộc
 -ảnh-
-poto2.jpg
+poto6.jpg
 -nội dung-
 * Năm học mới đang diễn ra 10/12/2025 
 -tác giả-
@@ -76,7 +76,7 @@ Quản lý - Thảo
 -tiêu đề-
 Nội bộ
 -ảnh-
-poto2.jpg
+poto7.jpg
 -nội dung-
 * Lễ âm lịch
 * Phát thiệp mời sinh nhật lion Verterious
@@ -90,7 +90,7 @@ Quản lý -
 -tiêu đề-
 Thần Linh
 -ảnh-
-poto2.jpg
+poto8.jpg
 -nội dung-
 
 -tác giả-
@@ -98,6 +98,7 @@ Quản lý -
 -mật khẩu-
 Kimngan2
 ===
+
 
 
 
