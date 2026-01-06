@@ -118,7 +118,7 @@
         }
         
         .date::before {
-            content: '📅';
+            content: 'Dữ liệu phải load lại nhé:';
         }
         
         .lock-icon {
@@ -296,9 +296,9 @@
                 if (!response.ok) throw new Error('Không thể tải file');
                 
                 const text = await response.text();
-                const lines = text.trim().split('\n').filter(line => line.trim() !== '');
+                const articles = text.split('===').map(s => s.trim()).filter(s => s !== '');
                 
-                if (lines.length === 0) {
+                if (articles.length === 0) {
                     container.innerHTML = '<div class="error-message">📭 Chưa có bài viết nào</div>';
                     return;
                 }
@@ -306,51 +306,96 @@
                 container.innerHTML = '';
                 allArticles = [];
                 
-                lines.forEach((line, index) => {
-                    const parts = line.split('|');
-                    
-                    if (parts.length < 2) return;
-                    
-                    const title = parts[0] ? parts[0].trim() : 'Không có tiêu đề';
-                    const image = (parts.length >= 2 && parts[1].trim() !== '') ? parts[1].trim() : '';
-                    const content = parts.length >= 3 ? parts[2].trim() : '';
-                    const author = parts.length >= 5 ? parts[4].trim() : '';
-                    const password = parts.length >= 6 ? parts[5].trim() : '';
-                    
-                    const date = new Date().toLocaleDateString('vi-VN');
-                    
-                    const article = {
-                        id: index,
-                        title: title,
-                        content: content,
-                        image: image,
-                        date: date,
-                        author: author,
-                        password: password
-                    };
-                    
-                    allArticles.push(article);
-                    
-                    const card = document.createElement('div');
-                    card.className = 'news-card';
-                    card.innerHTML = `
-                        ${password ? '<div class="lock-icon">🔒</div>' : ''}
-                        ${image ? `<img src="${image}" alt="${title}" onerror="this.style.display='none';">` : ''}
-                        <div class="card-content">
-                            <h2>${title}</h2>
-                            <p class="date">${date}</p>
-                        </div>
-                    `;
-                    
-                    card.onclick = () => handleCardClick(index);
-                    
-                    container.appendChild(card);
+                articles.forEach((articleText, index) => {
+                    const article = parseArticle(articleText, index);
+                    if (article) {
+                        allArticles.push(article);
+                        
+                        const card = document.createElement('div');
+                        card.className = 'news-card';
+                        card.innerHTML = `
+                            ${article.password ? '<div class="lock-icon">🔒</div>' : ''}
+                            ${article.image ? `<img src="${article.image}" alt="${article.title}" onerror="this.style.display='none';">` : ''}
+                            <div class="card-content">
+                                <h2>${article.title}</h2>
+                                <p class="date">${article.date}</p>
+                            </div>
+                        `;
+                        
+                        card.onclick = () => handleCardClick(index);
+                        container.appendChild(card);
+                    }
                 });
                 
             } catch (error) {
                 container.innerHTML = '<div class="error-message">❌ Lỗi tải dữ liệu. Vui lòng kiểm tra file news.txt</div>';
                 console.error('Error:', error);
             }
+        }
+
+        function parseArticle(text, id) {
+            const lines = text.split('\n');
+            const article = {
+                id: id,
+                title: '',
+                image: '',
+                content: '',
+                author: '',
+                password: '',
+                date: new Date().toLocaleDateString('vi-VN')
+            };
+            
+            let currentSection = '';
+            let contentLines = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // Kiểm tra các tag section
+                if (line === '-tiêu đề-') {
+                    currentSection = 'title';
+                    continue;
+                } else if (line === '-ảnh-') {
+                    currentSection = 'image';
+                    continue;
+                } else if (line === '-nội dung-') {
+                    currentSection = 'content';
+                    continue;
+                } else if (line === '-tác giả-') {
+                    currentSection = 'author';
+                    continue;
+                } else if (line === '-mật khẩu-') {
+                    currentSection = 'password';
+                    continue;
+                }
+                
+                // Lưu nội dung theo section
+                if (currentSection === 'title') {
+                    if (line && !article.title) {
+                        article.title = line;
+                    }
+                } else if (currentSection === 'image') {
+                    if (line && !article.image) {
+                        article.image = line;
+                    }
+                } else if (currentSection === 'content') {
+                    contentLines.push(lines[i]); // Giữ nguyên xuống dòng
+                } else if (currentSection === 'author') {
+                    if (line && !article.author) {
+                        article.author = line;
+                    }
+                } else if (currentSection === 'password') {
+                    if (line && !article.password) {
+                        article.password = line;
+                    }
+                }
+            }
+            
+            article.content = contentLines.join('\n').trim();
+            
+            if (!article.title) return null;
+            
+            return article;
         }
 
         function handleCardClick(articleId) {
@@ -374,16 +419,22 @@
 
         function closePasswordModal() {
             document.getElementById('password-modal').style.display = 'none';
-            pendingArticle = null;
+            // Không xóa pendingArticle ở đây
         }
 
         function submitPassword() {
+            if (!pendingArticle) {
+                closePasswordModal();
+                return;
+            }
+            
             const input = document.getElementById('password-input');
             const enteredPassword = input.value.trim();
             
             if (enteredPassword === pendingArticle.password) {
+                const articleToRead = pendingArticle;
                 closePasswordModal();
-                goToRead(pendingArticle);
+                goToRead(articleToRead);
             } else {
                 input.value = '';
                 input.style.borderColor = 'red';
@@ -402,22 +453,29 @@
         });
 
         window.onclick = (e) => {
-            if (e.target === document.getElementById('password-modal')) {
-                closePasswordModal();
+            const modal = document.getElementById('password-modal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                pendingArticle = null;
             }
         };
 
         function goToRead(article) {
-            // Lưu vào sessionStorage
+            if (!article) {
+                console.error('Article is null or undefined');
+                return;
+            }
+            
+            console.log('Going to read:', article);
+            
             sessionStorage.setItem('currentArticle', JSON.stringify({
-                title: article.title,
-                content: article.content,
-                image: article.image,
-                date: article.date,
-                author: article.author
+                title: article.title || 'Không có tiêu đề',
+                content: article.content || 'Không có nội dung',
+                image: article.image || '',
+                date: article.date || new Date().toLocaleDateString('vi-VN'),
+                author: article.author || ''
             }));
             
-            // Chuyển trang
             window.location.href = 'read.html';
         }
 
