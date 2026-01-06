@@ -15,7 +15,7 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
-- Fix không gian hẹp phòng 16
+- Fix không gian hẹp phòng 16!
 - Ok cu sơn nhen :)) nói chứ tui nhỏ tuổi hơn mai đem nộp id cho chị hân nghen !
 - Đã fix nghi thức sinh nhật nhằm đảm bảo sự công bằng - và sự ý nghĩa đặc biệt và ưu tiên cộng 1 điểm 
 - Đã tiếp nhận đơn của bà hmmm có gì đâu bà dù sao cũng từng là cô á vậy nghen nên đừng ngại con đang bận !
@@ -60,6 +60,7 @@ Tuyển dụng nhân sự
 5|Thần linh||Đơn kiện vui lòng gặp lion
 ==
 6|Mị Thần||Nội bộ li-os
+
 
 
 
