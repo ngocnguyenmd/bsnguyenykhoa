@@ -21,6 +21,8 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã ký thẳng 2 đưa đi thẳng luôn nghen - khỏi đi qua bên kia hơi khờ nên ưu ái vậy nhen ! đang bận ấy nên không dẫn đi được nên tự đi nghen !
+* Xóa bỏ sổ 01 ký bỏ qua không kiểm duyệt ! Lion đã ký
 * Đã fix môi trường mưa tăng 2rmd và dự kiến kết thúc khi hết sinh nhật lion
 * Đã sữa hệ thống báo điện tử và website trên hệ thống
 * Bãi bỏ ma túy các chất kích thích hoàn toàn tại khu cấm !
@@ -104,6 +106,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
