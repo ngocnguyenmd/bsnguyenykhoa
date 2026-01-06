@@ -60,7 +60,7 @@ poto5.jpg
 -nội dung-
 * Giải quyết : Trần hoàng nhật minh đã xong 9h sáng mai ghé làm id nghen !
 -tác giả-
-Quản lý - Quản ngục công B
+Quản lý - Quản ngục cổng B
 -mật khẩu-
 ===
 -tiêu đề-
@@ -99,6 +99,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
