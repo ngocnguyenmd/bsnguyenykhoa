@@ -21,6 +21,8 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đoan với như với sơn với minh !! ghé cổng 2 khu B qua làm giấy tờ lần 3 ! 
+* Đã fix sinh nhật số 788721 ID mới 
 * Đã ký thẳng 2 đưa đi thẳng luôn nghen - khỏi đi qua bên kia hơi khờ nên ưu ái vậy nhen ! đang bận ấy nên không dẫn đi được nên tự đi nghen !
 * Xóa bỏ sổ 01 ký bỏ qua không kiểm duyệt ! Lion đã ký
 * Đã fix môi trường mưa tăng 2rmd và dự kiến kết thúc khi hết sinh nhật lion
@@ -106,6 +108,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
