@@ -1,19 +1,250 @@
-Danh sách giải quyết cho vong mới (vietnam)||
-- giải quyết trần hoàng nhật minh đã xong 9h sáng ghé làm id nghen !
-- giải quyết ID phụ gặp hyun tại AT08 12h40 16/12/2025
-- An (người của lion) thông qua không cần kê khai đã kèm ID 1
-- xóa bỏ An trong danh sách hành hình cổng A
-- ngọc tuyết đã ký
-- nhi đã ký
-- giải quyết đơn mới 04/12/2025
-- Hoàng bảo ngọc (un ID)(không xác định) chưa ký thông qua
-- Phan nguyễn nhật huy
-- nguyễn đặng minh anh (người của lion) thông qua không cần kê khai 
-- Trần duy tùng 1993
-* Tác giả : Tổng quản ngục - Phòng giam 01[quản lý hyun]
-Tin tức mới||[Tất cả đã ký thông qua]
-- Fix không gian hẹp phòng 16!
-- Ok cu sơn nhen :)) nói chứ tui nhỏ tuổi hơn mai đem nộp id cho chị hân nghen !
-- Đã fix hoa cầu nguyện - phù thuật - hưởng phù thuật giai đoạn 2 thay vì 3 giảm 1 bậc 
-- Đã giao khu công viên 1 cho ông tô và tuyền deco ! [trang trí độ khó cao yêu cầu rời khỏi khu 1 hay khu C]
-* Tác giả : Nội bộ - Vy - trâm - tuấn - quỳnh 7h10p pm 4/1/2026 AR-d3m
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viện-LIFESHELL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #8b4513;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #8b4513;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            letter-spacing: 10px;
+            text-shadow: 1px 1px 5px #000;
+        }
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 15px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 7px;
+        }
+        .news-card {
+            background: white;
+            border-radius: 56px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border-top: 5px solid #8b4513;
+            cursor: pointer;
+        }
+        .news-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .card-content h2 {
+            color: #8b4513;
+            margin: 0 0 12px;
+            font-size: 1.7em;
+        }
+        .date {
+            font-size: 0.95em;
+            color: #8b4513;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(138, 63, 63, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            width: 95%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            background: #8b4513;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        .modal-body {
+            padding: 35px;
+        }
+        .modal-body img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .modal-body p {
+            line-height: 1.9;
+            font-size: 1.1em;
+            white-space: pre-wrap;
+        }
+        .close {
+            color: white;
+            float: right;
+            font-size: 2.5em;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #5e2f0e;
+            color: white;
+            margin-top: 60px;
+        }
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.5em; }
+            .news-card img { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LIFESHELL-CENTER</h1>
+        <p>Nhiệm vụ & Cuộc sống </p>
+    </header>
+
+    <div class="container" id="news-container"></div>
+
+    <div class="modal" id="news-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 id="modal-title"></h2>
+            </div>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="">
+                <p id="modal-content"></p>
+                <p class="date" id="modal-date"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Tin Tức Trung Hoa - Thiết kế hiện đại thanh lịch
+    </footer>
+
+    <script>
+        let newsList = []; // Lưu tất cả bài tin
+
+        async function loadNews() {
+            const container = document.getElementById('news-container');
+            if (!container) return;
+
+            try {
+                const response = await fetch('news.txt');
+                if (!response.ok) throw new Error();
+                const text = await response.text();
+                const lines = text.trim().split('\n');
+                container.innerHTML = '';
+                newsList = [];
+
+                lines.forEach(line => {
+                    if (line.trim() === '') return;
+                    const parts = line.split('|').map(p => p.trim());
+
+                    if (parts.length < 2) return;
+
+                    const title = parts[0];
+                    const content = parts[1];
+                    const image = (parts.length >= 3 && parts[2] !== '') ? parts[2] : null;
+                    const password = (parts.length >= 4 && parts[3] !== '') ? parts[3] : null;
+
+                    const date = new Date().toLocaleDateString('vi-VN');
+
+                    // Tạo card (luôn hiển thị trên list)
+                    const card = document.createElement('div');
+                    card.className = 'news-card';
+                    card.innerHTML = `
+                        ${image ? `<img src="${image}" alt="${title}" onerror="this.style.display='none';">` : ''}
+                        <div class="card-content">
+                            <h2>${title}</h2>
+                            <p class="date">${date}</p>
+                        </div>
+                    `;
+
+                    // Click card → kiểm tra pass rồi mới mở modal
+                    card.onclick = () => {
+                        if (password) {
+                            const input = prompt(`Nhập mật khẩu cho bài "${title}":`);
+                            if (input !== password) {
+                                alert('Mật khẩu sai! Không thể xem nội dung.');
+                                return;
+                            }
+                        }
+                        openModal(title, content, image, date);
+                    };
+
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                container.innerHTML = '<p style="text-align:center;color:red;">Lỗi tải file news.txt</p>';
+            }
+        }
+
+        function openModal(title, content, image, date) {
+            document.getElementById('modal-title').textContent = title;
+            const modalImg = document.getElementById('modal-img');
+            if (image) {
+                modalImg.src = image;
+                modalImg.style.display = 'block';
+            } else {
+                modalImg.style.display = 'none';
+            }
+            document.getElementById('modal-content').textContent = content;
+            document.getElementById('modal-date').textContent = date;
+            document.getElementById('news-modal').style.display = 'flex';
+        }
+
+        document.querySelector('.close').onclick = () => {
+            document.getElementById('news-modal').style.display = 'none';
+        };
+
+        window.onclick = (e) => {
+            if (e.target === document.getElementById('news-modal')) {
+                document.getElementById('news-modal').style.display = 'none';
+            }
+        };
+
+        window.addEventListener('load', loadNews);
+    </script>
+</body>
+</html>
