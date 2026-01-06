@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã fix môi trường mưa tăng 2rmd và dự kiến kết thúc khi hết sinh nhật lion
 * Đã sữa hệ thống báo điện tử và website trên hệ thống
 * Bãi bỏ ma túy các chất kích thích hoàn toàn tại khu cấm !
 * Thay đổi số 11 mã bảo mật khoa nội kèm mã bác sĩ
@@ -35,6 +36,9 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Buồn làm gì nhớ vừa thôi khóc goài vậy thầy kệ toaii đi
+* Cứ tới tầm này là ổng khóc cho đã rồi thôi không hiểu nổi anh ON 
+* Đã fix 8% hoa phù ép lên 11% ! 
 * Đã nhận được thư mời năm mới 2026 âm lịch
 * Sữa chữa không gian hẹp phòng 16!
 * Sữa chữa cổng A
@@ -99,6 +103,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
