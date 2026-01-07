@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã fix điện tại trạm metro LF lưu thông qua khu A và B sự cố điện do giảm trừ ép dòng điện ôm xuống mức thấp và IoT vấn đề do lỗi kỹ thuật mạch điện cháy quá áp  
 * Đã ký 2 đứa đi theo lối đỏ á nghen ! 20 tiếng umm chắc đủ rồi hen về thăm nhà đi làm gì cũng được vui vẻ xong quay lại gặp chị hiền ! 
 * Đã ký fix theo điều luật mới năm 2020 - hai đứa quyết định chọn 1 họ nhen ! không cho ghép riêng á kiếm gì ăn đi nghen cả nhóm luôn :)) 
 * Đoan với như với sơn với minh !! ghé cổng 2 khu B qua làm giấy tờ lần 3 ! 
@@ -112,6 +113,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
