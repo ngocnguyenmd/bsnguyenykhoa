@@ -4,300 +4,299 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFESHELL-CENTER</title>
+    <!-- Font Google -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
-       /* RESET */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* BODY */
-body {
-    font-family: 'Noto Serif SC', serif;
-    background: linear-gradient(135deg, #8b4513 0%, #5e2f0e 100%);
-    color: #333;
-    min-height: 100vh;
-}
-
-/* HEADER */
-header {
-    background: rgba(139, 69, 19, 0.95);
-    backdrop-filter: blur(10px);
-    color: white;
-    text-align: center;
-    padding: 24px 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-header h1 {
-    font-size: clamp(1.6rem, 5vw, 2.6rem);
-    letter-spacing: 4px;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-}
-
-header p {
-    font-size: clamp(0.9rem, 3vw, 1.2rem);
-    opacity: 0.95;
-}
-
-/* CONTAINER */
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 16px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-/* NEWS CARD */
-.news-card {
-    background: #fff;
-    border-radius: 18px;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.news-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #8b4513, #d2691e);
-}
-
-.news-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 40px rgba(139, 69, 19, 0.3);
-}
-
-/* IMAGE */
-.news-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.news-card:hover img {
-    transform: scale(1.05);
-}
-
-/* CARD CONTENT */
-.card-content {
-    padding: 20px;
-    text-align: center;
-}
-
-.card-content h2 {
-    color: #8b4513;
-    font-size: 1.2rem;
-    line-height: 1.4;
-    margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* DATE */
-.date {
-    font-size: 0.9rem;
-    color: #777;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-}
-
-.date::before {
-    content: "Load lại để làm mới !";
-    font-size: 0.85rem;
-    color: #999;
-}
-
-/* LOCK ICON */
-.lock-icon {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 38px;
-    height: 38px;
-    background: rgba(139, 69, 19, 0.9);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-/* PASSWORD MODAL */
-.password-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
-
-.password-box {
-    background: #fff;
-    width: 90%;
-    max-width: 400px;
-    padding: 30px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-}
-
-.password-box h3 {
-    color: #8b4513;
-    margin-bottom: 18px;
-    font-size: 1.4rem;
-}
-
-.password-box input {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: 2px solid #8b4513;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.password-box input:focus {
-    outline: none;
-    border-color: #d2691e;
-}
-
-/* BUTTONS */
-.password-buttons {
-    display: flex;
-    gap: 12px;
-}
-
-.password-buttons button {
-    flex: 1;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.btn-submit {
-    background: #8b4513;
-    color: #fff;
-}
-
-.btn-submit:hover {
-    background: #5e2f0e;
-}
-
-.btn-cancel {
-    background: #ddd;
-}
-
-.btn-cancel:hover {
-    background: #ccc;
-}
-
-/* FOOTER */
-footer {
-    margin-top: 50px;
-    padding: 26px 16px;
-    text-align: center;
-    background: rgba(94, 47, 14, 0.95);
-    color: white;
-    font-size: 1rem;
-}
-
-/* LOADING & ERROR */
-.loading,
-.error-message {
-    text-align: center;
-    padding: 50px 20px;
-    color: white;
-    font-size: 1.2rem;
-}
-
-.error-message {
-    background: rgba(255, 0, 0, 0.25);
-    border-radius: 15px;
-    margin: 30px;
-}
-
-/* 📱 MOBILE (Samsung A04) */
-@media (max-width: 480px) {
-    @media (max-width: 480px) {
-    .container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    /* ================= RESET ================= */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-}
+
+    /* ================= BODY ================= */
+    body {
+        font-family: 'Noto Serif SC', serif;
+        background: linear-gradient(135deg, #8b4513 0%, #5e2f0e 100%);
+        color: #333;
+        min-height: 100vh;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+        background: rgba(139, 69, 19, 0.95);
+        backdrop-filter: blur(10px);
+        color: white;
+        text-align: center;
+        padding: 24px 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
     header h1 {
-        letter-spacing: 2px;
+        font-size: clamp(1.6rem, 5vw, 2.6rem);
+        letter-spacing: 4px;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
     }
 
-    .news-card img {
-        height: 160px;
+    header p {
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        opacity: 0.95;
     }
 
-    .card-content {
-        padding: 16px;
-    }
-
-    .card-content h2 {
-        font-size: 1.1rem;
-    }
-}
-
-/* 💻 LAPTOP */
-@media (min-width: 1024px) {
+    /* ================= CONTAINER ================= */
     .container {
-        gap: 30px;
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 16px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    /* ================= NEWS CARD ================= */
+    .news-card {
+        background: #fff;
+        border-radius: 18px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .news-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #8b4513, #d2691e);
+    }
+
+    .news-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 40px rgba(139, 69, 19, 0.3);
     }
 
     .news-card img {
-        height: 240px;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .news-card:hover img {
+        transform: scale(1.05);
+    }
+
+    /* ================= CARD CONTENT ================= */
+    .card-content {
+        padding: 20px;
+        text-align: center;
     }
 
     .card-content h2 {
+        color: #8b4513;
+        font-size: 1.2rem;
+        line-height: 1.4;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .date {
+        font-size: 0.9rem;
+        color: #777;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .date::before {
+        content: "Load lại để làm mới !";
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    /* ================= LOCK ICON ================= */
+    .lock-icon {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+        background: rgba(139, 69, 19, 0.9);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ================= PASSWORD MODAL ================= */
+    .password-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(5px);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .password-box {
+        background: #fff;
+        width: 90%;
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+
+    .password-box h3 {
+        color: #8b4513;
+        margin-bottom: 18px;
         font-size: 1.4rem;
     }
-}
+
+    .password-box input {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 2px solid #8b4513;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .password-box input:focus {
+        outline: none;
+        border-color: #d2691e;
+    }
+
+    .password-buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    .password-buttons button {
+        flex: 1;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .btn-submit {
+        background: #8b4513;
+        color: #fff;
+    }
+
+    .btn-submit:hover {
+        background: #5e2f0e;
+    }
+
+    .btn-cancel {
+        background: #ddd;
+    }
+
+    .btn-cancel:hover {
+        background: #ccc;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+        margin-top: 50px;
+        padding: 26px 16px;
+        text-align: center;
+        background: rgba(94, 47, 14, 0.95);
+        color: white;
+        font-size: 1rem;
+    }
+
+    /* ================= LOADING & ERROR ================= */
+    .loading,
+    .error-message {
+        text-align: center;
+        padding: 50px 20px;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .error-message {
+        background: rgba(255, 0, 0, 0.25);
+        border-radius: 15px;
+        margin: 30px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 480px) {
+        .container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        header h1 {
+            letter-spacing: 2px;
+        }
+
+        .news-card img {
+            height: 160px;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card-content h2 {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .container {
+            gap: 30px;
+        }
+
+        .news-card img {
+            height: 240px;
+        }
+
+        .card-content h2 {
+            font-size: 1.4rem;
+        }
+    }
 
     </style>
 </head>
 <body>
+    <!-- HEADER -->
     <header>
         <h1>LIFESHELL</h1>
         <p>Nhiệm vụ & Quản lý & Cuộc sống</p>
     </header>
 
+    <!-- NEWS CONTAINER -->
     <div class="container" id="news-container">
         <div class="loading">⏳ Đang tải bài viết...</div>
     </div>
 
+    <!-- PASSWORD MODAL -->
     <div class="password-modal" id="password-modal">
         <div class="password-box">
             <h3>🔐 Bài viết Nội bộ cần có mật khẩu</h3>
@@ -310,206 +309,277 @@ footer {
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         &copy; 2026 Bản quyền thuộc về Data Nội bộ & Quyền thuộc về Lion Verterious
     </footer>
 
-    <script>
-        let pendingArticle = null;
-        let allArticles = [];
+    <!-- ================= JAVASCRIPT ================= -->
+<script>
+    // Biến lưu article đang chờ nhập mật khẩu
+    let pendingArticle = null;
+    let allArticles = [];
 
-        async function loadNews() {
-            const container = document.getElementById('news-container');
+    // Hàm lấy giờ hiện tại
+    function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        return `${hours}:${minutes} - ${day}/${month}/${year}`;
+    }
+
+    // Hàm tạo key unique cho mỗi đoạn cập nhật
+    function createUpdateKey(articleId, text) {
+        return `update_${articleId}_${text.trim()}`;
+    }
+
+    // Hàm xử lý nội dung có cú pháp *text* (không yêu cầu đầu dòng)
+  // Hàm xử lý nội dung có cú pháp *text* (không yêu cầu đầu dòng) - PHIÊN BẢN SỬA LỖI HIỂN THỊ
+function processContentWithTime(txt) {
+    const lines = txt.split(/\r?\n/);
+    let results = [];
+    let currentArticleId = 0;
+    let inContent = true; // Mặc định bật để luôn hiện giờ
+    const seen = new Set();
+
+    for (let line of lines) {
+        let originalLine = line.replace(/\r/g, ''); 
+        let trimmedLine = originalLine.trim();
+
+        if (!trimmedLine) {
+            results.push("");
+            continue;
+        }
+
+        // Nhận diện các thẻ điều hướng
+        if (/^-tiêu đề-/i.test(trimmedLine)) {
+            currentArticleId++;
+            inContent = false;
+            results.push(originalLine);
+            continue;
+        }
+        if (/^-nội dung-/i.test(trimmedLine)) {
+            inContent = true;
+            results.push(originalLine);
+            continue;
+        }
+        if (/^-tác giả-/i.test(trimmedLine) || /^-mật khẩu-/i.test(trimmedLine) || /^===$/.test(trimmedLine)) {
+            inContent = false;
+            results.push(originalLine);
+            continue;
+        }
+
+        if (inContent) {
+            // Tạo key lưu trữ dựa trên nội dung câu
+            const storageKey = `art_${currentArticleId}_${trimmedLine}`;
             
-            try {
-                const response = await fetch('news.txt');
-                if (!response.ok) throw new Error('Không thể tải file');
-                
-                const text = await response.text();
-                const articles = text.split('===').map(s => s.trim()).filter(s => s !== '');
-                
-                if (articles.length === 0) {
-                    container.innerHTML = '<div class="error-message">📭 Chưa có bài viết nào</div>';
-                    return;
-                }
-                
-                container.innerHTML = '';
-                allArticles = [];
-                
-                articles.forEach((articleText, index) => {
-                    const article = parseArticle(articleText, index);
-                    if (article) {
-                        allArticles.push(article);
-                        
-                        const card = document.createElement('div');
-                        card.className = 'news-card';
-                        card.innerHTML = `
-                            ${article.password ? '<div class="lock-icon">🔒</div>' : ''}
-                            ${article.image ? `<img src="${article.image}" alt="${article.title}" onerror="this.style.display='none';">` : ''}
-                            <div class="card-content">
-                                <h2>${article.title}</h2>
-                                <p class="date">${article.date}</p>
-                            </div>
-                        `;
-                        
-                        card.onclick = () => handleCardClick(index);
-                        container.appendChild(card);
-                    }
-                });
-                
-            } catch (error) {
-                container.innerHTML = '<div class="error-message">❌ Lỗi tải dữ liệu. Vui lòng kiểm tra file news.txt</div>';
-                console.error('Error:', error);
+            let savedTime = localStorage.getItem(storageKey);
+            if (!savedTime) {
+                savedTime = getCurrentFullTime(); // Lấy cả ngày tháng năm
+                localStorage.setItem(storageKey, savedTime);
             }
-        }
 
-        function parseArticle(text, id) {
-            const lines = text.split('\n');
-            const article = {
-                id: id,
-                title: '',
-                image: '',
-                content: '',
-                author: '',
-                password: '',
-                date: new Date().toLocaleDateString('vi-VN')
-            };
-            
-            let currentSection = '';
-            let contentLines = [];
-            
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-                
-                // Kiểm tra các tag section
-                if (line === '-tiêu đề-') {
-                    currentSection = 'title';
-                    continue;
-                } else if (line === '-ảnh-') {
-                    currentSection = 'image';
-                    continue;
-                } else if (line === '-nội dung-') {
-                    currentSection = 'content';
-                    continue;
-                } else if (line === '-tác giả-') {
-                    currentSection = 'author';
-                    continue;
-                } else if (line === '-mật khẩu-') {
-                    currentSection = 'password';
-                    continue;
-                }
-                
-                // Lưu nội dung theo section
-                if (currentSection === 'title') {
-                    if (line && !article.title) {
-                        article.title = line;
-                    }
-                } else if (currentSection === 'image') {
-                    if (line && !article.image) {
-                        article.image = line;
-                    }
-                } else if (currentSection === 'content') {
-                    contentLines.push(lines[i]); // Giữ nguyên xuống dòng
-                } else if (currentSection === 'author') {
-                    if (line && !article.author) {
-                        article.author = line;
-                    }
-                } else if (currentSection === 'password') {
-                    if (line && !article.password) {
-                        article.password = line;
-                    }
-                }
-            }
-            
-            article.content = contentLines.join('\n').trim();
-            
-            if (!article.title) return null;
-            
-            return article;
+            // Gắn giờ vào sau đuôi bất kể ký hiệu đầu dòng là gì
+            const lineWithTime = `${originalLine} - ${savedTime}`;
+            results.push(lineWithTime);
+        } else {
+            results.push(originalLine);
         }
+    }
 
-        function handleCardClick(articleId) {
-            const article = allArticles[articleId];
-            
-            if (article.password) {
-                pendingArticle = article;
-                showPasswordModal();
-            } else {
-                goToRead(article);
-            }
-        }
+    return results.join('\n');
+}
 
-        function showPasswordModal() {
-            const modal = document.getElementById('password-modal');
-            const input = document.getElementById('password-input');
-            modal.style.display = 'flex';
-            input.value = '';
-            input.focus();
-        }
+// Hàm lấy thời gian: HH:mm:ss DD/MM/YYYY
+function getCurrentFullTime() {
+    const now = new Date();
+    
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng trong JS từ 0-11
+    const year = now.getFullYear();
 
-        function closePasswordModal() {
-            document.getElementById('password-modal').style.display = 'none';
-            // Không xóa pendingArticle ở đây
-        }
+    return `${hh}:${mm}:${ss} ${day}/${month}/${year}`;
+}
 
-        function submitPassword() {
-            if (!pendingArticle) {
-                closePasswordModal();
+    // Load bài viết từ file news.txt
+    async function loadNews() {
+        const container = document.getElementById('news-container');
+        try {
+            const response = await fetch('news.txt');
+            if (!response.ok) throw new Error('Không thể tải file');
+            const text = await response.text();
+            const articles = text.split('===').map(s => s.trim()).filter(s => s !== '');
+            if (articles.length === 0) {
+                container.innerHTML = '<div class="error-message">📭 Chưa có bài viết nào</div>';
                 return;
             }
-            
-            const input = document.getElementById('password-input');
-            const enteredPassword = input.value.trim();
-            
-            if (enteredPassword === pendingArticle.password) {
-                const articleToRead = pendingArticle;
-                closePasswordModal();
-                goToRead(articleToRead);
-            } else {
-                input.value = '';
-                input.style.borderColor = 'red';
-                input.placeholder = '❌ Mật khẩu sai! Thử lại...';
-                setTimeout(() => {
-                    input.style.borderColor = '#8b4513';
-                    input.placeholder = 'Nhập mật khẩu';
-                }, 2000);
-            }
+            container.innerHTML = '';
+            allArticles = [];
+            articles.forEach((articleText, index) => {
+                const article = parseArticle(articleText, index);
+                if (article) {
+                    allArticles.push(article);
+                    const card = document.createElement('div');
+                    card.className = 'news-card';
+                    card.innerHTML = `
+                        ${article.password ? '<div class="lock-icon">🔒</div>' : ''}
+                        ${article.image ? `<img src="${article.image}" alt="${article.title}" onerror="this.style.display='none';">` : ''}
+                        <div class="card-content">
+                            <h2>${article.title}</h2>
+                            <p class="date">${article.date}</p>
+                        </div>
+                    `;
+                    card.onclick = () => handleCardClick(index);
+                    container.appendChild(card);
+                }
+            });
+        } catch (error) {
+            container.innerHTML = '<div class="error-message">❌ Lỗi tải dữ liệu. Vui lòng kiểm tra file news.txt</div>';
+            console.error('Error:', error);
         }
+    }
 
-        document.getElementById('password-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                submitPassword();
-            }
-        });
-
-        window.onclick = (e) => {
-            const modal = document.getElementById('password-modal');
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                pendingArticle = null;
-            }
+    // Chuyển text article thành object
+    function parseArticle(text, id) {
+        const lines = text.split('\n');
+        const article = {
+            id, 
+            title:'', 
+            image:'', 
+            content:'', 
+            author:'', 
+            password:'', 
+            date: new Date().toLocaleDateString('vi-VN')
         };
-
-        function goToRead(article) {
-            if (!article) {
-                console.error('Article is null or undefined');
-                return;
+        let currentSection = '';
+        let contentLines = [];
+        
+        for (let i=0; i<lines.length; i++) {
+            const line = lines[i].trim();
+            
+            if (line === '-tiêu đề-') { 
+                currentSection='title'; 
+                continue;
+            }
+            if (line === '-ảnh-') { 
+                currentSection='image'; 
+                continue;
+            }
+            if (line === '-nội dung-') { 
+                currentSection='content'; 
+                continue;
+            }
+            if (line === '-tác giả-') { 
+                currentSection='author'; 
+                continue;
+            }
+            if (line === '-mật khẩu-') { 
+                currentSection='password'; 
+                continue;
             }
             
-            console.log('Going to read:', article);
-            
-            sessionStorage.setItem('currentArticle', JSON.stringify({
-                title: article.title || 'Không có tiêu đề',
-                content: article.content || 'Không có nội dung',
-                image: article.image || '',
-                date: article.date || new Date().toLocaleDateString('vi-VN'),
-                author: article.author || ''
-            }));
-            
-            window.location.href = 'read.html';
+            if (currentSection==='title' && line && !article.title) {
+                article.title=line;
+            }
+            else if (currentSection==='image' && line && !article.image) {
+                article.image=line;
+            }
+            else if (currentSection==='content') {
+                contentLines.push(lines[i]);  // Giữ nguyên định dạng dòng
+            }
+            else if (currentSection==='author' && line && !article.author) {
+                article.author=line;
+            }
+            else if (currentSection==='password' && line && !article.password) {
+                article.password=line;
+            }
         }
+        
+        // Xử lý nội dung với cú pháp *text* mới
+        const rawContent = contentLines.join('\n');
+        article.content = processContentWithTime(rawContent, id);
+        
+        if(!article.title) return null;
+        
+        return article;
+    }
 
-        window.addEventListener('load', loadNews);
-    </script>
+    // Xử lý click vào card
+    function handleCardClick(articleId) {
+        const article = allArticles[articleId];
+        if(article.password){
+            pendingArticle=article;
+            showPasswordModal();
+        }else{
+            goToRead(article);
+        }
+    }
+
+    // Hiện modal mật khẩu
+    function showPasswordModal(){
+        const modal=document.getElementById('password-modal');
+        const input=document.getElementById('password-input');
+        modal.style.display='flex';
+        input.value='';
+        input.focus();
+    }
+
+    // Đóng modal
+    function closePasswordModal(){
+        document.getElementById('password-modal').style.display='none';
+    }
+
+    // Submit mật khẩu
+    function submitPassword(){
+        if(!pendingArticle){closePasswordModal(); return;}
+        const input=document.getElementById('password-input');
+        const enteredPassword=input.value.trim();
+        if(enteredPassword===pendingArticle.password){
+            const articleToRead=pendingArticle;
+            closePasswordModal();
+            goToRead(articleToRead);
+        }else{
+            input.value='';
+            input.style.borderColor='red';
+            input.placeholder='❌ Mật khẩu sai! Thử lại...';
+            setTimeout(()=>{input.style.borderColor='#8b4513'; input.placeholder='Nhập mật khẩu';},2000);
+        }
+    }
+
+    document.getElementById('password-input').addEventListener('keypress',(e)=>{
+        if(e.key==='Enter'){submitPassword();}
+    });
+
+    window.onclick=(e)=>{
+        const modal=document.getElementById('password-modal');
+        if(e.target===modal){
+            modal.style.display='none';
+            pendingArticle=null;
+        }
+    };
+
+    // Lưu article và chuyển sang read.html
+    function goToRead(article){
+        if(!article){console.error('Article is null'); return;}
+        sessionStorage.setItem('currentArticle',JSON.stringify({
+            title: article.title||'Không có tiêu đề',
+            content: article.content||'Không có nội dung',
+            image: article.image||'',
+            date: article.date||new Date().toLocaleDateString('vi-VN'),
+            author: article.author||''
+        }));
+        window.location.href='read.html';
+    }
+
+    // Load khi mở trang
+    window.addEventListener('load', loadNews);
+</script>
 </body>
 </html>
