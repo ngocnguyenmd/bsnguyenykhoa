@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã fix họ cho 2 đứa mới và đổi tên theo nguyện vọng và xử lý dữ liệu tại hồ sơ 01
 * Đã nhận thư mời lễ từ cực lạc quốc / không đi nghen ! tui bận ấy với lại vẫn chưa họp xong kẹt thiệt chứ không phải né ! 
 * Đã ký tăng dedcs lên 20% giảm sự may mắn 2% cho năm sau 
 * Đã chỉnh mùa tuyết rơi 2 IO chạy 3 dòng
@@ -124,6 +125,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
