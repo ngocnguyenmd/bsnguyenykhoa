@@ -21,6 +21,9 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* 2 đứa tạm biệt nhà đi rồi ra lộ nghen kiệt anh áo đen hôm qua á !
+* Đón 2 đứa địa chỉ em gửi á nghen kiệt ! lát về lì xì 5 lít kk
+* Mua giúp thầy 2 giỏ táo xanh ! cứ nói là táo nhập khẩu
 * Đã fix họ cho 2 đứa mới và đổi tên theo nguyện vọng và xử lý dữ liệu tại hồ sơ 01
 * Đã nhận thư mời lễ từ cực lạc quốc / không đi nghen ! tui bận ấy với lại vẫn chưa họp xong kẹt thiệt chứ không phải né ! 
 * Đã ký tăng dedcs lên 20% giảm sự may mắn 2% cho năm sau 
@@ -125,6 +128,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
