@@ -46,6 +46,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Ghé mua giúp thầy 20x cà phê nghen 2 ly nóng không thêm đá ! kẹp 2 cơm gà gửi qua khu B phòng 16 nói anh on nhờ là biết
 * còn buồn sương sương :)) hong ấy ghé làm tí trà đá đạo nhờ 
 * đã fix nhà ở khu A loại bỏ khóa thường bắt buộc dùng khóa điện và vân tay và nhận diện !
 * Buồn làm gì nhớ vừa thôi khóc goài vậy thầy kệ toaii đi
@@ -116,6 +117,7 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
 
