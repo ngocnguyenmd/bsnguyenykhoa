@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã nhận thư mời lễ từ cực lạc quốc / không đi nghen ! tui bận ấy với lại vẫn chưa họp xong kẹt thiệt chứ không phải né ! 
 * Đã ký tăng dedcs lên 20% giảm sự may mắn 2% cho năm sau 
 * Đã chỉnh mùa tuyết rơi 2 IO chạy 3 dòng
 * Đã fix điện tại trạm metro LF lưu thông qua khu A và B sự cố điện do giảm trừ ép dòng điện ôm xuống mức thấp và IoT vấn đề do lỗi kỹ thuật mạch điện cháy quá áp  
@@ -115,5 +116,6 @@ Quản lý -
 -mật khẩu-
 X3x8x7
 ===
+
 
 
