@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+* Đã ký vòng xoáy không gian 3 chiều
 * Đã ký thông qua hồng trắng kẹp tulips lưu ý phương thức cầu nguyện bỏ 1 phải ít nhất 3 bông ! 
 * Đã fix dùng tăm ! phù x4 á !
 * Tuyển dụng đã nhận 2547 người tạm không nhận nữa á hương ! đợi đợt sau nghen 
@@ -133,6 +134,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
