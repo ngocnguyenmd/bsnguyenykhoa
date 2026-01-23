@@ -21,35 +21,11 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
-* Thả cả diễn ra 1h sáng ! đến 5h sáng ! không thả cá chết ! và không được dùng cá thường cho hồ loại 1 !!! 
-* Đã fix phòng net cho trung tâm nét lành mạnh sống khỏe đúng như tên net khỏe ! Chúc anh khỏe chị khươn làm ăn tốt nghen em ghé nhớ free nhen !!!
-* Net khỏe bao gôm máy decor đẹp phòng riêng và tuyệt đối không với mọi thứ chỉ nhận học viên giỏi và đã build sẵn không game...chỉ giúp ích học tập nói chung là healthy
-* ưu đãi 70% nếu là học sinh tóp 10 chở lên tức chỉ 3k có thể chơi 1h 
-* Đã giải quyết bể tụ và sữa khắc phục nổ lớn gây thiệt hại !
-* anna ! nhiệm vụ hủy nghen 3 tháng nữa báo cáo lại mùa ! chú ý chỉ nhận tại bể nước thánh !
-* Đã ký vòng xoáy không gian 3 chiều
-* Đã ký thông qua hồng trắng kẹp tulips lưu ý phương thức cầu nguyện bỏ 1 phải ít nhất 3 bông ! 
-* Đã fix dùng tăm ! phù x4 á !
-* Tuyển dụng đã nhận 2547 người tạm không nhận nữa á hương ! đợi đợt sau nghen 
-* Chuyển giao lạnh hơn cảm giác nhỉnh 2%
-* 2 đứa tạm biệt nhà đi rồi ra lộ nghen kiệt anh áo đen hôm qua á !
-* Đón 2 đứa địa chỉ em gửi á nghen kiệt ! lát về lì xì 5 lít kk
-* Mua giúp thầy 2 giỏ táo xanh ! cứ nói là táo nhập khẩu
-* Đã fix họ cho 2 đứa mới và đổi tên theo nguyện vọng và xử lý dữ liệu tại hồ sơ 01
-* Đã nhận thư mời lễ từ cực lạc quốc / không đi nghen ! tui bận ấy với lại vẫn chưa họp xong kẹt thiệt chứ không phải né ! 
-* Đã ký tăng dedcs lên 20% giảm sự may mắn 2% cho năm sau 
-* Đã chỉnh mùa tuyết rơi 2 IO chạy 3 dòng
-* Đã fix điện tại trạm metro LF lưu thông qua khu A và B sự cố điện do giảm trừ ép dòng điện ôm xuống mức thấp và IoT vấn đề do lỗi kỹ thuật mạch điện cháy quá áp  
-* Đã ký 2 đứa đi theo lối đỏ á nghen ! 20 tiếng umm chắc đủ rồi hen về thăm nhà đi làm gì cũng được vui vẻ xong quay lại gặp chị hiền ! 
-* Đã ký fix theo điều luật mới năm 2020 - hai đứa quyết định chọn 1 họ nhen ! không cho ghép riêng á kiếm gì ăn đi nghen cả nhóm luôn :)) 
-* Đoan với như với sơn với minh !! ghé cổng 2 khu B qua làm giấy tờ lần 3 ! 
-* Đã fix sinh nhật số 788721 ID mới 
-* Đã ký thẳng 2 đưa đi thẳng luôn nghen - khỏi đi qua bên kia hơi khờ nên ưu ái vậy nhen ! đang bận ấy nên không dẫn đi được nên tự đi nghen !
-* Xóa bỏ sổ 01 ký bỏ qua không kiểm duyệt ! Lion đã ký
-* Đã fix môi trường mưa tăng 2rmd và dự kiến kết thúc khi hết sinh nhật lion
-* Đã sữa hệ thống báo điện tử và website trên hệ thống
-* Bãi bỏ ma túy các chất kích thích hoàn toàn tại khu cấm !
-* Thay đổi số 11 mã bảo mật khoa nội kèm mã bác sĩ
+- Giải quyết bỏ id thường với hồng ngọc người của lion ký không cần duyệt cơ bản
+- Giải quyết đơn kiện nhà ở đã bồi thường 20% như đã ký !
+- Giải quyết thời gian ép khí lạnh xuống 207rf đạt tiêu chuẩn cân bằng chuẩn 
+- Giải quyết nhang không còn hiệu nghiệm ! 
+- Giải quyết thu tiền điện qua nhận diện id đã hoạt động ổn 
 -tác giả-
 Quản lý khu A - Trâm tin tức
 -mật khẩu-
@@ -133,6 +109,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
