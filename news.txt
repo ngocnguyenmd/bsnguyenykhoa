@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+- Giải quyết KN đã xử lý nội bộ lỗi
 - Giải quyết bỏ id thường với hồng ngọc người của lion ký không cần duyệt cơ bản
 - Giải quyết đơn kiện nhà ở đã bồi thường 20% như đã ký !
 - Giải quyết thời gian ép khí lạnh xuống 207rf đạt tiêu chuẩn cân bằng chuẩn 
@@ -116,6 +117,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
