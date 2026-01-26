@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+- Đã ký tăng đột biến es và các vấn đề khác được nêu trong luật 2026
 - Giải quyết KN đã xử lý nội bộ lỗi
 - Giải quyết bỏ id thường với hồng ngọc người của lion ký không cần duyệt cơ bản
 - Giải quyết đơn kiện nhà ở đã bồi thường 20% như đã ký !
@@ -118,6 +119,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
