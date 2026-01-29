@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+- Đã giải quyết làm lại liều kế cho khoa cdha đã đổi bộ mới thống kê sau nghen !
 - Đã ký tăng đột biến es và các vấn đề khác được nêu trong luật 2026
 - Giải quyết KN đã xử lý nội bộ lỗi
 - Giải quyết bỏ id thường với hồng ngọc người của lion ký không cần duyệt cơ bản
@@ -39,6 +40,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* 236 46 45 
 * 06 70 38 72 976
 * 64 96 10 41 14 89 870 874 97
 * Đã fix 8% hoa phù ép lên 11% ! 
@@ -116,6 +118,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
