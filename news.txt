@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+- Đã thông thoáng tuyến A và B ạ !
 - Đã giải quyết làm lại liều kế cho khoa cdha đã đổi bộ mới thống kê sau nghen !
 - Đã ký tăng đột biến es và các vấn đề khác được nêu trong luật 2026
 - Giải quyết KN đã xử lý nội bộ lỗi
@@ -40,7 +41,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
-* 89 948 97 90 / 723 378
+* 64 969 60
 * Đã fix 8% hoa phù ép lên 11% ! 
 * Đã nhận được thư mời năm mới 2026 âm lịch
 * Sữa chữa không gian hẹp phòng 16!
@@ -116,6 +117,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
