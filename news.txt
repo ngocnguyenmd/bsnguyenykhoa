@@ -45,6 +45,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* 985 47 45 35 50 79 57
 * 538 86 06 87
 * Đã fix lấy đủ số id 2 ! và cấp quyền id 5 cho 52x !
 * Bắt đầu từ ngày 11 fix toàn bộ rạp phim khu A được miễn phí vé bất kỳ phim nào phục vụ tết !
@@ -131,6 +132,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
