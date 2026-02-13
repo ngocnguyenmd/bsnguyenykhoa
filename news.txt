@@ -45,6 +45,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* 81 35 5143 
 * 985 47 45 35 50 79 57
 * 538 86 06 87
 * Đã fix lấy đủ số id 2 ! và cấp quyền id 5 cho 52x !
@@ -132,6 +133,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
