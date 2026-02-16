@@ -45,7 +45,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
-* 07 375 36 71 72 32
+* 40 317 27 403 07 39 30
 * Đã fix lấy đủ số id 2 ! và cấp quyền id 5 cho 52x !
 * Bắt đầu từ ngày 11 fix toàn bộ rạp phim khu A được miễn phí vé bất kỳ phim nào phục vụ tết !
 * Thư mời đã dược chuyển đủ xếp lịch ghé săn lixi lf nghen ! 
@@ -131,6 +131,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
