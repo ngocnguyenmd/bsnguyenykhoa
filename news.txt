@@ -45,8 +45,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
-* Đã fix vàng !
-* 439 45 423 32  
+* 269 629 692
 * Khởi chạy project 34 
 -tác giả-
 Quản lý - 
@@ -117,6 +116,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
