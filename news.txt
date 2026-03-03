@@ -45,7 +45,8 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
-* 269 629 692
+* fix cổng C 
+* 62 72 26 16 60 61 
 * Khởi chạy project 34 
 -tác giả-
 Quản lý - 
@@ -116,6 +117,7 @@ Quản lý -
 -mật khẩu-
 Hopnoibo
 ===
+
 
 
 
