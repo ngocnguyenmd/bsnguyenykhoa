@@ -21,19 +21,9 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
-- Đã điều chỉnh luật và mọi thứ cần thiết để chuẩn bị bước qua năm mới !
-- Đã fix hệ thống 1 vùng tuyết arb72/c !
-- Dự kiến khai chữ giao thừa như mọi năm
-- Đã thông qua lịch học và lịch tết !
-- Đã thông thoáng tuyến A và B ạ !
-- Đã giải quyết làm lại liều kế cho khoa cdha đã đổi bộ mới thống kê sau nghen !
-- Đã ký tăng đột biến es và các vấn đề khác được nêu trong luật 2026
-- Giải quyết KN đã xử lý nội bộ lỗi
-- Giải quyết bỏ id thường với hồng ngọc người của lion ký không cần duyệt cơ bản
-- Giải quyết đơn kiện nhà ở đã bồi thường 20% như đã ký !
-- Giải quyết thời gian ép khí lạnh xuống 207rf đạt tiêu chuẩn cân bằng chuẩn 
-- Giải quyết nhang không còn hiệu nghiệm ! 
-- Giải quyết thu tiền điện qua nhận diện id đã hoạt động ổn 
+- Đã fix hệ thống hóa đá vân buộc phải lộ không cho ẩn !
+- Đã điều chỉnh BCVNNX
+- Đã góp phần may mắn tăng - 5^10 có kèm ID 
 -tác giả-
 Quản lý khu A - Trâm tin tức
 -mật khẩu-
