@@ -21,6 +21,7 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
+- Đã fix sự may mắn hóa đồng tiền với vé số kẹp id nhé ông bà nào thích góp cho con cháu quy đổi như củ chỉ thêm phí chuyển !! 
 - Đã fix hệ thống hóa đá vân buộc phải lộ không cho ẩn !
 - Đã điều chỉnh BCVNNX
 - Đã góp phần may mắn tăng - 5^10 có kèm ID 
