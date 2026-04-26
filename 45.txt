@@ -15,11 +15,8 @@ Tuyển dụng nhân sự
 * Tác giả : Châu [nội bộ]
 == 
 2|Tin tức mới||[Tất cả đã ký thông qua]
-- Fix không gian hẹp phòng 16!
-- Ok cu sơn nhen :)) nói chứ tui nhỏ tuổi hơn mai đem nộp id cho chị hân nghen !
-- Đã fix hoa cầu nguyện - phù thuật - hưởng phù thuật giai đoạn 2 thay vì 3 giảm 1 bậc 
-- Đã giao khu công viên 1 cho ông tô và tuyền deco ! [trang trí độ khó cao yêu cầu rời khỏi khu 1 hay khu C]
-* Tác giả : Nội bộ - Vy - trâm - tuấn - quỳnh 7h10p pm 4/1/2026 AR-d3m
+- Fix cong giao - thanh duong - fix rua toi ! trong dieu khoan 82 11 65 
+* Tác giả : Nội bộ - .TeamDxc- LF
 ==
 2|Danh sách giải quyết cho vong mới (vietnam)||
 - giải quyết trần hoàng nhật minh đã xong 9h sáng ghé làm id nghen !
