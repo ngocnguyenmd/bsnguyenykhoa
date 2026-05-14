@@ -33,6 +33,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Fix stmtp theo lời lion đã xong gửi gắm theo yêu cầu kỷ niệm 14x
 * Không có gì nè tiện đường ghé cứu thôi ! nói mấy anh cho em làm id 1 là được đợi ngay cổng nhen 
 * Đã fix 12/5 lễ vẫn như mọi năm nhưng bỏ lixi 200 thành 500 á !! 
 * Đã nhận đơn Quỳnh trâm ! đang chờ tiếp nhận ID 1
