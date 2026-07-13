@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head><script>window.huggingface={variables:{"SPACE_CREATOR_USER_ID":"6791bdc15374e1f6f1f894fa"}};</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Viên</title>
+    <style>
+        :root{--p:#3498db;--pl:#5dade2;--s:#2ecc71;--w:#f39c12;--bg:#f8f9fa;--card:#ffffff;--text:#2d3436;--light:#636e72;--radius:20px;--shadow:0 10px 30px rgba(0,0,0,0.1);}
+        .dark-mode{--p:#3498db;--s:#27ae60;--bg:#1e272e;--card:#2d3436;--text:#dfe6e9;--light:#b2bec3;--shadow:0 10px 30px rgba(0,0,0,0.4);}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);transition:all .4s;min-height:100vh;}
+        .container{max-width:800px;margin:0 auto;padding:20px;}
+
+        header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;padding:20px 0;}
+        h1{font-size:2.2rem;color:var(--p);font-weight:700;display:flex;align-items:center;gap:12px;}
+        .mode{cursor:pointer;font-size:2rem;width:60px;height:60px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all .3s;border:none;color:var(--text);}
+        .mode:hover{transform:scale(1.1);}
+
+        /* Tối ưu clock: bỏ animation infinite để giảm lag CPU */
+        .clock-box{background:linear-gradient(135deg,var(--p),#9b59b6);color:#fff;padding:20px;border-radius:var(--radius);text-align:center;margin-bottom:30px;box-shadow:var(--shadow);}
+        #clock{font-size:3rem;font-weight:bold;font-family:'Courier New',monospace;}
+        #date{font-size:1.2rem;margin-top:8px;opacity:0.9;}
+
+        .upload-group{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:30px;}
+        @media(max-width:768px){.upload-group{grid-template-columns:1fr;}}
+        .upload-card{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;transition:all .3s;}
+        .upload-card:hover{transform:translateY(-5px);}
+        .upload-card label{font-size:1.1rem;font-weight:600;color:var(--p);}
+        .upload-section{display:flex;gap:10px;margin-top:12px;}
+        .upload-section input[type=file]{flex:1;padding:12px;border-radius:12px;border:1px dashed var(--light);background:var(--bg);}
+        .upload-section button{padding:12px 25px;background:var(--p);color:#fff;border:none;border-radius:12px;cursor:pointer;font-weight:600;transition:all .3s;}
+        .upload-section button:hover{background:var(--pl);transform:scale(1.05);}
+
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:30px;}
+        @media(max-width:768px){.stats{grid-template-columns:1fr 1fr;}}
+        .stat{background:var(--card);padding:20px;border-radius:var(--radius);text-align:center;box-shadow:var(--shadow);transition:all .3s;}
+        .stat:hover{transform:translateY(-8px);}
+        .stat span{font-size:2.5rem;font-weight:bold;color:var(--p);}
+        .stat p{font-size:0.95rem;color:var(--light);margin-top:8px;}
+
+        /* THÊM PHẦN THÔNG BÁO SINH NHẬT */
+        .bday-banner{padding:20px;border-radius:var(--radius);margin-bottom:20px;box-shadow:var(--shadow);}
+        .bday-title{font-weight:800;font-size:1.2rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+        .bday-tags{display:flex;flex-wrap:wrap;gap:10px;}
+        .bday-tag{padding:8px 16px;border-radius:20px;font-size:0.95rem;font-weight:600;color:#fff;}
+        .banner-today{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;}
+        .banner-today .bday-tag{background:rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);}
+        .banner-soon{background:linear-gradient(135deg,#f39c12,#e67e22);color:#fff;}
+        .banner-soon .bday-tag{background:rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);}
+
+        .employee-list{display:flex;flex-direction:column;gap:25px;}
+        .card{background:var(--card);border-radius:var(--radius);padding:25px;box-shadow:var(--shadow);display:flex;gap:25px;position:relative;overflow:hidden;transition:all .4s;contain: content;} /* Thêm contain:content tối ưu scroll */
+        @keyframes fadeIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+        .card{animation:fadeIn 0.6s ease-out;}
+        .card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.2);}
+        .card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%;background:var(--p);}
+
+        /* GIỮ NGUYÊN 100% ẢNH GỐC CỦA BẠN */
+        .avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;border:5px solid var(--p);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+        .info{flex:1;}
+        
+        /* GIỮ NGUYÊN CLICK CHUYỂN TRANG GỐC CỦA BẠN */
+        .name{font-size:1.5rem;font-weight:800;color:var(--p);cursor:pointer;margin-bottom:10px;transition:all .3s;}
+        .name:hover{color:var(--pl);}
+        .detail{font-size:1rem;margin:8px 0;display:flex;align-items:center;gap:10px;}
+        .label{width:100px;font-weight:600;color:var(--light);}
+        .zodiac{padding:5px 12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:15px;font-size:0.8rem;}
+        .id-badge{background:var(--bg);color:var(--light);padding:2px 10px;border-radius:8px;font-size:0.85rem;font-weight:800;margin-right:5px;}
+
+        .countdown{margin-top:15px;padding:15px;background:linear-gradient(135deg,rgba(52,152,219,0.15),rgba(155,89,182,0.15));border-radius:15px;text-align:center;font-weight:700;color:var(--p);font-size:1.1rem;}
+        .task{margin-top:15px;padding:15px;background:rgba(46,204,113,0.15);border-left:6px solid var(--s);border-radius:15px;font-weight:600;color:var(--s);font-size:1.05rem;}
+
+        .dots{position:absolute;top:20px;right:20px;display:flex;flex-direction:column;gap:8px;}
+        .dot{width:16px;height:16px;border-radius:50%;border:3px solid var(--card);box-shadow:0 3px 8px rgba(0,0,0,0.4);}
+        .blue{background:var(--p);} .orange{background:var(--w);} .green{background:var(--s);} .purple{background:#9b59b6;}
+
+        .server-notice{text-align:center;padding:12px;background:rgba(46,204,113,0.2);border-radius:12px;color:var(--s);font-weight:600;margin-bottom:20px; display:none;}
+    </style>
+</head>
+<body class="dark-mode">
+
+<div class="container">
+    <header>
+        <h1>👥 Quản Lý Nhân Viên</h1>
+        <button class="mode" onclick="document.body.classList.toggle('dark-mode')"><span id="icon">🌙</span></button>
+    </header>
+
+    <div class="clock-box">
+        <div id="clock">--:--:--</div>
+        <div id="date"></div>
+    </div>
+
+    <div class="server-notice" id="serverNotice">⚡ Đã tự động tải dữ liệu từ Server</div>
+
+    <div class="upload-group" id="uploadGroup">
+        <div class="upload-card">
+            <label>📁 Tệp nhân viên (nhanvien.txt)</label>
+            <div class="upload-section">
+                <input type="file" id="nv" accept=".txt">
+                <button onclick="loadNVLocal()">Tải lên</button>
+            </div>
+        </div>
+        <div class="upload-card">
+            <label>📅 Tệp lịch trình (lichtrinh.txt)</label>
+            <div class="upload-section">
+                <input type="file" id="lt" accept=".txt">
+                <button onclick="loadLTLocal()">Tải lên</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div class="employee-list" id="list">
+        <div style="text-align:center;padding:60px;color:var(--light);font-size:1.3rem;">👤 Đang tải...</div>
+    </div>
+</div>
+
+<script>
+    let employees = [], schedules = {};
+
+    function zodiac(y){const z=["Tý 🐀","Sửu 🐂","Dần 🐅","Mão 🐇","Thìn 🐉","Tỵ 🐍","Ngọ 🐎","Mùi 🐑","Thân 🐒","Dậu 🐓","Tuất 🐕","Hợi 🐖"];return z[(y-4)%12];}
+    function age(dob){
+        const [d,m,y]=dob.split('/').map(Number);
+        const b=new Date(y,m-1,d), t=new Date();
+        let a=t.getFullYear()-y;
+        if(t.getMonth()+1<m||(t.getMonth()+1===m&&t.getDate()<d))a--;
+        return a;
+    }
+
+    function updateClock(){
+        const n=new Date();
+        const h=String(n.getHours()).padStart(2,'0');
+        const m=String(n.getMinutes()).padStart(2,'0');
+        const s=String(n.getSeconds()).padStart(2,'0');
+        document.getElementById('clock').textContent=`${h}:${m}:${s}`;
+        document.getElementById('date').textContent=n.toLocaleDateString('vi-VN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    }
+    setInterval(updateClock,1000);
+    updateClock();
+
+    // Xử lý dữ liệu chung
+    function processNVText(text) {
+        employees=[];
+        let counter = 1;
+        text.split('\n').forEach(l=>{
+            const p=l.split('|').map(x=>x.trim());
+            if(p.length>=2&&p[0]&&p[1]){
+                const [d,m,y]=p[1].split('/').map(Number);
+                const id = String(counter).padStart(2, '0'); counter++;
+                employees.push({id:id, name:p[0],dob:p[1],country:p[2]||'',edu:p[3]||'',height:p[4]||'',zodiac:y?zodiac(y):'',age:y?age(p[1]):0});
+            }
+        });
+        render();
+    }
+
+    function processLTText(text) {
+        if(!employees.length) return;
+        schedules={}; let c=0;
+        text.split('\n').forEach(l=>{
+            const p=l.split('|').map(x=>x.trim());
+            if(p.length>=2 && p[0]){
+                const emp=employees.find(x=>x.id === p[0]);
+                if(emp){schedules[emp.name]={task:p[1],time:p[2]||''};c++;}
+            }
+        });
+        render();
+    }
+
+    // Nút bấm Local
+    function loadNVLocal(){
+        const f=document.getElementById('nv').files[0];
+        if(!f)return alert('Chọn file nhân viên!');
+        const r=new FileReader();
+        r.onload=e=>processNVText(e.target.result);
+        r.readAsText(f);
+    }
+
+    function loadLTLocal(){
+        if(!employees.length)return alert('Tải nhân viên trước!');
+        const f=document.getElementById('lt').files[0];
+        if(!f)return alert('Chọn file lịch trình!');
+        const r=new FileReader();
+        r.onload=e=>processLTText(e.target.result);
+        r.readAsText(f);
+    }
+
+    // Tự động Server
+    async function fetchTXT(filename) {
+        try {
+            const res = await fetch(filename);
+            if (!res.ok) throw new Error();
+            return await res.text();
+        } catch (e) { return null; }
+    }
+
+    async function autoLoadFromServer() {
+        if (window.location.protocol === 'file:') {
+            document.getElementById('list').innerHTML = '<div style="text-align:center;padding:60px;color:var(--light);font-size:1.3rem;">👤 Chưa có dữ liệu nhân viên<br><small>Vui lòng tải file lên</small></div>';
+            return;
+        }
+        document.getElementById('uploadGroup').style.display = 'none';
+        document.getElementById('serverNotice').style.display = 'block';
+        
+        const nvText = await fetchTXT('nhanvien.txt');
+        if (nvText) {
+            processNVText(nvText);
+            const ltText = await fetchTXT('lichtrinh.txt');
+            if (ltText) processLTText(ltText);
+        } else {
+            document.getElementById('serverNotice').innerHTML = '❌ Không tìm thấy nhanvien.txt trên Server.';
+            document.getElementById('serverNotice').style.background = 'rgba(231,76,60,0.2)';
+            document.getElementById('serverNotice').style.color = '#e74c3c';
+        }
+    }
+
+    function render(){
+        const list=document.getElementById('list');
+        const stats=document.getElementById('stats');
+        if(employees.length===0){
+            if(window.location.protocol !== 'file:') return; 
+            list.innerHTML='<div style="text-align:center;padding:60px;color:var(--light);font-size:1.3rem;">👤 Chưa có dữ liệu nhân viên<br><small>Vui lòng tải file lên</small></div>';
+            stats.innerHTML=''; return;
+        }
+
+        let total=employees.length, todayB=0, soonB=0, hasS=0;
+        const t=new Date();
+        let bdayTodayArr = [], bdaySoonArr = [];
+
+        employees.forEach(e=>{
+            const [d,m]=e.dob.split('/').map(Number);
+            const isToday = t.getMonth()+1===m && t.getDate()===d;
+            let next=new Date(t.getFullYear(),m-1,d);
+            if(next<=t)next.setFullYear(t.getFullYear()+1);
+            const days=Math.floor((next-t)/86400000);
+
+            if(isToday){ todayB++; bdayTodayArr.push(e); }
+            else if(days<=7){ soonB++; bdaySoonArr.push({info:e, days:days}); }
+            if(schedules[e.name]) hasS++;
+        });
+
+        stats.innerHTML=`
+            <div class="stat"><span>${total}</span><p>Tổng NV</p></div>
+            <div class="stat"><span style="color:#e74c3c">${todayB}</span><p>SN hôm nay</p></div>
+            <div class="stat"><span style="color:#f39c12">${soonB}</span><p>Sắp SN</p></div>
+            <div class="stat"><span style="color:var(--s)">${hasS}</span><p>Có lịch trình</p></div>
+        `;
+
+        // Tạo Banner Sinh Nhật
+        let bannerHTML = '';
+        if(bdayTodayArr.length > 0){
+            bannerHTML += `<div class="bday-banner banner-today"><div class="bday-title">🎉 CHÚC MỪNG SINH NHẬT 🎉</div><div class="bday-tags">${bdayTodayArr.map(e=>`<div class="bday-tag">${e.name}</div>`).join('')}</div></div>`;
+        }
+        if(bdaySoonArr.length > 0){
+            bannerHTML += `<div class="bday-banner banner-soon"><div class="bday-title">⏳ SẮP CÓ SINH NHẬT (Trong 7 ngày tới)</div><div class="bday-tags">${bdaySoonArr.map(item=>`<div class="bday-tag">${item.info.name} (${item.days} ngày nữa)</div>`).join('')}</div></div>`;
+        }
+
+        // Render danh sách (Giữ nguyên cấu trúc gốc của bạn)
+        let html='';
+        employees.forEach((e,i)=>{
+            const n=String(i+1).padStart(2,'0'), img=n+'.jpg', prof=n+'.html';
+            const [d,m]=e.dob.split('/').map(Number);
+            const today=t.getMonth()+1===m&&t.getDate()===d;
+            let next=new Date(t.getFullYear(),m-1,d);
+            if(next<t)next.setFullYear(t.getFullYear()+1);
+            const diff=next-t, days=Math.floor(diff/86400000), hrs=Math.floor((diff%86400000)/3600000);
+
+            let dots='';
+            if(today) dots+='<div class="dot blue" title="Sinh nhật hôm nay"></div>';
+            else if(days<=7) dots+='<div class="dot orange" title="Sinh nhật sắp tới"></div>';
+            if(schedules[e.name]){
+                dots+='<div class="dot green" title="Có lịch trình"></div>';
+                if(schedules[e.name].time) dots+='<div class="dot purple" title="Có giờ làm"></div>';
+            }
+
+            const task=schedules[e.name];
+            const taskHTML=task?`<div class="task">📅 ${task.task}${task.time?` ⏰ ${task.time}`:''}</div>`:'';
+
+            // GIỮ NGUYÊN ẢNH GỐC VÀ ONCLICK CHUYỂN TRANG GỐC
+            html+=`
+            <div class="card">
+                <img class="avatar" src="${img}" alt="${e.name}" onerror="this.src='https://via.placeholder.com/120/3498db/fff?text=${e.name[0]}'">
+                <div class="info">
+                    <div class="name" onclick="window.open('${prof}','_blank')">[${e.id}] ${e.name} ${e.zodiac?`<span class="zodiac">${e.zodiac}</span>`:''}</div>
+                    <div class="detail"><span class="label">Ngày sinh:</span> ${e.dob} (${e.age} tuổi)</div>
+                    <div class="detail"><span class="label">Quốc gia:</span> ${e.country||'N/A'}</div>
+                    <div class="detail"><span class="label">Trình độ:</span> ${e.edu||'N/A'}</div>
+                    <div class="detail"><span class="label">Chiều cao:</span> ${e.height||'N/A'}</div>
+                    ${taskHTML}
+                    <div class="countdown">${today?'🎉 Sinh nhật hôm nay!!!':`Còn ${days} ngày ${hrs} giờ`}</div>
+                </div>
+                <div class="dots">${dots}</div>
+            </div>`;
+        });
+        
+        list.innerHTML = bannerHTML + html;
+    }
+
+    window.addEventListener('DOMContentLoaded', autoLoadFromServer);
+</script>
+</body>
+</html>

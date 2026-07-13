@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head><script>window.huggingface={variables:{"SPACE_CREATOR_USER_ID":"6791bdc15374e1f6f1f894fa"}};</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Nhân Viên</title>
+    <style>
+        :root{
+            --p:#e8553d;--pl:#ff7b5f;--pg:rgba(232,85,61,0.12);
+            --s:#27ae60;--w:#f39c12;--d:#8e44ad;
+            --bg:#f4f1ee;--card:#ffffff;--sidebar:#1a1a2e;
+            --text:#2d3436;--light:#636e72;--border:#ddd;
+            --radius:14px;--shadow:0 4px 16px rgba(0,0,0,0.08);
+        }
+        .dark-mode{
+            --bg:#0b0e17;--card:#151a2e;--sidebar:#0f1220;
+            --text:#e2e8f0;--light:#8a94a6;--border:#1e2a42;
+            --shadow:0 4px 16px rgba(0,0,0,0.3);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;min-height:100vh;overflow:hidden;}
+        .wrapper{display:flex;height:100vh;}
+
+        /* SIDEBAR CV */
+        .cv-side{
+            width:360px;min-width:360px;background:var(--sidebar);color:#fff;
+            display:flex;flex-direction:column;align-items:center;
+            padding:70px 24px 24px;overflow-y:auto;
+        }
+        .cv-side::-webkit-scrollbar{width:4px;}
+        .cv-side::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px;}
+        .avatar-wrap{margin-bottom:18px;flex-shrink:0;}
+        .avatar-img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid var(--p);background:var(--card);}
+        .cv-name{font-size:1.5rem;font-weight:800;text-align:center;line-height:1.3;margin-bottom:6px;}
+        .zodiac-badge{display:inline-block;background:var(--p);color:#fff;padding:4px 14px;border-radius:16px;font-size:0.8rem;font-weight:600;margin-bottom:18px;}
+        .cv-info{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+        .info-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;}
+        .info-row .ir-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
+        .info-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,0.4);margin-bottom:1px;}
+        .info-value{font-size:0.88rem;color:rgba(255,255,255,0.9);font-weight:500;}
+        .cd-box{width:100%;padding:14px;border-radius:var(--radius);text-align:center;background:rgba(232,85,61,0.15);border:1px solid rgba(255,255,255,0.05);margin-bottom:12px;}
+        .cd-label{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-bottom:4px;}
+        .cd-value{font-size:1.05rem;font-weight:700;color:var(--pl);}
+        .btn-back{
+            width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);
+            background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);
+            font-size:0.85rem;font-weight:600;cursor:pointer;text-align:center;
+            text-decoration:none;display:block;transition:all .2s;
+        }
+        .btn-back:hover{background:rgba(255,255,255,0.12);color:#fff;}
+
+        /* PHẢN: GALLERY */
+        .photo-side{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+        .photo-top{display:flex;align-items:center;justify-content:space-between;padding:70px 24px 0;flex-shrink:0;flex-wrap:wrap;gap:8px;}
+        .photo-title{font-size:1.2rem;font-weight:700;}
+        .photo-badge{background:var(--pg);color:var(--p);padding:4px 12px;border-radius:16px;font-size:0.78rem;font-weight:600;}
+        .photo-path{font-size:0.75rem;color:var(--light);padding:4px 24px 0;flex-shrink:0;}
+        .photo-grid-wrap{flex:1;overflow-y:auto;padding:16px 24px 24px;}
+        .photo-grid-wrap::-webkit-scrollbar{width:5px;}
+        .photo-grid-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+        .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+        .photo-card{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;aspect-ratio:3/4;background:var(--card);}
+        .photo-card img{width:100%;height:100%;object-fit:cover;display:block;}
+        .photo-card .p-num{position:absolute;top:6px;left:6px;background:rgba(0,0,0,0.5);color:#fff;padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:600;}
+        .state-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:var(--light);text-align:center;width:100%;}
+        .state-msg .big-icon{font-size:3rem;margin-bottom:12px;opacity:.3;}
+        .state-msg p{font-size:1rem;}
+        .state-msg small{margin-top:6px;opacity:.5;font-size:0.82rem;}
+        .load-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 24px;background:var(--p);color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:12px;}
+        .load-btn:hover{background:var(--pl);}
+
+        /* TOP BAR */
+        .topbar{position:fixed;top:0;left:0;right:0;height:48px;z-index:100;background:rgba(26,26,46,0.95);display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
+        .tb-left{display:flex;align-items:center;gap:8px;color:#fff;font-size:1rem;font-weight:700;}
+        .tb-id{background:var(--p);padding:2px 10px;border-radius:12px;font-size:0.72rem;font-weight:600;color:#fff;}
+        .tb-center{color:rgba(255,255,255,0.6);font-size:0.85rem;font-family:'Courier New',monospace;}
+        .mode-btn{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+        .mode-btn:hover{background:rgba(255,255,255,0.2);}
+
+        /* LIGHTBOX */
+        .lightbox{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+        .lightbox.active{opacity:1;pointer-events:auto;}
+        .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:6px;}
+        .lb-close,.lb-nav{position:absolute;border:none;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+        .lb-close:hover,.lb-nav:hover{background:rgba(255,255,255,0.2);}
+        .lb-close{top:16px;right:16px;width:40px;height:40px;}
+        .lb-nav{top:50%;transform:translateY(-50%);width:40px;height:40px;}
+        .lb-prev{left:16px;}
+        .lb-next{right:16px;}
+        .lb-counter{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);color:#fff;padding:4px 14px;border-radius:12px;font-size:0.8rem;}
+
+        /* Ẩn input ẩn */
+        .hidden-input{display:none;}
+
+        @media(max-width:960px){
+            .wrapper{flex-direction:column;}
+            .cv-side{width:100%;min-width:auto;padding:60px 16px 16px;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:12px;}
+            .avatar-img{width:100px;height:100px;}
+            .cv-info{flex-direction:row;flex-wrap:wrap;}
+            .info-row{flex:1;min-width:160px;}
+            .cd-box{flex:1;min-width:160px;}
+            .photo-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+            .photo-side{min-height:50vh;}
+        }
+        @media(max-width:520px){.photo-grid{grid-template-columns:repeat(2,1fr);}}
+    </style>
+</head>
+<body class="dark-mode">
+
+<!-- Input ẩn để xử lý file -->
+<input type="file" id="txtInput" accept=".txt" class="hidden-input">
+<input type="file" id="imgInput" accept="image/*" multiple webkitdirectory class="hidden-input">
+
+<div class="topbar">
+    <div class="tb-left">📄 Hồ Sơ <span class="tb-id" id="tbId">--</span></div>
+    <div class="tb-center" id="tbClock">--:--:--</div>
+    <button class="mode-btn" id="modeBtn"><span id="modeIcon">🌙</span></button>
+</div>
+
+<div class="wrapper" style="margin-top:48px;">
+    <aside class="cv-side" id="cvSide">
+        <div class="state-msg">
+            <div class="spinner" style="width:32px;height:32px;border:3px solid rgba(255,255,255,0.2);border-top-color:var(--p);border-radius:50%;margin-bottom:10px;"></div>
+            <p>Đang kiểm tra dữ liệu...</p>
+        </div>
+    </aside>
+    <main class="photo-side">
+        <div class="photo-top">
+            <div class="photo-title">🖼️ Thư viện ảnh</div>
+            <span class="photo-badge" id="photoBadge">0 ảnh</span>
+        </div>
+        <div class="photo-path" id="photoPathLabel"></div>
+        <div class="photo-grid-wrap" id="photoWrap">
+            <div class="state-msg">
+                <div class="spinner" style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--p);border-radius:50%;margin-bottom:10px;"></div>
+                <p>Đang chuẩn bị...</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="lightbox" id="lightbox">
+    <button class="lb-close">✕</button>
+    <button class="lb-nav lb-prev">◀</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav lb-next">▶</button>
+    <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+/* =======================================================
+   LOGIC ĐƯỜNG DẪN CHUẨN XÁC TUYỆT ĐỐI
+======================================================= */
+var currentPath = decodeURIComponent(window.location.pathname);
+var pathParts = currentPath.split('/').filter(function(p){ return p.length > 0; });
+
+var pathToParent = '';
+for (var i = 0; i < pathParts.length - 1; i++) {
+    pathToParent += '/' + pathParts[i];
+}
+var BACK_URL = pathToParent + '/F52.html';
+
+var htmlFileName = pathParts[pathParts.length - 1] || '';
+var personId = htmlFileName.replace('.html', '').replace('.htm', '');
+if (!personId || !/^\d+$/.test(personId)) personId = '01';
+
+var AVATAR_PATH = personId + '.jpg';
+var TXT_PATH    = 'Pro/' + personId + '.txt';
+var PHOTO_BASE  = 'Photo/' + personId + '/';
+
+var personData = null;
+var photoList  = [];
+var lbIndex    = 0;
+var isServerMode = false;
+
+/* ĐỒNG HỒ */
+function tickClock() {
+    var n = new Date();
+    document.getElementById('tbClock').textContent =
+        String(n.getHours()).padStart(2,'0') + ':' +
+        String(n.getMinutes()).padStart(2,'0') + ':' +
+        String(n.getSeconds()).padStart(2,'0');
+}
+setInterval(tickClock, 1000);
+tickClock();
+
+/* DARK MODE */
+document.getElementById('modeBtn').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    document.getElementById('modeIcon').textContent = document.body.classList.contains('dark-mode') ? '🌙' : '☀️';
+});
+
+/* TIỆN ÍCH */
+function zodiac(y) { return ['Tý 🐀','Sửu 🐂','Dần 🐅','Mão 🐇','Thìn 🐉','Tỵ 🐍','Ngọ 🐎','Mùi 🐑','Thân 🐒','Dậu 🐓','Tuất 🐕','Hợi 🐖'][(y-4)%12]; }
+function calcAge(dob) { var p=dob.split('/').map(Number),t=new Date(),a=t.getFullYear()-p[2]; if(t.getMonth()+1<p[1]||(t.getMonth()+1===p[1]&&t.getDate()<p[0]))a--; return a; }
+function bcd(dob) { var p=dob.split('/').map(Number),t=new Date(),it=(t.getMonth()+1===p[1]&&t.getDate()===p[0]),nx=new Date(t.getFullYear(),p[1]-1,p[0]); if(nx<=t)nx.setFullYear(t.getFullYear()+1); var d=nx-t; return{isToday:it,days:Math.floor(d/86400000),hrs:Math.floor((d%86400000)/3600000)}; }
+function parseTxt(t) { var l=t.split('\n').filter(function(x){return x.trim();}); if(!l.length)return null; var p=l[0].split('|').map(function(x){return x.trim();}); if(p.length<2)return null; var dp=p[1].split('/').map(Number); return{name:p[0]||'',dob:p[1]||'',country:p[2]||'',edu:p[3]||'',height:p[4]||'',zodiac:dp[2]?zodiac(dp[2]):'',age:dp[2]?calcAge(p[1]):0}; }
+
+/* RENDER CV */
+function renderCV() {
+    if(!personData) return;
+    var side=document.getElementById('cvSide'), cd=bcd(personData.dob);
+    document.getElementById('tbId').textContent='ID: '+personId;
+    document.title=personData.name+' — Hồ Sơ CV';
+    var ini=personData.name.replace(/\s/g,'').charAt(0);
+    var fb="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Crect fill='%23e8553d' width='140' height='140' rx='70'/%3E%3Ctext x='70' y='92' text-anchor='middle' fill='white' font-size='56' font-family='sans-serif'%3E"+encodeURIComponent(ini)+"%3C/text%3E%3C/svg%3E";
+    
+    side.innerHTML=
+        '<div class="avatar-wrap"><img class="avatar-img" src="'+AVATAR_PATH+'" alt="'+personData.name+'" onerror="this.onerror=null;this.src=\''+fb+'\';"></div>'+
+        '<div class="cv-name">'+personData.name+'</div>'+
+        (personData.zodiac?'<div class="zodiac-badge">⭐ '+personData.zodiac+'</div>':'')+
+        '<div class="cv-info">'+
+            '<div class="info-row"><div class="ir-icon">🎂</div><div><div class="info-label">Ngày sinh</div><div class="info-value">'+personData.dob+' ('+personData.age+' tuổi)</div></div></div>'+
+            '<div class="info-row"><div class="ir-icon">🌍</div><div><div class="info-label">Quốc gia</div><div class="info-value">'+(personData.country||'—')+'</div></div></div>'+
+            '<div class="info-row"><div class="ir-icon">🎓</div><div><div class="info-label">Trình độ</div><div class="info-value">'+(personData.edu||'—')+'</div></div></div>'+
+            '<div class="info-row"><div class="ir-icon">📏</div><div><div class="info-label">Chiều cao</div><div class="info-value">'+(personData.height||'—')+'</div></div></div>'+
+        '</div>'+
+        '<div class="cd-box"><div class="cd-label">🎁 Sinh nhật</div><div class="cd-value">'+(cd.isToday?'🎉 Hôm nay!!!':'Còn '+cd.days+' ngày '+cd.hrs+' giờ')+'</div></div>'+
+        '<a href="'+BACK_URL+'" class="btn-back">⬅ Quay lại Quản Lý NV</a>';
+}
+
+/* RENDER GALLERY */
+function renderPhotos() {
+    var wrap=document.getElementById('photoWrap');
+    document.getElementById('photoBadge').textContent=photoList.length+' ảnh';
+    if(!photoList.length){
+        wrap.innerHTML='<div class="state-msg"><div class="big-icon">🖼️</div><p>Chưa có ảnh nào được tải</p><small>Chọn thư mục chứa ảnh trên máy tính của bạn</small><button class="load-btn" onclick="document.getElementById(\'imgInput\').click()">📂 Chọn thư mục ảnh</button></div>';
+        return;
+    }
+    var h='<div class="photo-grid">';
+    for(var i=0;i<photoList.length;i++){
+        var ph=photoList[i];
+        h+='<div class="photo-card" onclick="openLB('+i+')"><img src="'+ph.url+'" alt="'+ph.name+'" loading="lazy"><div class="p-num">'+String(ph.num).padStart(2,'0')+'</div></div>';
+    }
+    wrap.innerHTML=h+'</div>';
+}
+
+/* =======================================================
+   LOGIC TẢI ẢNH MỚI NHẤT (ÉP HỎI 01-10 TRƯỚC)
+======================================================= */
+
+// Hiển thị trạng thái đang quét 10 ảnh
+function showScanningState() {
+    document.getElementById('photoPathLabel').textContent = 'Đang quét ảnh tự động (01-10)...';
+    document.getElementById('photoWrap').innerHTML = 
+        '<div class="state-msg">'+
+            '<div class="spinner" style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--p);border-radius:50%;margin-bottom:10px;"></div>'+
+            '<p>Đang tìm kiếm ảnh từ 01.jpg đến 10.jpg...</p>'+
+            '<small>Vui lòng chờ trong giây lát</small>'+
+        '</div>';
+}
+
+// 1. BẮT BUỘC HỎI TỪ 01.jpg ĐẾN 10.jpg TRÊN SERVER
+function smartSequentialScan() {
+    photoList = [];
+    var maxIndex = 10; // Bắt buộc hỏi đến 10
+    var currentIndex = 1;
+    
+    // Hiện giao diện chờ trước khi bắt đầu quét
+    showScanningState();
+    
+    // Dùng setTimeout(0) để trình duyệt kịp vẽ giao diện Loading trước
+    setTimeout(function() {
+        function checkNext() {
+            if (currentIndex > maxIndex) { 
+                // Đã hỏi xong 10 tấm
+                if (photoList.length === 0) {
+                    showLoadFromPcBtn(); // Không có ảnh nào -> Chuyển sang cách 2
+                } else {
+                    document.getElementById('photoPathLabel').textContent = PHOTO_BASE;
+                    renderPhotos(); // Có ảnh -> Hiện ra luôn
+                }
+                return;
+            }
+            
+            var pad = String(currentIndex).padStart(2,'0');
+            var path = PHOTO_BASE + pad + '.jpg';
+            var img = new Image();
+            
+            img.onload = function() {
+                // Tìm thấy -> Lưu lại và tiếp tục hỏi số tiếp theo
+                photoList.push({ url: path, name: pad + '.jpg', num: currentIndex });
+                currentIndex++;
+                checkNext(); 
+            };
+            
+            img.onerror = function() {
+                // Không thấy tấm này -> Vẫn tiếp tục hỏi số tiếp theo (đề phòng thiếu số giữa)
+                currentIndex++;
+                checkNext(); 
+            };
+            
+            img.src = path;
+        }
+        
+        checkNext(); // Bắt đầu hỏi
+    }, 50);
+}
+
+// 2. CÁCH 2: Hiện nút cho phép chọn thư mục ảnh từ máy tính (Nếu cách 1 thất bại)
+function showLoadFromPcBtn() {
+    document.getElementById('photoPathLabel').textContent = 'Chuyển sang chế độ thủ công';
+    document.getElementById('photoWrap').innerHTML = 
+        '<div class="state-msg">'+
+            '<div class="big-icon">📂</div>'+
+            '<p>Không tìm thấy ảnh 01-10.jpg trên Server</p>'+
+            '<small>Hãy chọn thư mục <b>Photo/'+personId+'</b> từ máy tính của bạn để xem ảnh.</small>'+
+            '<button class="load-btn" onclick="document.getElementById(\'imgInput\').click()">📂 Chọn thư mục ảnh</button>'+
+        '</div>';
+}
+
+// 3. Xử lý khi người dùng chọn thư mục ảnh từ máy tính
+document.getElementById('imgInput').addEventListener('change', function(e) {
+    var files = e.target.files; 
+    if (!files || !files.length) return;
+    
+    photoList = [];
+    var imgExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+    
+    for (var i = 0; i < files.length; i++) {
+        var f = files[i];
+        var ext = f.name.split('.').pop().toLowerCase();
+        
+        if (imgExts.indexOf(ext) !== -1) {
+            var objectUrl = URL.createObjectURL(f); 
+            var numMatch = f.name.match(/(\d+)/);
+            var num = numMatch ? parseInt(numMatch[1], 10) : (i + 1);
+            
+            photoList.push({
+                url: objectUrl,
+                name: f.name,
+                num: num
+            });
+        }
+    }
+    
+    photoList.sort(function(a, b) { return a.num - b.num; });
+    
+    var folderPath = files[0].webkitRelativePath.split('/')[0] + '/';
+    document.getElementById('photoPathLabel').textContent = '📁 ' + folderPath;
+    renderPhotos();
+});
+
+/* =======================================================
+   KHỞI CHẠY CHÍNH
+======================================================= */
+
+// Thử tải file TXT để xem đang chạy Server hay Local
+fetch(TXT_PATH).then(function(r){
+    if(!r.ok) throw new Error('fail');
+    return r.text();
+}).then(function(text){
+    personData = parseTxt(text);
+    if(!personData) throw new Error('parse fail');
+    isServerMode = true;
+    renderCV();
+    
+    // Đang chạy trên Server -> Bắt buộc quét 10 ảnh
+    smartSequentialScan();
+    
+}).catch(function(){
+    // Đang chạy Local -> Hiện giao diện nút tải lên
+    var side=document.getElementById('cvSide');
+    side.innerHTML='<div class="state-msg"><div class="big-icon">📂</div><p>Tải hồ sơ để bắt đầu</p><small>Dự kiến: Pro/'+personId+'.txt</small><button class="load-btn" onclick="document.getElementById(\'txtInput\').click()">📁 Chọn file TXT</button></div>';
+    
+    document.getElementById('photoPathLabel').textContent = 'Chế độ xem từ máy tính';
+    document.getElementById('photoWrap').innerHTML = '<div class="state-msg"><div class="big-icon">🖼️</div><p>Chưa có ảnh</p><small>Dự kiến: '+PHOTO_BASE+'</small><button class="load-btn" onclick="document.getElementById(\'imgInput\').click()">📂 Chọn thư mục ảnh</button></div>';
+});
+
+// Bắt sự kiện nút tải TXT ở chế độ Local
+document.getElementById('txtInput').addEventListener('change',function(e){
+    var f=e.target.files[0]; if(!f) return;
+    var r=new FileReader();
+    r.onload=function(ev){personData=parseTxt(ev.target.result);if(personData)renderCV();else alert('Sai định dạng!');};
+    r.readAsText(f);
+});
+
+/* LIGHTBOX */
+var lbEl=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbCounter=document.getElementById('lbCounter');
+function openLB(i){lbIndex=i;updateLB();lbEl.classList.add('active');document.body.style.overflow='hidden';}
+function closeLB(){lbEl.classList.remove('active');document.body.style.overflow='';}
+function navLB(d){lbIndex=(lbIndex+d+photoList.length)%photoList.length;updateLB();}
+function updateLB(){lbImg.src=photoList[lbIndex].url;lbImg.alt=photoList[lbIndex].name;lbCounter.textContent=(lbIndex+1)+' / '+photoList.length;}
+lbEl.querySelector('.lb-close').addEventListener('click',closeLB);
+lbEl.querySelector('.lb-prev').addEventListener('click',function(){navLB(-1);});
+lbEl.querySelector('.lb-next').addEventListener('click',function(){navLB(1);});
+lbEl.addEventListener('click',function(e){if(e.target===lbEl)closeLB();});
+document.addEventListener('keydown',function(e){if(!lbEl.classList.contains('active'))return;if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')navLB(-1);if(e.key==='ArrowRight')navLB(1);});
+
+document.getElementById('tbId').textContent='ID: '+personId;
+
+/* Spinner */
+(function(){var s=document.querySelectorAll('.spinner');s.forEach(function(el){var d=0;function spin(){d+=6;el.style.transform='rotate('+d+'deg)';requestAnimationFrame(spin);}spin();});})();
+</script>
+</body>
+</html>
