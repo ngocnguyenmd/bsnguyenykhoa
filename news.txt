@@ -13,10 +13,9 @@ Tin Quan Trọng
 -ảnh-
 poto2.jpg
 -nội dung-
-- Fix tòa nhà chung cho hoàn thiện 
-- Fix điện và nước do lỗi thông số liên quan
+- IEZpeCBrw70gxrDhu5tjIDMgMiBbTE5URF1bVlRLTl0gdGjDtG5nIHF1YSDEkWnhu4F1IGx14bqtdCB0aMOhbmcgNiDEkcOjIGvDqG0gSUQ2
 -tác giả-
-Quản lý - mỹ hiền 
+Quản lý - Luật LFS 
 -mật khẩu-
 
 ===
@@ -26,6 +25,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Thả cho mọi người về đợt 2 hôm này nghen !
 * xJHDoyBrw70gYsOhbmggxJHhuq11IHhhbmggdsOgIHTDumkgdHLDoCAKCgo=
 * Fix các luật chưa đúng cho trung tâm mới có đính kèm 
 -tác giả-
