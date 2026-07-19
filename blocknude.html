@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nude Image Batch Detector</title>
+<style>
+:root{
+  --bg:#0a0e1a; --bg2:#131829; --card:#1a2138; --border:#2a3454;
+  --text:#e8eef8; --muted:#8a96b3; --accent:#5b8cff;
+  --danger:#ff4d6d; --warn:#ffb84d; --ok:#4dff9d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:linear-gradient(135deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  min-height:100vh;padding:20px;
+}
+.container{max-width:1400px;margin:0 auto}
+header{margin-bottom:24px;text-align:center}
+h1{
+  font-size:2.2rem;font-weight:800;
+  background:linear-gradient(90deg,var(--accent),var(--danger));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:8px;
+}
+.sub{color:var(--muted);font-size:.95rem}
+.model-status{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:10px;padding:6px 14px;border-radius:20px;
+  background:var(--card);border:1px solid var(--border);font-size:.8rem;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--warn)}
+.dot.ok{background:var(--ok)} .dot.err{background:var(--danger)}
+.dot.loading{background:var(--warn);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+.dropzone{
+  border:2px dashed var(--border);background:var(--card);
+  border-radius:16px;padding:50px 20px;text-align:center;
+  cursor:pointer;transition:all .3s;margin-bottom:18px;
+}
+.dropzone:hover,.dropzone.drag{
+  border-color:var(--accent);background:rgba(91,140,255,.08);
+}
+.dropzone-icon{font-size:48px;margin-bottom:12px}
+.dropzone-text{font-size:1.1rem;margin-bottom:4px;font-weight:600}
+.dropzone-hint{color:var(--muted);font-size:.85rem}
+
+.controls{
+  display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;align-items:stretch;
+}
+.control-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;flex:1;min-width:220px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.control-card label{
+  display:block;color:var(--muted);font-size:.75rem;
+  margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;
+}
+.control-row{display:flex;align-items:center;gap:10px}
+.control-row input[type=range]{flex:1;accent-color:var(--accent)}
+.control-row select{
+  width:100%;background:var(--bg);color:var(--text);
+  border:1px solid var(--border);border-radius:6px;padding:7px;font-size:.9rem;
+}
+.thresh-val{
+  min-width:45px;text-align:right;font-weight:700;
+  font-variant-numeric:tabular-nums;color:var(--accent);
+}
+.btn{
+  background:var(--accent);color:#fff;border:none;border-radius:8px;
+  padding:0 18px;font-size:.9rem;cursor:pointer;font-weight:600;
+  transition:all .2s;align-self:stretch;display:flex;align-items:center;
+}
+.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.btn-danger{background:var(--danger)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.status{
+  display:flex;gap:24px;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;
+  padding:14px 18px;margin-bottom:18px;align-items:center;flex-wrap:wrap;
+}
+.stat{display:flex;flex-direction:column;min-width:60px}
+.stat-val{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.stat-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.progress{
+  flex:1;height:8px;background:var(--bg);
+  border-radius:4px;overflow:hidden;min-width:200px;
+}
+.progress-bar{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--ok));
+  width:0%;transition:width .3s;
+}
+
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tab{
+  background:var(--card);border:1px solid var(--border);color:var(--text);
+  padding:7px 14px;border-radius:20px;cursor:pointer;font-size:.85rem;
+  transition:all .15s;
+}
+.tab:hover{border-color:var(--accent)}
+.tab.active{background:var(--accent);border-color:var(--accent)}
+.tab-count{
+  background:rgba(255,255,255,.15);padding:1px 8px;
+  border-radius:10px;margin-left:6px;font-size:.72rem;
+}
+
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;
+}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;position:relative;transition:all .2s;
+}
+.card.flag{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger),0 4px 20px rgba(255,77,109,.25)}
+.card.safe{border-color:rgba(77,255,157,.4)}
+.card-img{
+  width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg);
+  display:block;cursor:zoom-in;
+}
+.card-overlay{
+  position:absolute;top:8px;left:8px;right:8px;
+  display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;
+}
+.badge{
+  padding:4px 9px;border-radius:6px;font-size:.72rem;font-weight:700;
+  backdrop-filter:blur(6px);text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.badge.nude{background:rgba(255,77,109,.92);color:#fff}
+.badge.safe{background:rgba(77,255,157,.88);color:#0a0e1a}
+.badge.processing{background:rgba(255,184,77,.92);color:#0a0e1a}
+.badge.error{background:rgba(255,77,109,.92);color:#fff}
+.badge.waiting{background:rgba(138,150,179,.7);color:#fff}
+
+.card-bars{padding:8px 10px;font-size:.7rem}
+.bar-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.bar-label{width:55px;color:var(--muted)}
+.bar-track{flex:1;height:5px;background:var(--bg);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width .4s}
+.bar-fill.Drawing{background:#9b7dff}
+.bar-fill.Hentai{background:#ff6b9d}
+.bar-fill.Neutral{background:#4dff9d}
+.bar-fill.Porn{background:#ff4d6d}
+.bar-fill.Sexy{background:#ffb84d}
+.bar-pct{width:36px;text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+
+.card-name{
+  padding:6px 10px;font-size:.72rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  border-top:1px solid var(--border);
+}
+
+.empty{
+  grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);
+}
+
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.9);
+  display:none;align-items:center;justify-content:center;z-index:100;padding:20px;
+}
+.modal.show{display:flex;cursor:zoom-out}
+.modal img{max-width:92vw;max-height:92vh;border-radius:8px;cursor:default}
+
+.loader-overlay{
+  position:fixed;inset:0;background:rgba(10,14,26,.96);
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;z-index:200;gap:18px;
+}
+.loader-overlay.show{display:flex}
+.spinner{
+  width:56px;height:56px;border:4px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.toast{
+  position:fixed;bottom:20px;right:20px;background:var(--card);
+  border:1px solid var(--border);border-radius:8px;padding:12px 18px;
+  z-index:150;transform:translateX(120%);transition:transform .3s;max-width:320px;
+  font-size:.88rem;
+}
+.toast.show{transform:translateX(0)}
+.toast.error{border-color:var(--danger)}
+.toast.ok{border-color:var(--ok)}
+
+.warning{
+  background:rgba(255,184,77,.08);border:1px solid var(--warn);
+  color:var(--warn);border-radius:8px;padding:10px 14px;
+  margin-bottom:16px;font-size:.83rem;line-height:1.5;
+}
+.warning b{color:#fff}
+
+@media(max-width:600px){
+  .controls{flex-direction:column}
+  .stat-val{font-size:1.2rem}
+  h1{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Nude Image Batch Detector</h1>
+    <p class="sub">Kiểm tra ảnh hàng loạt bằng AI — chạy 100% trong trình duyệt, không upload ảnh đi đâu</p>
+    <div class="model-status">
+      <span class="dot loading" id="modelDot"></span>
+      <span id="modelText">Đang khởi tạo model AI...</span>
+    </div>
+  </header>
+
+  <div class="warning">
+    ⚠️ <b>Lưu ý:</b> Công cụ chạy hoàn toàn local, ảnh của bạn không bị gửi lên server. <br>
+    Hướng dẫn: Để tránh lỗi, hãy nén file <code>index.html</code> thành <code>.zip</code> và kéo thả vào <b>app.netlify.com/drop</b>.
+  </div>
+
+  <div class="dropzone" id="dropzone">
+    <div class="dropzone-icon">📁</div>
+    <div class="dropzone-text">Kéo thả ảnh vào đây hoặc bấm để chọn</div>
+    <div class="dropzone-hint">Hỗ trợ JPG / PNG / WEBP / GIF — chọn được nhiều file cùng lúc</div>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+  </div>
+
+  <div class="controls">
+    <div class="control-card">
+      <label>Ngưỡng xác định "Nude"</label>
+      <div class="control-row">
+        <input type="range" id="threshold" min="20" max="90" value="45">
+        <span class="thresh-val" id="thresholdVal">45%</span>
+      </div>
+    </div>
+    <div class="control-card">
+      <label>Xử lý song song</label>
+      <div class="control-row">
+        <select id="concurrency">
+          <option value="1">1 - Chậm, tốn ít RAM nhất</option>
+          <option value="2" selected>2 - Cân bằng</option>
+          <option value="3">3 - Nhanh hơn</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="clearBtn">Xóa tất cả</button>
+    <button class="btn btn-danger" id="exportBtn" disabled>Xuất DS nude</button>
+  </div>
+
+  <div class="status">
+    <div class="stat"><div class="stat-val" id="totalStat">0</div><div class="stat-lbl">Tổng</div></div>
+    <div class="stat"><div class="stat-val" id="processedStat" style="color:var(--accent)">0</div><div class="stat-lbl">Đã xong</div></div>
+    <div class="stat"><div class="stat-val" id="nudeStat" style="color:var(--danger)">0</div><div class="stat-lbl">Nude</div></div>
+    <div class="stat"><div class="stat-val" id="safeStat" style="color:var(--ok)">0</div><div class="stat-lbl">An toàn</div></div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-filter="all">Tất cả <span class="tab-count" id="cnt-all">0</span></div>
+    <div class="tab" data-filter="nude">Nude <span class="tab-count" id="cnt-nude">0</span></div>
+    <div class="tab" data-filter="safe">An toàn <span class="tab-count" id="cnt-safe">0</span></div>
+    <div class="tab" data-filter="processing">Đang xử lý <span class="tab-count" id="cnt-processing">0</span></div>
+    <div class="tab" data-filter="error">Lỗi <span class="tab-count" id="cnt-error">0</span></div>
+  </div>
+
+  <div class="grid" id="grid">
+    <div class="empty" id="empty">Chưa có ảnh nào. Hãy thêm ảnh để bắt đầu kiểm tra.</div>
+  </div>
+</div>
+
+<div class="modal" id="modal"><img id="modalImg" src="" alt=""></div>
+
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+  <div id="loaderText">Đang tải model AI... (Lần đầu mất 10-20s)</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Dùng ESM để ép buộc chạy đúng CPU backend, tránh xung đột thư viện -->
+<script type="module">
+  import * as tf from 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js';
+  import * as nsfwjs from 'https://cdn.jsdelivr.net/npm/nsfwjs@2.4.2/dist/nsfwjs.min.js';
+
+  // Tắt toàn bộ log spam trong Console
+  tf.env().set('VERBOSE', false);
+  tf.env().set('WEBGL_PACK', false);
+  
+  // Ép buộc dùng CPU để KHÔNG BAO GIỜ bị lỗi WebGL / crash trình duyệt
+  await tf.setBackend('cpu');
+  await tf.ready();
+
+  // ===== State =====
+  let model = null;
+  let images = [];
+  let currentFilter = 'all';
+  let threshold = 0.45;
+  let concurrency = 2;
+  let queue = [];
+  let activeWorkers = 0;
+  let nextId = 1;
+
+  const $ = id => document.getElementById(id);
+  const dropzone = $('dropzone');
+  const fileInput = $('fileInput');
+  const grid = $('grid');
+  const empty = $('empty');
+  const thresholdInput = $('threshold');
+  const thresholdVal = $('thresholdVal');
+  const concurrencySelect = $('concurrency');
+  const clearBtn = $('clearBtn');
+  const exportBtn = $('exportBtn');
+  const loader = $('loader');
+  const loaderText = $('loaderText');
+  const toast = $('toast');
+  const modelDot = $('modelDot');
+  const modelText = $('modelText');
+
+  function showToast(msg, type='info'){
+    toast.textContent = msg;
+    toast.className = 'toast show ' + type;
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.className = 'toast', 3500);
+  }
+
+  function setModelStatus(state, text){
+    modelDot.className = 'dot ' + state;
+    modelText.textContent = text;
+  }
+
+  async function loadModel(){
+    loader.classList.add('show');
+    setModelStatus('loading', 'Đang tải model AI...');
+    
+    const modelSources = [
+      'https://hf.co/public-data/nsfwjs/raw/main/model.json',
+      'https://cdn.jsdelivr.net/gh/infinitered/nsfwjs@master/dist/quant_nsfw_mobilenet/model.json'
+    ];
+
+    for(let i=0; i<modelSources.length; i++){
+      const url = modelSources[i];
+      try{
+        loaderText.textContent = `Đang tải model từ nguồn ${i+1}...`;
+        model = await nsfwjs.load(url, { size: 299, type: 'graph' });
+        if(model){
+          setModelStatus('ok', `Model sẵn sàng (CPU Mode)`);
+          showToast(`Model AI đã tải xong!`, 'ok');
+          break;
+        }
+      }catch(e){
+        console.warn(`Nguồn ${i+1} thất bại:`, e.message);
+      }
+    }
+
+    loader.classList.remove('show');
+    if(!model){
+      setModelStatus('err', 'Lỗi tải model');
+      showToast('Lỗi tải Model. Vui lòng deploy lên Netlify để chạy chuẩn.', 'error');
+    }
+  }
+
+  async function processImage(item){
+    if(item.status !== 'pending') return;
+    item.status = 'processing';
+    updateCard(item);
+
+    try{
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = item.url;
+      await new Promise((res, rej) => {
+        img.onload = res;
+        img.onerror = () => rej(new Error('Không đọc được ảnh'));
+      });
+
+      const predictions = await model.classify(img, 5);
+      item.predictions = predictions;
+
+      const get = name => (predictions.find(p => p.className === name)?.probability) || 0;
+      const nudeScore = get('Porn') + get('Hentai') + get('Sexy');
+      item.nudeScore = nudeScore;
+      item.isNude = nudeScore >= threshold;
+      item.status = 'done';
+    }catch(e){
+      item.status = 'error';
+      item.error = e.message || 'Lỗi không xác định';
+    }
+    updateCard(item);
+    updateStats();
+  }
+
+  function enqueue(item){
+    queue.push(item);
+    runQueue();
+  }
+  function runQueue(){
+    while(activeWorkers < concurrency && queue.length > 0){
+      const item = queue.shift();
+      if(!item || item.status !== 'pending') continue;
+      activeWorkers++;
+      processImage(item).finally(() => {
+        activeWorkers--;
+        runQueue();
+      });
+    }
+  }
+
+  function addFiles(files){
+    const imgFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if(imgFiles.length === 0){
+      showToast('Không có file ảnh hợp lệ', 'error');
+      return;
+    }
+    if(empty) empty.style.display = 'none';
+    imgFiles.forEach(file => {
+      const url = URL.createObjectURL(file);
+      const item = {
+        id: nextId++, file, url,
+        name: file.name, size: file.size,
+        status: 'pending', predictions: null,
+        nudeScore: 0, isNude: false, error: null
+      };
+      images.push(item);
+      renderCard(item);
+      enqueue(item);
+    });
+    updateStats();
+    showToast(`Đã thêm ${imgFiles.length} ảnh vào hàng đợi`, 'ok');
+  }
+
+  function renderCard(item){
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.id = 'card-' + item.id;
+    card.dataset.status = item.status;
+    card.dataset.isNude = 'false';
+    card.innerHTML = `
+      <div class="card-overlay"><span class="badge waiting">Đang chờ...</span></div>
+      <img class="card-img" src="${item.url}" alt="" loading="lazy">
+      <div class="card-bars"><div style="color:var(--muted);font-size:.75rem">⏳ Trong hàng đợi...</div></div>
+      <div class="card-name" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</div>
+    `;
+    card.querySelector('.card-img').addEventListener('click', e => {
+      e.stopPropagation();
+      $('modalImg').src = item.url;
+      $('modal').classList.add('show');
+    });
+    grid.appendChild(card);
+  }
+
+  function updateCard(item){
+    const card = $('card-' + item.id);
+    if(!card) return;
+    card.dataset.status = item.status;
+    card.dataset.isNude = item.isNude ? 'true' : 'false';
+    const overlay = card.querySelector('.card-overlay');
+    const bars = card.querySelector('.card-bars');
+    card.classList.remove('safe','flag');
+
+    if(item.status === 'processing'){
+      overlay.innerHTML = '<span class="badge processing">Đang phân tích...</span>';
+      bars.innerHTML = '<div style="color:var(--warn);font-size:.75rem">⏳ Đang chạy AI...</div>';
+    }else if(item.status === 'done'){
+      if(item.isNude){
+        card.classList.add('flag');
+        overlay.innerHTML = `<span class="badge nude">NUDE ${Math.round(item.nudeScore*100)}%</span>`;
+      }else{
+        card.classList.add('safe');
+        overlay.innerHTML = '<span class="badge safe">SAFE</span>';
+      }
+      bars.innerHTML = item.predictions.map(p => `
+        <div class="bar-row">
+          <span class="bar-label">${p.className}</span>
+          <span class="bar-track"><span class="bar-fill ${p.className}" style="width:${Math.round(p.probability*100)}%"></span></span>
+          <span class="bar-pct">${(p.probability*100).toFixed(1)}%</span>
+        </div>`).join('');
+    }else if(item.status === 'error'){
+      overlay.innerHTML = '<span class="badge error">LỖI</span>';
+      bars.innerHTML = `<div style="color:var(--danger);font-size:.72rem">${escapeHtml(item.error||'Lỗi')}</div>`;
+    }
+    applyFilter();
+  }
+
+  function applyFilter(){
+    document.querySelectorAll('.card').forEach(c => {
+      const s = c.dataset.status;
+      const nude = c.dataset.isNude === 'true';
+      let show = true;
+      if(currentFilter === 'nude') show = s === 'done' && nude;
+      else if(currentFilter === 'safe') show = s === 'done' && !nude;
+      else if(currentFilter === 'processing') show = s === 'pending' || s === 'processing';
+      else if(currentFilter === 'error') show = s === 'error';
+      c.style.display = show ? '' : 'none';
+    });
+  }
+
+  function updateStats(){
+    const total = images.length;
+    const processed = images.filter(i => i.status === 'done').length;
+    const nude = images.filter(i => i.status === 'done' && i.isNude).length;
+    const safe = images.filter(i => i.status === 'done' && !i.isNude).length;
+    const processing = images.filter(i => i.status === 'pending' || i.status === 'processing').length;
+    const error = images.filter(i => i.status === 'error').length;
+
+    $('totalStat').textContent = total;
+    $('processedStat').textContent = processed;
+    $('nudeStat').textContent = nude;
+    $('safeStat').textContent = safe;
+    $('cnt-all').textContent = total;
+    $('cnt-nude').textContent = nude;
+    $('cnt-safe').textContent = safe;
+    $('cnt-processing').textContent = processing;
+    $('cnt-error').textContent = error;
+    $('progressBar').style.width = total ? (processed/total*100)+'%' : '0%';
+    exportBtn.disabled = nude === 0;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // ===== Events =====
+  thresholdInput.addEventListener('input', () => {
+    threshold = thresholdInput.value / 100;
+    thresholdVal.textContent = thresholdInput.value + '%';
+    images.forEach(item => {
+      if(item.status === 'done'){
+        item.isNude = item.nudeScore >= threshold;
+        updateCard(item);
+      }
+    });
+    updateStats();
+  });
+
+  concurrencySelect.addEventListener('change', () => {
+    concurrency = parseInt(concurrencySelect.value);
+    runQueue();
+  });
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      currentFilter = t.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault(); dropzone.classList.remove('drag');
+    if(e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', e => { addFiles(e.target.files); fileInput.value = ''; });
+  document.addEventListener('paste', e => {
+    const files = Array.from(e.clipboardData.files || []);
+    if(files.length) addFiles(files);
+  });
+
+  $('modal').addEventListener('click', () => $('modal').classList.remove('show'));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') $('modal').classList.remove('show'); });
+
+  clearBtn.addEventListener('click', () => {
+    if(images.length === 0) return;
+    if(!confirm('Xóa tất cả ảnh và kết quả?')) return;
+    images.forEach(i => URL.revokeObjectURL(i.url));
+    images = []; queue = [];
+    grid.innerHTML = ''; grid.appendChild(empty);
+    empty.style.display = ''; updateStats();
+    showToast('Đã xóa tất cả', 'ok');
+  });
+
+  exportBtn.addEventListener('click', () => {
+    const nudeList = images.filter(i => i.isNude);
+    if(nudeList.length === 0) return;
+    let txt = `DANH SÁCH ẢNH NUDE\nSố lượng: ${nudeList.length}\nNgưỡng: ${Math.round(threshold*100)}%\nThời gian: ${new Date().toLocaleString('vi-VN')}\n${'='.repeat(60)}\n\n`;
+    nudeList.forEach((i, idx) => {
+      txt += `${idx+1}. ${i.name}\n   Kích thước: ${(i.size/1024).toFixed(1)} KB\n`;
+      if(i.predictions) i.predictions.forEach(p => { txt += `   - ${p.className}: ${(p.probability*100).toFixed(1)}%\n`; });
+      txt += `   => Nude score: ${(i.nudeScore*100).toFixed(1)}%\n\n`;
+    });
+    const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `nude-list-${Date.now()}.txt`;
+    a.click(); URL.revokeObjectURL(a.href);
+    showToast(`Đã xuất ${nudeList.length} ảnh nude ra file txt`, 'ok');
+  });
+
+  // ===== Init =====
+  loadModel();
+  updateStats();
+</script>
+</body>
+</html>
