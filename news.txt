@@ -25,6 +25,7 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Đã fix hệ điều hành linux bỏ hàm củ lấy dạng mới !
 * Giải quyết cho ông chú và bà theo đơn yêu cầu !
 * Giải quyết lỗi máy in phòng 407 239 done ! [phòng 16]
 * Thả cho mọi người về đợt 2 hôm này nghen !
@@ -49,6 +50,8 @@ Hoàng Tộc/Quý Tộc
 -ảnh-
 poto6.jpg
 -nội dung-
+* Đã ký thông qua giấy học viện cho hà và đoan
+* Đã thông qua nhập học cho Cẩn và Hân
 * Thông qua căn hộ nhỏ có điều kiện ID3 
 * Thông qua huynhu
 * Thông qua hồ sơ minh thư, quỳnh trâm, west , mai,... đạt chuẩn lớp B 
@@ -72,6 +75,7 @@ Thần Linh
 -ảnh-
 poto8.jpg
 -nội dung-
+* Họp bỏ quyền lực 2 thay quyền lực LFS
 * Họp nội bộ
 * Chia 5 khóa cứng cho ID 6
 -tác giả-
