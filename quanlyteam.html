@@ -359,7 +359,7 @@ function autoScanImages() {
 }
 
 async function autoLoadInfo(person) {
-  const infoText = await fetchFile('./info/' + person.id + '.txt');
+  const infoText = await fetchFile('./Pro/' + person.id + '.txt');
   if(infoText) {
     person.info = parseInfoText(infoText);
     if(state.cast[state.currentIdx] && state.cast[state.currentIdx].id === person.id) {
