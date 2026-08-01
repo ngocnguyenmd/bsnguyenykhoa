@@ -19,222 +19,231 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .app{max-width:var(--mxw);margin:0 auto;position:relative;z-index:1;animation:appIn .7s cubic-bezier(.16,1,.3,1)}
 @keyframes appIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-.header{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:linear-gradient(135deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:14px;margin-bottom:14px;box-shadow:var(--shadow);flex-wrap:wrap;gap:14px}
-.brand{display:flex;align-items:center;gap:14px}
-.logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-weight:900;font-size:22px;color:var(--bg-deep);letter-spacing:-1px;box-shadow:0 4px 14px rgba(212,165,116,.3);position:relative;overflow:hidden}
+/* ===== HEADER ===== */
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(135deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:14px;margin-bottom:14px;box-shadow:var(--shadow);flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-weight:900;font-size:20px;color:var(--bg-deep);letter-spacing:-1px;box-shadow:0 4px 14px rgba(212,165,116,.3);position:relative;overflow:hidden}
 .logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);animation:shine 4s infinite}
 @keyframes shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
-.brand-text h1{font-size:20px;font-weight:800;letter-spacing:.3px;line-height:1.1}
-.brand-text p{font-size:10.5px;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
-.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card-2);color:var(--text);font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;letter-spacing:.3px}
+.brand-text h1{font-size:18px;font-weight:800;letter-spacing:.3px}
+.brand-text p{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.btn{padding:9px 13px;border-radius:9px;border:1px solid var(--border);background:var(--card-2);color:var(--text);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
 .btn:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px)}
 .btn.primary{background:linear-gradient(135deg,var(--amber),var(--amber-deep));border-color:var(--amber);color:var(--bg-deep);font-weight:800}
-.btn.primary:hover{box-shadow:0 6px 18px rgba(212,165,116,.35);color:var(--bg-deep)}
+.btn.primary:hover{box-shadow:0 6px 18px rgba(212,165,116,.35)}
 .btn.ghost{background:transparent}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.mode-pill{font-size:10px;font-weight:800;letter-spacing:1.5px;padding:5px 10px;border-radius:20px;background:rgba(212,165,116,.15);color:var(--amber);border:1px solid rgba(212,165,116,.35);text-transform:uppercase;transition:all .3s}
-.mode-pill.manual{background:rgba(198,74,58,.15);color:var(--red);border-color:rgba(198,74,58,.35)}
-.mode-pill.auto{background:rgba(122,154,90,.15);color:var(--green);border-color:rgba(122,154,90,.35)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.mode-pill{font-size:9.5px;font-weight:800;letter-spacing:1.5px;padding:4px 9px;border-radius:20px;text-transform:uppercase;transition:all .3s}
+.mode-pill.auto{background:rgba(122,154,90,.15);color:var(--green);border:1px solid rgba(122,154,90,.35)}
+.mode-pill.manual{background:rgba(198,74,58,.15);color:var(--red);border:1px solid rgba(198,74,58,.35)}
+.key-btn{font-size:10px!important;padding:5px 9px!important;border-radius:7px!important;opacity:.6;transition:all .2s}
+.key-btn:hover{opacity:1}
+.key-btn.ok{border-color:var(--green);color:var(--green);opacity:.8}
 
-.layout{display:grid;grid-template-columns:180px 1fr;gap:14px;min-height:calc(100vh - 120px)}
-@media(max-width:1024px){.layout{grid-template-columns:1fr}}
-.sidebar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-.sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px dashed var(--border-soft)}
-.sidebar-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
-.sidebar-count{font-size:11px;color:var(--amber);font-weight:700;background:rgba(212,165,116,.1);padding:3px 8px;border-radius:8px}
-.fb-story-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;max-height:calc(100vh - 220px);padding-right:4px}
-@media(max-width:1024px){.fb-story-list{max-height:280px;flex-direction:row;overflow-x:auto;overflow-y:hidden}}
-.fb-story-list::-webkit-scrollbar{width:5px;height:5px}
-.fb-story-list::-webkit-scrollbar-track{background:transparent}
-.fb-story-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.fb-story-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:12px;cursor:pointer;transition:all .2s;flex-shrink:0}
-@media(max-width:1024px){.fb-story-item{flex-direction:column;justify-content:center;width:70px;gap:4px;text-align:center}}
-.fb-story-item:hover{background:var(--card-2)}
-.fb-story-item.active{background:var(--card-2)}
-.fb-story-img{width:50px;height:50px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));flex-shrink:0;transition:transform .2s}
-@media(max-width:1024px){.fb-story-img{width:60px;height:60px}}
-.fb-story-item:hover .fb-story-img{transform:scale(1.05)}
-.fb-story-img-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid var(--card);position:relative}
-.fb-story-img-inner img{width:100%;height:100%;object-fit:cover;display:block}
-.fb-story-item.active .fb-story-img{box-shadow:0 0 12px rgba(212,165,116,.4)}
-.fb-story-info{flex:1;min-width:0}
-@media(max-width:1024px){.fb-story-info{display:none}}
-.fb-story-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fb-story-item.active .fb-story-name{color:var(--amber)}
-.fb-story-st{font-size:10px;color:var(--muted);margin-top:2px}
-.fb-story-item.active .fb-story-st{color:var(--amber-soft)}
+/* ===== LAYOUT ===== */
+.layout{display:flex;gap:14px;min-height:calc(100vh - 110px)}
 
-.main{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:500px}
-.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.5px;flex-wrap:wrap}
+/* ===== SIDEBAR ===== */
+.sidebar{width:170px;flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:width .3s,opacity .3s,padding .3s;overflow:hidden}
+.sidebar.collapsed{width:48px;padding:12px 8px}
+.sidebar.collapsed .sidebar-head-text,.sidebar.collapsed .fb-story-info,.sidebar.collapsed .sidebar-title,.sidebar.collapsed .sidebar-count{display:none}
+.sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border-soft)}
+.sidebar-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sidebar-count{font-size:10px;color:var(--amber);font-weight:700;background:rgba(212,165,116,.1);padding:2px 7px;border-radius:6px}
+.toggle-sidebar{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .2s;line-height:1;flex-shrink:0}
+.toggle-sidebar:hover{color:var(--amber)}
+
+.sb-list{display:flex;flex-direction:column;gap:6px;overflow-y:auto;overflow-x:hidden;flex:1}
+.sb-list::-webkit-scrollbar{width:0}
+.sb-item{display:flex;align-items:center;gap:9px;padding:5px 6px;border-radius:10px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.sb-item:hover{background:var(--card-2)}
+.sb-item.active{background:var(--card-2)}
+.sb-av{width:36px;height:36px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));flex-shrink:0;transition:transform .2s}
+.sb-item:hover .sb-av{transform:scale(1.06)}
+.sb-av-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid var(--card)}
+.sb-av-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.sb-item.active .sb-av{box-shadow:0 0 10px rgba(212,165,116,.4)}
+.sb-info{flex:1;min-width:0}
+.sb-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-item.active .sb-name{color:var(--amber)}
+.sb-sub{font-size:9.5px;color:var(--muted);margin-top:1px}
+
+/* ===== MAIN ===== */
+.main{flex:1;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:500px}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);margin-bottom:12px;letter-spacing:.4px;flex-wrap:wrap}
 .breadcrumb .sep{opacity:.4}
 .breadcrumb .cur{color:var(--amber);font-weight:700}
-.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:5px;animation:blink 1.6s infinite}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);margin-right:4px;animation:blink 1.6s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.profile{display:grid;grid-template-columns:220px 1fr;gap:18px;margin-bottom:16px;animation:fadeUp .4s ease}
-@media(max-width:768px){.profile{grid-template-columns:1fr}}
+
+/* ===== PROFILE + BUBBLE GẮN ẢNH ===== */
+.profile-zone{display:grid;grid-template-columns:200px 1fr;gap:16px;margin-bottom:14px;animation:fadeUp .4s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.profile-img{width:220px;height:280px;border-radius:12px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:1px solid var(--border);box-shadow:0 8px 20px rgba(0,0,0,.4)}
-@media(max-width:768px){.profile-img{width:160px;height:200px;margin:0 auto}}
-.profile-img img{width:100%;height:100%;object-fit:cover;display:block;animation:imgIn .55s ease}
-@keyframes imgIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
-.profile-img .badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:4px 8px;border-radius:6px;font-size:9.5px;font-weight:700;color:var(--amber);letter-spacing:1px;border:1px solid rgba(212,165,116,.3)}
-.profile-info{display:flex;flex-direction:column;gap:4px}
-.profile-info h2{font-size:28px;font-weight:800;margin-bottom:2px;letter-spacing:-.5px}
-@media(max-width:768px){.profile-info h2{font-size:22px;text-align:center}}
-.profile-info .role{font-size:13px;color:var(--amber);margin-bottom:12px;font-weight:600}
-@media(max-width:768px){.profile-info .role{text-align:center}}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12px;margin-bottom:10px}
-.info-grid .lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
-.info-grid .val{color:var(--text);font-weight:600;margin-bottom:4px}
+@media(max-width:768px){.profile-zone{grid-template-columns:1fr}}
 
-/* ===== KHUNG CHÁT GẮN VỚI ẢNH ===== */
-.chat-frame{border:1px solid var(--border-soft);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;flex:1;min-height:260px;background:var(--bg-deep)}
+.img-bubble-wrap{position:relative}
+.profile-img{width:200px;height:260px;border-radius:12px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:1px solid var(--border);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+@media(max-width:768px){.profile-img{width:150px;height:195px;margin:0 auto}}
+.profile-img img{width:100%;height:100%;object-fit:cover;display:block;animation:imgIn .5s ease}
+@keyframes imgIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
+.profile-img .badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:3px 7px;border-radius:5px;font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.8px;border:1px solid rgba(212,165,116,.3)}
 
-/* Phần truyện tranh trên */
-.comic-strip{padding:20px 18px 14px;display:flex;flex-direction:column;gap:16px;min-height:120px;max-height:280px;overflow-y:auto;position:relative}
-.comic-strip::-webkit-scrollbar{width:4px}
-.comic-strip::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.comic-strip-empty{text-align:center;color:var(--muted);font-size:12px;padding:30px 10px;opacity:.7}
-
-/* 1 dòng truyện: avatars + speech bubbles */
-.comic-row{display:flex;align-items:flex-start;gap:10px;animation:comicIn .4s ease}
-@keyframes comicIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.comic-row.wife-row{flex-direction:row}
-.comic-row.husband-row{flex-direction:row-reverse}
-.comic-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--amber);box-shadow:0 3px 10px rgba(0,0,0,.3)}
-.comic-av img{width:100%;height:100%;object-fit:cover;display:block}
-.comic-av.husband-av{border-color:var(--muted);background:var(--card-2);display:grid;place-items:center;font-size:18px;color:var(--muted)}
-.comic-bubble{position:relative;max-width:75%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.6;word-break:break-word}
-.comic-row.wife-row .comic-bubble{background:linear-gradient(135deg,var(--card-2),var(--card));border:1px solid var(--border);border-top-left-radius:4px;color:var(--text)}
-.comic-row.husband-row .comic-bubble{background:rgba(212,165,116,.12);border:1px solid rgba(212,165,116,.25);border-top-right-radius:4px;color:var(--amber-soft);text-align:right}
-.comic-bubble .cb-cursor{display:inline-block;width:2px;height:14px;background:var(--amber);margin-left:1px;vertical-align:text-bottom;animation:cursorBlink .5s step-end infinite}
+/* ===== BUBBLE NỔI NGAY ẢNH ===== */
+.wife-bubble{position:absolute;bottom:-8px;right:-12px;width:calc(100% + 80px);max-width:320px;background:linear-gradient(135deg,var(--card-2),var(--card));border:1.5px solid var(--amber);border-radius:16px;padding:12px 16px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 20px rgba(212,165,116,.1);animation:bubblePop .4s cubic-bezier(.16,1,.3,1)}
+@keyframes bubblePop{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:none}}
+.wife-bubble::before{content:'';position:absolute;bottom:14px;left:-10px;width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:10px solid var(--amber)}
+.wife-bubble::after{content:'';position:absolute;bottom:15px;left:-8px;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:9px solid var(--card-2)}
+.wb-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.wb-av{width:26px;height:26px;border-radius:50%;overflow:hidden;border:1.5px solid var(--amber);flex-shrink:0}
+.wb-av img{width:100%;height:100%;object-fit:cover}
+.wb-name{font-size:10px;font-weight:800;color:var(--amber);letter-spacing:1px;text-transform:uppercase}
+.wb-time{margin-left:auto;font-size:9px;color:var(--muted);opacity:.6}
+.wb-text{font-size:13.5px;line-height:1.6;color:var(--text)}
+.wb-text .wb-cur{display:inline-block;width:2px;height:13px;background:var(--amber);margin-left:1px;vertical-align:text-bottom;animation:cursorBlink .5s step-end infinite}
 @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
-.comic-time{font-size:9px;color:var(--muted);opacity:.5;margin-top:3px}
-.comic-row.husband-row .comic-time{text-align:right}
 
-/* Divider giữa comic và chat input */
-.comic-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 18px}
+@media(max-width:768px){
+  .wife-bubble{position:relative;bottom:auto;right:auto;width:100%;max-width:none;margin-top:10px}
+  .wife-bubble::before,.wife-bubble::after{display:none}
+}
+@media(max-width:500px){
+  .profile-zone{grid-template-columns:1fr}
+  .wife-bubble{max-width:none;width:100%}
+}
 
-/* Chat input dưới */
-.chat-input-area{padding:12px 18px 14px;display:flex;gap:10px;align-items:center;background:var(--card)}
-.chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:13px;outline:none;transition:border-color .2s}
+/* ===== THÔNG TIN ===== */
+.profile-info{display:flex;flex-direction:column;gap:3px}
+.profile-info h2{font-size:24px;font-weight:800;letter-spacing:-.4px}
+@media(max-width:768px){.profile-info h2{text-align:center}}
+.profile-info .role{font-size:12px;color:var(--amber);margin-bottom:10px;font-weight:600}
+@media(max-width:768px){.profile-info .role{text-align:center}}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;font-size:11.5px}
+.info-grid .lbl{color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.8px}
+.info-grid .val{color:var(--text);font-weight:600;margin-bottom:3px}
+
+/* ===== KHUNG CHAT CHỈ CHO CHỒNG ===== */
+.chat-box{flex:1;display:flex;flex-direction:column;border:1px solid var(--border-soft);border-radius:12px;overflow:hidden;background:var(--bg-deep);min-height:180px}
+.chat-log{flex:1;padding:14px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.chat-log::-webkit-scrollbar{width:4px}
+.chat-log::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.chat-msg{display:flex;gap:8px;animation:msgIn .3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.chat-msg.me{flex-direction:row-reverse}
+.cm-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:13px;font-weight:700;border:1.5px solid var(--muted);color:var(--muted);background:var(--card-2)}
+.chat-msg.me .cm-av{border-color:var(--amber);color:var(--amber);background:rgba(212,165,116,.1)}
+.cm-bubble{max-width:70%;padding:8px 13px;border-radius:12px;font-size:13px;line-height:1.55}
+.chat-msg:not(.me) .cm-bubble{background:var(--card);border:1px solid var(--border);border-top-left-radius:4px}
+.chat-msg.me .cm-bubble{background:rgba(212,165,116,.12);border:1px solid rgba(212,165,116,.2);border-top-right-radius:4px;color:var(--amber-soft)}
+.cm-time{font-size:8.5px;color:var(--muted);opacity:.5;margin-top:2px}
+.chat-msg.me .cm-time{text-align:right}
+.chat-empty{text-align:center;color:var(--muted);font-size:12px;padding:30px 10px;opacity:.6}
+.chat-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 16px}
+.chat-input-bar{display:flex;gap:8px;padding:10px 16px 12px;background:var(--card);align-items:center}
+.chat-input{flex:1;padding:9px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:12.5px;outline:none;transition:border-color .2s}
 .chat-input:focus{border-color:var(--amber)}
-.chat-input::placeholder{color:var(--muted);opacity:.5}
-.chat-send{width:40px;height:40px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);font-size:18px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all .2s;font-weight:700}
+.chat-input::placeholder{color:var(--muted);opacity:.4}
+.chat-send{width:36px;height:36px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);font-size:16px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all .2s;font-weight:700}
 .chat-send:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(212,165,116,.3)}
-.chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.chat-send:disabled{opacity:.3;cursor:not-allowed;transform:none}
 
-/* Hoạt động cũ giữ lại nhỏ */
-.activity-mini{background:var(--card-2);border:1px solid var(--border-soft);border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px;animation:fadeUp .3s ease}
-.activity-mini .am-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-size:16px;flex-shrink:0;color:var(--bg-deep)}
-.activity-mini .am-body{flex:1;min-width:0}
-.activity-mini .am-label{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.activity-mini .am-val{font-size:13px;font-weight:700;color:var(--text);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.activity-mini .am-timer{font-size:10px;color:var(--amber);font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0}
-
-.toast-container{position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:var(--card);border:1px solid var(--amber);border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;color:var(--text);font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;max-width:300px;pointer-events:auto}
+/* ===== TOAST ===== */
+.toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.toast{background:var(--card);border:1px solid var(--amber);border-left:4px solid var(--amber);padding:10px 14px;border-radius:8px;color:var(--text);font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;max-width:280px;pointer-events:auto}
 .toast.err{border-color:var(--red);border-left-color:var(--red)}
 .toast.ok{border-color:var(--green);border-left-color:var(--green)}
 @keyframes toastIn{from{transform:translateX(120%);opacity:0}to{transform:none;opacity:1}}
 @keyframes toastOut{to{transform:translateX(120%);opacity:0}}
 
+/* ===== SPLASH ===== */
 .splash{position:fixed;inset:0;background:var(--bg-deep);display:grid;place-items:center;z-index:9998;transition:opacity .5s}
 .splash.hide{opacity:0;pointer-events:none}
-.splash-inner{text-align:center}
-.splash-logo{font-size:32px;font-weight:900;letter-spacing:4px;color:var(--amber);margin-bottom:14px;animation:pulse 1.5s ease-in-out infinite}
+.splash-logo{font-size:28px;font-weight:900;letter-spacing:4px;color:var(--amber);margin-bottom:12px;animation:pulse 1.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
-.splash-bar{width:200px;height:2px;background:var(--card);border-radius:2px;overflow:hidden;margin:0 auto}
+.splash-bar{width:180px;height:2px;background:var(--card);border-radius:2px;overflow:hidden}
 .splash-bar::after{content:'';display:block;width:30%;height:100%;background:var(--amber);animation:load 1.2s ease-in-out infinite}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
-.empty{flex:1;display:grid;place-items:center;color:var(--muted);text-align:center;padding:40px 20px}
-.empty .icon{font-size:54px;margin-bottom:12px;opacity:.4}
-.empty h3{font-size:16px;color:var(--text);margin-bottom:6px}
-.empty p{font-size:13px;margin-bottom:16px;line-height:1.6}
 
-/* Modal key */
+.empty{flex:1;display:grid;place-items:center;color:var(--muted);text-align:center;padding:40px 20px}
+.empty .icon{font-size:48px;margin-bottom:10px;opacity:.4}
+.empty h3{font-size:15px;color:var(--text);margin-bottom:5px}
+.empty p{font-size:12px;line-height:1.6}
+
+/* ===== KEY MODAL ===== */
 .key-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:950;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
 .key-overlay.show{opacity:1;pointer-events:auto}
-.key-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.92);width:min(440px,92vw);background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--amber);border-radius:18px;padding:28px 24px 22px;z-index:951;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.key-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.92);width:min(420px,90vw);background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--amber);border-radius:16px;padding:24px 22px 20px;z-index:951;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 24px 60px rgba(0,0,0,.6)}
 .key-modal.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
-.key-modal-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-size:24px;color:var(--bg-deep);margin-bottom:14px;box-shadow:0 6px 20px rgba(212,165,116,.3)}
-.key-modal h2{font-size:18px;font-weight:800;margin-bottom:6px}
-.key-modal .key-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
-.key-modal .key-desc a{color:var(--amber);text-decoration:underline;text-underline-offset:2px}
-.key-saved-info{display:none;align-items:center;gap:10px;padding:10px 12px;background:rgba(122,154,90,.1);border:1px solid rgba(122,154,90,.25);border-radius:10px;margin-bottom:14px}
-.key-saved-info .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
-.key-saved-info span{font-size:11.5px;color:var(--green);font-weight:600}
-.key-saved-info .change-link{margin-left:auto;font-size:10.5px;color:var(--amber);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit}
-.key-input-wrap{position:relative;margin-bottom:6px}
-.key-input{width:100%;padding:11px 40px 11px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:'Courier New',monospace;font-size:13px;letter-spacing:.5px;outline:none;transition:all .2s}
-.key-input:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(212,165,116,.15)}
-.key-input::placeholder{color:var(--muted);opacity:.5;font-family:'Segoe UI',sans-serif;letter-spacing:0}
-.key-toggle-vis{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;border-radius:6px;transition:color .2s}
-.key-toggle-vis:hover{color:var(--amber)}
-.key-hint{font-size:10px;color:var(--muted);margin-bottom:14px}
-.key-hint .warn{color:var(--red)}
-.key-actions{display:flex;gap:10px;justify-content:flex-end}
-.key-actions .btn{min-width:90px;justify-content:center}
-
-/* Nút cài key nhỏ ở header */
-.key-btn-sm{font-size:10px!important;padding:6px 10px!important;border-radius:8px!important;opacity:.6;transition:opacity .2s}
-.key-btn-sm:hover{opacity:1}
-.key-btn-sm.has-key{border-color:var(--green);color:var(--green);opacity:.8}
-.key-btn-sm.has-key:hover{opacity:1}
+.km-icon{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-size:22px;color:var(--bg-deep);margin-bottom:12px}
+.km h2{font-size:17px;font-weight:800;margin-bottom:5px}
+.km .desc{font-size:11.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.km .desc a{color:var(--amber);text-decoration:underline}
+.km-saved{display:none;align-items:center;gap:8px;padding:9px 11px;background:rgba(122,154,90,.1);border:1px solid rgba(122,154,90,.25);border-radius:9px;margin-bottom:12px;font-size:11px;color:var(--green);font-weight:600}
+.km-saved .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.km-saved .chg{margin-left:auto;color:var(--amber);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:10.5px}
+.km-iwrap{position:relative;margin-bottom:5px}
+.km-input{width:100%;padding:10px 38px 10px 12px;border-radius:9px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:'Courier New',monospace;font-size:12.5px;outline:none;transition:all .2s}
+.km-input:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(212,165,116,.12)}
+.km-input::placeholder{color:var(--muted);opacity:.4;font-family:'Segoe UI',sans-serif}
+.km-eye{position:absolute;right:7px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:3px}
+.km-eye:hover{color:var(--amber)}
+.km-hint{font-size:9.5px;color:var(--muted);margin-bottom:12px}
+.km-hint .w{color:var(--red)}
+.km-acts{display:flex;gap:8px;justify-content:flex-end}
+.km-acts .btn{min-width:80px;justify-content:center;font-size:11.5px}
 </style>
 </head>
 <body>
 
-<div class="splash" id="splash"><div class="splash-inner"><div class="splash-logo">VỢ MANAGER</div><div class="splash-bar"></div></div></div>
+<div class="splash" id="splash"><div style="text-align:center"><div class="splash-logo">VỢ MANAGER</div><div class="splash-bar"></div></div></div>
 
 <div class="app">
   <header class="header">
     <div class="brand">
       <div class="logo">♡</div>
-      <div class="brand-text"><h1>VỢ MANAGER</h1><p>Hệ thống · Quản lý vợ</p></div>
+      <div class="brand-text"><h1>VỢ MANAGER</h1><p>Quản lý vợ</p></div>
     </div>
     <div class="controls">
-      <button class="btn ghost key-btn-sm" id="keyBtn" title="Cài Groq API Key">🔑 Key</button>
-      <span class="mode-pill" id="modePill">Đang quét</span>
-      <button class="btn ghost" id="modeBtn" disabled><span id="modeBtnText">⋮⋮ Thủ công</span></button>
+      <button class="btn ghost key-btn" id="keyBtn" title="Groq API Key">🔑</button>
+      <span class="mode-pill auto" id="modePill">Tự động</span>
+      <button class="btn ghost" id="modeBtn" disabled><span id="modeBtnText">⋮⋮</span></button>
       <button class="btn" id="prevBtn" disabled>‹</button>
-      <button class="btn primary" id="randomBtn" disabled>⟳</button>
+      <button class="btn primary" id="randomBtn" disabled">⟳</button>
       <button class="btn" id="nextBtn" disabled>›</button>
     </div>
   </header>
 
   <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar-head"><span class="sidebar-title">Danh sách vợ</span><span class="sidebar-count" id="castCount">0</span></div>
-      <div class="fb-story-list" id="castList"><div style="text-align:center;color:var(--muted);font-size:13px;padding:20px">Đang tìm ảnh...</div></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-head-text"><span class="sidebar-title">Vợ</span> <span class="sidebar-count" id="castCount">0</span></span>
+        <button class="toggle-sidebar" id="toggleSB" title="Thu nhỏ">◁</button>
+      </div>
+      <div class="sb-list" id="castList">
+        <div style="text-align:center;color:var(--muted);font-size:12px;padding:18px 4px">Đang quét...</div>
+      </div>
     </aside>
 
     <main class="main" id="mainContent">
       <div class="empty" id="emptyState">
-        <div class="icon">♡</div><        <h3>Đang chờ dữ liệu</h3>
-        <p>Quét ảnh trong <code>source/</code> và thông tin từ <code>Pro/</code></p>
+        <div class="icon">♡</div>
+        <h3>Đang chờ dữ liệu</h3>
+        <p>Quét ảnh <code>source/</code> · Thông tin <code>Pro/</code> · Hoạt động <code>task/</code></p>
       </div>
     </main>
   </div>
 </div>
 
-<!-- Modal key -->
+<!-- Key modal -->
 <div class="key-overlay" id="keyOverlay"></div>
-<div class="key-modal" id="keyModal">
-  <div class="key-modal-icon">🔑</div>
+<div class="key-modal km" id="keyModal">
+  <div class="km-icon">🔑</div>
   <h2>Groq API Key</h2>
-  <p class="key-desc">Dùng để vợ nói chuyện với anh.<br>Lấy key miễn phí tại <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a></p>
-  <div class="key-saved-info" id="keySavedInfo"><span class="dot"></span><span id="keySavedText"></span><button class="change-link" id="keyChangeLink">Đổi</button></div>
-  <div class="key-input-wrap">
-    <input type="password" class="key-input" id="keyInput" placeholder="gsk_xxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false">
-    <button class="key-toggle-vis" id="keyToggleVis" title="Hiện/ẩn">◉</button>
-  </div>
-  <div class="key-hint"><span class="warn">⚠</span> Chỉ lưu trên trình duyệt này, không gửi đi đâu.</div>
-  <div class="key-actions">
-    <button class="btn ghost" id="keyCancelBtn">Hủy</button>
-    <button class="btn primary" id="keySaveBtn">Lưu</button>
-  </div>
+  <p class="desc">Để vợ nói chuyện chuẩn hơn. Lấy miễn phí tại <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a></p>
+  <div class="km-saved" id="kmSaved"><span class="dot"></span><span id="kmSavedTxt"></span><button class="chg" id="kmChg">Đổi</button></div>
+  <div class="km-iwrap"><input type="password" class="km-input" id="kmInput" placeholder="gsk_xxxxx..." autocomplete="off" spellcheck="false"><button class="km-eye" id="kmEye">◉</button></div>
+  <div class="km-hint"><span class="w">⚠</span> Chỉ lưu trên trình duyệt này.</div>
+  <div class="km-acts"><button class="btn ghost" id="kmCancel">Hủy</button><button class="btn primary" id="kmSave">Lưu</button></div>
 </div>
 
 <div class="toast-container" id="toasts"></div>
@@ -242,327 +251,298 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 <script>
 /* ===== STATE ===== */
-var state={cast:[],activities:[],actions:[],currentIdx:0,mode:'auto',autoIntervalMs:6000,autoTimer:null,progressTimer:null};
+var S={cast:[],activities:[],actions:[],currentIdx:0,mode:'auto',bossInfo:'',progressTimer:null};
 var GROQ_URL='https://api.groq.com/openai/v1/chat/completions';
-var STORAGE_KEY='vfm_groq_key';
-var groqCooldown=false;
-var chatHistory=[];
-var keyModalCb=null;
-var actTimerStart=0,actTimerInterval=null,taskInterval=null,activeInterval=null;
+var SK='vfm_gk';var groqCool=false;var chatHist=[];var kmCb=null;
+var autoSayTmo=null;var actStart=0,actInt=null,taskInt=null,activeInt=null;
 
-/* ===== HELPERS ===== */
 var $=function(s){return document.querySelector(s)};
 function toast(m,t){var e=document.createElement('div'),c='toast ';if(t==='err')c+='err';else if(t==='ok')c+='ok';e.className=c;e.textContent=m;$('#toasts').appendChild(e);setTimeout(function(){e.remove()},3000)}
 function pick(a,ex){if(!a.length)return'';if(a.length===1)return a[0];var v;do{v=a[Math.floor(Math.random()*a.length)]}while(v===ex);return v}
-function fmtTime(s){var m=Math.floor(s/60),ss=s%60;return(m<10?'0':'')+m+':'+(ss<10?'0':'')+ss}
+function fmtT(s){var m=Math.floor(s/60),ss=s%60;return(m<10?'0':'')+m+':'+(ss<10?'0':'')+ss}
 function now(){var d=new Date();return(d.getHours()<10?'0':'')+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes()}
 
-/* ===== KEY MANAGEMENT ===== */
-function getKey(){try{return localStorage.getItem(STORAGE_KEY)||''}catch(e){return''}}
-function setKey(k){try{localStorage.setItem(STORAGE_KEY,k)}catch(e){}}
-function delKey(){try{localStorage.removeItem(STORAGE_KEY)}catch(e){}}
-function hasKey(){var k=getKey().trim();return k.length>10}
-function maskKey(k){return k.length<=12?'****':k.substring(0,7)+'****'+k.substring(k.length-4)}
+/* ===== KEY ===== */
+function gK(){try{return localStorage.getItem(SK)||''}catch(e){return''}}
+function sK(k){try{localStorage.setItem(SK,k)}catch(e){}}
+function dK(){try{localStorage.removeItem(SK)}catch(e){}}
+function hK(){return gK().trim().length>10}
+function mK(k){return k.length<=12?'****':k.substring(0,7)+'****'+k.substring(k.length-4)}
 
-function showKeyModal(cb){
-  keyModalCb=cb;
-  var s=getKey().trim(),si=$('#keySavedInfo'),inp=$('#keyInput');
-  if(s.length>10){si.style.display='flex';$('#keySavedText').textContent=maskKey(s);inp.value=''}
-  else{si.style.display='none';inp.value=''}
-  $('#keyOverlay').classList.add('show');$('#keyModal').classList.add('show');
-  setTimeout(function(){inp.focus()},350);
+function showKM(cb){
+  kmCb=cb;var s=gK().trim(),sv=$('#kmSaved'),inp=$('#kmInput');
+  if(s.length>10){sv.style.display='flex';$('#kmSavedTxt').textContent=mK(s);inp.value=''}else{sv.style.display='none';inp.value=''}
+  $('#keyOverlay').classList.add('show');$('#keyModal').classList.add('show');setTimeout(function(){inp.focus()},350);
 }
-function hideKeyModal(){$('#keyOverlay').classList.remove('show');$('#keyModal').classList.remove('show');keyModalCb=null}
-function saveKey(){
-  var v=$('#keyInput').value.trim();
-  if(!v.length){var s=getKey().trim();if(s.length>10)v=s;else{toast('Nhập API Key','err');$('#keyInput').focus();return}}
-  if(!v.startsWith('gsk_')){toast('Key bắt đầu bằng "gsk_"','err');$('#keyInput').focus();return}
-  if(v.length<20){toast('Key quá ngắn','err');$('#keyInput').focus();return}
-  setKey(v);toast('Đã lưu Key!','ok');updateKeyBtn();
-  var cb=keyModalCb;hideKeyModal();if(cb)cb();
+function hideKM(){$('#keyOverlay').classList.remove('show');$('#keyModal').classList.remove('show');kmCb=null}
+function saveKM(){
+  var v=$('#kmInput').value.trim();
+  if(!v.length){var s=gK().trim();if(s.length>10)v=s;else{toast('Nhập Key','err');return}}
+  if(!v.startsWith('gsk_')){toast('Bắt đầu bằng "gsk_"','err');return}
+  if(v.length<20){toast('Key quá ngắn','err');return}
+  sK(v);toast('Đã lưu Key!','ok');updKB();var cb=kmCb;hideKM();if(cb)cb();
 }
-function updateKeyBtn(){var b=$('#keyBtn');if(hasKey()){b.classList.add('has-key');b.title='Key đã lưu - bấm để đổi'}else{b.classList.remove('has-key');b.title='Chưa có Key - bấm để cài'}}
+function updKB(){var b=$('#keyBtn');if(hK()){b.classList.add('ok');b.title='Key đã lưu'}else{b.classList.remove('ok');b.title='Chưa có Key'}}
 
 /* ===== GROQ ===== */
-async function groqChat(wifeName,userMsg,hist){
-  var key=getKey().trim();if(!key||groqCooldown)return null;
-  groqCooldown=true;setTimeout(function(){groqCooldown=false},5000);
+async function groqChat(userMsg,hist,isReply){
+  var key=gK().trim();if(!key||groqCool)return null;
+  groqCool=true;setTimeout(function(){groqCool=false},5000);
   var ctrl=new AbortController(),tmo=setTimeout(function(){ctrl.abort()},7000);
+  var wName=getWName(),bInfo=S.bossInfo;
+  var sys='Bạn là "'+wName+'", vợ Việt Nam nói với chồng là "anh", tự xưng "em".'+(bInfo?' Về chồng: '+bInfo:'')+' Nói CỰC NGẮN: đúng 1 câu, tối đa 12 chữ. Đời thường, gọn, tự nhiên. Không emoji, không ngoặc kép, không giải thích.';
+  if(isReply)sys+=' Trả lời ngắn gọn câu anh vừa nói.';
+
   try{
-    var msgs=[{role:'system',content:'Bạn là người vợ Việt Nam nói chuyện với chồng gọi là "anh", tự xưng "em". Nói CỰC NGẮN: 1 câu duy nhất, tối đa 15 chữ. Đời thường, gọn, không dài dòng. Không emoji, không ngoặc kép.'}];
-    for(var i=Math.max(0,hist.length-6);i<hist.length;i++){msgs.push(hist[i])}
-    msgs.push({role:'user',content:userMsg||wifeName+' nói với anh:'});
-    var r=await fetch(GROQ_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'llama-3.1-8b-instant',messages:msgs,max_tokens:60,temperature:0.9}),signal:ctrl.signal});
+    var msgs=[{role:'system',content:sys}];
+    for(var i=Math.max(0,hist.length-8);i<hist.length;i++)msgs.push(hist[i]);
+    msgs.push({role:'user',content:userMsg});
+    var r=await fetch(GROQ_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'llama-3.1-8b-instant',messages:msgs,max_tokens:50,temperature:0.9}),signal:ctrl.signal});
     clearTimeout(tmo);var d=await r.json();
-    if(d.error){var m=(d.error.message||'').toLowerCase();if(m.indexOf('invalid')>-1||m.indexOf('unauthorized')>-1){delKey();updateKeyBtn();toast('Key không hợp lệ','err')}return null}
+    if(d.error){var m=(d.error.message||'').toLowerCase();if(m.indexOf('invalid')>-1||m.indexOf('unauthorized')>-1){dK();updKB();toast('Key lỗi','err')}return null}
     if(d.choices&&d.choices[0]){var tx=d.choices[0].message.content.trim();
       if((tx[0]==='"'&&tx[tx.length-1]==='"')||(tx[0]==='\u201C'&&tx[tx.length-1]==='\u201D'))tx=tx.slice(1,-1);
-      if(tx.length>3&&tx.length<80)return tx}
+      if(tx.length>2&&tx.length<60)return tx}
   }catch(e){clearTimeout(tmo)}
   return null;
 }
 
-/* ===== FALLBACK ===== */
-var fbWife=['Anh ơi em đói.','Anh về sớm nha.','Em nhớ anh.','Anh mua trà sữa cho em.','Em mệt quá.','Anh đèo em đi nhé.','Em thèm lẩu.','Anh rửa bát giùm em.','Anh ơi ra đây.','Em buồn ngủ rồi.','Anh đẹp trai nhất nè.','Em nấu cơm rồi đấy.','Anh đi lấy đồ giùm em.','Em mới cắt tóc nè.','Anh thấy em gầy chưa.','Tối nay em muốn đi ăn.','Anh ôm em đi.','Em thấy vui lắm.','Anh dọn phòng đi.','Em đói bụng rồi.'];
-var fbReply=['Được em ơi.','Anh về ngay.','Anh mua cho.','Để anh làm.','Anh đây rồi.','Ok em.','Anh nhớ em.','Xin lỗi em.','Em ngoan nha.','Anh đi ngay.'];
-function getFb(type,ex){var a=type==='wife'?fbWife:fbReply,v,tries=0;do{v=a[Math.floor(Math.random()*a.length)]}while(v===ex&&tries<8);return v}
+/* ===== FALLBACK DỰA TRÊN ACTIVE ===== */
+var fbMap={
+  'ăn':'Em đói quá anh ơi.','uống':'Anh mua nước cho em.','nấu':'Em nấu xong rồi đấy.','rửa':'Anh rửa bát giùm em.','dọn':'Anh dọn nhà đi nào.','ngủ':'Em buồn ngủ rồi.','nghỉ':'Em mệt quá.','làm':'Em đang bận đây.','chơi':'Anh chơi với em đi.','mua':'Anh mua hộ em nha.','đi':'Anh đèo em đi.','chờ':'Anh đợi em một chút.','về':'Anh về sớm nha.','gọi':'Anh gọi điện giùm em.','viết':'Em đang viết đây.','đọc':'Em đang đọc sách.','xem':'Em đang xem phim.','tập':'Em tập thể dục xong.','chạy':'Em chạy xong rồi mệt.','học':'Em đang học đây.','nghĩ':'Em đang nghĩ ngợi.','thiết kế':'Em đang thiết kế.','vẽ':'Em đang vẽ đây.','photograph':'Em đang chụp ảnh.','quay':'Em đang quay video.','edit':'Em đang edit.','mix':'Em đang mix nhạc.','sing':'Em đang hát đây.','nhảy':'Em đang nhảy.','tắm':'Em đi tắm đây.','trang điểm':'Em trang điểm xong rồi.','mặc':'Em mặc đồ xong rồi.','chuẩn bị':'Em chuẩn bị xong rồi.','đợi':'Em đợi anh đây.','soạn':'Em đang soạn tin.','gửi':'Em gửi xong rồi.','nhắn':'Em nhắn xong rồi.','check':'Em check xong rồi.','kiểm tra':'Em kiểm tra xong rồi.','lên mạng':'Em đang lướt mạng.','lướt':'Em đang lướt mạng.','mạng':'Em đang dùng mạng.','tin':'Em đang đọc tin.','báo':'Em đang đọc báo.','listen':'Em đang nghe nhạc.','nghe':'Em đang nghe nhạc.','nhạc':'Em đang nghe nhạc đây.','yoga':'Em tập yoga xong.','meditat':'Em thiền xong rồi.','thiền':'Em thiền xong rồi.','cook':'Em nấu ăn xong.','bake':'Em nướng bánh xong.','làm bánh':'Em nướng bánh xong.','giặt':'Anh giặt đồ giùm em.','phơi':'Anh phơi đồ giùm em.','ủi':'Anh ủi đồ giùm em.','sắp xếp':'Em sắp xếp xong rồi.','tổ chức':'Em đang tổ chức.','lên kế hoạch':'Em đang lên kế hoạch.','tính':'Em đang tính toán.','quản lý':'Em đang quản lý việc.','họp':'Em họp xong rồi.','báo cáo':'Em báo cáo xong rồi.','thuyết trình':'Em thuyết trình xong rồi.','gặp':'Em đang gặp người.','discuss':'Em đang thảo luận.','thảo luận':'Em đang thảo luận.','negotiat':'Em đang đàm phán.','đàm phán':'Em đang đàm phán.'
+};
+function fbFromActive(text){var t=text.toLowerCase();for(var k in fbMap){if(t.indexOf(k)>-1)return fbMap[k]}return pick(['Anh ơi em đây.','Em bận chút anh.','Anh ra đây đi.','Nhớ anh quá.'],null)}
+function fbReply(){return pick(['Được em ơi.','Anh đây rồi.','Để anh làm.','Ok em.','Anh nhớ em.','Xin lỗi em.','Em ngoan nha.','Anh đi ngay.','Anh mua cho.','Đợi anh nhé.'],null)}
 
-/* ===== COMIC RENDER ===== */
-function getWifeName(){
-  var p=state.cast[state.currentIdx];
-  if(!p)return'Vợ';
-  return(p.info&&p.info.name!=='Chưa có thông tin')?p.info.name:('Vợ #'+p.id);
+/* ===== HELPERS ===== */
+function getWName(){var p=S.cast[S.currentIdx];if(!p)return'Vợ';return(p.info&&p.info.name!=='Chưa có thông tin')?p.info.name:('Vợ #'+p.id)}
+function getWImg(){var p=S.cast[S.currentIdx];return p?p.imgSrc:''}
+
+/* ===== BUBBLE TRÊN ẢNH ===== */
+var bubbleTyping=false;
+function showBubble(text,animate){
+  var el=$('#wifeBubble');if(!el)return;
+  if(animate)el.style.animation='none',el.offsetHeight,el.style.animation='bubblePop .4s cubic-bezier(.16,1,.3,1)';
+  $('#wbName').textContent=getWName();
+  $('#wbTime').textContent=now();
+  $('#wbText').textContent=text;
 }
-function getWifeImg(){
-  var p=state.cast[state.currentIdx];return p?p.imgSrc:'';
+function showBubbleTyping(){
+  if(bubbleTyping)return;bubbleTyping=true;
+  var el=$('#wifeBubble');if(!el){bubbleTyping=false;return}
+  el.style.animation='none',el.offsetHeight,el.style.animation='bubblePop .4s cubic-bezier(.16,1,.3,1)';
+  $('#wbName').textContent=getWName();
+  $('#wbTime').textContent=now();
+  $('#wbText').innerHTML='<span class="wb-cur"></span>';
 }
-
-function addComicRow(type,text,animate){
-  var strip=$('#comicStrip');if(!strip)return;
-  var empty=strip.querySelector('.comic-strip-empty');if(empty)empty.remove();
-  var row=document.createElement('div');
-  row.className='comic-row '+(type==='wife'?'wife-row':'husband-row');
-  if(animate)row.style.animation='comicIn .4s ease';
-
-  var av=document.createElement('div');
-  av.className='comic-av'+(type==='husband'?' husband-av':'');
-  if(type==='wife'){av.innerHTML='<img src="'+getWifeImg()+'" alt="vợ">'}
-  else{av.textContent='♂'}
-
-  var wrap=document.createElement('div');
-  wrap.style.cssText='display:flex;flex-direction:column;gap:2px;min-width:0';
-
-  var bubble=document.createElement('div');
-  bubble.className='comic-bubble';
-  bubble.textContent=text;
-
-  var time=document.createElement('div');
-  time.className='comic-time';time.textContent=now();
-
-  wrap.appendChild(bubble);wrap.appendChild(time);
-  row.appendChild(av);row.appendChild(wrap);
-  strip.appendChild(row);
-  strip.scrollTop=strip.scrollHeight;
-}
-
-function addComicTyping(type){
-  var strip=$('#comicStrip');if(!strip)return;
-  var empty=strip.querySelector('.comic-strip-empty');if(empty)empty.remove();
-  var row=document.createElement('div');
-  row.className='comic-row '+(type==='wife'?'wife-row':'husband-row');
-  row.id='typingRow';
-  var av=document.createElement('div');
-  av.className='comic-av'+(type==='husband'?' husband-av':'');
-  if(type==='wife'){av.innerHTML='<img src="'+getWifeImg()+'" alt="vợ">'}else{av.textContent='♂'}
-  var wrap=document.createElement('div');
-  var bubble=document.createElement('div');
-  bubble.className='comic-bubble';
-  bubble.id='typingBubble';
-  bubble.innerHTML='<span class="cb-cursor"></span>';
-  wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);
-  strip.appendChild(row);strip.scrollTop=strip.scrollHeight;
-  return bubble;
-}
-
-function removeTypingRow(){var r=$('#typingRow');if(r)r.remove()}
-
-function typeIntoBubble(bubble,text,cb){
+function typeBubble(text,cb){
+  var el=$('#wbText');if(!el){if(cb)cb();return}
   var i=0;
-  function next(){
-    if(i<text.length){bubble.textContent=text.substring(0,i+1);i++;setTimeout(next,35+Math.random()*25)}
-    else{if(cb)cb()}
-  }
+  function next(){if(i<text.length){el.innerHTML=text.substring(0,i+1)+'<span class="wb-cur"></span>';i++;setTimeout(next,30+Math.random()*20)}else{el.textContent=text;bubbleTyping=false;if(cb)cb()}}
   next();
 }
 
-/* ===== WIFE AUTO SAY ===== */
-async function wifeAutoSay(){
-  if(state.cast.length===0)return;
-  var name=getWifeName();
-  var bubble=addComicTyping('wife');
-  var msg=await groqChat(name,null,chatHistory);
-  if(!msg)msg=getFb('wife','');
-  removeTypingRow();
-  addComicRow('wife',msg,true);
-  chatHistory.push({role:'user',content:name+' nói với anh:'});
-  chatHistory.push({role:'assistant',content:msg});
+/* ===== WIFE TỰ NÓI (DỰA ACTIVE) ===== */
+async function wifeSay(){
+  if(!S.cast.length||bubbleTyping)return;
+  var act='';
+  if(S.actions.length>0){var a=pick(S.actions);act=a.action;if(a.location)act+=' '+a.location}
+  if(!act)act='làm việc';
+
+  showBubbleTyping();
+  var prompt=getWName()+' đang '+act+'. Nói 1 câu ngắn với chồng.';
+  var msg=await groqChat(prompt,chatHist,false);
+  if(!msg)msg=fbFromActive(act);
+  typeBubble(msg);
+  chatHist.push({role:'user',content:prompt},{role:'assistant',content:msg});
 }
 
-/* ===== HUSBAND REPLY ===== */
-async function husbandReply(userText){
-  if(!userText.trim()||state.cast.length===0)return;
-  addComicRow('husband',userText.trim(),true);
-  chatHistory.push({role:'user',content:userText.trim()});
+/* ===== CHAT LOG (CHỈ CHO CHỒNG) ===== */
+function addChatMsg(text,isMe){
+  var log=$('#chatLog');if(!log)return;
+  var empty=log.querySelector('.chat-empty');if(empty)empty.remove();
+  var row=document.createElement('div');
+  row.className='chat-msg'+(isMe?' me':'');
+  row.innerHTML='<div class="cm-av">'+(isMe?'♂':'♡')+'</div><div><div class="cm-bubble">'+text+'</div><div class="cm-time">'+now()+'</div></div>';
+  log.appendChild(row);log.scrollTop=log.scrollHeight;
+}
+function addChatTyping(){
+  var log=$('#chatLog');if(!log)return;
+  var row=document.createElement('div');row.className='chat-msg';row.id='chatTyping';
+  row.innerHTML='<div class="cm-av">♡</div><div><div class="cm-bubble" style="color:var(--muted)">...</div></div>';
+  log.appendChild(row);log.scrollTop=log.scrollHeight;
+}
+function removeChatTyping(){var r=$('#chatTyping');if(r)r.remove()}
 
-  /* Vợ trả lời */
-  var name=getWifeName();
-  var bubble=addComicTyping('wife');
-  var msg=await groqChat(name,userText.trim(),chatHistory);
-  if(!msg)msg=getFb('wife','');
-  removeTypingRow();
-  addComicRow('wife',msg,true);
-  chatHistory.push({role:'assistant',content:msg});
+async function husbandSend(text){
+  if(!text.trim()||!S.cast.length)return;
+  text=text.trim();
+  addChatMsg(text,true);
+  chatHist.push({role:'user',content:text});
+
+  /* Vợ trả lời trong chat log */
+  addChatTyping();
+  var msg=await groqChat(text,chatHist,true);
+  if(!msg)msg=fbReply();
+  removeChatTyping();
+  addChatMsg(msg,false);
+  chatHist.push({role:'assistant',content:msg});
 }
 
 /* ===== PARSE ===== */
-function parseTaskText(t){return t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0})}
-function parseActiveText(t){return t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0}).map(function(l){var p=l.split('|');return{action:p[0].trim(),location:p[1]?p[1].trim():''}})}
-function parseInfoText(t){var ls=t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0});if(ls.length>0){var p=ls[0].split('|').map(function(s){return s.trim()});return{name:p[0]||'Chưa có thông tin',birth:p[1]||'—',location:p[2]||'—',school:p[3]||'—',height:p[4]||'—'}}return{name:'Chưa có thông tin',birth:'—',location:'—',school:'—',height:'—'}}
+function parseTask(t){return t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0})}
+function parseActive(t){return t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0}).map(function(l){var p=l.split('|');return{action:p[0].trim(),location:p[1]?p[1].trim():''}})}
+function parseInfo(t){var ls=t.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0});if(ls.length>0){var p=ls[0].split('|').map(function(s){return s.trim()});return{name:p[0]||'Chưa có thông tin',birth:p[1]||'—',location:p[2]||'—',school:p[3]||'—',height:p[4]||'—'}}return{name:'Chưa có thông tin',birth:'—',location:'—',school:'—',height:'—'}}
 
 /* ===== FETCH ===== */
-function fetchFile(u){return new Promise(function(r){var x=new XMLHttpRequest();x.open('GET',u,true);x.onload=function(){r(x.status===200||x.status===0?x.responseText:null)};x.onerror=function(){r(null)};x.send()})}
+function fF(u){return new Promise(function(r){var x=new XMLHttpRequest();x.open('GET',u,true);x.onload=function(){r(x.status===200||x.status===0?x.responseText:null)};x.onerror=function(){r(null)};x.send()})}
 
-async function autoLoadTasks(){
-  var t=await fetchFile('./task/task.txt'),a=await fetchFile('./task/active.txt');
-  if(t)state.activities=parseTaskText(t);if(a)state.actions=parseActiveText(a);
-  if(state.activities.length>0&&state.actions.length>0){toast('Đã tải task + active','ok');if(state.cast.length>0)renderProfile();startTimers()}
+async function loadTasks(){
+  var t=await fF('./task/task.txt'),a=await fF('./task/active.txt'),b=await fF('./task/boss.txt');
+  if(t)S.activities=parseTask(t);if(a)S.actions=parseActive(a);
+  if(b){S.bossInfo=b.split(/\r?\n/).map(function(l){return l.trim()}).filter(function(l){return l.length>0}).join('. ');if(S.bossInfo)toast('Đã tải boss.txt!','ok')}
+  if(S.activities.length>0&&S.actions.length>0){toast('Đã tải task + active','ok');if(S.cast.length>0)renderProfile();startTimers()}
 }
 
 /* ===== SCAN ===== */
-function autoScan(){
+function scan(){
   var found=0,scanned=0,total=60;
   for(var i=1;i<=total;i++){(function(idx){
     var id=String(idx).padStart(2,'0'),img=new Image();
-    img.onload=function(){state.cast.push({id:id,imgSrc:'./source/'+id+'.jpg'});found++;scanned++;check(found,scanned,total)};
-    img.onerror=function(){scanned++;check(found,scanned,total)};
+    img.onload=function(){S.cast.push({id:id,imgSrc:'./source/'+id+'.jpg'});found++;scanned++;chk(found,scanned,total)};
+    img.onerror=function(){scanned++;chk(found,scanned,total)};
     img.src='./source/'+id+'.jpg';
   })(i)}
-  function check(f,s,t){
+  function chk(f,s,t){
     if(s>=t){
       if(f>0){
-        $('#modePill').textContent='Sẵn sàng';$('#modePill').className='mode-pill auto';
-        $('#modeBtn').disabled=false;$('#prevBtn').disabled=false;$('#nextBtn').disabled=false;$('#randomBtn').disabled=false;
-        state.cast.sort(function(a,b){return parseInt(a.id)-parseInt(b.id)});
-        renderCastList();state.currentIdx=0;renderProfile();autoLoadInfo(state.cast[0]);
+        S.cast.sort(function(a,b){return parseInt(a.id)-parseInt(b.id)});
+        renderList();S.currentIdx=0;renderProfile();autoLoadInfo(S.cast[0]);
         toast('Tìm thấy '+f+' ảnh!','ok');
-        /* Vợ nói câu đầu sau 8s */
-        setTimeout(function(){if(state.cast.length>0)wifeAutoSay()},8000);
-        /* Lên lịch tự nói */
-        scheduleAutoSay();
+        /* Vợ nói câu đầu sau 6s */
+        setTimeout(function(){if(S.cast.length)wifeSay()},6000);
+        schedSay();
       }else{
-        $('#modePill').textContent='Không ảnh';$('#modePill').className='mode-pill manual';
-        $('#castList').innerHTML='<div style="text-align:center;color:var(--red);font-size:13px;padding:20px">Không tìm thấy ảnh!</div>';
+        $('#castList').innerHTML='<div style="text-align:center;color:var(--red);font-size:12px;padding:18px 4px">Không có ảnh!</div>';
         toast('Không tìm thấy ảnh!','err');
       }
     }
   }
 }
 
-var autoSayTimeout=null;
-function scheduleAutoSay(){
-  if(autoSayTimeout)clearTimeout(autoSayTimeout);
-  var delay=50000+Math.random()*70000;
-  autoSayTimeout=setTimeout(function(){wifeAutoSay();scheduleAutoSay()},delay);
-}
+function schedSay(){if(autoSayTmo)clearTimeout(autoSayTmo);autoSayTmo=setTimeout(function(){wifeSay();schedSay()},40000+Math.random()*50000)}
 
 /* ===== LOAD INFO ===== */
-async function autoLoadInfo(p){var t=await fetchFile('./Pro/'+p.id+'.txt');if(t){p.info=parseInfoText(t);if(state.cast[state.currentIdx]&&state.cast[state.currentIdx].id===p.id)renderProfile()}}
-function handleInfoLoad(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var p=state.cast[state.currentIdx];if(p){p.info=parseInfoText(ev.target.result);toast('Đã tải '+f.name,'ok');renderProfile()}};r.readAsText(f);e.target.value=''}
+async function autoLoadInfo(p){var t=await fF('./Pro/'+p.id+'.txt');if(t){p.info=parseInfo(t);if(S.cast[S.currentIdx]&&S.cast[S.currentIdx].id===p.id)renderProfile()}}
+function handleInfoLoad(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var p=S.cast[S.currentIdx];if(p){p.info=parseInfo(ev.target.result);toast('Đã tải '+f.name,'ok');renderProfile()}};r.readAsText(f);e.target.value=''}
 
-/* ===== RENDER ===== */
-function renderCastList(){
+/* ===== RENDER LIST ===== */
+function renderList(){
   var list=$('#castList');list.innerHTML='';
-  state.cast.forEach(function(p,idx){
-    var item=document.createElement('div');item.className='fb-story-item'+(idx===state.currentIdx?' active':'');
+  S.cast.forEach(function(p,idx){
+    var item=document.createElement('div');item.className='sb-item'+(idx===S.currentIdx?' active':'');
     var dn=(p.info&&p.info.name!=='Chưa có thông tin')?p.info.name:('Vợ #'+p.id);
-    item.innerHTML='<div class="fb-story-img"><div class="fb-story-img-inner"><img src="'+p.imgSrc+'" alt="'+p.id+'"></div></div><div class="fb-story-info"><div class="fb-story-name">'+dn+'</div><div class="fb-story-st">Bấm xem</div></div>';
-    item.addEventListener('click',function(){state.currentIdx=idx;chatHistory=[];renderProfile();renderCastList();if(!p.info)autoLoadInfo(p);resetTimers()});
+    item.innerHTML='<div class="sb-av"><div class="sb-av-inner"><img src="'+p.imgSrc+'" alt="'+p.id+'"></div></div><div class="sb-info"><div class="sb-name">'+dn+'</div><div class="sb-sub">Xem</div></div>';
+    item.addEventListener('click',function(){S.currentIdx=idx;chatHist=[];renderProfile();renderList();if(!p.info)autoLoadInfo(p);resetT()});
     list.appendChild(item);
   });
-  $('#castCount').textContent=state.cast.length;
+  $('#castCount').textContent=S.cast.length;
 }
 
+/* ===== RENDER PROFILE ===== */
 function renderProfile(){
-  var main=$('#mainContent'),p=state.cast[state.currentIdx];
+  var main=$('#mainContent'),p=S.cast[S.currentIdx];
   if(!p){main.innerHTML='<div class="empty"><div class="icon">♡</div><h3>Chưa có dữ liệu</h3></div>';return}
   var info=p.info||{name:'Chưa có thông tin',birth:'—',location:'—',school:'—',height:'—'};
-  var taskAct='...',actDet='...';
-  if(state.activities.length>0&&state.actions.length>0){taskAct=pick(state.activities);var ac=pick(state.actions);actDet=ac.action;if(ac.location)actDet+=' '+ac.location}
 
   main.innerHTML=
     '<div class="breadcrumb"><span><span class="live-dot"></span>THEO DÕI</span><span class="sep">/</span><span>Gia đình</span><span class="sep">/</span><span class="cur">'+info.name+'</span></div>'+
-    '<div class="profile">'+
-      '<div class="profile-img"><img src="'+p.imgSrc+'" alt="'+p.id+'"><div class="badge">#'+p.id+'</div></div>'+
+    '<div class="profile-zone">'+
+      '<div class="img-bubble-wrap">'+
+        '<div class="profile-img"><img src="'+p.imgSrc+'" alt="'+p.id+'"><div class="badge">#'+p.id+'</div></div>'+
+        '<div class="wife-bubble" id="wifeBubble">'+
+          '<div class="wb-top"><div class="wb-av"><img src="'+p.imgSrc+'" alt=""></div><span class="wb-name" id="wbName">'+info.name+'</span><span class="wb-time" id="wbTime">'+now()+'</span></div>'+
+          '<div class="wb-text" id="wbText">...</div>'+
+        '</div>'+
+      '</div>'+
       '<div class="profile-info"><h2>'+info.name+'</h2><div class="role">'+info.birth+'</div>'+
         '<div class="info-grid"><div><div class="lbl">Nơi sinh</div><div class="val">'+info.location+'</div></div><div><div class="lbl">Chiều cao</div><div class="val">'+info.height+'</div></div><div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">'+info.school+'</div></div></div>'+
       '</div>'+
     '</div>'+
-    '<div class="activity-mini"><div class="am-icon">♡</div><div class="am-body"><div class="am-label">Đang làm gì</div><div class="am-val" id="actVal">'+taskAct+'</div></div><span class="am-timer" id="actTimer">00:00</span></div>'+
-    '<div class="chat-frame">'+
-      '<div class="comic-strip" id="comicStrip"><div class="comic-strip-empty">Vợ sẽ nói chuyện ở đây...</div></div>'+
-      '<div class="comic-divider"></div>'+
-      '<div class="chat-input-area"><input class="chat-input" id="chatInput" placeholder="Nhắn lại cho vợ..." maxlength="120"><button class="chat-send" id="chatSend">➤</button></div>'+
+    '<div class="chat-box">'+
+      '<div class="chat-log" id="chatLog"><div class="chat-empty">Nhắn tin cho vợ ở đây...</div></div>'+
+      '<div class="chat-divider"></div>'+
+      '<div class="chat-input-bar"><input class="chat-input" id="chatInput" placeholder="Nhắn cho vợ..." maxlength="100"><button class="chat-send" id="chatSend">➤</button></div>'+
     '</div>';
 
-  /* Gắn sự kiện chat */
+  /* Chat events */
   var inp=$('#chatInput'),send=$('#chatSend');
-  function doSend(){var v=inp.value.trim();if(!v)return;inp.value='';husbandReply(v)}
+  function doSend(){var v=inp.value.trim();if(!v)return;inp.value='';husbandSend(v)}
   send.addEventListener('click',doSend);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend()}});
   startActTimer();
-
-  /* Load lại comic cũ nếu có (chỉ hiện empty) */
 }
 
-/* ===== HOẠT ĐỘNG ===== */
-function changeActivity(){
-  if(!state.cast[state.currentIdx]||!state.activities.length)return;
-  var old=$('#actVal')?$('#actVal').textContent:'';var el=$('#actVal');
-  if(el){el.style.opacity='.4';setTimeout(function(){el.textContent=pick(state.activities,old);el.style.opacity='1'},200)}
-  resetTimers();
+/* ===== SIDEBAR TOGGLE ===== */
+function toggleSB(){
+  var sb=$('#sidebar'),btn=$('#toggleSB');
+  sb.classList.toggle('collapsed');
+  btn.textContent=sb.classList.contains('collapsed')?'▷':'◁';
 }
-function nextPerson(){if(!state.cast.length)return;state.currentIdx=(state.currentIdx+1)%state.cast.length;chatHistory=[];renderProfile();renderCastList();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers()}
-function prevPerson(){if(!state.cast.length)return;state.currentIdx=(state.currentIdx-1+state.cast.length)%state.cast.length;chatHistory=[];renderProfile();renderCastList();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers()}
-function randomPerson(){if(state.cast.length<2)return;var n;do{n=Math.floor(Math.random()*state.cast.length)}while(n===state.currentIdx);state.currentIdx=n;chatHistory=[];renderProfile();renderCastList();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers()}
-function toggleMode(){
-  if(!state.activities.length){toast('Chưa có task/active','err');return}
-  state.mode=state.mode==='auto'?'manual':'auto';
-  if(state.mode==='auto'){$('#modePill').textContent='Tự động';$('#modePill').className='mode-pill auto';$('#modeBtnText').textContent='⋮⋮ Thủ công';startTimers();toast('Tự động','ok')}
-  else{$('#modePill').textContent='Thủ công';$('#modePill').className='mode-pill manual';$('#modeBtnText').textContent='▶ Tự động';stopTimers();toast('Thủ công','info')}
+
+/* ===== NAVIGATION ===== */
+function nextP(){if(!S.cast.length)return;S.currentIdx=(S.currentIdx+1)%S.cast.length;chatHist=[];renderProfile();renderList();if(!S.cast[S.currentIdx].info)autoLoadInfo(S.cast[S.currentIdx]);resetT()}
+function prevP(){if(!S.cast.length)return;S.currentIdx=(S.currentIdx-1+S.cast.length)%S.cast.length;chatHist=[];renderProfile();renderList();if(!S.cast[S.currentIdx].info)autoLoadInfo(S.cast[S.currentIdx]);resetT()}
+function randP(){if(S.cast.length<2)return;var n;do{n=Math.floor(Math.random()*S.cast.length)}while(n===S.currentIdx);S.currentIdx=n;chatHist=[];renderProfile();renderList();if(!S.cast[S.currentIdx].info)autoLoadInfo(S.cast[S.currentIdx]);resetT()}
+function toggleM(){
+  if(!S.activities.length){toast('Chưa có task','err');return}
+  S.mode=S.mode==='auto'?'manual':'auto';
+  var pill=$('#modePill'),txt=$('#modeBtnText');
+  if(S.mode==='auto'){pill.textContent='Tự động';pill.className='mode-pill auto';txt.textContent='⋮⋮';startTimers();toast('Tự động','ok')}
+  else{pill.textContent='Thủ công';pill.className='mode-pill manual';txt.textContent='▶';stopTimers();toast('Thủ công','info')}
 }
 
 /* ===== TIMERS ===== */
-function startActTimer(){if(actTimerInterval)clearInterval(actTimerInterval);actTimerStart=Date.now();actTimerInterval=setInterval(function(){var el=$('#actTimer');if(!el){clearInterval(actTimerInterval);return}el.textContent=fmtTime(Math.floor((Date.now()-actTimerStart)/1000))},500)}
+function startActTimer(){if(actInt)clearInterval(actInt);actStart=Date.now();actInt=setInterval(function(){var el=$('#actTimer');if(!el){clearInterval(actInt);return}/* không dùng timer hiển thị nữa */},1000)}
 function startTimers(){
-  stopTimers();if(state.mode!=='auto'||!state.activities.length)return;
-  var ad=60*1000,td=20*60*1000;
-  activeInterval=setInterval(function(){if(!state.actions.length)return;var ac=pick(state.actions),d=ac.action;if(ac.location)d+=' '+ac.location;var el=$('#actVal');if(el)el.textContent=d},ad);
-  taskInterval=setInterval(function(){if(!state.activities.length)return;var old=$('#actVal')?$('#actVal').textContent:'';var el=$('#actVal');if(el){el.style.opacity='.4';setTimeout(function(){el.textContent=pick(state.activities,old);el.style.opacity='1'},200)}},td);
+  stopTimers();if(S.mode!=='auto'||!S.activities.length)return;
+  activeInt=setInterval(function(){/* active thay đổi ngầm, wife nói lại */},60000);
+  taskInt=setInterval(function(){},1200000);
 }
-function stopTimers(){if(activeInterval){clearInterval(activeInterval);activeInterval=null}if(taskInterval){clearInterval(taskInterval);taskInterval=null}}
-function resetTimers(){if(state.mode==='auto')startTimers()}
+function stopTimers(){if(activeInt){clearInterval(activeInt);activeInt=null}if(taskInt){clearInterval(taskInt);taskInt=null}}
+function resetT(){if(S.mode==='auto')startTimers()}
 
-/* ===== PHÍM ===== */
+/* ===== KEYS ===== */
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
-  if(!state.cast.length)return;
-  if(e.code==='Space'){e.preventDefault();randomPerson()}
-  else if(e.code==='ArrowLeft')prevPerson();
-  else if(e.code==='ArrowRight')nextPerson();
-  else if(e.key==='m'||e.key==='M')toggleMode();
-  else if(e.key==='r'||e.key==='R')changeActivity();
+  if(!S.cast.length)return;
+  if(e.code==='Space'){e.preventDefault();randP()}
+  else if(e.code==='ArrowLeft')prevP();
+  else if(e.code==='ArrowRight')nextP();
+  else if(e.key==='m'||e.key==='M')toggleM();
 });
 
 /* ===== INIT ===== */
 function init(){
   $('#fileInputInfo').addEventListener('change',handleInfoLoad);
-  $('#modeBtn').addEventListener('click',toggleMode);
-  $('#prevBtn').addEventListener('click',prevPerson);
-  $('#nextBtn').addEventListener('click',nextPerson);
-  $('#randomBtn').addEventListener('click',randomPerson);
+  $('#modeBtn').addEventListener('click',toggleM);
+  $('#prevBtn').addEventListener('click',prevP);
+  $('#nextBtn').addEventListener('click',nextP);
+  $('#randomBtn').addEventListener('click',randP);
+  $('#toggleSB').addEventListener('click',toggleSB);
 
   /* Key modal */
-  $('#keyBtn').addEventListener('click',function(){showKeyModal(function(){toast('Key đã cập nhật, vợ sẽ nói hay hơn!','ok')})});
-  $('#keyCancelBtn').addEventListener('click',hideKeyModal);
-  $('#keyOverlay').addEventListener('click',hideKeyModal);
-  $('#keySaveBtn').addEventListener('click',saveKey);
-  $('#keyInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();saveKey()}if(e.key==='Escape')hideKeyModal()});
-  $('#keyChangeLink').addEventListener('click',function(){$('#keyInput').value=getKey().trim();$('#keyInput').type='text';$('#keyToggleVis').textContent='◎';$('#keySavedInfo').style.display='none';$('#keyInput').focus()});
-  $('#keyToggleVis').addEventListener('click',function(){var i=$('#keyInput');if(i.type==='password'){i.type='text';this.textContent='◎'}else{i.type='password';this.textContent='◉'}});
-  updateKeyBtn();
+  $('#keyBtn').addEventListener('click',function(){showKM(function(){toast('Key đã cập nhật!','ok')})});
+  $('#kmCancel').addEventListener('click',hideKM);
+  $('#keyOverlay').addEventListener('click',hideKM);
+  $('#kmSave').addEventListener('click',saveKM);
+  $('#kmInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();saveKM()}if(e.key==='Escape')hideKM()});
+  $('#kmChg').addEventListener('click',function(){$('#kmInput').value=gK().trim();$('#kmInput').type='text';$('#kmEye').textContent='◎';$('#kmSaved').style.display='none';$('#kmInput').focus()});
+  $('#kmEye').addEventListener('click',function(){var i=$('#kmInput');if(i.type==='password'){i.type='text';this.textContent='◎'}else{i.type='password';this.textContent='◉'}});
+  updKB();
 
-  setTimeout(function(){$('#splash').classList.add('hide');setTimeout(function(){$('#splash').remove()},500)},600);
-  autoScan();autoLoadTasks();
+  setTimeout(function(){$('#splash').classList.add('hide');setTimeout(function(){$('#splash').remove()},500)},500);
+  scan();loadTasks();
 }
 init();
 </script>
