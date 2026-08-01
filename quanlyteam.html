@@ -62,54 +62,50 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .fb-item.active .fb-nm{color:var(--amber)}
 .sidebar.collapsed .fb-nm{display:none}
 .main{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;overflow:hidden}
-.comic-row{display:grid;grid-template-columns:160px 160px;gap:10px;flex-shrink:0}
-@media(max-width:700px){.comic-row{grid-template-columns:1fr 1fr;gap:6px}}
-.comic-panel{height:280px;border-radius:10px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:2px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.4);display:flex;flex-direction:column}
-@media(max-width:700px){.comic-panel{height:200px}}
-.comic-panel img{width:100%;height:100%;object-fit:cover;display:block;flex:1}
-.comic-tag{position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:.8px;backdrop-filter:blur(4px);border:1px solid}
-.tag-wife{background:rgba(198,74,58,.75);color:#fff;border-color:rgba(198,74,58,.5)}
-.tag-husband{background:rgba(212,165,116,.75);color:var(--bg-deep);border-color:rgba(212,165,116,.5)}
+
+/* === PANEL ẢNH + BUBBLE === */
+.profile-row{display:grid;grid-template-columns:180px 1fr;gap:14px;flex-shrink:0}
+@media(max-width:700px){.profile-row{grid-template-columns:1fr}}
+.comic-panel{width:180px;height:300px;border-radius:10px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:2px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.4)}
+@media(max-width:700px){.comic-panel{width:140px;height:220px;margin:0 auto}}
+.comic-panel img{width:100%;height:100%;object-fit:cover;display:block}
+.comic-badge{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);padding:2px 8px;border-radius:5px;font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.8px;border:1px solid rgba(212,165,116,.25)}
 .comic-chat{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 50%,transparent);padding:8px;pointer-events:none}
-.comic-bubble{padding:6px 9px;font-size:11px;line-height:1.4;position:relative;opacity:0;transform:translateY(4px);transition:all .35s ease;word-break:break-word;border-radius:8px;min-height:20px}
+.comic-bubble{padding:6px 9px;font-size:11px;line-height:1.4;position:relative;opacity:0;transform:translateY(4px);transition:all .35s ease;word-break:break-word;border-radius:8px;min-height:20px;background:var(--card-2);border:1.5px solid var(--red);color:#f0c0b0}
 .comic-bubble.show{opacity:1;transform:translateY(0)}
-.bubble-wife{background:var(--card-2);border:1.5px solid var(--red);color:#f0c0b0}
-.bubble-wife::before{content:'';position:absolute;top:-5px;left:14px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--red)}
-.bubble-wife::after{content:'';position:absolute;top:-3.5px;left:15px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
-.bubble-husband{background:var(--card-2);border:1.5px solid var(--amber-deep);color:var(--amber-soft)}
-.bubble-husband::before{content:'';position:absolute;top:-5px;right:14px;left:auto;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--amber-deep)}
-.bubble-husband::after{content:'';position:absolute;top:-3.5px;right:15px;left:auto;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
+.comic-bubble::before{content:'';position:absolute;top:-5px;left:14px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--red)}
+.comic-bubble::after{content:'';position:absolute;top:-3.5px;left:15px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
 .comic-bubble .t span{display:inline;animation:td 1.2s infinite;font-size:14px}
 .comic-bubble .t span:nth-child(2){animation-delay:.2s}
 .comic-bubble .t span:nth-child(3){animation-delay:.4s}
 @keyframes td{0%,60%,100%{opacity:.2}30%{opacity:1}}
-.mid-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;flex-shrink:0}
-@media(max-width:700px){.mid-row{grid-template-columns:1fr 1fr;gap:6px}}
-.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;box-shadow:var(--shadow)}
-.info-card .ic-label{font-size:8.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-bottom:3px}
-.info-card .ic-name{font-size:15px;font-weight:800;line-height:1.2;margin-bottom:1px}
-.info-card .ic-detail{font-size:10px;color:var(--muted);line-height:1.3}
-.task-chip{padding:4px 10px;border-radius:7px;background:var(--card);border:1px solid var(--border-soft);font-size:10.5px;line-height:1.4}
+
+/* === INFO === */
+.info-col{display:flex;flex-direction:column;gap:4px;min-width:0}
+.info-col h2{font-size:24px;font-weight:800;letter-spacing:-.3px;line-height:1.2}
+@media(max-width:700px){.info-col h2{font-size:20px;text-align:center}}
+.info-col .role{font-size:12px;color:var(--amber);font-weight:600;margin-bottom:8px}
+@media(max-width:700px){.info-col .role{text-align:center}}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;font-size:11px;margin-bottom:8px}
+.info-grid .lbl{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.8px}
+.info-grid .val{color:var(--text);font-weight:600}
+.task-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+@media(max-width:700px){.task-row{grid-template-columns:1fr}}
+.task-chip{padding:6px 10px;border-radius:8px;background:var(--bg-deep);border:1px solid var(--border-soft)}
 .task-chip .tc-label{font-size:8.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
-.task-chip .tc-val{color:var(--text);font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chat-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:0;overflow:hidden}
-.chat-head{padding:8px 12px;border-bottom:1px dashed var(--border-soft);font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px;flex-shrink:0}
-.chat-head .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.chat-msgs{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:6px;min-height:0}
-.chat-msgs::-webkit-scrollbar{width:3px}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.msg{max-width:82%;padding:7px 10px;border-radius:10px;font-size:12px;line-height:1.5;word-break:break-word;animation:msgIn .25s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);border-bottom-right-radius:3px;font-weight:600}
-.msg.ai{align-self:flex-start;background:var(--card-2);color:var(--text);border:1px solid var(--border-soft);border-bottom-left-radius:3px}
-.chat-input-row{display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--border-soft);flex-shrink:0}
-.chat-input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:12px;outline:none;resize:none;min-height:36px;max-height:80px;line-height:1.4}
-.chat-input:focus{border-color:var(--amber)}
-.chat-input::placeholder{color:var(--muted);font-size:11px}
-.chat-send{width:36px;height:36px;border-radius:8px;border:1px solid var(--amber);background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);font-size:16px;font-weight:900;cursor:pointer;display:grid;place-items:center;transition:all .15s;flex-shrink:0}
-.chat-send:hover{box-shadow:0 3px 10px rgba(212,165,116,.3);transform:scale(1.05)}
-.chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.task-chip .tc-val{color:var(--text);font-weight:600;font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* === LOG CUỘC SỐNG (thay chat) === */
+.life-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.life-head{padding:8px 12px;border-bottom:1px dashed var(--border-soft);font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.life-head .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 2s infinite}
+.life-msgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:0}
+.life-msgs::-webkit-scrollbar{width:3px}
+.life-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.life-item{padding:8px 12px;border-radius:8px;background:var(--bg-deep);border-left:3px solid var(--amber-deep);font-size:12px;line-height:1.5;color:var(--text);animation:lifeIn .4s ease}
+@keyframes lifeIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.life-item .li-time{font-size:9px;color:var(--muted);margin-bottom:2px;font-weight:600;letter-spacing:.5px}
+
 .toast-container{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .toast{background:var(--card);border:1px solid var(--amber);border-left:3px solid var(--amber);padding:10px 14px;border-radius:8px;color:var(--text);font-size:11.5px;box-shadow:0 6px 20px rgba(0,0,0,.5);animation:toastIn .25s ease,toastOut .25s ease 2.5s forwards;max-width:260px;pointer-events:auto}
 .toast.err{border-color:var(--red);border-left-color:var(--red)}
@@ -123,14 +119,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .splash-bar{width:160px;height:2px;background:var(--card);border-radius:2px;overflow:hidden;margin:12px auto 0}
 .splash-bar::after{content:'';display:block;width:30%;height:100%;background:var(--amber);animation:load 1.2s ease-in-out infinite}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
-@media(max-height:768px){.comic-panel{height:230px}.app{padding:8px;gap:6px}.header{padding:8px 12px}.mid-row{gap:6px}}
+@media(max-height:768px){.comic-panel{height:250px}.app{padding:8px;gap:6px}.header{padding:8px 12px}}
 @media(max-width:400px){
   .app{padding:6px;gap:5px}.header{padding:6px 8px;gap:5px}.brand-text h1{font-size:14px}.brand-text p{display:none}.logo{width:32px;height:32px;font-size:15px}
   .api-input{width:90px;font-size:10px;padding:5px 7px}.btn{padding:5px 7px;font-size:10px}.sidebar{width:38px;border-radius:8px}.sidebar.collapsed{width:38px}
   .sidebar-head{padding:6px 4px}.sidebar-title,.sidebar-count{display:none}.fb-list{padding:4px 3px}.fb-av{width:28px;height:28px}
-  .comic-row{grid-template-columns:1fr 1fr;gap:4px}.comic-panel{height:160px}
-  .info-card .ic-name{font-size:14px}.task-chip{padding:3px 7px;font-size:9.5px}
-  .chat-input{font-size:11px;padding:6px 10px;min-height:32px}.chat-send{width:32px;height:32px;font-size:14px}.msg{font-size:11px;padding:6px 8px}
+  .profile-row{grid-template-columns:100px 1fr;gap:8px}.comic-panel{width:100px;height:160px}
+  .info-col h2{font-size:16px}.info-grid{font-size:10px}.task-chip{padding:4px 7px;font-size:10px}
+  .life-item{font-size:11px;padding:6px 8px}
 }
 </style>
 </head>
@@ -180,14 +176,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 <input type="file" id="fileInputInfo" accept=".txt" style="display:none">
 
 <script>
-var state={cast:[],activities:[],actions:[],currentIdx:0,groqKey:'',groqReady:false,bossInfo:null,chatHistories:{}};
+var state={cast:[],activities:[],actions:[],currentIdx:0,groqKey:'',groqReady:false,bossInfo:null,lifeLogs:{}};
 var $=function(s){return document.querySelector(s);};
 
 function loadApiKey(){var k=localStorage.getItem('groq_api_key');if(k&&k.length>5){state.groqKey=k;$('#apiKeyInput').value=k;return true;}return false;}
 function saveApiKey(k){localStorage.setItem('groq_api_key',k);}
-function clearApiKey(){localStorage.removeItem('groq_api_key');state.groqKey='';state.groqReady=false;$('#apiKeyInput').value='';$('#apiDot').classList.remove('on');$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Đã xóa API Key','ok');}
+function clearApiKey(){localStorage.removeItem('groq_api_key');state.groqKey='';state.groqReady=false;$('#apiKeyInput').value='';$('#apiDot').classList.remove('on');$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;stopLifeLog();toast('Đã xóa API Key','ok');}
 function toast(m,t){var e=document.createElement('div');e.className='toast'+(t==='err'?' err':t==='ok'?' ok':'');e.textContent=m;$('#toasts').appendChild(e);setTimeout(function(){e.remove();},2800);}
 function pick(a,e){if(!a.length)return'';if(a.length===1)return a[0];var v;do{v=a[Math.floor(Math.random()*a.length)];}while(v===e);return v;}
+function nowTime(){var d=new Date();return(d.getHours()<10?'0':'')+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes();}
 
 function parseTaskText(t){return t.split(/\r?\n/).map(function(l){return l.trim();}).filter(function(l){return l.length>0;});}
 function parseActiveText(t){return t.split(/\r?\n/).map(function(l){return l.trim();}).filter(function(l){return l.length>0;}).map(function(l){var p=l.split('|');return{action:p[0].trim(),location:p[1]?p[1].trim():''};});}
@@ -199,21 +196,21 @@ function parseInfoText(t){
 }
 function parseBossText(t){
   var lines=t.split(/\r?\n/).map(function(x){return x.trim();}).filter(function(x){return x.length>0;});
-  var o={name:'Chồng',role:'—',note:'—'};
-  lines.forEach(function(x){if(x.indexOf('|')>-1){var p=x.split('|');o.name=p[0].trim()||o.name;o.role=p[1]?p[1].trim():o.role;o.note=p[2]?p[2].trim():o.note;}else if(o.name==='Chồng')o.name=x;});
+  var o={name:'Boss',role:'—',note:'—'};
+  lines.forEach(function(x){if(x.indexOf('|')>-1){var p=x.split('|');o.name=p[0].trim()||o.name;o.role=p[1]?p[1].trim():o.role;o.note=p[2]?p[2].trim():o.note;}else if(o.name==='Boss')o.name=x;});
   return o;
 }
 
 function fetchFile(u){return new Promise(function(r){var x=new XMLHttpRequest();x.open('GET',u,true);x.onload=function(){r(x.status===200||x.status===0?x.responseText:null);};x.onerror=function(){r(null);};x.send();});}
 
-/* === GROQ — không có prompt hệ thống, chỉ gửi tin nhắn thẳng === */
-async function groqSend(messages,maxTokens){
+/* === GROQ — chỉ gọi 1 câu ngắn dựa trên task/active === */
+async function groqLifeLog(prompt){
   if(!state.groqReady)return null;
   try{
     var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:messages,max_tokens:maxTokens||80,temperature:1.0})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:40,temperature:1.2})
     });
     if(!r.ok)return null;
     var d=await r.json();
@@ -221,61 +218,57 @@ async function groqSend(messages,maxTokens){
   }catch(e){return null;}
 }
 
-/* === CHAT — KHÔNG PROMPT, CHỈ GỬI THẲNG === */
-var wifeBubbleEl=null,husbandBubbleEl=null,chatInputEl=null,chatSendBtn=null,chatSending=false;
+/* === LOG CUỘC SỐNG — gọi AI mỗi 50s, in vào log, hiện bubble === */
+var bubbleEl=null,lifeTimer=null,lifeCool=false;
+var LIFE_INTERVAL=50000;
 
-function addMsgToChat(text,isMe){
-  var el=$('#chatMsgs');if(!el)return;
-  var d=document.createElement('div');d.className='msg '+(isMe?'me':'ai');d.textContent=text;
+function buildLifePrompt(){
+  var p=state.cast[state.currentIdx];if(!p)return null;
+  var info=p.info||{name:'?',birth:'—',location:'—',school:'—',height:'—'};
+  var tasks=state.activities.length>0?state.activities.join(', '):'chưa rõ';
+  var actives=state.actions.length>0?state.actions.map(function(a){return a.action;}).join(', '):'chưa rõ';
+  return 'Viết 1 câu ngắn (dưới 20 chữ) về cuộc sống hàng ngày của '+info.name+' ('+info.location+', '+info.school+'). Hiện tại đang: '+tasks+'. Đang active: '+actives+'. Chỉ viết 1 câu thôi, không giải thích.';
+}
+
+function addLifeLog(text){
+  var el=$('#lifeMsgs');if(!el)return;
+  var d=document.createElement('div');d.className='life-item';
+  d.innerHTML='<div class="li-time">'+nowTime()+'</div>'+text;
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 
-async function sendChat(){
-  var msg=chatInputEl.value.trim();
-  if(!msg||chatSending||!state.groqReady)return;
-  chatSending=true;chatInputEl.value='';chatInputEl.style.height='auto';
+async function fireLifeLog(){
+  if(!state.groqReady||lifeCool||!bubbleEl)return;
+  lifeCool=true;
 
-  /* 1. Câu hỏi → panel CHỒNG */
-  if(husbandBubbleEl){
-    var display=msg.length>40?msg.substring(0,37)+'...':msg;
-    husbandBubbleEl.textContent=display;
-    husbandBubbleEl.classList.add('show');
-  }
+  /* Typing */
+  bubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';
+  bubbleEl.classList.add('show');
 
-  /* 2. In câu hỏi vào nhật ký */
-  addMsgToChat(msg,true);
+  var prompt=buildLifePrompt();
+  if(!prompt){bubbleEl.classList.remove('show');lifeCool=false;return;}
 
-  /* 3. Lưu history */
-  var cid=getCurrentCharId();
-  if(!state.chatHistories[cid])state.chatHistories[cid]=[];
-  state.chatHistories[cid].push({role:'user',content:msg});
-  if(state.chatHistories[cid].length>14)state.chatHistories[cid]=state.chatHistories[cid].slice(-12);
+  var reply=await groqLifeLog(prompt);
 
-  /* 4. Typing ở panel VỢ */
-  if(wifeBubbleEl)wifeBubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';
-  if(wifeBubbleEl)wifeBubbleEl.classList.add('show');
-
-  /* 5. Gửi thẳng — không prompt hệ thống nào */
-  var reply=await groqSend(state.chatHistories[cid].slice(-10),80);
-
-  /* 6. Trả lời → panel VỢ + nhật ký */
   if(reply){
     var clean=reply.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();
-    if(wifeBubbleEl){wifeBubbleEl.textContent=clean;wifeBubbleEl.classList.add('show');}
-    addMsgToChat(clean,false);
-    state.chatHistories[cid].push({role:'assistant',content:clean});
+    if(clean.length>60)clean=clean.substring(0,57)+'...';
+    bubbleEl.textContent=clean;
+    bubbleEl.classList.add('show');
+    addLifeLog(clean);
   }else{
-    if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');
-    addMsgToChat('...',false);
+    bubbleEl.classList.remove('show');
   }
 
-  setTimeout(function(){if(husbandBubbleEl)husbandBubbleEl.classList.remove('show');},8000);
-  setTimeout(function(){if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');},12000);
-  chatSending=false;
+  setTimeout(function(){if(bubbleEl)bubbleEl.classList.remove('show');},15000);
+  setTimeout(function(){lifeCool=false;},LIFE_INTERVAL);
 }
 
-function getCurrentCharId(){var p=state.cast[state.currentIdx];return p?p.id:null;}
-function toggleSidebar(){var sb=$('#sidebar');sb.classList.toggle('collapsed');$('#toggleSidebar').textContent=sb.classList.contains('collapsed')?'▶':'◀';}
+function startLifeLog(){stopLifeLog();if(!state.groqReady)return;
+  setTimeout(function(){if(state.groqReady)fireLifeLog();},6000);
+  lifeTimer=setInterval(function(){if(!lifeCool)fireLifeLog();},LIFE_INTERVAL);
+}
+function stopLifeLog(){if(lifeTimer){clearInterval(lifeTimer);lifeTimer=null;}}
 
 /* === LOAD DATA === */
 async function autoLoadAll(){
@@ -323,60 +316,51 @@ function renderProfile(){
   var main=$('#mainContent');var p=state.cast[state.currentIdx];
   if(!p){main.innerHTML='<div style="flex:1;display:grid;place-items:center;color:var(--muted)"><p>Chọn nhân vật</p></div>';return;}
   var info=p.info||{name:'ID '+p.id,birth:'—',location:'—',school:'—',height:'—'};
-  var boss=state.bossInfo||{name:'Chồng',role:'—',note:'—'};
   var taskAct='—',activeDet='—';
   if(state.activities.length>0)taskAct=pick(state.activities);
   if(state.actions.length>0){var a=pick(state.actions);activeDet=a.action+(a.location?' '+a.location:'');}
 
   main.innerHTML=
-    '<div class="comic-row">'+
+    '<div class="profile-row">'+
       '<div class="comic-panel">'+
         '<img src="'+p.imgSrc+'" alt="'+p.id+'">'+
-        '<div class="comic-tag tag-wife">VỢ — '+info.name+'</div>'+
-        '<div class="comic-chat"><div class="comic-bubble bubble-wife" id="wifeBubble"></div></div>'+
+        '<div class="comic-badge">#'+p.id+'</div>'+
+        '<div class="comic-chat"><div class="comic-bubble" id="lifeBubble"></div></div>'+
       '</div>'+
-      '<div class="comic-panel">'+
-        '<div class="comic-tag tag-husband">CHỒNG — '+boss.name+'</div>'+
-        '<div style="flex:1;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:10px">'+
-          '<div>'+boss.name+'<br><span style="font-size:10px;color:var(--amber)">'+boss.role+'</span></div>'+
+      '<div class="info-col">'+
+        '<h2>'+info.name+'</h2>'+
+        '<div class="role">'+info.birth+'</div>'+
+        '<div class="info-grid">'+
+          '<div><div class="lbl">Nơi sinh</div><div class="val">'+info.location+'</div></div>'+
+          '<div><div class="lbl">Chiều cao</div><div class="val">'+info.height+'</div></div>'+
+          '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">'+info.school+'</div></div>'+
         '</div>'+
-        '<div class="comic-chat"><div class="comic-bubble bubble-husband" id="husbandBubble"></div></div>'+
+        '<div class="task-row">'+
+          '<div class="task-chip"><span class="tc-label">Nhiệm vụ</span><span class="tc-val" id="taskVal">'+taskAct+'</span></div>'+
+          '<div class="task-chip"><span class="tc-label">Active</span><span class="tc-val" id="activeVal">'+activeDet+'</span></div>'+
+        '</div>'+
       '</div>'+
     '</div>'+
-    '<div class="mid-row">'+
-      '<div class="info-card"><div class="ic-label">Vợ</div><div class="ic-name">'+info.name+'</div><div class="ic-detail">'+info.birth+' · '+info.location+'</div></div>'+
-      '<div class="info-card"><div class="ic-label">Chồng</div><div class="ic-name">'+boss.name+'</div><div class="ic-detail">'+boss.role+(boss.note&&boss.note!=='—'?' · '+boss.note:'')+'</div></div>'+
-      '<div class="task-chip"><span class="tc-label">Nhiệm vụ</span><span class="tc-val" id="taskVal">'+taskAct+'</span></div>'+
-      '<div class="task-chip"><span class="tc-label">Active</span><span class="tc-val" id="activeVal">'+activeDet+'</span></div>'+
-    '</div>'+
-    '<div class="chat-box">'+
-      '<div class="chat-head"><span class="live-dot"></span>Nhật ký trò chuyện</div>'+
-      '<div class="chat-msgs" id="chatMsgs"></div>'+
-      '<div class="chat-input-row">'+
-        '<textarea class="chat-input" id="chatInput" placeholder="Nhập tin nhắn cho '+info.name+'..." rows="1"></textarea>'+
-        '<button class="chat-send" id="chatSend">➤</button>'+
-      '</div>'+
+    '<div class="life-box">'+
+      '<div class="life-head"><span class="dot"></span>Cuộc sống</div>'+
+      '<div class="life-msgs" id="lifeMsgs"></div>'+
     '</div>';
 
-  wifeBubbleEl=$('#wifeBubble');
-  husbandBubbleEl=$('#husbandBubble');
-  chatInputEl=$('#chatInput');
-  chatSendBtn=$('#chatSend');
+  bubbleEl=$('#lifeBubble');
 
-  chatSendBtn.addEventListener('click',sendChat);
-  chatInputEl.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
-  chatInputEl.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
-
+  /* Khôi phục log cũ */
   var cid=p.id;
-  if(state.chatHistories[cid]){
-    state.chatHistories[cid].forEach(function(m){addMsgToChat(m.content,m.role==='user');});
+  if(state.lifeLogs[cid]){
+    state.lifeLogs[cid].forEach(function(t){addLifeLog(t);});
   }
 }
 
 function nextPerson(){if(!state.cast.length)return;state.currentIdx=(state.currentIdx+1)%state.cast.length;renderCastList();renderProfile();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers();}
 function prevPerson(){if(!state.cast.length)return;state.currentIdx=(state.currentIdx-1+state.cast.length)%state.cast.length;renderCastList();renderProfile();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers();}
 function randomPerson(){if(state.cast.length<2)return;var n;do{n=Math.floor(Math.random()*state.cast.length);}while(n===state.currentIdx);state.currentIdx=n;renderCastList();renderProfile();if(!state.cast[state.currentIdx].info)autoLoadInfo(state.cast[state.currentIdx]);resetTimers();}
+function toggleSidebar(){var sb=$('#sidebar');sb.classList.toggle('collapsed');$('#toggleSidebar').textContent=sb.classList.contains('collapsed')?'▶':'◀';}
 
+/* === TIMERS (chỉ task/active) === */
 var taskInt=null,activeInt=null;
 var ACTIVE_MS=60000,TASK_MS=1200000;
 function startTimers(){stopTimers();if(!state.activities.length)return;
@@ -386,11 +370,12 @@ function startTimers(){stopTimers();if(!state.activities.length)return;
 function stopTimers(){if(taskInt){clearInterval(taskInt);taskInt=null;}if(activeInt){clearInterval(activeInt);activeInt=null;}}
 function resetTimers(){startTimers();}
 
+/* === API KEY === */
 function handleApiKey(){
   var k=$('#apiKeyInput').value.trim();if(!k){toast('Nhập Key','err');return;}
   state.groqKey=k;$('#apiBtn').textContent='...';$('#apiBtn').disabled=true;
   fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
-  .then(function(r){if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');}else throw new Error(r.status);})
+  .then(function(r){if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');startLifeLog();}else throw new Error(r.status);})
   .catch(function(e){state.groqReady=false;$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Lỗi: '+e.message,'err');});
 }
 
@@ -401,6 +386,16 @@ document.addEventListener('keydown',function(e){
   else if(e.code==='ArrowLeft')prevPerson();
   else if(e.code==='ArrowRight')nextPerson();
 });
+
+/* === Ghi log vào state khi AI trả lời === */
+var origAddLifeLog=addLifeLog;
+addLifeLog=function(text){
+  /* Lưu vào state.lifeLogs */
+  var p=state.cast[state.currentIdx];
+  if(p){if(!state.lifeLogs[p.id])state.lifeLogs[p.id]=[];state.lifeLogs[p.id].push(text);}
+  /* Render */
+  origAddLifeLog(text);
+};
 
 function init(){
   $('#toggleSidebar').addEventListener('click',toggleSidebar);
@@ -420,7 +415,7 @@ function init(){
   autoLoadAll();
   if(loadApiKey()){
     fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
-    .then(function(r){if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;}else clearApiKey();})
+    .then(function(r){if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;startLifeLog();}else clearApiKey();})
     .catch(function(){clearApiKey();});
   }
 }
