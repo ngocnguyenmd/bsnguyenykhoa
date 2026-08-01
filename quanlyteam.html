@@ -201,7 +201,7 @@ body::before{
       <div class="empty" id="emptyState">
         <div class="icon">🖼️</div>
         <h3>Đang chờ dữ liệu</h3>
-        <p>App tự động quét ảnh <code>source/01.jpg</code> và tải dữ liệu từ <code>task/task.txt</code>, <code>task/active.txt</code>.<br>Thông tin nhân vật sẽ tự động tải từ <code>info/01.txt</code> nếu có trên server.</p>
+        <p>App tự động quét ảnh <code>source/01.jpg</code> và tải dữ liệu từ <code>task/task.txt</code>, <code>task/active.txt</code>.<br>Thông tin nhân vật sẽ tự động tải từ <code>Pro/01.txt</code> nếu có trên server.</p>
       </div>
     </main>
   </div>
@@ -311,7 +311,7 @@ async function autoLoadTasksActive() {
     if(state.cast.length > 0) {
       renderProfile();
     }
-    startAutoTimer();
+    startTimers();
   }
 }
 
@@ -401,7 +401,7 @@ function renderCastList() {
       if(!person.info) {
         autoLoadInfo(person);
       }
-      resetAutoTimer();
+      resetTimers();
     });
     list.appendChild(item);
   });
@@ -422,7 +422,10 @@ function renderProfile() {
   let activeDetail = 'Vui lòng tải task.txt và active.txt để xem hoạt động.';
   
   if(state.activities.length > 0 && state.actions.length > 0) {
+    /* Lấy nhiệm vụ ngẫu nhiên từ task.txt */
     taskActivity = pick(state.activities);
+    
+    /* Lấy hoạt động ngẫu nhiên từ active.txt */
     const act = pick(state.actions);
     activeDetail = act.action;
     if(act.location) {
@@ -451,7 +454,7 @@ function renderProfile() {
           '<div><div class="lbl">Chiều cao</div><div class="val">' + info.height + '</div></div>' +
           '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">' + info.school + '</div></div>' +
         '</div>' +
-        '<div class="bio">Thông tin này lấy trực tiếp từ file <code>info/' + person.id + '.txt</code>.</div>' +
+        '<div class="bio">Thông tin này lấy trực tiếp từ file <code>Pro/' + person.id + '.txt</code>.</div>' +
       '</div>' +
     '</div>' +
     '<div class="activity">' +
@@ -506,7 +509,7 @@ function changeActivityOnly() {
   $('#actDetail').textContent = activeDetail;
   
   startActTimer();
-  resetAutoTimer();
+  resetTimers();
 }
 
 function nextPerson() {
@@ -517,7 +520,7 @@ function nextPerson() {
   if(!state.cast[state.currentIdx].info) {
     autoLoadInfo(state.cast[state.currentIdx]);
   }
-  resetAutoTimer();
+  resetTimers();
 }
 
 function prevPerson() {
@@ -528,7 +531,7 @@ function prevPerson() {
   if(!state.cast[state.currentIdx].info) {
     autoLoadInfo(state.cast[state.currentIdx]);
   }
-  resetAutoTimer();
+  resetTimers();
 }
 
 function randomPerson() {
@@ -543,7 +546,7 @@ function randomPerson() {
   if(!state.cast[state.currentIdx].info) {
     autoLoadInfo(state.cast[state.currentIdx]);
   }
-  resetAutoTimer();
+  resetTimers();
 }
 
 function toggleMode() {
@@ -558,13 +561,13 @@ function toggleMode() {
     pill.textContent = 'Tự động';
     pill.className = 'mode-pill auto';
     btnText.textContent = '⋮⋮ Chế độ thủ công';
-    startAutoTimer();
+    startTimers();
     toast('Đã chuyển sang Tự động', 'ok');
   } else {
     pill.textContent = 'Thủ công';
     pill.className = 'mode-pill manual';
     btnText.textContent = '▶ Chế độ tự động';
-    stopAutoTimer();
+    stopTimers();
     toast('Chế độ thủ công', 'info');
   }
   renderProfile();
@@ -584,35 +587,68 @@ function startActTimer() {
   }, 500);
 }
 
-function startAutoTimer() {
-  stopAutoTimer();
+/* TIMER MỚI: TASK 20 PHÚT, ACTIVE 60 GIÂY */
+let taskInterval = null;
+let activeInterval = null;
+
+function startTimers() {
+  stopTimers();
   if(state.mode !== 'auto' || state.activities.length === 0) return;
-  const startT = Date.now();
   
+  const taskDuration = 20 * 60 * 1000; /* 20 phút */
+  const activeDuration = 60 * 1000; /* 60 giây */
+  
+  /* Đếm ngược 60 giây cho hoạt động (active) */
   state.progressTimer = setInterval(function() {
-    const elapsed = Date.now() - startT;
-    const pct = Math.min(100, (elapsed / state.autoIntervalMs) * 100);
+    const elapsed = Date.now() - actTimerStart;
+    const pct = Math.min(100, (elapsed / activeDuration) * 100);
     const bar = $('#autoBar');
     const txt = $('#autoTimerText');
     if(bar) bar.style.width = pct + '%';
     if(txt) {
-      const remain = Math.max(0, (state.autoIntervalMs - elapsed) / 1000);
+      const remain = Math.max(0, (activeDuration - elapsed) / 1000);
       txt.innerHTML = 'Tự đổi sau <b>' + remain.toFixed(1) + 's</b>';
     }
   }, 80);
   
-  state.autoTimer = setTimeout(function() {
-    randomPerson();
-  }, state.autoIntervalMs);
+  /* Timer đổi Active mỗi 60s */
+  activeInterval = setInterval(function() {
+    updateActiveOnly();
+  }, activeDuration);
+  
+  /* Timer đổi Task mỗi 20 phút */
+  taskInterval = setInterval(function() {
+    updateTaskOnly();
+  }, taskDuration);
 }
 
-function stopAutoTimer() {
-  if(state.autoTimer) { clearTimeout(state.autoTimer); state.autoTimer = null; }
+function updateActiveOnly() {
+  if(state.actions.length === 0) return;
+  const act = pick(state.actions);
+  let activeDetail = act.action;
+  if(act.location) {
+    activeDetail += ' ' + act.location;
+  }
+  const el = $('#actDetail');
+  if(el) el.textContent = activeDetail;
+}
+
+function updateTaskOnly() {
+  if(state.activities.length === 0) return;
+  const oldActivity = $('#statusValue') ? $('#statusValue').textContent : '';
+  const activity = pick(state.activities, oldActivity);
+  const el = $('#statusValue');
+  if(el) el.textContent = activity;
+}
+
+function stopTimers() {
   if(state.progressTimer) { clearInterval(state.progressTimer); state.progressTimer = null; }
+  if(activeInterval) { clearInterval(activeInterval); activeInterval = null; }
+  if(taskInterval) { clearInterval(taskInterval); taskInterval = null; }
 }
 
-function resetAutoTimer() {
-  if(state.mode === 'auto') startAutoTimer();
+function resetTimers() {
+  if(state.mode === 'auto') startTimers();
 }
 
 document.addEventListener('keydown', function(e) {
