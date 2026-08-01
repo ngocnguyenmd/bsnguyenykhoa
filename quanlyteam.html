@@ -201,7 +201,7 @@ body::before{
       <div class="empty" id="emptyState">
         <div class="icon">🖼️</div>
         <h3>Đang chờ dữ liệu</h3>
-        <p>App tự động quét ảnh (01.jpg, 02.jpg...).<br>Để xem thông tin chi tiết, bấm nút bên dưới để chọn 1 file <strong>01.txt</strong>.<br>File <strong>tasks.txt</strong> và <strong>active.txt</strong> sẽ tự động load ngầm.</p>
+        <p>App tự động quét ảnh (01.jpg, 02.jpg...).<br>Để xem thông tin chi tiết, bấm nút bên dưới để chọn 1 file <strong>01.txt</strong>.<br>File <strong>task.txt</strong> và <strong>active.txt</strong> sẽ tự động load ngầm.</p>
         <button class="btn primary" id="loadInfoBtn">📁 Chọn file 01.txt</button>
       </div>
     </main>
@@ -301,14 +301,15 @@ function fetchFile(url) {
 }
 
 async function autoLoadTasksActive() {
-  const taskText = await fetchFile('./tasks.txt');
+  /* Đã sửa thành task.txt (không có s) */
+  const taskText = await fetchFile('./task.txt');
   const activeText = await fetchFile('./active.txt');
   
   if(taskText) state.activities = parseTaskText(taskText);
   if(activeText) state.actions = parseActiveText(activeText);
   
   if(state.activities.length > 0 && state.actions.length > 0) {
-    toast('Đã load ngầm tasks.txt và active.txt!', 'ok');
+    toast('Đã load ngầm task.txt và active.txt!', 'ok');
     if(state.cast.length > 0) {
       renderProfile();
     }
@@ -406,7 +407,7 @@ function renderProfile() {
   const info = state.globalInfo || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
   
   let activity = 'Chưa có dữ liệu';
-  let detailHtml = 'Vui lòng tải tasks.txt và active.txt để xem hoạt động.';
+  let detailHtml = 'Vui lòng tải task.txt và active.txt để xem hoạt động.';
   
   if(state.activities.length > 0 && state.actions.length > 0) {
     activity = pick(state.activities);
@@ -536,7 +537,7 @@ function randomPerson() {
 
 function toggleMode() {
   if(state.activities.length === 0) {
-    toast('Vui lòng tải tasks.txt và active.txt trước', 'err');
+    toast('Vui lòng tải task.txt và active.txt trước', 'err');
     return;
   }
   state.mode = state.mode === 'auto' ? 'manual' : 'auto';
