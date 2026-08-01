@@ -16,16 +16,13 @@
 html,body{background:var(--bg-deep);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;height:100%;overflow:hidden}
 body{background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(212,165,116,.07),transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(198,74,58,.05),transparent 60%),linear-gradient(180deg,var(--bg-deep),var(--bg));background-attachment:fixed}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle at 1px 1px,rgba(212,165,116,.03) 1px,transparent 0);background-size:22px 22px}
-
 .app{height:100vh;display:flex;flex-direction:column;position:relative;z-index:1;padding:10px;gap:8px;animation:appIn .5s ease}
 @keyframes appIn{from{opacity:0}to{opacity:1}}
-
 .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);flex-shrink:0;flex-wrap:wrap;gap:8px}
 .brand{display:flex;align-items:center;gap:10px}
 .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-weight:900;font-size:18px;color:var(--bg-deep);flex-shrink:0}
 .brand-text h1{font-size:16px;font-weight:800;line-height:1.1}
 .brand-text p{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
-
 .controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .btn{padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card-2);color:var(--text);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
 .btn:hover{border-color:var(--amber);color:var(--amber)}
@@ -34,16 +31,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .btn.danger{border-color:var(--red);color:var(--red)}
 .btn.danger:hover{background:rgba(198,74,58,.15)}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-
 .api-bar{display:flex;gap:5px;align-items:center}
 .api-input{padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:11px;width:160px;outline:none}
 .api-input:focus{border-color:var(--amber)}
 .api-input::placeholder{color:var(--muted);font-size:10px}
 .api-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;transition:all .3s}
 .api-dot.on{background:var(--green);box-shadow:0 0 6px rgba(122,154,90,.5)}
-
 .body-wrap{flex:1;display:flex;gap:8px;min-height:0;overflow:hidden}
-
 .sidebar{width:160px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:width .3s ease;overflow:hidden;flex-shrink:0}
 .sidebar.collapsed{width:42px}
 .sidebar-head{display:flex;justify-content:space-between;align-items:center;padding:10px 10px 8px;border-bottom:1px dashed var(--border-soft);flex-shrink:0}
@@ -53,7 +47,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .sidebar.collapsed .sidebar-count{display:none}
 .toggle-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--border);background:var(--card-2);color:var(--muted);font-size:11px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
 .toggle-btn:hover{border-color:var(--amber);color:var(--amber)}
-
 .fb-list{flex:1;overflow-y:auto;padding:6px;overflow-x:hidden}
 .sidebar.collapsed .fb-list{padding:6px 4px}
 .fb-list::-webkit-scrollbar{width:3px}
@@ -68,50 +61,50 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .fb-nm{font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fb-item.active .fb-nm{color:var(--amber)}
 .sidebar.collapsed .fb-nm{display:none}
-
 .main{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;overflow:hidden}
 
-.top-section{display:grid;grid-template-columns:160px 1fr;gap:12px;flex-shrink:0}
-@media(max-width:700px){.top-section{grid-template-columns:1fr}}
-
-.comic-panel{width:160px;height:260px;border-radius:10px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:2px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.4)}
-@media(max-width:700px){.comic-panel{width:120px;height:180px;margin:0 auto}}
-.comic-panel img{width:100%;height:100%;object-fit:cover;display:block}
-.comic-badge{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);padding:2px 7px;border-radius:5px;font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.8px;border:1px solid rgba(212,165,116,.25)}
-
+/* === TRUYỆN TRANH 2 PANEL === */
+.comic-row{display:grid;grid-template-columns:160px 160px;gap:10px;flex-shrink:0}
+@media(max-width:700px){.comic-row{grid-template-columns:1fr 1fr;gap:6px}}
+.comic-panel{height:280px;border-radius:10px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:2px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.4);display:flex;flex-direction:column}
+@media(max-width:700px){.comic-panel{height:200px}}
+.comic-panel img{width:100%;height:100%;object-fit:cover;display:block;flex:1}
+.comic-tag{position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:.8px;backdrop-filter:blur(4px);border:1px solid}
+.tag-wife{background:rgba(198,74,58,.7);color:#fff;border-color:rgba(198,74,58,.5)}
+.tag-husband{background:rgba(212,165,116,.7);color:var(--bg-deep);border-color:rgba(212,165,116,.5)}
 .comic-chat{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 50%,transparent);padding:8px;pointer-events:none}
-.comic-bubble{background:var(--card-2);border:1.5px solid var(--amber-deep);border-radius:8px;padding:6px 9px;font-size:11px;line-height:1.4;color:var(--amber-soft);position:relative;opacity:0;transform:translateY(4px);transition:all .35s ease;word-break:break-word}
+.comic-bubble{padding:6px 9px;font-size:11px;line-height:1.4;position:relative;opacity:0;transform:translateY(4px);transition:all .35s ease;word-break:break-word;border-radius:8px;min-height:20px}
 .comic-bubble.show{opacity:1;transform:translateY(0)}
-.comic-bubble::before{content:'';position:absolute;top:-5px;left:14px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--amber-deep)}
-.comic-bubble::after{content:'';position:absolute;top:-3.5px;left:15px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
+.bubble-wife{background:var(--card-2);border:1.5px solid var(--red);color:#f0c0b0}
+.bubble-wife::before{content:'';position:absolute;top:-5px;left:14px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--red)}
+.bubble-wife::after{content:'';position:absolute;top:-3.5px;left:15px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
+.bubble-husband{background:var(--card-2);border:1.5px solid var(--amber-deep);color:var(--amber-soft)}
+.bubble-husband::before{content:'';position:absolute;top:-5px;right:14px;left:auto;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid var(--amber-deep)}
+.bubble-husband::after{content:'';position:absolute;top:-3.5px;right:15px;left:auto;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid var(--card-2)}
 .comic-bubble .t span{display:inline;animation:td 1.2s infinite;font-size:14px}
 .comic-bubble .t span:nth-child(2){animation-delay:.2s}
 .comic-bubble .t span:nth-child(3){animation-delay:.4s}
 @keyframes td{0%,60%,100%{opacity:.2}30%{opacity:1}}
 
-.info-side{display:flex;flex-direction:column;gap:3px;min-width:0}
-.info-side h2{font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.2}
-@media(max-width:700px){.info-side h2{font-size:18px;text-align:center}}
-.info-side .role{font-size:12px;color:var(--amber);font-weight:600}
-@media(max-width:700px){.info-side .role{text-align:center}}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px;font-size:11px}
-.info-grid .lbl{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.8px}
-.info-grid .val{color:var(--text);font-weight:600}
-.task-row{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
-.task-chip{padding:4px 10px;border-radius:7px;background:var(--bg-deep);border:1px solid var(--border-soft);font-size:10.5px;color:var(--amber-soft);line-height:1.4;flex:1;min-width:120px}
+/* Info + task */
+.mid-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;flex-shrink:0}
+@media(max-width:700px){.mid-row{grid-template-columns:1fr 1fr;gap:6px}}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow)}
+.info-card .ic-label{font-size:8.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.info-card .ic-name{font-size:16px;font-weight:800;line-height:1.2;margin-bottom:2px}
+.info-card .ic-detail{font-size:10.5px;color:var(--muted);line-height:1.4}
+.task-chip{padding:4px 10px;border-radius:7px;background:var(--card);border:1px solid var(--border-soft);font-size:10.5px;line-height:1.4}
 .task-chip .tc-label{font-size:8.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;display:block;margin-bottom:2px}
 .task-chip .tc-val{color:var(--text);font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* === KHUNG CHAT === */
 .chat-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .chat-head{padding:8px 12px;border-bottom:1px dashed var(--border-soft);font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px;flex-shrink:0}
 .chat-head .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.chat-head .ch-name{color:var(--amber);margin-left:auto;font-size:11px;text-transform:none;letter-spacing:0}
-
 .chat-msgs{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:6px;min-height:0}
 .chat-msgs::-webkit-scrollbar{width:3px}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
 .msg{max-width:82%;padding:7px 10px;border-radius:10px;font-size:12px;line-height:1.5;word-break:break-word;animation:msgIn .25s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);border-bottom-right-radius:3px;font-weight:600}
@@ -119,7 +112,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .msg.ai .typing-ind span{display:inline;animation:td 1.2s infinite;font-size:14px}
 .msg.ai .typing-ind span:nth-child(2){animation-delay:.2s}
 .msg.ai .typing-ind span:nth-child(3){animation-delay:.4s}
-
 .chat-input-row{display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--border-soft);flex-shrink:0}
 .chat-input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:12px;outline:none;resize:none;min-height:36px;max-height:80px;line-height:1.4}
 .chat-input:focus{border-color:var(--amber)}
@@ -134,7 +126,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .toast.ok{border-color:var(--green);border-left-color:var(--green)}
 @keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:none;opacity:1}}
 @keyframes toastOut{to{transform:translateX(100%);opacity:0}}
-
 .splash{position:fixed;inset:0;background:var(--bg-deep);display:grid;place-items:center;z-index:9998;transition:opacity .4s}
 .splash.hide{opacity:0;pointer-events:none}
 .splash-logo{font-size:26px;font-weight:900;letter-spacing:4px;color:var(--amber);animation:pulse 1.5s ease-in-out infinite}
@@ -143,14 +134,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .splash-bar::after{content:'';display:block;width:30%;height:100%;background:var(--amber);animation:load 1.2s ease-in-out infinite}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
 
-@media(max-height:768px){.comic-panel{height:220px}.top-section{gap:10px}.app{padding:8px;gap:6px}.header{padding:8px 12px}}
+@media(max-height:768px){.comic-panel{height:230px}.app{padding:8px;gap:6px}.header{padding:8px 12px}.mid-row{gap:6px}}
 @media(max-width:400px){
   .app{padding:6px;gap:5px}.header{padding:6px 8px;gap:5px}.brand-text h1{font-size:14px}.brand-text p{display:none}.logo{width:32px;height:32px;font-size:15px}
   .api-input{width:90px;font-size:10px;padding:5px 7px}.btn{padding:5px 7px;font-size:10px}.sidebar{width:38px;border-radius:8px}.sidebar.collapsed{width:38px}
   .sidebar-head{padding:6px 4px}.sidebar-title,.sidebar-count{display:none}.fb-list{padding:4px 3px}.fb-av{width:28px;height:28px}
-  .top-section{grid-template-columns:100px 1fr;gap:8px}.comic-panel{width:100px;height:160px}.info-side h2{font-size:16px}
-  .info-grid{gap:2px 8px;font-size:10px}.task-row{gap:4px}.task-chip{padding:3px 7px;font-size:9.5px;min-width:0}
-  .chat-box{border-radius:8px}.chat-input{font-size:11px;padding:6px 10px;min-height:32px}.chat-send{width:32px;height:32px;font-size:14px}.msg{font-size:11px;padding:6px 8px}
+  .comic-row{grid-template-columns:1fr 1fr;gap:4px}.comic-panel{height:160px}
+  .info-card .ic-name{font-size:14px}.task-chip{padding:3px 7px;font-size:9.5px}
+  .chat-input{font-size:11px;padding:6px 10px;min-height:32px}.chat-send{width:32px;height:32px;font-size:14px}.msg{font-size:11px;padding:6px 8px}
 }
 </style>
 </head>
@@ -170,8 +161,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div class="api-bar">
         <input class="api-input" id="apiKeyInput" type="password" placeholder="Groq API Key...">
         <button class="btn primary" id="apiBtn" style="padding:6px 9px;font-size:10px">Lưu</button>
-        <button class="btn danger" id="apiClearBtn" style="padding:6px 9px;font-size:10px" title="Xóa API Key">✕</button>
-        <div class="api-dot" id="apiDot" title="AI trạng thái"></div>
+        <button class="btn danger" id="apiClearBtn" style="padding:6px 9px;font-size:10px" title="Xóa Key">✕</button>
+        <div class="api-dot" id="apiDot" title="AI"></div>
       </div>
       <button class="btn" id="prevBtn" disabled>‹</button>
       <button class="btn primary" id="randomBtn" disabled>⟳</button>
@@ -203,19 +194,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 var state={cast:[],activities:[],actions:[],currentIdx:0,groqKey:'',groqReady:false,bossInfo:null,chatHistories:{}};
 var $=function(s){return document.querySelector(s);};
 
-/* === LƯU / XÓA API KEY === */
-function loadApiKey(){
-  var k=localStorage.getItem('groq_api_key');
-  if(k&&k.length>5){state.groqKey=k;$('#apiKeyInput').value=k;return true;}
-  return false;
-}
+function loadApiKey(){var k=localStorage.getItem('groq_api_key');if(k&&k.length>5){state.groqKey=k;$('#apiKeyInput').value=k;return true;}return false;}
 function saveApiKey(k){localStorage.setItem('groq_api_key',k);}
 function clearApiKey(){localStorage.removeItem('groq_api_key');state.groqKey='';state.groqReady=false;$('#apiKeyInput').value='';$('#apiDot').classList.remove('on');$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;stopBubble();toast('Đã xóa API Key','ok');}
-
 function toast(m,t){var e=document.createElement('div');e.className='toast'+(t==='err'?' err':t==='ok'?' ok':'');e.textContent=m;$('#toasts').appendChild(e);setTimeout(function(){e.remove();},2800);}
 function pick(a,e){if(!a.length)return'';if(a.length===1)return a[0];var v;do{v=a[Math.floor(Math.random()*a.length)];}while(v===e);return v;}
 
-/* === PARSE === */
 function parseTaskText(t){return t.split(/\r?\n/).map(function(l){return l.trim();}).filter(function(l){return l.length>0;});}
 function parseActiveText(t){return t.split(/\r?\n/).map(function(l){return l.trim();}).filter(function(l){return l.length>0;}).map(function(l){var p=l.split('|');return{action:p[0].trim(),location:p[1]?p[1].trim():''};});}
 function parseInfoText(t){
@@ -226,34 +210,25 @@ function parseInfoText(t){
 }
 function parseBossText(t){
   var lines=t.split(/\r?\n/).map(function(x){return x.trim();}).filter(function(x){return x.length>0;});
-  var o={name:'Boss',role:'—',note:'—'};
-  lines.forEach(function(x){if(x.indexOf('|')>-1){var p=x.split('|');o.name=p[0].trim()||o.name;o.role=p[1]?p[1].trim():o.role;o.note=p[2]?p[2].trim():o.note;}else if(o.name==='Boss')o.name=x;});
+  var o={name:'Chồng',role:'—',note:'—'};
+  lines.forEach(function(x){if(x.indexOf('|')>-1){var p=x.split('|');o.name=p[0].trim()||o.name;o.role=p[1]?p[1].trim():o.role;o.note=p[2]?p[2].trim():o.note;}else if(o.name==='Chồng')o.name=x;});
   return o;
 }
 
 function fetchFile(u){return new Promise(function(r){var x=new XMLHttpRequest();x.open('GET',u,true);x.onload=function(){r(x.status===200||x.status===0?x.responseText:null);};x.onerror=function(){r(null);};x.send();});}
 
-/* === GROQ API === */
+/* === GROQ === */
 async function groqChat(sys,usr,max){
   if(!state.groqReady)return null;
-  try{
-    var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:max||60,temperature:1.0})
-    });
-    if(!r.ok)return null;
-    var d=await r.json();
-    return d.choices&&d.choices[0]?d.choices[0].message.content.trim():null;
-  }catch(e){return null;}
-}
+  try{var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:max||60,temperature:1.0})});
+  if(!r.ok)return null;var d=await r.json();return d.choices&&d.choices[0]?d.choices[0].message.content.trim():null;}catch(e){return null;}}
 
-/* === BUBBLE VỢ TỰ ĐỘNG === */
+/* === BUBBLE VỢ TỰ ĐỘNG (chỉ hiện ở panel vợ) === */
 var chatTopics=['hỏi ăn cơm chưa','dỗi vì bận quá','nhắc về sớm','chê lướt điện thoại','hỏi đang làm gì','buồn vì ít nói','nhắc uống nước','hỏi có nhớ không','dỗi không rep','nhắc đi ngủ','hỏi tối ăn gì','chê thức khuya','nhắc mai lịch gì','hỏi đang ở đâu','nhớ chồng','dỗi không gọi','nhắc mua gì','chê lười','hỏi mệt không','nhắc đừng hút thuốc'];
 var chatHistArr=[],lastBubble='';
 function getTopic(){var a=chatTopics.filter(function(t){return chatHistArr.indexOf(t)===-1;});if(!a.length){chatHistArr=chatHistArr.slice(4);a=chatTopics.filter(function(t){return chatHistArr.indexOf(t)===-1;});}var c=a[Math.floor(Math.random()*a.length)];chatHistArr.push(c);if(chatHistArr.length>8)chatHistArr.shift();return c;}
 
-var bubbleEl=null,bubbleTimer=null,bubbleCool=false;
+var wifeBubbleEl=null,bubbleTimer=null,bubbleCool=false;
 function startBubble(){stopBubble();if(!state.groqReady)return;
   setTimeout(function(){if(state.groqReady)fireBubble();},6000);
   bubbleTimer=setInterval(function(){if(!bubbleCool)fireBubble();},38000);
@@ -261,85 +236,90 @@ function startBubble(){stopBubble();if(!state.groqReady)return;
 function stopBubble(){if(bubbleTimer){clearInterval(bubbleTimer);bubbleTimer=null;}}
 
 async function fireBubble(){
-  if(!state.groqReady||bubbleCool||!bubbleEl)return;bubbleCool=true;
-  bubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';bubbleEl.classList.add('show');
-  var p=state.cast[state.currentIdx];
-  var pName=p&&p.info?p.info.name:'vợ';
-  var r=await groqChat(
-    'Bạn là '+pName+'. Nói tiếng Việt bình dân. Bạn muốn '+getTopic()+'. Nói đúng 1 câu, dưới 15 chữ.',
-    'Nói đi',35
-  );
-  if(r){var c=r.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();if(c.length>45)c=c.substring(0,42)+'...';if(c===lastBubble){bubbleEl.classList.remove('show');bubbleCool=false;return;}lastBubble=c;bubbleEl.textContent=c;bubbleEl.classList.add('show');}
-  else{bubbleEl.classList.remove('show');}
-  setTimeout(function(){if(bubbleEl)bubbleEl.classList.remove('show');},13000);
+  if(!state.groqReady||bubbleCool||!wifeBubbleEl)return;bubbleCool=true;
+  wifeBubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';wifeBubbleEl.classList.add('show');
+  var p=state.cast[state.currentIdx];var pName=p&&p.info?p.info.name:'vợ';
+  var r=await groqChat('Bạn là '+pName+', NỮ. Nói tiếng Việt bình dân. Bạn muốn '+getTopic()+'. Nói đúng 1 câu, dưới 15 chữ.','Nói đi',35);
+  if(r){var c=r.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();if(c.length>45)c=c.substring(0,42)+'...';if(c===lastBubble){wifeBubbleEl.classList.remove('show');bubbleCool=false;return;}lastBubble=c;wifeBubbleEl.textContent=c;wifeBubbleEl.classList.add('show');}
+  else{wifeBubbleEl.classList.remove('show');}
+  setTimeout(function(){if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');},13000);
   setTimeout(function(){bubbleCool=false;},16000);
 }
 
-/* === CHAT MANUAL — DÙNG THÔNG TIN NHÂN VẬT === */
-var chatMsgsEl=null,chatInputEl=null,chatSendBtn=null,chatSending=false;
+/* === CHAT MANUAL — TRẢ LỜI VÀO 2 PANEL TRUYỆN TRANH === */
+var husbandBubbleEl=null,chatInputEl=null,chatSendBtn=null,chatSending=false;
 
 function buildChatPrompt(){
   var p=state.cast[state.currentIdx];
-  if(!p)return'Bạn là một người phụ nữ. Trả lời ngắn gọn tiếng Việt.';
-
+  if(!p)return'Bạn là một người phụ nữ. Trả lời ngắn gọn.';
   var info=p.info||{name:'?',birth:'—',location:'—',school:'—',height:'—'};
   var tasks=state.activities.length>0?state.activities.slice(0,8).join(', '):'chưa rõ';
   var actives=state.actions.length>0?state.actions.slice(0,5).map(function(a){return a.action;}).join(', '):'chưa rõ';
-
-  /* QUAN TRỌNG: truyền đủ thông tin nhân vật để AI biết ai nó đang đóng */
-  return 'Bạn đang đóng vai '+info.name+'. '+
-    'Thông tin của bạn: sinh ngày '+info.birth+', quê ở '+info.location+', học tại '+info.school+', cao '+info.height+'. '+
-    'Nhiệm vụ hiện tại: '+tasks+'. '+
-    'Hoạt động: '+actives+'. '+
-    'Bạn nói tiếng Việt bình dân, ngắn gọn, tự nhiên như đời thực. '+
-    'Bạn là NỮ. Khi người hỏi xưng "anh" thì xưng "em", khi hỏi xưng "mày" thì xưng "tao" hoặc "tui". '+
-    'Khi hỏi về việc gì liên quan đến bản thân (học nhạc, diễn, ca hát...) thì trả lời dựa trên THÔNG TIN của bạn ở trên. '+
-    'Trả lời dưới 30 chữ. Không giải thích thêm.';
+  return 'Bạn đang đóng vai '+info.name+', NỮ. '+
+    'Thông tin: sinh '+info.birth+', quê '+info.location+', học '+info.school+', cao '+info.height+'. '+
+    'Nhiệm vụ: '+tasks+'. Hoạt động: '+actives+'. '+
+    'Bạn nói tiếng Việt bình dân, ngắn gọn. '+
+    'Khi người hỏi xưng "anh" thì xưng "em". Khi hỏi xưng "mày" thì xưng "tui". '+
+    'Trả lời dựa trên thông tin của bạn. Dưới 30 chữ.';
 }
 
-function getCurrentCharId(){var p=state.cast[state.currentIdx];return p?p.id:null;}
-
-function addChatMsg(text,isMe){
-  if(!chatMsgsEl)return null;
-  var d=document.createElement('div');d.className='msg '+(isMe?'me':'ai');
-  if(!isMe&&text==='__typing__'){d.innerHTML='<span class="typing-ind"><span>.</span><span>.</span><span>.</span></span>';}
-  else{d.textContent=text;}
-  chatMsgsEl.appendChild(d);chatMsgsEl.scrollTop=chatMsgsEl.scrollHeight;return d;
+function addMsgToChat(text,isMe){
+  var el=$('#chatMsgs');if(!el)return;
+  var d=document.createElement('div');d.className='msg '+(isMe?'me':'ai');d.textContent=text;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 
 async function sendChat(){
   var msg=chatInputEl.value.trim();
   if(!msg||chatSending||!state.groqReady)return;
   chatSending=true;chatInputEl.value='';chatInputEl.style.height='auto';
-  addChatMsg(msg,true);
 
+  /* 1. Hiện câu hỏi vào panel CHỒNG (vàng, mũi tên phải) */
+  if(husbandBubbleEl){
+    var display=msg.length>40?msg.substring(0,37)+'...':msg;
+    husbandBubbleEl.textContent=display;
+    husbandBubbleEl.classList.add('show');
+  }
+
+  /* 2. Thêm vào khung chat log */
+  addMsgToChat(msg,true);
+
+  /* 3. Lưu history */
   var cid=getCurrentCharId();
   if(!state.chatHistories[cid])state.chatHistories[cid]=[];
   state.chatHistories[cid].push({role:'user',content:msg});
   if(state.chatHistories[cid].length>14)state.chatHistories[cid]=state.chatHistories[cid].slice(-12);
 
-  var typingEl=addChatMsg('__typing__',false);
+  /* 4. Gọi API */
+  if(wifeBubbleEl)wifeBubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';
+  if(wifeBubbleEl)wifeBubbleEl.classList.add('show');
 
-  /* Gọi API với system prompt chứa thông tin nhân vật */
   var sysPrompt=buildChatPrompt();
-  var apiMsgs=[{role:'system',content:sysPrompt}].concat(state.chatHistories[cid].slice(-8));
   var reply=await groqChat(sysPrompt,msg,80);
 
-  if(typingEl)typingEl.remove();
+  /* 5. Hiện câu trả lời vào panel VỢ (đỏ, mũi tên trái) */
   if(reply){
     var clean=reply.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();
-    addChatMsg(clean,false);
+    if(wifeBubbleEl){wifeBubbleEl.textContent=clean;wifeBubbleEl.classList.add('show');}
+    addMsgToChat(clean,false);
     state.chatHistories[cid].push({role:'assistant',content:clean});
-  }else{addChatMsg('...',false);}
+  }else{
+    if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');
+    addMsgToChat('...',false);
+  }
+
+  /* Ẩn bubble chồng sau 10s, vợ sau 15s */
+  setTimeout(function(){if(husbandBubbleEl)husbandBubbleEl.classList.remove('show');},10000);
+  setTimeout(function(){if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');},15000);
   chatSending=false;
 }
 
-/* === SIDEBAR TOGGLE === */
+function getCurrentCharId(){var p=state.cast[state.currentIdx];return p?p.id:null;}
 function toggleSidebar(){var sb=$('#sidebar');sb.classList.toggle('collapsed');$('#toggleSidebar').textContent=sb.classList.contains('collapsed')?'▶':'◀';}
 
 /* === LOAD DATA === */
 async function autoLoadAll(){
-  var r=await Promise.all([fetchFile('./boss.txt'),fetchFile('./task/task.txt'),fetchFile('./task/active.txt')]);
+  var r=await Promise.all([fetchFile('./task/boss.txt'),fetchFile('./task/task.txt'),fetchFile('./task/active.txt')]);
   if(r[0])state.bossInfo=parseBossText(r[0]);
   if(r[1])state.activities=parseTaskText(r[1]);
   if(r[2])state.actions=parseActiveText(r[2]);
@@ -365,10 +345,7 @@ function autoScanImages(){
   }}
 }
 
-async function autoLoadInfo(p){
-  var t=await fetchFile('./Pro/'+p.id+'.txt');
-  if(t){p.info=parseInfoText(t);if(state.cast[state.currentIdx]&&state.cast[state.currentIdx].id===p.id)renderProfile();}
-}
+async function autoLoadInfo(p){var t=await fetchFile('./Pro/'+p.id+'.txt');if(t){p.info=parseInfoText(t);if(state.cast[state.currentIdx]&&state.cast[state.currentIdx].id===p.id)renderProfile();}}
 
 function renderCastList(){
   var el=$('#castList');el.innerHTML='';
@@ -381,47 +358,52 @@ function renderCastList(){
   $('#castCount').textContent=state.cast.length;
 }
 
-/* === RENDER PROFILE === */
+/* === RENDER PROFILE — 2 PANEL TRUYỆN TRANH === */
 function renderProfile(){
   var main=$('#mainContent');var p=state.cast[state.currentIdx];
   if(!p){main.innerHTML='<div style="flex:1;display:grid;place-items:center;color:var(--muted)"><p>Chọn nhân vật</p></div>';return;}
   var info=p.info||{name:'ID '+p.id,birth:'—',location:'—',school:'—',height:'—'};
+  var boss=state.bossInfo||{name:'Chồng',role:'—',note:'—'};
   var taskAct='—',activeDet='—';
   if(state.activities.length>0)taskAct=pick(state.activities);
   if(state.actions.length>0){var a=pick(state.actions);activeDet=a.action+(a.location?' '+a.location:'');}
 
   main.innerHTML=
-    '<div class="top-section">'+
+    /* 2 panel truyện tranh */
+    '<div class="comic-row">'+
       '<div class="comic-panel">'+
         '<img src="'+p.imgSrc+'" alt="'+p.id+'">'+
-        '<div class="comic-badge">#'+p.id+'</div>'+
-        '<div class="comic-chat"><div class="comic-bubble" id="chatBubble"></div></div>'+
+        '<div class="comic-tag tag-wife">VỢ — '+info.name+'</div>'+
+        '<div class="comic-chat"><div class="comic-bubble bubble-wife" id="wifeBubble"></div></div>'+
       '</div>'+
-      '<div class="info-side">'+
-        '<h2>'+info.name+'</h2>'+
-        '<div class="role">'+info.birth+'</div>'+
-        '<div class="info-grid">'+
-          '<div><div class="lbl">Nơi sinh</div><div class="val">'+info.location+'</div></div>'+
-          '<div><div class="lbl">Chiều cao</div><div class="val">'+info.height+'</div></div>'+
-          '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">'+info.school+'</div></div>'+
+      '<div class="comic-panel" id="husbandPanel">'+
+        '<div class="comic-tag tag-husband">CHỒNG — '+boss.name+'</div>'+
+        '<div style="flex:1;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:10px">'+
+          '<div>'+boss.name+'<br><span style="font-size:10px;color:var(--amber)">'+boss.role+'</span></div>'+
         '</div>'+
-        '<div class="task-row">'+
-          '<div class="task-chip"><span class="tc-label">Nhiệm vụ</span><span class="tc-val" id="taskVal">'+taskAct+'</span></div>'+
-          '<div class="task-chip"><span class="tc-label">Active</span><span class="tc-val" id="activeVal">'+activeDet+'</span></div>'+
-        '</div>'+
+        '<div class="comic-chat"><div class="comic-bubble bubble-husband" id="husbandBubble"></div></div>'+
       '</div>'+
     '</div>'+
+    /* Info + task */
+    '<div class="mid-row">'+
+      '<div class="info-card"><div class="ic-label">Vợ</div><div class="ic-name">'+info.name+'</div><div class="ic-detail">'+info.birth+' · '+info.location+'</div></div>'+
+      '<div class="info-card"><div class="ic-label">Chồng</div><div class="ic-name">'+boss.name+'</div><div class="ic-detail">'+boss.role+(boss.note&&boss.note!=='—'?' · '+boss.note:'')+'</div></div>'+
+      '<div class="task-chip"><span class="tc-label">Nhiệm vụ</span><span class="tc-val" id="taskVal">'+taskAct+'</span></div>'+
+      '<div class="task-chip"><span class="tc-label">Active</span><span class="tc-val" id="activeVal">'+activeDet+'</span></div>'+
+    '</div>'+
+    /* Chat */
     '<div class="chat-box">'+
-      '<div class="chat-head"><span class="live-dot"></span>Chat<span class="ch-name">'+info.name+'</span></div>'+
+      '<div class="chat-head"><span class="live-dot"></span>Nhật ký trò chuyện</div>'+
       '<div class="chat-msgs" id="chatMsgs"></div>'+
       '<div class="chat-input-row">'+
-        '<textarea class="chat-input" id="chatInput" placeholder="Nhập tin nhắn..." rows="1"></textarea>'+
+        '<textarea class="chat-input" id="chatInput" placeholder="Nhập tin nhắn cho '+info.name+'..." rows="1"></textarea>'+
         '<button class="chat-send" id="chatSend">➤</button>'+
       '</div>'+
     '</div>';
 
-  bubbleEl=$('#chatBubble');
-  chatMsgsEl=$('#chatMsgs');
+  /* Gắn reference */
+  wifeBubbleEl=$('#wifeBubble');
+  husbandBubbleEl=$('#husbandBubble');
   chatInputEl=$('#chatInput');
   chatSendBtn=$('#chatSend');
 
@@ -429,10 +411,10 @@ function renderProfile(){
   chatInputEl.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
   chatInputEl.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
 
-  /* Khôi phục lịch sử chat cho nhân vật này */
+  /* Khôi phục lịch sử chat */
   var cid=p.id;
   if(state.chatHistories[cid]){
-    state.chatHistories[cid].forEach(function(m){addChatMsg(m.content,m.role==='user');});
+    state.chatHistories[cid].forEach(function(m){addMsgToChat(m.content,m.role==='user');});
   }
 }
 
@@ -451,22 +433,15 @@ function startTimers(){stopTimers();if(!state.activities.length)return;
 function stopTimers(){if(taskInt){clearInterval(taskInt);taskInt=null;}if(activeInt){clearInterval(activeInt);activeInt=null;}}
 function resetTimers(){startTimers();}
 
-/* === API KEY HANDLER === */
+/* === API KEY === */
 function handleApiKey(){
-  var k=$('#apiKeyInput').value.trim();
-  if(!k){toast('Nhập Key','err');return;}
-  state.groqKey=k;
-  $('#apiBtn').textContent='...';$('#apiBtn').disabled=true;
-  fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})
-  }).then(function(r){
-    if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');startBubble();}
-    else throw new Error(r.status);
-  }).catch(function(e){state.groqReady=false;$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Lỗi: '+e.message,'err');});
+  var k=$('#apiKeyInput').value.trim();if(!k){toast('Nhập Key','err');return;}
+  state.groqKey=k;$('#apiBtn').textContent='...';$('#apiBtn').disabled=true;
+  fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
+  .then(function(r){if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');startBubble();}else throw new Error(r.status);})
+  .catch(function(e){state.groqReady=false;$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Lỗi: '+e.message,'err');});
 }
 
-/* === KEYBOARD === */
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   if(!state.cast.length)return;
@@ -475,7 +450,6 @@ document.addEventListener('keydown',function(e){
   else if(e.code==='ArrowRight')nextPerson();
 });
 
-/* === INIT === */
 function init(){
   $('#toggleSidebar').addEventListener('click',toggleSidebar);
   $('#prevBtn').addEventListener('click',prevPerson);
@@ -489,25 +463,14 @@ function init(){
     r.onload=function(ev){var p=state.cast[state.currentIdx];if(p){p.info=parseInfoText(ev.target.result);toast('Đã tải '+f.name,'ok');renderProfile();}};
     r.readAsText(f);e.target.value='';
   });
-
-  /* Khởi động splash */
   setTimeout(function(){$('#splash').classList.add('hide');setTimeout(function(){$('#splash').remove();},400);},500);
-
-  /* Quét ảnh */
   autoScanImages();
-
-  /* Tải data */
   autoLoadAll();
-
-  /* Tự động kết nối lại nếu có key đã lưu */
+  /* Tự kết nối lại nếu có key */
   if(loadApiKey()){
-    fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})
-    }).then(function(r){
-      if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;startBubble();}
-      else{clearApiKey();}
-    }).catch(function(){clearApiKey();});
+    fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
+    .then(function(r){if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;startBubble();}else clearApiKey();})
+    .catch(function(){clearApiKey();});
   }
 }
 init();
