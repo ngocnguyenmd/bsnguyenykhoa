@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIO CAST — Quản lý nhân vật</title>
+<style>
+:root{
+  --bg-deep:#0c0908; --bg:#14100d; --card:#1c1714; --card-2:#241c17;
+  --border:#332820; --border-soft:#2a221c;
+  --amber:#d4a574; --amber-soft:#e8c8a0; --amber-deep:#8a6440;
+  --red:#c64a3a; --green:#7a9a5a; --text:#ede0cc; --muted:#8a7868;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+  --mxw:1280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-deep);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;min-height:100vh;overflow-x:hidden}
+body{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%,rgba(212,165,116,.08),transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%,rgba(198,74,58,.06),transparent 60%),
+    linear-gradient(180deg,var(--bg-deep),var(--bg));
+  background-attachment:fixed;
+  padding:18px;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(212,165,116,.04) 1px,transparent 0);
+  background-size:24px 24px;
+}
+.app{max-width:var(--mxw);margin:0 auto;position:relative;z-index:1;animation:appIn .7s cubic-bezier(.16,1,.3,1)}
+@keyframes appIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:linear-gradient(135deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:14px;margin-bottom:14px;box-shadow:var(--shadow);flex-wrap:wrap;gap:14px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-weight:900;font-size:22px;color:var(--bg-deep);letter-spacing:-1px;box-shadow:0 4px 14px rgba(212,165,116,.3);position:relative;overflow:hidden}
+.logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);animation:shine 4s infinite}
+@keyframes shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.brand-text h1{font-size:20px;font-weight:800;letter-spacing:.3px;line-height:1.1}
+.brand-text p{font-size:10.5px;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
+
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card-2);color:var(--text);font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;letter-spacing:.3px}
+.btn:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,var(--amber),var(--amber-deep));border-color:var(--amber);color:var(--bg-deep);font-weight:800}
+.btn.primary:hover{box-shadow:0 6px 18px rgba(212,165,116,.35);color:var(--bg-deep)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.mode-pill{font-size:10px;font-weight:800;letter-spacing:1.5px;padding:5px 10px;border-radius:20px;background:rgba(212,165,116,.15);color:var(--amber);border:1px solid rgba(212,165,116,.35);text-transform:uppercase;transition:all .3s}
+.mode-pill.manual{background:rgba(198,74,58,.15);color:var(--red);border-color:rgba(198,74,58,.35)}
+.mode-pill.auto{background:rgba(122,154,90,.15);color:var(--green);border:1px solid rgba(122,154,90,.35)}
+
+.layout{display:grid;grid-template-columns:300px 1fr;gap:14px;min-height:calc(100vh - 120px)}
+@media (max-width:1024px){.layout{grid-template-columns:1fr}}
+
+.sidebar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px dashed var(--border-soft)}
+.sidebar-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sidebar-count{font-size:11px;color:var(--amber);font-weight:700;background:rgba(212,165,116,.1);padding:3px 8px;border-radius:8px}
+.cast-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;overflow-y:auto;max-height:calc(100vh - 220px);padding-right:4px}
+@media (max-width:1024px){.cast-list{max-height:380px}}
+.cast-list::-webkit-scrollbar{width:5px}
+.cast-list::-webkit-scrollbar-track{background:transparent}
+.cast-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.cast-item{background:var(--card-2);border:1px solid var(--border-soft);border-radius:10px;padding:8px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;text-align:center}
+.cast-item:hover{border-color:var(--amber);transform:translateY(-2px)}
+.cast-item.active{border-color:var(--amber);background:linear-gradient(135deg,rgba(212,165,116,.18),var(--card-2));box-shadow:0 0 0 1px var(--amber)}
+.cast-item.active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--amber)}
+.cast-item .ph{width:100%;aspect-ratio:1;border-radius:8px;background:linear-gradient(135deg,#2a221c,#1a1512);display:grid;place-items:center;color:var(--muted);font-size:28px;font-weight:800;margin-bottom:6px;overflow:hidden;position:relative}
+.cast-item .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.cast-item .ph .init{filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.cast-item .nm{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cast-item .st{font-size:9.5px;color:var(--muted);margin-top:2px;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cast-item.active .st{color:var(--amber-soft)}
+
+.main{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:500px}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.5px;flex-wrap:wrap}
+.breadcrumb .sep{opacity:.4}
+.breadcrumb .cur{color:var(--amber);font-weight:700}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:5px;animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.profile{display:grid;grid-template-columns:220px 1fr;gap:18px;margin-bottom:16px;animation:fadeUp .4s ease}
+@media (max-width:768px){.profile{grid-template-columns:1fr}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.profile-img{width:220px;height:280px;border-radius:12px;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;position:relative;border:1px solid var(--border);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+@media (max-width:768px){.profile-img{width:160px;height:200px;margin:0 auto}}
+.profile-img img{width:100%;height:100%;object-fit:cover;display:block;animation:imgIn .55s ease}
+@keyframes imgIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
+.profile-img .placeholder{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:60px;font-weight:800;letter-spacing:-2px}
+.profile-img .badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:4px 8px;border-radius:6px;font-size:9.5px;font-weight:700;color:var(--amber);letter-spacing:1px;border:1px solid rgba(212,165,116,.3)}
+
+.profile-info{display:flex;flex-direction:column;gap:4px}
+.profile-info h2{font-size:28px;font-weight:800;margin-bottom:2px;letter-spacing:-.5px}
+@media (max-width:768px){.profile-info h2{font-size:22px;text-align:center}}
+.profile-info .role{font-size:13px;color:var(--amber);margin-bottom:12px;font-weight:600}
+@media (max-width:768px){.profile-info .role{text-align:center}}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12px;margin-bottom:10px}
+.info-grid .lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.info-grid .val{color:var(--text);font-weight:600;margin-bottom:4px}
+.bio{font-size:12.5px;line-height:1.6;color:var(--muted);background:var(--card-2);padding:10px 12px;border-radius:8px;border-left:3px solid var(--amber);margin-top:auto}
+
+.activity{background:var(--card-2);border:1px solid var(--border-soft);border-radius:12px;padding:16px;flex:1;display:flex;flex-direction:column;animation:fadeUp .5s ease .1s both;position:relative;overflow:hidden}
+.activity::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent)}
+.activity-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border-soft);flex-wrap:wrap;gap:8px}
+.activity-head h3{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:8px}
+.activity-head .timer{font-size:11px;color:var(--amber);font-weight:700;font-variant-numeric:tabular-nums;background:rgba(212,165,116,.08);padding:4px 10px;border-radius:8px;border:1px solid rgba(212,165,116,.2)}
+
+.activity-status{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.status-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;font-size:22px;flex-shrink:0;transition:transform .4s}
+.activity-status.changing .status-icon{animation:iconFlip .6s ease}
+@keyframes iconFlip{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.85)}100%{transform:rotate(360deg) scale(1)}}
+.status-text .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px}
+.status-text .value{font-size:17px;font-weight:700;color:var(--text);line-height:1.2}
+.status-text .value.amber{color:var(--amber-soft)}
+
+.activity-detail{font-size:13.5px;line-height:1.7;color:var(--text);padding:12px 14px;background:var(--bg-deep);border-radius:8px;border-left:3px solid var(--amber);margin-bottom:12px;min-height:64px;transition:all .3s}
+
+.activity-actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.activity-actions .btn{font-size:11.5px;padding:8px 12px}
+
+.auto-timer{position:absolute;bottom:14px;right:14px;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.5px;background:rgba(0,0,0,.4);padding:4px 8px;border-radius:6px;border:1px solid var(--border-soft)}
+.auto-bar{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,var(--amber),var(--red));transition:width .1s linear}
+
+.toast-container{position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--card);border:1px solid var(--amber);border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;color:var(--text);font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;max-width:300px;pointer-events:auto}
+.toast.err{border-color:var(--red);border-left-color:var(--red)}
+.toast.ok{border-color:var(--green);border-left-color:var(--green)}
+@keyframes toastIn{from{transform:translateX(120%);opacity:0}to{transform:none;opacity:1}}
+@keyframes toastOut{to{transform:translateX(120%);opacity:0}}
+
+.splash{position:fixed;inset:0;background:var(--bg-deep);display:grid;place-items:center;z-index:9998;transition:opacity .5s}
+.splash.hide{opacity:0;pointer-events:none}
+.splash-inner{text-align:center}
+.splash-logo{font-size:32px;font-weight:900;letter-spacing:4px;color:var(--amber);margin-bottom:14px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.splash-bar{width:200px;height:2px;background:var(--card);border-radius:2px;overflow:hidden;margin:0 auto}
+.splash-bar::after{content:'';display:block;width:30%;height:100%;background:var(--amber);animation:load 1.2s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+
+.empty{flex:1;display:grid;place-items:center;color:var(--muted);text-align:center;padding:40px 20px}
+.empty .icon{font-size:54px;margin-bottom:12px;opacity:.4}
+.empty h3{font-size:16px;color:var(--text);margin-bottom:6px}
+.empty p{font-size:13px;margin-bottom:16px;line-height:1.6}
+.empty .btn{margin:0 auto}
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <div class="splash-inner">
+    <div class="splash-logo">STUDIO CAST</div>
+    <div class="splash-bar"></div>
+  </div>
+</div>
+
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">◆</div>
+      <div class="brand-text">
+        <h1>STUDIO CAST</h1>
+        <p>Hậu trường · Quản lý nhân vật</p>
+      </div>
+    </div>
+    <div class="controls">
+      <span class="mode-pill" id="modePill">Đang quét ảnh</span>
+      <button class="btn ghost" id="modeBtn" disabled>
+        <span id="modeBtnText">⋮⋮ Chế độ thủ công</span>
+      </button>
+      <button class="btn" id="prevBtn" disabled>‹ Trước</button>
+      <button class="btn primary" id="randomBtn" disabled>⟳ Ngẫu nhiên</button>
+      <button class="btn" id="nextBtn" disabled>Kế ›</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Danh sách nhân vật</span>
+        <span class="sidebar-count" id="castCount">0</span>
+      </div>
+      <div class="cast-list" id="castList">
+        <div style="grid-column: span 2; text-align: center; color: var(--muted); font-size: 13px; padding: 20px;">
+          Đang tìm kiếm ảnh (01.jpg) trong thư mục...
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <div class="empty" id="emptyState">
+        <div class="icon">🖼️</div>
+        <h3>Đang chờ dữ liệu</h3>
+        <p>App sẽ tự động nạp ảnh từ thư mục. Hãy bấm vào 1 nhân vật bất kỳ ở cột trái, sau đó chọn file <strong>01.txt</strong> để xem thông tin.<br>Cần có 2 file <strong>tasks.txt</strong> và <strong>active.txt</strong> để random trạng thái.</p>
+        <button class="btn primary" id="loadTaskBtn">📁 Tải tasks.txt & active.txt</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-container" id="toasts"></div>
+
+<input type="file" id="fileInputPerson" accept=".txt" style="display:none">
+<input type="file" id="fileInputTasks" accept=".txt" multiple style="display:none">
+
+<script>
+const state = {
+  cast: [],
+  activities: [], /* Lưu nguyên dòng task: "đang làm vườn" */
+  actions: [],    /* Lưu hành động: "uống nước" + địa điểm "tại quán a" */
+  currentIdx: 0,
+  mode: 'auto',
+  autoIntervalMs: 6000,
+  autoTimer: null,
+  progressTimer: null
+};
+
+const $ = function(s) { return document.querySelector(s); };
+
+function toast(msg, type) {
+  const t = document.createElement('div');
+  let cls = 'toast ';
+  if(type === 'err') cls += 'err';
+  else if(type === 'ok') cls += 'ok';
+  t.className = cls;
+  t.textContent = msg;
+  $('#toasts').appendChild(t);
+  setTimeout(function(){ t.remove(); }, 3000);
+}
+
+function pick(arr, exclude) {
+  if(arr.length === 0) return '';
+  if(arr.length === 1) return arr[0];
+  let v;
+  do {
+    v = arr[Math.floor(Math.random() * arr.length)];
+  } while(v === exclude);
+  return v;
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const ss = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+
+/* Phân tích tasks.txt: Lấy nguyên dòng không phân chia */
+function parseTaskText(text) {
+  return text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
+}
+
+/* Phân tích active.txt: Cắt dấu | thành (hành động) và (địa điểm) */
+function parseActiveText(text) {
+  const lines = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
+  return lines.map(function(line) {
+    const parts = line.split('|');
+    return {
+      action: parts[0].trim(), /* VD: "uống nước" */
+      location: parts[1] ? parts[1].trim() : '' /* VD: "tại quán a" */
+    };
+  });
+}
+
+/* Phân tích thông tin người từ 01.txt (Tên|Ngày sinh|...) */
+function parseInfoText(text) {
+  const lines = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
+  if(lines.length > 0) {
+    const parts = lines[0].split('|').map(function(p){ return p.trim(); });
+    return {
+      name: parts[0] || 'Đang cập nhật',
+      birth: parts[1] || '—',
+      location: parts[2] || '—',
+      school: parts[3] || '—',
+      height: parts[4] || '—'
+    };
+  }
+  return { name: 'Đang cập nhật', birth: '—', location: '—', school: '—', height: '—' };
+}
+
+/* QUÉT ẢNH TỰ ĐỘNG */
+function autoScanImages() {
+  let foundCount = 0;
+  let scannedCount = 0;
+  const totalToScan = 99;
+  
+  for(let i = 1; i <= totalToScan; i++) {
+    const id = String(i).padStart(2, '0');
+    const img = new Image();
+    img.onload = function() {
+      state.cast.push({ id: id, imgSrc: './' + id + '.jpg', info: null });
+      foundCount++;
+      scannedCount++;
+      checkScanComplete();
+    };
+    img.onerror = function() {
+      scannedCount++;
+      checkScanComplete();
+    };
+    img.src = './' + id + '.jpg';
+  }
+  
+  function checkScanComplete() {
+    if(scannedCount >= totalToScan) {
+      if(foundCount > 0) {
+        $('#modePill').textContent = 'Sẵn sàng';
+        $('#modePill').className = 'mode-pill auto';
+        $('#modeBtn').disabled = false;
+        $('#prevBtn').disabled = false;
+        $('#nextBtn').disabled = false;
+        $('#randomBtn').disabled = false;
+        /* Sắp xếp theo ID */
+        state.cast.sort(function(a,b){ return parseInt(a.id) - parseInt(b.id); });
+        renderCastList();
+        toast('Đã tìm thấy ' + foundCount + ' ảnh nhân vật!', 'ok');
+      } else {
+        $('#modePill').textContent = 'Không có ảnh';
+        $('#modePill').className = 'mode-pill manual';
+        $('#castList').innerHTML = '<div style="grid-column: span 2; text-align: center; color: var(--red); font-size: 13px; padding: 20px;">Không tìm thấy ảnh 01.jpg nào!</div>';
+        toast('Không tìm thấy ảnh nào!', 'err');
+      }
+    }
+  }
+}
+
+/* XỬ LÝ FILE TXT THỦ CÔNG */
+function handlePersonTxtLoad(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result;
+    const person = state.cast[state.currentIdx];
+    if(person) {
+      person.info = parseInfoText(text);
+      renderProfile();
+      toast('Đã load thông tin từ ' + file.name, 'ok');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function handleTasksTxtLoad(event) {
+  const files = event.target.files;
+  if(!files || files.length === 0) return;
+  
+  let taskFile = null, activeFile = null;
+  for(let i = 0; i < files.length; i++) {
+    const name = files[i].name.toLowerCase();
+    if(name.includes('task')) taskFile = files[i];
+    else if(name.includes('active') || name.includes('hoatdong')) activeFile = files[i];
+  }
+  
+  if(!taskFile || !activeFile) {
+    toast('Vui lòng chọn đủ tasks.txt và active.txt', 'err');
+    return;
+  }
+  
+  const taskReader = new FileReader();
+  taskReader.onload = function(ev) {
+    state.activities = parseTaskText(ev.target.result);
+    
+    const activeReader = new FileReader();
+    activeReader.onload = function(eva) {
+      state.actions = parseActiveText(eva.target.result);
+      toast('Đã load ' + state.activities.length + ' task và ' + state.actions.length + ' hoạt động!', 'ok');
+      if(state.cast.length > 0) {
+        renderProfile();
+        startAutoTimer();
+      }
+    };
+    activeReader.readAsText(activeFile);
+  };
+  taskReader.readAsText(taskFile);
+  event.target.value = '';
+}
+
+function renderCastList() {
+  const list = $('#castList');
+  list.innerHTML = '';
+  state.cast.forEach(function(person, idx) {
+    const item = document.createElement('div');
+    item.className = 'cast-item' + (idx === state.currentIdx ? ' active' : '');
+    item.dataset.idx = idx;
+    item.innerHTML = '<div class="ph"><img src="' + person.imgSrc + '" alt="' + person.id + '"></div><div class="nm">ID ' + person.id + '</div><div class="st">Bấm để xem</div>';
+    item.addEventListener('click', function() {
+      state.currentIdx = idx;
+      renderProfile();
+      renderCastList();
+      resetAutoTimer();
+      
+      if(!person.info) {
+        toast('Vui lòng chọn file ' + person.id + '.txt', 'info');
+        $('#fileInputPerson').click();
+      }
+    });
+    list.appendChild(item);
+  });
+  $('#castCount').textContent = state.cast.length;
+}
+
+function renderProfile() {
+  const main = $('#mainContent');
+  const person = state.cast[state.currentIdx];
+  if(!person) {
+    main.innerHTML = '<div class="empty"><div class="icon">📄</div><h3>Chưa có dữ liệu</h3></div>';
+    return;
+  }
+  
+  const info = person.info || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
+  
+  let activity = 'Chưa có dữ liệu';
+  let detailHtml = 'Vui lòng tải tasks.txt và active.txt để xem hoạt động.';
+  
+  if(state.activities.length > 0 && state.actions.length > 0) {
+    /* Lấy nguyên dòng task: "đang làm vườn" */
+    activity = pick(state.activities);
+    
+    /* Lấy 1 hành động ngẫu nhiên từ active.txt: {action: "uống nước", location: "tại quán a"} */
+    const act = pick(state.actions);
+    
+    /* Ghép câu chi tiết: "Đang làm vườn. Hoạt động cụ thể: uống nước tại quán a." */
+    let detailStr = activity + '. ';
+    if(act.action) {
+      detailStr += 'Hoạt động cụ thể: ' + act.action;
+      if(act.location) {
+        detailStr += ' ' + act.location;
+      }
+      detailStr += '.';
+    }
+    detailHtml = info.name + ' ' + detailStr;
+  }
+  
+  main.innerHTML = 
+    '<div class="breadcrumb">' +
+      '<span><span class="live-dot"></span>ĐANG THEO DÕI</span>' +
+      '<span class="sep">/</span>' +
+      '<span>Hậu trường</span>' +
+      '<span class="sep">/</span>' +
+      '<span class="cur">ID #' + person.id + '</span>' +
+    '</div>' +
+    '<div class="profile">' +
+      '<div class="profile-img">' +
+        '<img src="' + person.imgSrc + '" alt="' + person.id + '">' +
+        '<div class="badge">ID #' + person.id + '</div>' +
+      '</div>' +
+      '<div class="profile-info">' +
+        '<h2>' + info.name + '</h2>' +
+        '<div class="role">' + info.birth + '</div>' +
+        '<div class="info-grid">' +
+          '<div><div class="lbl">Nơi sinh</div><div class="val">' + info.location + '</div></div>' +
+          '<div><div class="lbl">Chiều cao</div><div class="val">' + info.height + '</div></div>' +
+          '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">' + info.school + '</div></div>' +
+        '</div>' +
+        '<div class="bio">Thông tin lấy trực tiếp từ file ' + person.id + '.txt.</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="activity">' +
+      '<div class="activity-head">' +
+        '<h3><span class="live-dot"></span>Hoạt động hiện tại</h3>' +
+        '<span class="timer" id="actTimer">00:00</span>' +
+      '</div>' +
+      '<div class="activity-status" id="actStatus">' +
+        '<div class="status-icon">◆</div>' +
+        '<div class="status-text">' +
+          '<div class="label">Trạng thái</div>' +
+          '<div class="value amber" id="statusValue">' + activity + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="activity-detail" id="actDetail">' + detailHtml + '</div>' +
+      '<div class="activity-actions">' +
+        '<button class="btn primary" id="loadInfoBtn">📁 Tải file ' + person.id + '.txt</button>' +
+        '<button class="btn" id="newPersonBtn">⇄ Đổi nhân vật</button>' +
+      '</div>' +
+      (state.mode === 'auto' && state.activities.length > 0 ? '<div class="auto-timer" id="autoTimerText">Tự đổi sau <b>6.0s</b></div><div class="auto-bar" id="autoBar" style="width:0%"></div>' : '') +
+    '</div>';
+  
+  $('#loadInfoBtn').addEventListener('click', function() { $('#fileInputPerson').click(); });
+  $('#newPersonBtn').addEventListener('click', nextPerson);
+  startActTimer();
+}
+
+function changeActivityOnly() {
+  const person = state.cast[state.currentIdx];
+  if(!person || state.activities.length === 0) return;
+  
+  const statusEl = $('#actStatus');
+  statusEl.classList.add('changing');
+  setTimeout(function(){ statusEl.classList.remove('changing'); }, 600);
+  
+  const oldActivity = $('#statusValue').textContent;
+  const activity = pick(state.activities, oldActivity);
+  const act = pick(state.actions);
+  
+  let detailStr = activity + '. ';
+  if(act.action) {
+    detailStr += 'Hoạt động cụ thể: ' + act.action;
+    if(act.location) {
+      detailStr += ' ' + act.location;
+    }
+    detailStr += '.';
+  }
+  
+  const info = person.info || { name: 'Nhân vật ' + person.id };
+  $('#statusValue').textContent = activity;
+  $('#actDetail').innerHTML = info.name + ' ' + detailStr;
+  
+  startActTimer();
+  resetAutoTimer();
+}
+
+function nextPerson() {
+  if(state.cast.length === 0) return;
+  state.currentIdx = (state.currentIdx + 1) % state.cast.length;
+  renderProfile();
+  renderCastList();
+  resetAutoTimer();
+}
+
+function prevPerson() {
+  if(state.cast.length === 0) return;
+  state.currentIdx = (state.currentIdx - 1 + state.cast.length) % state.cast.length;
+  renderProfile();
+  renderCastList();
+  resetAutoTimer();
+}
+
+function randomPerson() {
+  if(state.cast.length < 2) return;
+  let newIdx;
+  do {
+    newIdx = Math.floor(Math.random() * state.cast.length);
+  } while(newIdx === state.currentIdx);
+  state.currentIdx = newIdx;
+  renderProfile();
+  renderCastList();
+  resetAutoTimer();
+}
+
+function toggleMode() {
+  if(state.activities.length === 0) {
+    toast('Vui lòng tải tasks.txt và active.txt trước', 'err');
+    return;
+  }
+  state.mode = state.mode === 'auto' ? 'manual' : 'auto';
+  const pill = $('#modePill');
+  const btnText = $('#modeBtnText');
+  if(state.mode === 'auto') {
+    pill.textContent = 'Tự động';
+    pill.className = 'mode-pill auto';
+    btnText.textContent = '⋮⋮ Chế độ thủ công';
+    startAutoTimer();
+    toast('Đã chuyển sang Tự động', 'ok');
+  } else {
+    pill.textContent = 'Thủ công';
+    pill.className = 'mode-pill manual';
+    btnText.textContent = '▶ Chế độ tự động';
+    stopAutoTimer();
+    toast('Chế độ thủ công', 'info');
+  }
+  renderProfile();
+}
+
+let actTimerStart = 0;
+let actTimerInterval = null;
+
+function startActTimer() {
+  if(actTimerInterval) clearInterval(actTimerInterval);
+  actTimerStart = Date.now();
+  actTimerInterval = setInterval(function() {
+    const el = $('#actTimer');
+    if(!el) { clearInterval(actTimerInterval); return; }
+    const s = Math.floor((Date.now() - actTimerStart) / 1000);
+    el.textContent = formatTime(s);
+  }, 500);
+}
+
+function startAutoTimer() {
+  stopAutoTimer();
+  if(state.mode !== 'auto' || state.activities.length === 0) return;
+  const startT = Date.now();
+  
+  state.progressTimer = setInterval(function() {
+    const elapsed = Date.now() - startT;
+    const pct = Math.min(100, (elapsed / state.autoIntervalMs) * 100);
+    const bar = $('#autoBar');
+    const txt = $('#autoTimerText');
+    if(bar) bar.style.width = pct + '%';
+    if(txt) {
+      const remain = Math.max(0, (state.autoIntervalMs - elapsed) / 1000);
+      txt.innerHTML = 'Tự đổi sau <b>' + remain.toFixed(1) + 's</b>';
+    }
+  }, 80);
+  
+  state.autoTimer = setTimeout(function() {
+    randomPerson();
+  }, state.autoIntervalMs);
+}
+
+function stopAutoTimer() {
+  if(state.autoTimer) { clearTimeout(state.autoTimer); state.autoTimer = null; }
+  if(state.progressTimer) { clearInterval(state.progressTimer); state.progressTimer = null; }
+}
+
+function resetAutoTimer() {
+  if(state.mode === 'auto') startAutoTimer();
+}
+
+document.addEventListener('keydown', function(e) {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if(state.cast.length === 0) return;
+  if(e.code === 'Space') { e.preventDefault(); randomPerson(); }
+  else if(e.code === 'ArrowLeft') { prevPerson(); }
+  else if(e.code === 'ArrowRight') { nextPerson(); }
+  else if(e.key === 'm' || e.key === 'M') { toggleMode(); }
+  else if(e.key === 'r' || e.key === 'R') { changeActivityOnly(); }
+});
+
+function init() {
+  $('#fileInputPerson').addEventListener('change', handlePersonTxtLoad);
+  $('#fileInputTasks').addEventListener('change', handleTasksTxtLoad);
+  $('#loadTaskBtn').addEventListener('click', function() { $('#fileInputTasks').click(); });
+  $('#modeBtn').addEventListener('click', toggleMode);
+  $('#prevBtn').addEventListener('click', prevPerson);
+  $('#nextBtn').addEventListener('click', nextPerson);
+  $('#randomBtn').addEventListener('click', randomPerson);
+  
+  setTimeout(function() {
+    $('#splash').classList.add('hide');
+    setTimeout(function(){ $('#splash').remove(); }, 500);
+  }, 600);
+  
+  autoScanImages();
+}
+
+init();
+</script>
+</body>
+</html>
