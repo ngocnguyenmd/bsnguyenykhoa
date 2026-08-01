@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STUDIO CAST - Quan ly nhan vat</title>
+<title>STUDIO CAST</title>
 <style>
 :root{
   --bg-deep:#0c0908; --bg:#14100d; --card:#1c1714; --card-2:#241c17;
@@ -201,8 +201,7 @@ body::before{
       <div class="empty" id="emptyState">
         <div class="icon">🖼️</div>
         <h3>Đang chờ dữ liệu</h3>
-        <p>App tự động quét ảnh (01.jpg, 02.jpg...).<br>Để xem thông tin chi tiết, bấm nút bên dưới để chọn 1 file <strong>01.txt</strong>.<br>File <strong>task.txt</strong> và <strong>active.txt</strong> sẽ tự động load ngầm.</p>
-        <button class="btn primary" id="loadInfoBtn">📁 Chọn file 01.txt</button>
+        <p>App tự động quét ảnh <code>source/01.jpg</code> và tải dữ liệu từ <code>task/task.txt</code>, <code>task/active.txt</code>.<br>Thông tin nhân vật sẽ tự động tải từ <code>info/01.txt</code> nếu có trên server.</p>
       </div>
     </main>
   </div>
@@ -301,15 +300,14 @@ function fetchFile(url) {
 }
 
 async function autoLoadTasksActive() {
-  /* Đã sửa thành task.txt (không có s) */
-  const taskText = await fetchFile('./task.txt');
-  const activeText = await fetchFile('./active.txt');
+  const taskText = await fetchFile('./task/task.txt');
+  const activeText = await fetchFile('./task/active.txt');
   
   if(taskText) state.activities = parseTaskText(taskText);
   if(activeText) state.actions = parseActiveText(activeText);
   
   if(state.activities.length > 0 && state.actions.length > 0) {
-    toast('Đã load ngầm task.txt và active.txt!', 'ok');
+    toast('Đã tải ngầm task.txt và active.txt!', 'ok');
     if(state.cast.length > 0) {
       renderProfile();
     }
@@ -326,7 +324,7 @@ function autoScanImages() {
     const id = String(i).padStart(2, '0');
     const img = new Image();
     img.onload = function() {
-      state.cast.push({ id: id, imgSrc: './' + id + '.jpg' });
+      state.cast.push({ id: id, imgSrc: './source/' + id + '.jpg' });
       foundCount++;
       scannedCount++;
       checkScanComplete();
@@ -335,7 +333,7 @@ function autoScanImages() {
       scannedCount++;
       checkScanComplete();
     };
-    img.src = './' + id + '.jpg';
+    img.src = './source/' + id + '.jpg';
   }
   
   function checkScanComplete() {
@@ -360,6 +358,16 @@ function autoScanImages() {
   }
 }
 
+async function autoLoadInfo(person) {
+  const infoText = await fetchFile('./info/' + person.id + '.txt');
+  if(infoText) {
+    person.info = parseInfoText(infoText);
+    if(state.cast[state.currentIdx] && state.cast[state.currentIdx].id === person.id) {
+      renderProfile();
+    }
+  }
+}
+
 function handleInfoTxtLoad(event) {
   const file = event.target.files[0];
   if(!file) return;
@@ -367,9 +375,10 @@ function handleInfoTxtLoad(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     const text = e.target.result;
-    state.globalInfo = parseInfoText(text);
-    toast('Đã load thông tin từ ' + file.name, 'ok');
-    if(state.cast.length > 0) {
+    const person = state.cast[state.currentIdx];
+    if(person) {
+      person.info = parseInfoText(text);
+      toast('Đã tải thông tin từ ' + file.name, 'ok');
       renderProfile();
     }
   };
@@ -389,6 +398,9 @@ function renderCastList() {
       state.currentIdx = idx;
       renderProfile();
       renderCastList();
+      if(!person.info) {
+        autoLoadInfo(person);
+      }
       resetAutoTimer();
     });
     list.appendChild(item);
@@ -404,23 +416,18 @@ function renderProfile() {
     return;
   }
   
-  const info = state.globalInfo || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
+  const info = person.info || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
   
-  let activity = 'Chưa có dữ liệu';
-  let detailHtml = 'Vui lòng tải task.txt và active.txt để xem hoạt động.';
+  let taskActivity = 'Chưa có dữ liệu';
+  let activeDetail = 'Vui lòng tải task.txt và active.txt để xem hoạt động.';
   
   if(state.activities.length > 0 && state.actions.length > 0) {
-    activity = pick(state.activities);
+    taskActivity = pick(state.activities);
     const act = pick(state.actions);
-    let detailStr = activity + '. ';
-    if(act.action) {
-      detailStr += 'Hoạt động cụ thể: ' + act.action;
-      if(act.location) {
-        detailStr += ' ' + act.location;
-      }
-      detailStr += '.';
+    activeDetail = act.action;
+    if(act.location) {
+      activeDetail += ' ' + act.location;
     }
-    detailHtml = info.name + ' ' + detailStr;
   }
   
   main.innerHTML = 
@@ -444,7 +451,7 @@ function renderProfile() {
           '<div><div class="lbl">Chiều cao</div><div class="val">' + info.height + '</div></div>' +
           '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">' + info.school + '</div></div>' +
         '</div>' +
-        '<div class="bio">Thông tin này áp dụng chung cho mọi nhân vật (lấy từ 01.txt).</div>' +
+        '<div class="bio">Thông tin này lấy trực tiếp từ file <code>info/' + person.id + '.txt</code>.</div>' +
       '</div>' +
     '</div>' +
     '<div class="activity">' +
@@ -455,13 +462,13 @@ function renderProfile() {
       '<div class="activity-status" id="actStatus">' +
         '<div class="status-icon">◆</div>' +
         '<div class="status-text">' +
-          '<div class="label">Trạng thái</div>' +
-          '<div class="value amber" id="statusValue">' + activity + '</div>' +
+          '<div class="label">Trạng thái (Nhiệm vụ)</div>' +
+          '<div class="value amber" id="statusValue">' + taskActivity + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="activity-detail" id="actDetail">' + detailHtml + '</div>' +
+      '<div class="activity-detail" id="actDetail">' + activeDetail + '</div>' +
       '<div class="activity-actions">' +
-        '<button class="btn primary" id="loadInfoBtn">📁 Tải file 01.txt</button>' +
+        '<button class="btn primary" id="loadInfoBtn">📁 Tải file ' + person.id + '.txt</button>' +
         '<button class="btn" id="newPersonBtn">⇄ Đổi nhân vật</button>' +
       '</div>' +
       (state.mode === 'auto' && state.activities.length > 0 ? '<div class="auto-timer" id="autoTimerText">Tự đổi sau <b>6.0s</b></div><div class="auto-bar" id="autoBar" style="width:0%"></div>' : '') +
@@ -490,18 +497,13 @@ function changeActivityOnly() {
   const activity = pick(state.activities, oldActivity);
   const act = pick(state.actions);
   
-  let detailStr = activity + '. ';
-  if(act.action) {
-    detailStr += 'Hoạt động cụ thể: ' + act.action;
-    if(act.location) {
-      detailStr += ' ' + act.location;
-    }
-    detailStr += '.';
+  let activeDetail = act.action;
+  if(act.location) {
+    activeDetail += ' ' + act.location;
   }
   
-  const info = state.globalInfo || { name: 'Nhân vật ' + person.id };
   $('#statusValue').textContent = activity;
-  $('#actDetail').innerHTML = info.name + ' ' + detailStr;
+  $('#actDetail').textContent = activeDetail;
   
   startActTimer();
   resetAutoTimer();
@@ -512,6 +514,9 @@ function nextPerson() {
   state.currentIdx = (state.currentIdx + 1) % state.cast.length;
   renderProfile();
   renderCastList();
+  if(!state.cast[state.currentIdx].info) {
+    autoLoadInfo(state.cast[state.currentIdx]);
+  }
   resetAutoTimer();
 }
 
@@ -520,6 +525,9 @@ function prevPerson() {
   state.currentIdx = (state.currentIdx - 1 + state.cast.length) % state.cast.length;
   renderProfile();
   renderCastList();
+  if(!state.cast[state.currentIdx].info) {
+    autoLoadInfo(state.cast[state.currentIdx]);
+  }
   resetAutoTimer();
 }
 
@@ -532,6 +540,9 @@ function randomPerson() {
   state.currentIdx = newIdx;
   renderProfile();
   renderCastList();
+  if(!state.cast[state.currentIdx].info) {
+    autoLoadInfo(state.cast[state.currentIdx]);
+  }
   resetAutoTimer();
 }
 
