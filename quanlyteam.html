@@ -103,7 +103,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 @keyframes msgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--amber),var(--amber-deep));color:var(--bg-deep);border-bottom-right-radius:3px;font-weight:600}
 .msg.ai{align-self:flex-start;background:var(--card-2);color:var(--text);border:1px solid var(--border-soft);border-bottom-left-radius:3px}
-.msg.system{align-self:center;background:transparent;color:var(--muted);font-size:10px;font-style:italic;padding:2px 0;border:none;max-width:100%}
 .chat-input-row{display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--border-soft);flex-shrink:0}
 .chat-input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text);font-family:inherit;font-size:12px;outline:none;resize:none;min-height:36px;max-height:80px;line-height:1.4}
 .chat-input:focus{border-color:var(--amber)}
@@ -186,7 +185,7 @@ var $=function(s){return document.querySelector(s);};
 
 function loadApiKey(){var k=localStorage.getItem('groq_api_key');if(k&&k.length>5){state.groqKey=k;$('#apiKeyInput').value=k;return true;}return false;}
 function saveApiKey(k){localStorage.setItem('groq_api_key',k);}
-function clearApiKey(){localStorage.removeItem('groq_api_key');state.groqKey='';state.groqReady=false;$('#apiKeyInput').value='';$('#apiDot').classList.remove('on');$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;stopBubble();toast('Đã xóa API Key','ok');}
+function clearApiKey(){localStorage.removeItem('groq_api_key');state.groqKey='';state.groqReady=false;$('#apiKeyInput').value='';$('#apiDot').classList.remove('on');$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Đã xóa API Key','ok');}
 function toast(m,t){var e=document.createElement('div');e.className='toast'+(t==='err'?' err':t==='ok'?' ok':'');e.textContent=m;$('#toasts').appendChild(e);setTimeout(function(){e.remove();},2800);}
 function pick(a,e){if(!a.length)return'';if(a.length===1)return a[0];var v;do{v=a[Math.floor(Math.random()*a.length)];}while(v===e);return v;}
 
@@ -207,65 +206,27 @@ function parseBossText(t){
 
 function fetchFile(u){return new Promise(function(r){var x=new XMLHttpRequest();x.open('GET',u,true);x.onload=function(){r(x.status===200||x.status===0?x.responseText:null);};x.onerror=function(){r(null);};x.send();});}
 
-/* === GROQ === */
-async function groqChat(sys,usr,max){
+/* === GROQ — không có prompt hệ thống, chỉ gửi tin nhắn thẳng === */
+async function groqSend(messages,maxTokens){
   if(!state.groqReady)return null;
-  try{var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:max||60,temperature:1.0})});
-  if(!r.ok)return null;var d=await r.json();return d.choices&&d.choices[0]?d.choices[0].message.content.trim():null;}catch(e){return null;}}
-
-/* === BUBBLE VỢ TỰ ĐỘNG — CHỈ HIỆN Ở PANEL VỢ, KHÔNG IN VÀO NHẬT KÝ === */
-var chatTopics=['hỏi ăn cơm chưa','dỗi vì bận quá','nhắc về sớm','chê lướt điện thoại','hỏi đang làm gì','buồn vì ít nói','nhắc uống nước','hỏi có nhớ không','dỗi không rep','nhắc đi ngủ','hỏi tối ăn gì','chê thức khuya','nhắc mai lịch gì','hỏi đang ở đâu','nhớ chồng','dỗi không gọi','nhắc mua gì','chê lười','hỏi mệt không','nhắc đừng hút thuốc'];
-var chatHistArr=[],lastBubble='';
-function getTopic(){var a=chatTopics.filter(function(t){return chatHistArr.indexOf(t)===-1;});if(!a.length){chatHistArr=chatHistArr.slice(4);a=chatTopics.filter(function(t){return chatHistArr.indexOf(t)===-1;});}var c=a[Math.floor(Math.random()*a.length)];chatHistArr.push(c);if(chatHistArr.length>8)chatHistArr.shift();return c;}
-
-var wifeBubbleEl=null,bubbleTimer=null,bubbleCool=false;
-function startBubble(){stopBubble();if(!state.groqReady)return;
-  setTimeout(function(){if(state.groqReady)fireBubble();},8000);
-  bubbleTimer=setInterval(function(){if(!bubbleCool)fireBubble();},45000);
-}
-function stopBubble(){if(bubbleTimer){clearInterval(bubbleTimer);bubbleTimer=null;}}
-
-async function fireBubble(){
-  if(!state.groqReady||bubbleCool||!wifeBubbleEl)return;
-  bubbleCool=true;
-  wifeBubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';
-  wifeBubbleEl.classList.add('show');
-  var p=state.cast[state.currentIdx];var pName=p&&p.info?p.info.name:'vợ';
-  var r=await groqChat('Bạn là '+pName+', NỮ. Nói tiếng Việt bình dân. Bạn muốn '+getTopic()+'. Nói đúng 1 câu, dưới 15 chữ.','Nói đi',35);
-  if(r){
-    var c=r.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();
-    if(c.length>45)c=c.substring(0,42)+'...';
-    if(c===lastBubble){wifeBubbleEl.classList.remove('show');bubbleCool=false;return;}
-    lastBubble=c;
-    wifeBubbleEl.textContent=c;
-    wifeBubbleEl.classList.add('show');
-  }else{wifeBubbleEl.classList.remove('show');}
-  setTimeout(function(){if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');},12000);
-  setTimeout(function(){bubbleCool=false;},18000);
+  try{
+    var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:messages,max_tokens:maxTokens||80,temperature:1.0})
+    });
+    if(!r.ok)return null;
+    var d=await r.json();
+    return d.choices&&d.choices[0]?d.choices[0].message.content.trim():null;
+  }catch(e){return null;}
 }
 
-/* === CHAT MANUAL — CÂU HỎI VÀO PANEL CHỒNG, TRẢ LỜI VÀO PANEL VỢ + IN NHẬT KÝ === */
-var husbandBubbleEl=null,chatInputEl=null,chatSendBtn=null,chatSending=false;
+/* === CHAT — KHÔNG PROMPT, CHỈ GỬI THẲNG === */
+var wifeBubbleEl=null,husbandBubbleEl=null,chatInputEl=null,chatSendBtn=null,chatSending=false;
 
-function buildChatPrompt(){
-  var p=state.cast[state.currentIdx];
-  if(!p)return'Bạn là một người phụ nữ. Trả lời ngắn gọn.';
-  var info=p.info||{name:'?',birth:'—',location:'—',school:'—',height:'—'};
-  var tasks=state.activities.length>0?state.activities.slice(0,8).join(', '):'chưa rõ';
-  var actives=state.actions.length>0?state.actions.slice(0,5).map(function(a){return a.action;}).join(', '):'chưa rõ';
-  return 'Bạn đang đóng vai '+info.name+', NỮ. '+
-    'Thông tin: sinh '+info.birth+', quê '+info.location+', học '+info.school+', cao '+info.height+'. '+
-    'Nhiệm vụ: '+tasks+'. Hoạt động: '+actives+'. '+
-    'Bạn nói tiếng Việt bình dân, ngắn gọn. '+
-    'Khi người hỏi xưng "anh" thì xưng "em". Khi hỏi xưng "mày" thì xưng "tui". '+
-    'Trả lời dựa trên thông tin của bạn. Dưới 30 chữ.';
-}
-
-function addMsgToChat(text,isMe,isSystem){
+function addMsgToChat(text,isMe){
   var el=$('#chatMsgs');if(!el)return;
-  var d=document.createElement('div');
-  if(isSystem){d.className='msg system';d.textContent=text;}
-  else{d.className='msg '+(isMe?'me':'ai');d.textContent=text;}
+  var d=document.createElement('div');d.className='msg '+(isMe?'me':'ai');d.textContent=text;
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 
@@ -274,15 +235,15 @@ async function sendChat(){
   if(!msg||chatSending||!state.groqReady)return;
   chatSending=true;chatInputEl.value='';chatInputEl.style.height='auto';
 
-  /* 1. Câu hỏi → panel CHỒNG (vàng) */
+  /* 1. Câu hỏi → panel CHỒNG */
   if(husbandBubbleEl){
     var display=msg.length>40?msg.substring(0,37)+'...':msg;
     husbandBubbleEl.textContent=display;
     husbandBubbleEl.classList.add('show');
   }
 
-  /* 2. In vào nhật ký */
-  addMsgToChat(msg,true,false);
+  /* 2. In câu hỏi vào nhật ký */
+  addMsgToChat(msg,true);
 
   /* 3. Lưu history */
   var cid=getCurrentCharId();
@@ -294,22 +255,20 @@ async function sendChat(){
   if(wifeBubbleEl)wifeBubbleEl.innerHTML='<span class="t"><span>.</span><span>.</span><span>.</span></span>';
   if(wifeBubbleEl)wifeBubbleEl.classList.add('show');
 
-  /* 5. Gọi API */
-  var sysPrompt=buildChatPrompt();
-  var reply=await groqChat(sysPrompt,msg,80);
+  /* 5. Gửi thẳng — không prompt hệ thống nào */
+  var reply=await groqSend(state.chatHistories[cid].slice(-10),80);
 
-  /* 6. Trả lời → panel VỢ (đỏ) + in nhật ký */
+  /* 6. Trả lời → panel VỢ + nhật ký */
   if(reply){
     var clean=reply.split('\n')[0].replace(/[\*\(\)\[\]""'']/g,'').trim();
     if(wifeBubbleEl){wifeBubbleEl.textContent=clean;wifeBubbleEl.classList.add('show');}
-    addMsgToChat(clean,false,false);
+    addMsgToChat(clean,false);
     state.chatHistories[cid].push({role:'assistant',content:clean});
   }else{
     if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');
-    addMsgToChat('...',false,false);
+    addMsgToChat('...',false);
   }
 
-  /* Ẩn bubble sau thời gian */
   setTimeout(function(){if(husbandBubbleEl)husbandBubbleEl.classList.remove('show');},8000);
   setTimeout(function(){if(wifeBubbleEl)wifeBubbleEl.classList.remove('show');},12000);
   chatSending=false;
@@ -410,7 +369,7 @@ function renderProfile(){
 
   var cid=p.id;
   if(state.chatHistories[cid]){
-    state.chatHistories[cid].forEach(function(m){addMsgToChat(m.content,m.role==='user',false);});
+    state.chatHistories[cid].forEach(function(m){addMsgToChat(m.content,m.role==='user');});
   }
 }
 
@@ -431,7 +390,7 @@ function handleApiKey(){
   var k=$('#apiKeyInput').value.trim();if(!k){toast('Nhập Key','err');return;}
   state.groqKey=k;$('#apiBtn').textContent='...';$('#apiBtn').disabled=true;
   fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
-  .then(function(r){if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');startBubble();}else throw new Error(r.status);})
+  .then(function(r){if(r.ok){state.groqReady=true;saveApiKey(k);$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';toast('API Key đã lưu!','ok');}else throw new Error(r.status);})
   .catch(function(e){state.groqReady=false;$('#apiBtn').textContent='Lưu';$('#apiBtn').disabled=false;toast('Lỗi: '+e.message,'err');});
 }
 
@@ -461,7 +420,7 @@ function init(){
   autoLoadAll();
   if(loadApiKey()){
     fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.groqKey},body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'ok'}],max_tokens:2})})
-    .then(function(r){if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;startBubble();}else clearApiKey();})
+    .then(function(r){if(r.ok){state.groqReady=true;$('#apiDot').classList.add('on');$('#apiBtn').textContent='Đã lưu';$('#apiBtn').disabled=true;}else clearApiKey();})
     .catch(function(){clearApiKey();});
   }
 }
