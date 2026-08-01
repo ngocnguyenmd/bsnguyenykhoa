@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STUDIO CAST — Quản lý nhân vật</title>
+<title>STUDIO CAST - Quan ly nhan vat</title>
 <style>
 :root{
   --bg-deep:#0c0908; --bg:#14100d; --card:#1c1714; --card-2:#241c17;
@@ -51,28 +51,36 @@ body::before{
 .mode-pill.manual{background:rgba(198,74,58,.15);color:var(--red);border-color:rgba(198,74,58,.35)}
 .mode-pill.auto{background:rgba(122,154,90,.15);color:var(--green);border:1px solid rgba(122,154,90,.35)}
 
-.layout{display:grid;grid-template-columns:300px 1fr;gap:14px;min-height:calc(100vh - 120px)}
+.layout{display:grid;grid-template-columns:180px 1fr;gap:14px;min-height:calc(100vh - 120px)}
 @media (max-width:1024px){.layout{grid-template-columns:1fr}}
 
 .sidebar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
 .sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px dashed var(--border-soft)}
 .sidebar-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
 .sidebar-count{font-size:11px;color:var(--amber);font-weight:700;background:rgba(212,165,116,.1);padding:3px 8px;border-radius:8px}
-.cast-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;overflow-y:auto;max-height:calc(100vh - 220px);padding-right:4px}
-@media (max-width:1024px){.cast-list{max-height:380px}}
-.cast-list::-webkit-scrollbar{width:5px}
-.cast-list::-webkit-scrollbar-track{background:transparent}
-.cast-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.cast-item{background:var(--card-2);border:1px solid var(--border-soft);border-radius:10px;padding:8px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;text-align:center}
-.cast-item:hover{border-color:var(--amber);transform:translateY(-2px)}
-.cast-item.active{border-color:var(--amber);background:linear-gradient(135deg,rgba(212,165,116,.18),var(--card-2));box-shadow:0 0 0 1px var(--amber)}
-.cast-item.active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--amber)}
-.cast-item .ph{width:100%;aspect-ratio:1;border-radius:8px;background:linear-gradient(135deg,#2a221c,#1a1512);display:grid;place-items:center;color:var(--muted);font-size:28px;font-weight:800;margin-bottom:6px;overflow:hidden;position:relative}
-.cast-item .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.cast-item .ph .init{filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
-.cast-item .nm{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cast-item .st{font-size:9.5px;color:var(--muted);margin-top:2px;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cast-item.active .st{color:var(--amber-soft)}
+
+.fb-story-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;max-height:calc(100vh - 220px);padding-right:4px}
+@media (max-width:1024px){.fb-story-list{max-height:280px;flex-direction:row;overflow-x:auto;overflow-y:hidden}}
+.fb-story-list::-webkit-scrollbar{width:5px;height:5px}
+.fb-story-list::-webkit-scrollbar-track{background:transparent}
+.fb-story-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.fb-story-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:12px;cursor:pointer;transition:all .2s;flex-shrink:0}
+@media (max-width:1024px){.fb-story-item{flex-direction:column;justify-content:center;width:70px;gap:4px;text-align:center}}
+.fb-story-item:hover{background:var(--card-2)}
+.fb-story-item.active{background:var(--card-2)}
+.fb-story-img{width:50px;height:50px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));flex-shrink:0;transition:transform .2s}
+@media (max-width:1024px){.fb-story-img{width:60px;height:60px}}
+.fb-story-item:hover .fb-story-img{transform:scale(1.05)}
+.fb-story-img-inner{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#2a221c,#1a1512);overflow:hidden;border:2px solid var(--card);position:relative}
+.fb-story-img-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.fb-story-img-inner .init{position:absolute;inset:0;display:grid;place-items:center;color:var(--amber-soft);font-size:20px;font-weight:800;letter-spacing:-1px}
+.fb-story-item.active .fb-story-img{background:linear-gradient(135deg,var(--amber),var(--amber-deep));box-shadow:0 0 12px rgba(212,165,116,.4)}
+.fb-story-info{flex:1;min-width:0}
+@media (max-width:1024px){.fb-story-info{display:none}}
+.fb-story-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb-story-item.active .fb-story-name{color:var(--amber)}
+.fb-story-st{font-size:10px;color:var(--muted);margin-top:2px}
+.fb-story-item.active .fb-story-st{color:var(--amber-soft)}
 
 .main{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:500px}
 .breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.5px;flex-wrap:wrap}
@@ -179,12 +187,12 @@ body::before{
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar-head">
-        <span class="sidebar-title">Danh sách nhân vật</span>
+        <span class="sidebar-title">Nhân vật</span>
         <span class="sidebar-count" id="castCount">0</span>
       </div>
-      <div class="cast-list" id="castList">
-        <div style="grid-column: span 2; text-align: center; color: var(--muted); font-size: 13px; padding: 20px;">
-          Đang tìm kiếm ảnh (01.jpg) trong thư mục...
+      <div class="fb-story-list" id="castList">
+        <div style="text-align: center; color: var(--muted); font-size: 13px; padding: 20px;">
+          Đang tìm ảnh...
         </div>
       </div>
     </aside>
@@ -193,8 +201,8 @@ body::before{
       <div class="empty" id="emptyState">
         <div class="icon">🖼️</div>
         <h3>Đang chờ dữ liệu</h3>
-        <p>App sẽ tự động nạp ảnh từ thư mục. Hãy bấm vào 1 nhân vật bất kỳ ở cột trái, sau đó chọn file <strong>01.txt</strong> để xem thông tin.<br>Cần có 2 file <strong>tasks.txt</strong> và <strong>active.txt</strong> để random trạng thái.</p>
-        <button class="btn primary" id="loadTaskBtn">📁 Tải tasks.txt & active.txt</button>
+        <p>App tự động quét ảnh (01.jpg, 02.jpg...).<br>Để xem thông tin chi tiết, bấm nút bên dưới để chọn 1 file <strong>01.txt</strong>.<br>File <strong>tasks.txt</strong> và <strong>active.txt</strong> sẽ tự động load ngầm.</p>
+        <button class="btn primary" id="loadInfoBtn">📁 Chọn file 01.txt</button>
       </div>
     </main>
   </div>
@@ -202,19 +210,19 @@ body::before{
 
 <div class="toast-container" id="toasts"></div>
 
-<input type="file" id="fileInputPerson" accept=".txt" style="display:none">
-<input type="file" id="fileInputTasks" accept=".txt" multiple style="display:none">
+<input type="file" id="fileInputInfo" accept=".txt" style="display:none">
 
 <script>
 const state = {
   cast: [],
-  activities: [], /* Lưu nguyên dòng task: "đang làm vườn" */
-  actions: [],    /* Lưu hành động: "uống nước" + địa điểm "tại quán a" */
+  activities: [],
+  actions: [],
   currentIdx: 0,
   mode: 'auto',
   autoIntervalMs: 6000,
   autoTimer: null,
-  progressTimer: null
+  progressTimer: null,
+  globalInfo: null
 };
 
 const $ = function(s) { return document.querySelector(s); };
@@ -246,24 +254,21 @@ function formatTime(s) {
   return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
 }
 
-/* Phân tích tasks.txt: Lấy nguyên dòng không phân chia */
 function parseTaskText(text) {
   return text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
 }
 
-/* Phân tích active.txt: Cắt dấu | thành (hành động) và (địa điểm) */
 function parseActiveText(text) {
   const lines = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
   return lines.map(function(line) {
     const parts = line.split('|');
     return {
-      action: parts[0].trim(), /* VD: "uống nước" */
-      location: parts[1] ? parts[1].trim() : '' /* VD: "tại quán a" */
+      action: parts[0].trim(),
+      location: parts[1] ? parts[1].trim() : ''
     };
   });
 }
 
-/* Phân tích thông tin người từ 01.txt (Tên|Ngày sinh|...) */
 function parseInfoText(text) {
   const lines = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
   if(lines.length > 0) {
@@ -279,7 +284,38 @@ function parseInfoText(text) {
   return { name: 'Đang cập nhật', birth: '—', location: '—', school: '—', height: '—' };
 }
 
-/* QUÉT ẢNH TỰ ĐỘNG */
+function fetchFile(url) {
+  return new Promise(function(resolve) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onload = function() {
+      if (xhr.status === 200 || xhr.status === 0) {
+        resolve(xhr.responseText);
+      } else {
+        resolve(null);
+      }
+    };
+    xhr.onerror = function() { resolve(null); };
+    xhr.send();
+  });
+}
+
+async function autoLoadTasksActive() {
+  const taskText = await fetchFile('./tasks.txt');
+  const activeText = await fetchFile('./active.txt');
+  
+  if(taskText) state.activities = parseTaskText(taskText);
+  if(activeText) state.actions = parseActiveText(activeText);
+  
+  if(state.activities.length > 0 && state.actions.length > 0) {
+    toast('Đã load ngầm tasks.txt và active.txt!', 'ok');
+    if(state.cast.length > 0) {
+      renderProfile();
+    }
+    startAutoTimer();
+  }
+}
+
 function autoScanImages() {
   let foundCount = 0;
   let scannedCount = 0;
@@ -289,7 +325,7 @@ function autoScanImages() {
     const id = String(i).padStart(2, '0');
     const img = new Image();
     img.onload = function() {
-      state.cast.push({ id: id, imgSrc: './' + id + '.jpg', info: null });
+      state.cast.push({ id: id, imgSrc: './' + id + '.jpg' });
       foundCount++;
       scannedCount++;
       checkScanComplete();
@@ -310,71 +346,33 @@ function autoScanImages() {
         $('#prevBtn').disabled = false;
         $('#nextBtn').disabled = false;
         $('#randomBtn').disabled = false;
-        /* Sắp xếp theo ID */
         state.cast.sort(function(a,b){ return parseInt(a.id) - parseInt(b.id); });
         renderCastList();
         toast('Đã tìm thấy ' + foundCount + ' ảnh nhân vật!', 'ok');
       } else {
         $('#modePill').textContent = 'Không có ảnh';
         $('#modePill').className = 'mode-pill manual';
-        $('#castList').innerHTML = '<div style="grid-column: span 2; text-align: center; color: var(--red); font-size: 13px; padding: 20px;">Không tìm thấy ảnh 01.jpg nào!</div>';
+        $('#castList').innerHTML = '<div style="text-align: center; color: var(--red); font-size: 13px; padding: 20px;">Không tìm thấy ảnh!</div>';
         toast('Không tìm thấy ảnh nào!', 'err');
       }
     }
   }
 }
 
-/* XỬ LÝ FILE TXT THỦ CÔNG */
-function handlePersonTxtLoad(event) {
+function handleInfoTxtLoad(event) {
   const file = event.target.files[0];
   if(!file) return;
   
   const reader = new FileReader();
   reader.onload = function(e) {
     const text = e.target.result;
-    const person = state.cast[state.currentIdx];
-    if(person) {
-      person.info = parseInfoText(text);
+    state.globalInfo = parseInfoText(text);
+    toast('Đã load thông tin từ ' + file.name, 'ok');
+    if(state.cast.length > 0) {
       renderProfile();
-      toast('Đã load thông tin từ ' + file.name, 'ok');
     }
   };
   reader.readAsText(file);
-  event.target.value = '';
-}
-
-function handleTasksTxtLoad(event) {
-  const files = event.target.files;
-  if(!files || files.length === 0) return;
-  
-  let taskFile = null, activeFile = null;
-  for(let i = 0; i < files.length; i++) {
-    const name = files[i].name.toLowerCase();
-    if(name.includes('task')) taskFile = files[i];
-    else if(name.includes('active') || name.includes('hoatdong')) activeFile = files[i];
-  }
-  
-  if(!taskFile || !activeFile) {
-    toast('Vui lòng chọn đủ tasks.txt và active.txt', 'err');
-    return;
-  }
-  
-  const taskReader = new FileReader();
-  taskReader.onload = function(ev) {
-    state.activities = parseTaskText(ev.target.result);
-    
-    const activeReader = new FileReader();
-    activeReader.onload = function(eva) {
-      state.actions = parseActiveText(eva.target.result);
-      toast('Đã load ' + state.activities.length + ' task và ' + state.actions.length + ' hoạt động!', 'ok');
-      if(state.cast.length > 0) {
-        renderProfile();
-        startAutoTimer();
-      }
-    };
-    activeReader.readAsText(activeFile);
-  };
-  taskReader.readAsText(taskFile);
   event.target.value = '';
 }
 
@@ -383,19 +381,14 @@ function renderCastList() {
   list.innerHTML = '';
   state.cast.forEach(function(person, idx) {
     const item = document.createElement('div');
-    item.className = 'cast-item' + (idx === state.currentIdx ? ' active' : '');
+    item.className = 'fb-story-item' + (idx === state.currentIdx ? ' active' : '');
     item.dataset.idx = idx;
-    item.innerHTML = '<div class="ph"><img src="' + person.imgSrc + '" alt="' + person.id + '"></div><div class="nm">ID ' + person.id + '</div><div class="st">Bấm để xem</div>';
+    item.innerHTML = '<div class="fb-story-img"><div class="fb-story-img-inner"><img src="' + person.imgSrc + '" alt="' + person.id + '"></div></div><div class="fb-story-info"><div class="fb-story-name">ID ' + person.id + '</div><div class="fb-story-st">Bấm để xem</div></div>';
     item.addEventListener('click', function() {
       state.currentIdx = idx;
       renderProfile();
       renderCastList();
       resetAutoTimer();
-      
-      if(!person.info) {
-        toast('Vui lòng chọn file ' + person.id + '.txt', 'info');
-        $('#fileInputPerson').click();
-      }
     });
     list.appendChild(item);
   });
@@ -410,19 +403,14 @@ function renderProfile() {
     return;
   }
   
-  const info = person.info || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
+  const info = state.globalInfo || { name: 'Chưa có thông tin', birth: '—', location: '—', school: '—', height: '—' };
   
   let activity = 'Chưa có dữ liệu';
   let detailHtml = 'Vui lòng tải tasks.txt và active.txt để xem hoạt động.';
   
   if(state.activities.length > 0 && state.actions.length > 0) {
-    /* Lấy nguyên dòng task: "đang làm vườn" */
     activity = pick(state.activities);
-    
-    /* Lấy 1 hành động ngẫu nhiên từ active.txt: {action: "uống nước", location: "tại quán a"} */
     const act = pick(state.actions);
-    
-    /* Ghép câu chi tiết: "Đang làm vườn. Hoạt động cụ thể: uống nước tại quán a." */
     let detailStr = activity + '. ';
     if(act.action) {
       detailStr += 'Hoạt động cụ thể: ' + act.action;
@@ -455,7 +443,7 @@ function renderProfile() {
           '<div><div class="lbl">Chiều cao</div><div class="val">' + info.height + '</div></div>' +
           '<div><div class="lbl">Học vấn</div><div class="val" style="grid-column:span 2">' + info.school + '</div></div>' +
         '</div>' +
-        '<div class="bio">Thông tin lấy trực tiếp từ file ' + person.id + '.txt.</div>' +
+        '<div class="bio">Thông tin này áp dụng chung cho mọi nhân vật (lấy từ 01.txt).</div>' +
       '</div>' +
     '</div>' +
     '<div class="activity">' +
@@ -472,14 +460,20 @@ function renderProfile() {
       '</div>' +
       '<div class="activity-detail" id="actDetail">' + detailHtml + '</div>' +
       '<div class="activity-actions">' +
-        '<button class="btn primary" id="loadInfoBtn">📁 Tải file ' + person.id + '.txt</button>' +
+        '<button class="btn primary" id="loadInfoBtn">📁 Tải file 01.txt</button>' +
         '<button class="btn" id="newPersonBtn">⇄ Đổi nhân vật</button>' +
       '</div>' +
       (state.mode === 'auto' && state.activities.length > 0 ? '<div class="auto-timer" id="autoTimerText">Tự đổi sau <b>6.0s</b></div><div class="auto-bar" id="autoBar" style="width:0%"></div>' : '') +
     '</div>';
   
-  $('#loadInfoBtn').addEventListener('click', function() { $('#fileInputPerson').click(); });
-  $('#newPersonBtn').addEventListener('click', nextPerson);
+  const loadInfoBtn = $('#loadInfoBtn');
+  if(loadInfoBtn) {
+    loadInfoBtn.addEventListener('click', function() { $('#fileInputInfo').click(); });
+  }
+  const newPersonBtn = $('#newPersonBtn');
+  if(newPersonBtn) {
+    newPersonBtn.addEventListener('click', nextPerson);
+  }
   startActTimer();
 }
 
@@ -504,7 +498,7 @@ function changeActivityOnly() {
     detailStr += '.';
   }
   
-  const info = person.info || { name: 'Nhân vật ' + person.id };
+  const info = state.globalInfo || { name: 'Nhân vật ' + person.id };
   $('#statusValue').textContent = activity;
   $('#actDetail').innerHTML = info.name + ' ' + detailStr;
   
@@ -620,9 +614,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 function init() {
-  $('#fileInputPerson').addEventListener('change', handlePersonTxtLoad);
-  $('#fileInputTasks').addEventListener('change', handleTasksTxtLoad);
-  $('#loadTaskBtn').addEventListener('click', function() { $('#fileInputTasks').click(); });
+  $('#fileInputInfo').addEventListener('change', handleInfoTxtLoad);
   $('#modeBtn').addEventListener('click', toggleMode);
   $('#prevBtn').addEventListener('click', prevPerson);
   $('#nextBtn').addEventListener('click', nextPerson);
@@ -634,6 +626,7 @@ function init() {
   }, 600);
   
   autoScanImages();
+  autoLoadTasksActive();
 }
 
 init();
