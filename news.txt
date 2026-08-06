@@ -14,6 +14,7 @@ Tin Quan Trọng
 poto2.jpg
 -nội dung-
 - IEZpeCBrw70gxrDhu5tjIDMgMiBbTE5URF1bVlRLTl0gdGjDtG5nIHF1YSDEkWnhu4F1IGx14bqtdCB0aMOhbmcgNiDEkcOjIGvDqG0gSUQ2
+- Giải quyết nội bộ / nhân sự mới
 -tác giả-
 Quản lý - Luật LFS 
 -mật khẩu-
@@ -25,6 +26,10 @@ Tin Miễn Phí
 -ảnh-
 poto3.jpg
 -nội dung-
+* Đã fix đèn lòng chuẩn bị cho trung thu ! 
+* Đã thông qua giảm x10 quay về giá củ 
+* Fix 4/11 thông qua đã ký ! 
+* Đã thông qua Quốc trung vào team chú bảo anh hyun !
 * Đã fix hệ điều hành linux bỏ hàm củ lấy dạng mới !
 * Giải quyết cho ông chú và bà theo đơn yêu cầu !
 * Giải quyết lỗi máy in phòng 407 239 done ! [phòng 16]
@@ -40,7 +45,7 @@ Giải quyết Vong mới
 -ảnh-
 poto5.jpg
 -nội dung-
-* Giải quyết
+* Giải quyết cho bạn Nguyễn quốc trung ! cố gắng nghen mai ký cho về thăm ny tại kẹt quá ấy !
 -tác giả-
 LFP
 -mật khẩu-
@@ -75,9 +80,8 @@ Thần Linh
 -ảnh-
 poto8.jpg
 -nội dung-
-* Họp bỏ quyền lực 2 thay quyền lực LFS
-* Họp nội bộ
-* Chia 5 khóa cứng cho ID 6
+* Đã ký khu vực mới / thông qua
+* Họp cải tạo khu D
 -tác giả-
 Quản lý - 
 -mật khẩu-
