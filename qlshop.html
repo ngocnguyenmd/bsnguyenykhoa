@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Mặt Hàng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>📦 Quản Lý Mặt Hàng</h1>
+
+<!-- Sổ lọc nhóm + Tìm kiếm -->
+<div class="search-box">
+    <select id="chonNhom">
+        <option value="*">📋 TẤT CẢ NHÓM</option>
+    </select>
+    <input type="text" id="timKiem" placeholder="🔍 Tìm theo tên hoặc mã...">
+</div>
+
+<!-- Nút điều khiển -->
+<div class="ctrl-box">
+    <button onclick="docFileTxt()">📂 Đọc File TXT</button>
+    <button onclick="docLaiTuFile()">🔄 Đọc Lại Từ File</button>
+    <button onclick="luuDuLieu()">💾 Lưu Dữ Liệu</button>
+    <button onclick="xuatFileMoi()">📤 Xuất File Mới</button>
+    <button onclick="xoaTatCa()">🗑️ Xóa Hết</button>
+    <span id="trangThai" class="status"></span>
+</div>
+
+<!-- Danh sách hàng hóa -->
+<div class="grid" id="danhSach"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
