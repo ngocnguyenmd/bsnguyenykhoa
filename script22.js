@@ -63,11 +63,11 @@ function docLaiTuFile() {
     xoaDuLuuDaBan();
     taiFileTuMay('dulieu.txt', function(noiDung) {
         xuLyNoiDungTxt(noiDung, false);
-        document.getElementById('trangThai').textContent = '✅ Đã tải: dulieu.txt - Đúng số trong file!';
+        document.getElementById('trangThai').textContent = '✅ Đã tải: dulieu.txt';
     });
 }
 
-// === 🌐 GỌI API ĐÚNG ĐỊNH DẠNG BÁCH HÓA XANH ===
+// === 🌐 GỌI API — ĐỌC ĐẦY ĐỦ ẢNH + GIÁ + TỒN KHO ===
 async function taiTuAPI() {
     let tuKhoa = document.getElementById('timKiem').value.trim();
     
@@ -76,15 +76,15 @@ async function taiTuAPI() {
         return;
     }
 
-    // ✅ Tự chuyển "xà bông cục" → "xa-bong-cuc"
+    // Tự chuyển "xà bông cục" → "xa-bong-cuc"
     tuKhoa = tuKhoa.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // bỏ dấu
-        .replace(/\s+/g, '-'); // khoảng trắng → gạch ngang
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, '-');
 
-    document.getElementById('trangThai').textContent = '⌛ Đang gọi API: ' + tuKhoa;
+    document.getElementById('trangThai').textContent = '⌛ Đang tải: ' + tuKhoa;
 
     try {
-        // ✅ ĐÚNG THỨ TỰ tham số theo mẫu BHXX
+        // ✅ ĐÚNG THỨ TỰ tham số BHXX
         const API_URL = 'https://api.bachhoaxanh.com/gw/Category/V2/GetCate' +
             '?provinceId=1027' +
             '&wardId=0' +
@@ -95,7 +95,7 @@ async function taiTuAPI() {
             '&isV2=true' +
             '&pageSize=30';
 
-        console.log('🔗 Gọi URL:', API_URL);
+        console.log('🔗 Gọi:', API_URL);
 
         const response = await fetch(API_URL, {
             method: 'GET',
@@ -104,14 +104,14 @@ async function taiTuAPI() {
                 'Accept': 'application/json, text/plain, */*',
                 'Referer': 'https://www.bachhoaxanh.com/',
                 'Origin': 'https://www.bachhoaxanh.com',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                'User-Agent': 'Mozilla/5.0'
             }
         });
 
         if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
         
         const duLieu = await response.json();
-        console.log('📩 API trả về:', duLieu);
+        console.log('📩 Tổng số:', duLieu?.data?.products?.length || 0, 'sản phẩm');
 
         if (!duLieu || !duLieu.data || !duLieu.data.products || duLieu.data.products.length === 0) {
             throw new Error('Không tìm thấy sản phẩm cho: ' + tuKhoa);
@@ -125,11 +125,17 @@ async function taiTuAPI() {
             const id = String(sp.id);
             const ten = sp.fullName || sp.name;
             const nhom = (sp.category && sp.category.name) ? sp.category.name : tuKhoa.replace(/-/g, ' ');
+            
+            // ✅ ĐỌC ĐÚNG TRƯỜNG GIÁ & TỒN KHO
             const gia = (sp.productPrices && sp.productPrices[0]) ? sp.productPrices[0].price : 0;
             const slTon = (sp.productPrices && sp.productPrices[0]) ? sp.productPrices[0].quantity : 0;
+            
+            // ✅ ĐỌC ĐÚNG LINK ẢNH TỪ API
             const anh = sp.avatar || '';
+            
             const slDaBan = duLuuDaBan.hasOwnProperty(id) ? duLuuDaBan[id] : 0;
 
+            // Bỏ qua hàng đã có (tránh trùng)
             const daTonTai = tatCaMatHang.some(hang => hang.id === id);
             if (daTonTai) return;
 
@@ -147,11 +153,11 @@ async function taiTuAPI() {
 
         taoSolecChonNhom();
         hienThiTheoNhom();
-        document.getElementById('trangThai').textContent = `✅ Tìm "${tuKhoa}": ${sanPhamAPI.length} sản phẩm → Thêm: ${soLuongThem}`;
+        document.getElementById('trangThai').textContent = `✅ ${sanPhamAPI.length} sản phẩm → Thêm: ${soLuongThem}`;
 
     } catch (loi) {
-        console.error('❌ Chi tiết lỗi API:', loi);
-        document.getElementById('trangThai').textContent = '❌ Lỗi: ' + loi.message;
+        console.error('❌ Lỗi:', loi);
+        document.getElementById('trangThai').textContent = '❌ ' + loi.message;
     }
 }
 
@@ -185,7 +191,7 @@ function xuatFileMoi() {
     document.getElementById('trangThai').textContent = '✅ Đã xuất: dulieu_capnhat.txt';
 }
 
-// === HÀM XỬ LÝ NỘI DUNG TXT CHUNG ===
+// === XỬ LÝ NỘI DUNG TXT ===
 function xuLyNoiDungTxt(text, coLayDuLuuDaBan) {
     const dong = text.split('\n');
     const ds = document.getElementById('danhSach');
@@ -233,12 +239,12 @@ function taoSolecChonNhom() {
     });
 }
 
-// === LỌC KHI CHỌN NHÓM ===
+// === LỌC THEO NHÓM ===
 function locTheoNhom() {
     hienThiTheoNhom();
 }
 
-// === HIỂN THỊ CÓ TIÊU ĐỀ NHÓM ===
+// === HIỂN THỊ DANH SÁCH ===
 function hienThiTheoNhom() {
     const nhomChon = document.getElementById('chonNhom').value;
     const tuKhoa = document.getElementById('timKiem').value.toLowerCase().trim();
@@ -276,7 +282,7 @@ function hienThiTheoNhom() {
     }
 }
 
-// === TẠO THẺ HÀNG HÓA ===
+// === TẠO THẺ SẢN PHẨM — HIỂN THỊ ẢNH TỪ API ===
 function taoTheHang(hang, nhomDiv) {
     const card = document.createElement('div');
     card.className = 'card';
@@ -284,12 +290,13 @@ function taoTheHang(hang, nhomDiv) {
     card.dataset.ten = hang.ten.toLowerCase();
     card.dataset.id = hang.id;
 
+    // ✅ Ưu tiên ảnh từ API trước, không có thì lấy ảnh cục bộ
     const urlAnh = hang.anhAPI || ('images/' + hang.id + '.jpg');
     const giaDinh = hang.gia.toLocaleString('vi-VN') + ' đ';
 
     card.innerHTML = `
-        <img src="${urlAnh}" alt="${hang.ten}">
-        <span class="no-img">Không có ảnh<br>images/${hang.id}.jpg</span>
+        <img src="${urlAnh}" alt="${hang.ten}" loading="lazy">
+        <span class="no-img" style="display:none;">Không có ảnh</span>
         <div class="name">${hang.ten}</div>
         <div class="info">Mã: ${hang.id}</div>
         <div class="info">Tồn: ${hang.slTon}</div>
@@ -299,6 +306,7 @@ function taoTheHang(hang, nhomDiv) {
     `;
     nhomDiv.appendChild(card);
 
+    // Xử lý lỗi ảnh
     const img = card.querySelector('img');
     img.onerror = function() {
         if (!hang.anhAPI) {
@@ -307,6 +315,7 @@ function taoTheHang(hang, nhomDiv) {
         }
     };
 
+    // Nút bán hàng
     card.querySelector('.mua-btn').onclick = function() {
         hang.slDaBan += 1;
         hang.slTon = Math.max(0, hang.slTon - 1);
