@@ -4,33 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Mặt Hàng</title>
-    <link rel="stylesheet" href="style22.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        select, input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .trangthai {
+            color: #27ae60;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        /* === HIỂN THỊ DANH SÁCH === */
+        #danhSach {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nhom-khoi {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .nhom-tieu-de {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2980b9;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .nhom-hang {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        /* === THẺ SẢN PHẨM === */
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            border-color: #3498db;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 140px;
+            object-fit: contain;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        .no-img {
+            display: none;
+            text-align: center;
+            color: #999;
+            padding: 30px 10px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            height: 140px;
+            line-height: 80px;
+        }
+
+        .name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+            min-height: 40px;
+        }
+
+        .info {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .gia {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .ban {
+            color: #27ae60;
+        }
+
+        .mua-btn {
+            background: #27ae60;
+            color: white;
+            margin-top: auto;
+        }
+
+        .mua-btn:hover {
+            background: #219653;
+        }
+    </style>
 </head>
 <body>
 
-<h1>📦 Quản Lý Mặt Hàng</h1>
+    <h1>📦 Quản Lý Mặt Hàng</h1>
 
-<!-- Sổ lọc nhóm + Tìm kiếm -->
-<div class="search-box">
-    <select id="chonNhom">
-        <option value="*">📋 TẤT CẢ NHÓM</option>
-    </select>
-    <input type="text" id="timKiem" placeholder="🔍 Tìm theo tên hoặc mã...">
-</div>
+    <div class="toolbar">
+        <select id="chonNhom" onchange="locTheoNhom()">
+            <option value="*">📋 TẤT CẢ NHÓM</option>
+        </select>
+        <input type="text" id="timKiem" placeholder="🔍 Tìm theo tên hoặc mã..." oninput="locTheoNhom()">
+        
+        <button onclick="docFileTxt()">📂 Đọc File TXT</button>
+        <button onclick="docLaiTuFile()">🔄 Đọc Lại Từ File</button>
+        <button onclick="taiTuAPI()">🌐 Tìm từ API BHXX</button>
+        <button onclick="luuDuLieu()">💾 Lưu Dữ Liệu</button>
+        <button onclick="xuatFileMoi()">📄 Xuất File Mới</button>
+        <button onclick="xoaTatCa()">🗑️ Xóa Hết</button>
+        
+        <span id="trangThai" class="trangthai"></span>
+    </div>
 
-<!-- Nút điều khiển -->
-<div class="ctrl-box">
-    <button onclick="docFileTxt()">📂 Đọc File TXT</button>
-    <button onclick="docLaiTuFile()">🔄 Đọc Lại Từ File</button>
-    <button onclick="taiTuAPI()">🌐 Tìm từ API BHXX</button>
-    <button onclick="luuDuLieu()">💾 Lưu Dữ Liệu</button>
-    <button onclick="xuatFileMoi()">📤 Xuất File Mới</button>
-    <button onclick="xoaTatCa()">🗑️ Xóa Hết</button>
-    <span id="trangThai" class="status"></span>
-</div>
-<!-- Danh sách hàng hóa -->
-<div class="grid" id="danhSach"></div>
+    <!-- ✅ KHU VỰC HIỂN THỊ SẢN PHẨM — PHẢI CÓ ID NÀY! -->
+    <div id="danhSach"></div>
 
-<script src="script22.js"></script>
+    <!-- === LIÊN KẾT FILE JS === -->
+    <script src="script22.js"></script>
 </body>
 </html>
