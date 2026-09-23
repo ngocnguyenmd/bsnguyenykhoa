@@ -60,6 +60,6 @@ Lê nữ thùy Dương|09/12/1976|Việt Nam|Đại học chuyên ngành Quản 
 60a16452|09/06/1990|vietnam|12/8|BVM|164cm
 61b16449|20/06/1990|vietnam|12/10|BVM|168cm
 62CMenNg16552|23/9/1996|vietnam|5/12|BVS|166cm
-63Dipuong16247|29/9/200x12/4|BVC|165cm
-64EHa16548|29/9/200x|12/9|BVC|163cm
+63Dipuong16247|29/9/200x|vietnam|12/4|BVC|165cm
+64EHa16548|29/9/200x|vietnam|12/9|BVC|163cm
 65siu17046||29/3/1994|korea|Đại học LF|169cm
