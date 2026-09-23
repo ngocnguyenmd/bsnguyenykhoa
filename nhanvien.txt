@@ -57,8 +57,9 @@ Thúy Ngân|05/04/1991|Việt Nam|Trường Đại học Sân khấu Điện ả
 Nguyễn Thị Hồng Tuyết|28/08/1994|Việt Nam|Học viện Công nghệ Bưu chính Viễn thông TP. Hồ Chí Minh|1m67
 Suzy|10/10/1994|Hàn Quốc|Nghệ thuật Biểu diễn Seoul|168 cm
 Lê nữ thùy Dương|09/12/1976|Việt Nam|Đại học chuyên ngành Quản trị kinh doanh và Marketing tại Úc; Thạc sĩ Quản trị kinh doanh tại Đại học Maastricht (Hà Lan); Nghiên cứu sinh Tiến sĩ Quản trị kinh doanh tại Viện Công nghệ Châu Á – Thái Lan.|1m7
-60a16452|07/06/1990|vietnam|BVs|165cm
-61b16449|07/06/1990|vietnam|BVs|167cm
-6262CMenNg16552|1/1/1996|BVS|164cm
-63Dipuong16247|1/1/2000|BVC|164cm
-64EHa16548|1/1/2006|BVC|164cm
+60a16452|09/06/1990|vietnam|12/8|BVM|164cm
+61b16449|20/06/1990|vietnam|12/10|BVM|168cm
+62CMenNg16552|23/9/1996|vietnam|5/12|BVS|166cm
+63Dipuong16247|29/9/200x12/4|BVC|165cm
+64EHa16548|29/9/200x|12/9|BVC|163cm
+65siu17046||29/3/1994|korea|Đại học LF|169cm
