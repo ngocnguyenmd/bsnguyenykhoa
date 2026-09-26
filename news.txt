@@ -39,6 +39,7 @@ Giải quyết Vong mới
 -ảnh-
 poto5.jpg
 -nội dung-
+* Giải quyết huyên nội bộ bỏ id1 ưu tiên qua cổng A làm việc riêng theo cấp chỉ định LF áp dụng cho 26 đến 27 sẽ reset Qua cổng 2
 * Giải quyết cho bạn Nguyễn quốc trung ! cố gắng nghen mai ký cho về thăm ny tại kẹt quá ấy !
 -tác giả-
 LFP
